@@ -524,7 +524,7 @@ a { color:inherit; text-decoration:none; }
   position:absolute; top:3px; left:3px;
   width:30px; height:26px; border-radius:13px;
   background:var(--surface); box-shadow:var(--shadow-sm);
-  transition:transform .22s ease;
+  transition:transform .4s cubic-bezier(.68,-0.55,.27,1.55);  /* deslizamiento con rebote */
   z-index:0;
 }
 :root[data-theme="dark"] .theme-toggle__thumb { transform:translateX(30px); }
@@ -533,12 +533,22 @@ a { color:inherit; text-decoration:none; }
   position:relative; z-index:1;
   display:grid; place-items:center;
   color:var(--text-muted);
-  transition:color .2s ease;
+  transition:color .3s ease, transform .45s cubic-bezier(.68,-0.55,.27,1.55), opacity .3s ease;
 }
-.theme-toggle__icon--sun  { color:#f59e0b; }                 /* sol activo en modo claro */
-:root[data-theme="dark"] .theme-toggle__icon--sun  { color:var(--text-muted); }
-.theme-toggle__icon--moon { color:var(--text-muted); }
-:root[data-theme="dark"] .theme-toggle__icon--moon { color:#93c5fd; }  /* luna activa en modo oscuro */
+/* Sol: activo en claro, se encoge y gira al pasar a oscuro */
+.theme-toggle__icon--sun  { color:#f59e0b; transform:rotate(0) scale(1); opacity:1; }
+:root[data-theme="dark"] .theme-toggle__icon--sun  { color:var(--text-muted); transform:rotate(-90deg) scale(.55); opacity:.45; }
+/* Luna: activa en oscuro, se encoge y gira al pasar a claro */
+.theme-toggle__icon--moon { color:var(--text-muted); transform:rotate(90deg) scale(.55); opacity:.45; }
+:root[data-theme="dark"] .theme-toggle__icon--moon { color:#93c5fd; transform:rotate(0) scale(1); opacity:1; }
+
+/* Crossfade global del tema (solo durante el cambio) */
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition: background-color .4s ease, color .4s ease, border-color .4s ease, fill .4s ease, box-shadow .4s ease !important;
+}
 
 /* Toggle genérico on/off (opciones de datos) */
 .toggle {

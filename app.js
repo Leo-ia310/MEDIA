@@ -398,10 +398,16 @@ function initTheme() {
   const saved = localStorage.getItem("aiame-theme");
   if (saved) document.documentElement.setAttribute("data-theme", saved);
 }
+let themeTransitionTimer = null;
 function toggleTheme() {
-  const current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+  const root = document.documentElement;
+  const current = root.getAttribute("data-theme") === "dark" ? "dark" : "light";
   const next = current === "dark" ? "light" : "dark";
-  document.documentElement.setAttribute("data-theme", next);
+  // Crossfade suave de toda la interfaz solo durante el cambio
+  root.classList.add("theme-transition");
+  clearTimeout(themeTransitionTimer);
+  themeTransitionTimer = setTimeout(() => root.classList.remove("theme-transition"), 450);
+  root.setAttribute("data-theme", next);
   try { localStorage.setItem("aiame-theme", next); } catch (_) {}
 }
 
