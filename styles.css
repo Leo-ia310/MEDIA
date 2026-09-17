@@ -524,7 +524,7 @@ a { color:inherit; text-decoration:none; }
   position:absolute; top:3px; left:3px;
   width:30px; height:26px; border-radius:13px;
   background:var(--surface); box-shadow:var(--shadow-sm);
-  transition:transform .4s cubic-bezier(.68,-0.55,.27,1.55);  /* deslizamiento con rebote */
+  transition:transform .55s cubic-bezier(.34,1.56,.64,1);  /* deslizamiento con rebote marcado */
   z-index:0;
 }
 :root[data-theme="dark"] .theme-toggle__thumb { transform:translateX(30px); }
@@ -533,13 +533,13 @@ a { color:inherit; text-decoration:none; }
   position:relative; z-index:1;
   display:grid; place-items:center;
   color:var(--text-muted);
-  transition:color .3s ease, transform .45s cubic-bezier(.68,-0.55,.27,1.55), opacity .3s ease;
+  transition:color .4s ease, transform .6s cubic-bezier(.34,1.56,.64,1), opacity .4s ease;
 }
-/* Sol: activo en claro, se encoge y gira al pasar a oscuro */
+/* Sol: activo en claro; al pasar a oscuro gira media vuelta y casi desaparece */
 .theme-toggle__icon--sun  { color:#f59e0b; transform:rotate(0) scale(1); opacity:1; }
-:root[data-theme="dark"] .theme-toggle__icon--sun  { color:var(--text-muted); transform:rotate(-90deg) scale(.55); opacity:.45; }
-/* Luna: activa en oscuro, se encoge y gira al pasar a claro */
-.theme-toggle__icon--moon { color:var(--text-muted); transform:rotate(90deg) scale(.55); opacity:.45; }
+:root[data-theme="dark"] .theme-toggle__icon--sun  { color:var(--text-muted); transform:rotate(-180deg) scale(.25); opacity:.25; }
+/* Luna: activa en oscuro; al pasar a claro gira media vuelta y casi desaparece */
+.theme-toggle__icon--moon { color:var(--text-muted); transform:rotate(180deg) scale(.25); opacity:.25; }
 :root[data-theme="dark"] .theme-toggle__icon--moon { color:#93c5fd; transform:rotate(0) scale(1); opacity:1; }
 
 /* Crossfade global del tema (solo durante el cambio) */
@@ -547,7 +547,7 @@ a { color:inherit; text-decoration:none; }
 .theme-transition *,
 .theme-transition *::before,
 .theme-transition *::after {
-  transition: background-color .4s ease, color .4s ease, border-color .4s ease, fill .4s ease, box-shadow .4s ease !important;
+  transition: background-color .5s ease, color .5s ease, border-color .5s ease, fill .5s ease, box-shadow .5s ease !important;
 }
 
 /* Toggle genérico on/off (opciones de datos) */

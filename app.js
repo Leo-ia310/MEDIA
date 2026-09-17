@@ -406,7 +406,7 @@ function toggleTheme() {
   // Crossfade suave de toda la interfaz solo durante el cambio
   root.classList.add("theme-transition");
   clearTimeout(themeTransitionTimer);
-  themeTransitionTimer = setTimeout(() => root.classList.remove("theme-transition"), 450);
+  themeTransitionTimer = setTimeout(() => root.classList.remove("theme-transition"), 600);
   root.setAttribute("data-theme", next);
   try { localStorage.setItem("aiame-theme", next); } catch (_) {}
 }
