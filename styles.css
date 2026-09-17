@@ -450,6 +450,8 @@ a { color:inherit; text-decoration:none; }
   transition:transform .32s cubic-bezier(.4,0,.2,1);
 }
 #dataPanel { z-index:80; }   /* el subpanel se muestra por encima */
+/* Efecto "push": la ventana anterior se desplaza a la izquierda al abrir el subpanel */
+#settingsPanel.is-pushed { transform:translateX(-30%); }
 
 .panel__head {
   flex-shrink:0;

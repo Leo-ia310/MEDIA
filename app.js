@@ -498,9 +498,14 @@ function openPanel(node)  { node.classList.add("is-open"); node.setAttribute("ar
 function closePanel(node) { node.classList.remove("is-open"); node.setAttribute("aria-hidden", "true"); }
 
 function openSettings() { openPanel(el.settingsPanel); }
-function closeSettings() { toggleLangMenu(false); closePanel(el.dataPanel); closePanel(el.settingsPanel); }
-function openData()  { openPanel(el.dataPanel); }
-function closeData() { closePanel(el.dataPanel); }
+function closeSettings() {
+  toggleLangMenu(false);
+  closePanel(el.dataPanel);
+  el.settingsPanel.classList.remove("is-pushed");
+  closePanel(el.settingsPanel);
+}
+function openData()  { openPanel(el.dataPanel); el.settingsPanel.classList.add("is-pushed"); }
+function closeData() { closePanel(el.dataPanel); el.settingsPanel.classList.remove("is-pushed"); }
 
 el.settingsBack.addEventListener("click", closeSettings);
 el.settingsTheme.addEventListener("click", toggleTheme);
