@@ -1,0 +1,22 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AIAME">
+  <defs>
+    <linearGradient id="aiame-grad" x1="12" y1="12" x2="108" y2="108" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#60a5fa"/>
+      <stop offset="0.55" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#1e3a8a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Base redondeada -->
+  <rect x="8" y="8" width="104" height="104" rx="28" fill="url(#aiame-grad)"/>
+
+  <!-- Marca: "A" estilizada + nodo IA -->
+  <path d="M60 30 L84 88 H72 L67.5 76 H52.5 L48 88 H36 L60 30 Z M56 65 H64 L60 52 Z"
+        fill="#ffffff"/>
+
+  <!-- Puntos tipo "red neuronal" -->
+  <circle cx="60" cy="30" r="6" fill="#ffffff"/>
+  <circle cx="60" cy="30" r="3" fill="#2563eb"/>
+  <circle cx="36" cy="88" r="4.5" fill="#bfdbfe"/>
+  <circle cx="84" cy="88" r="4.5" fill="#bfdbfe"/>
+</svg>

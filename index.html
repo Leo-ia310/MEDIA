@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIAME — Asistente IA</title>
+  <meta name="description" content="AIAME, tu asistente de inteligencia artificial." />
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+ <div class="shell">
+
+  <!-- ===================== BARRA SUPERIOR ===================== -->
+  <header class="topbar">
+    <div class="topbar__left">
+      <a class="brand" href="#" aria-label="AIAME inicio">
+        <img src="assets/logo.svg" alt="" class="brand__logo" />
+        <span class="brand__name">AIAME</span>
+      </a>
+    </div>
+
+    <div class="topbar__actions">
+      <!-- Buscar -->
+      <button class="topbar__btn" id="btnSearch" type="button" aria-label="Buscar" data-i18n-aria="tb_search">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" fill="none"/>
+          <path d="M20 20l-3.2-3.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <!-- Notificaciones -->
+      <div class="menu-anchor">
+        <button class="topbar__btn" id="btnNotif" type="button" aria-label="Notificaciones" data-i18n-aria="tb_notifications" aria-haspopup="true" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M13.7 21a2 2 0 0 1-3.4 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+          </svg>
+          <span class="badge" id="notifBadge">2</span>
+        </button>
+
+        <div class="dropdown" id="notifMenu" hidden>
+          <div class="dropdown__header" data-i18n="notif_header">Notificaciones</div>
+          <ul class="notif-list">
+            <li class="notif-item">
+              <span class="notif-dot"></span>
+              <div>
+                <p class="notif-title" data-i18n="notif1_title">Bienvenido a AIAME</p>
+                <p class="notif-text" data-i18n="notif1_text">Tu asistente está listo para conversar.</p>
+              </div>
+            </li>
+            <li class="notif-item">
+              <span class="notif-dot"></span>
+              <div>
+                <p class="notif-title" data-i18n="notif2_title">Consejo</p>
+                <p class="notif-text" data-i18n-html="notif2_text">Pulsa <kbd>Shift</kbd>+<kbd>Enter</kbd> para saltar de línea.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Cuenta -->
+      <div class="menu-anchor">
+        <button class="topbar__btn topbar__btn--account" id="btnAccount" type="button" aria-label="Cuenta" data-i18n-aria="tb_account" aria-haspopup="true" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
+            <path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </button>
+
+        <div class="dropdown dropdown--right" id="accountMenu" hidden>
+          <p class="account-menu__hint" data-i18n="acc_hint">Accede para guardar tus conversaciones</p>
+          <div class="account-menu__auth">
+            <button class="btn-auth btn-auth--primary" id="btnLogin" type="button" data-i18n="acc_login">Iniciar sesión</button>
+            <button class="btn-auth btn-auth--ghost" id="btnRegister" type="button" data-i18n="acc_register">Registrarse</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== CUERPO ===================== -->
+  <div class="app" id="app">
+   <div class="workspace">
+
+    <!-- Rail de iconos (secciones principales) -->
+    <nav class="rail" id="rail" aria-label="Secciones">
+      <div class="rail__group">
+        <button class="rail__item" type="button" data-section="nuevo">
+          <span class="rail__icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+              <path d="M18.4 2.6a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4 9.4-9.4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </span>
+          <span class="rail__label" data-i18n="rail_new">Nuevo chat</span>
+        </button>
+
+        <button class="rail__item" type="button" data-section="buscar">
+          <span class="rail__icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" fill="none"/>
+              <path d="M20 20l-3.2-3.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span class="rail__label" data-i18n="rail_search">Buscar chats</span>
+        </button>
+
+        <button class="rail__item" type="button" data-section="imagenes">
+          <span class="rail__icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.8" fill="none"/>
+              <circle cx="8.5" cy="9" r="1.6" stroke="currentColor" stroke-width="1.6" fill="none"/>
+              <path d="M4 17l4.5-4.5L13 17l3-3 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </span>
+          <span class="rail__label" data-i18n="rail_images">Imágenes</span>
+        </button>
+
+        <button class="rail__item" type="button" data-section="modelos">
+          <span class="rail__icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/>
+              <path d="M4 7.5 12 12l8-4.5M12 12v9" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </span>
+          <span class="rail__label" data-i18n="rail_models">Modelos</span>
+        </button>
+      </div>
+
+      <div class="rail__group rail__group--bottom">
+        <button class="rail__item" type="button" data-section="ajustes">
+          <span class="rail__icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <path fill="currentColor" d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.61-.22l-2.39.96a7.03 7.03 0 0 0-1.62-.94l-.36-2.54A.49.49 0 0 0 13.9 2h-3.8a.49.49 0 0 0-.49.42l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.5.5 0 0 0-.61.22L2.31 8.48a.5.5 0 0 0 .12.64l2.03 1.58c-.05.3-.07.62-.07.94 0 .32.02.64.07.94l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32c.14.24.42.32.61.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.25.42.49.42h3.8c.24 0 .44-.18.49-.42l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.24.09.47 0 .61-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/>
+            </svg>
+          </span>
+          <span class="rail__label" data-i18n="rail_settings">Configuración</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Panel principal -->
+    <main class="main">
+      <section class="messages" id="messages" aria-live="polite">
+        <div class="welcome" id="welcome">
+          <img src="assets/logo.svg" alt="" class="welcome__logo" />
+          <h1 class="welcome__title" data-i18n-html="welcome_title">Hola, soy <span>AIAME</span></h1>
+          <p class="welcome__subtitle" data-i18n="welcome_subtitle">¿En qué puedo ayudarte hoy?</p>
+        </div>
+      </section>
+
+      <div class="composer">
+        <form class="composer__form" id="composerForm">
+          <textarea id="input" class="composer__input" placeholder="Escribe un mensaje a AIAME…" data-i18n-placeholder="composer_placeholder" rows="1" autocomplete="off"></textarea>
+
+          <button class="composer__mic" id="btnMic" type="button" aria-label="Grabar audio" data-i18n-aria="mic_record">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+              <rect x="9" y="3" width="6" height="11" rx="3" stroke="currentColor" stroke-width="1.8" fill="none"/>
+              <path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M9 21h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            </svg>
+          </button>
+
+          <button class="composer__send" id="btnSend" type="submit" aria-label="Enviar" data-i18n-aria="send" disabled>
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+              <path d="M4 12l16-8-6 16-3-6-7-2z" fill="currentColor"/>
+            </svg>
+          </button>
+        </form>
+        <p class="composer__hint" data-i18n="composer_hint">AIAME puede cometer errores. Verifica la información importante.</p>
+      </div>
+    </main>
+
+   </div><!-- /workspace -->
+  </div><!-- /app -->
+
+ </div><!-- /shell -->
+
+  <!-- ===================== PANEL DE AJUSTES (slide) ===================== -->
+  <section class="panel" id="settingsPanel" aria-hidden="true" aria-labelledby="settingsTitle">
+    <header class="panel__head">
+      <button class="panel__back" id="settingsBack" type="button" aria-label="Cerrar" data-i18n-aria="close">
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <h2 class="panel__title" id="settingsTitle" data-i18n="settings_title">Configuración</h2>
+    </header>
+
+    <div class="panel__body">
+      <div class="setting-row">
+        <div class="setting-row__text">
+          <p class="setting-row__label" data-i18n="settings_theme">Tema</p>
+        </div>
+        <button class="theme-toggle" id="settingsTheme" type="button" role="switch" aria-label="Tema" data-i18n-aria="settings_theme">
+          <span class="theme-toggle__thumb"></span>
+          <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16">
+              <circle cx="12" cy="12" r="4.5" fill="currentColor"/>
+              <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/>
+              </g>
+            </svg>
+          </span>
+          <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="15" height="15">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" fill="currentColor"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-row__text">
+          <p class="setting-row__label" data-i18n="settings_language">Idioma</p>
+        </div>
+        <div class="lang-dd" id="langDD">
+          <button class="lang-dd__trigger" id="langTrigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Idioma" data-i18n-aria="settings_language">
+            <span class="lang-dd__current" id="langCurrent">Español</span>
+            <svg class="lang-dd__chevron" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <ul class="lang-dd__menu" id="langMenu" role="listbox" hidden>
+            <li class="lang-dd__option" role="option" data-value="es">Español</li>
+            <li class="lang-dd__option" role="option" data-value="en">English</li>
+            <li class="lang-dd__option" role="option" data-value="fr">Français</li>
+            <li class="lang-dd__option" role="option" data-value="pt">Português</li>
+          </ul>
+        </div>
+      </div>
+
+      <button class="setting-row setting-row--nav" id="openData" type="button">
+        <div class="setting-row__text">
+          <p class="setting-row__label" data-i18n="data_title">Control de datos</p>
+          <p class="setting-row__desc" data-i18n="data_desc">Gestiona qué datos usa AIAME</p>
+        </div>
+        <svg class="setting-row__chevron" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===================== SUBPANEL CONTROL DE DATOS (slide) ===================== -->
+  <section class="panel" id="dataPanel" aria-hidden="true" aria-labelledby="dataTitle">
+    <header class="panel__head">
+      <button class="panel__back" id="dataBack" type="button" aria-label="Volver" data-i18n-aria="back">
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <h2 class="panel__title" id="dataTitle" data-i18n="data_title">Control de datos</h2>
+    </header>
+
+    <div class="panel__body">
+      <div class="data-option">
+        <button class="setting-row setting-row--toggle" data-toggle="metadata" type="button">
+          <p class="setting-row__label" data-i18n="data_metadata">Meta datos</p>
+          <span class="toggle"></span>
+        </button>
+        <p class="data-option__desc" data-i18n="data_metadata_desc">Permite guardar datos sobre tus conversaciones (fechas, títulos) para organizarlas mejor.</p>
+      </div>
+
+      <div class="data-option">
+        <button class="setting-row setting-row--toggle" data-toggle="analytics" type="button">
+          <p class="setting-row__label" data-i18n="data_analytics">Analytics</p>
+          <span class="toggle"></span>
+        </button>
+        <p class="data-option__desc" data-i18n="data_analytics_desc">Comparte estadísticas de uso anónimas para ayudarnos a mejorar AIAME.</p>
+      </div>
+
+      <div class="data-option">
+        <button class="setting-row setting-row--toggle" data-toggle="models" type="button">
+          <p class="setting-row__label" data-i18n="data_models">Modelos Mejorados</p>
+          <span class="toggle"></span>
+        </button>
+        <p class="data-option__desc" data-i18n="data_models_desc">Usa tus interacciones para acceder a modelos más avanzados y respuestas de mayor calidad.</p>
+      </div>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
