@@ -512,8 +512,8 @@ a { color:inherit; text-decoration:none; }
 /* Interruptor de tema con sol (claro) y luna (oscuro) */
 .theme-toggle {
   position:relative; flex-shrink:0;
-  width:84px; height:36px;
-  padding:5px;
+  width:92px; height:40px;
+  padding:4px;
   border-radius:999px;
   border:1px solid var(--border);
   background:var(--bg-soft);
@@ -521,25 +521,25 @@ a { color:inherit; text-decoration:none; }
   cursor:pointer;
 }
 .theme-toggle__thumb {
-  position:absolute; top:5px; left:10px;
-  width:26px; height:26px; border-radius:50%;   /* perilla sólida circular */
-  background:var(--surface); box-shadow:var(--shadow-md);
-  transition:transform .85s cubic-bezier(.45,.05,.55,1);  /* slide lento y suave, efecto interruptor */
+  position:absolute; top:4px; left:9px;
+  width:32px; height:32px; border-radius:50%;   /* perilla circular grande (llena el alto) */
+  background:var(--surface); border:1px solid var(--border); box-shadow:var(--shadow-md);
+  transition:transform .8s cubic-bezier(.45,.05,.55,1);  /* slide lento y visible */
   z-index:0;
 }
-:root[data-theme="dark"] .theme-toggle__thumb { transform:translateX(37px); }
+:root[data-theme="dark"] .theme-toggle__thumb { transform:translateX(42px); }
 
 /* Iconos a tamaño normal siempre; solo cambian color/opacidad segun estado */
 .theme-toggle__icon {
   position:relative; z-index:1;
   display:grid; place-items:center;
   color:var(--text-muted);
-  transition:color .4s ease, opacity .4s ease;
+  transition:color .5s ease, opacity .5s ease, transform .8s cubic-bezier(.45,.05,.55,1);
 }
-.theme-toggle__icon--sun  { color:#f59e0b; opacity:1; }
-:root[data-theme="dark"] .theme-toggle__icon--sun  { color:var(--text-muted); opacity:.5; }
-.theme-toggle__icon--moon { color:var(--text-muted); opacity:.5; }
-:root[data-theme="dark"] .theme-toggle__icon--moon { color:#93c5fd; opacity:1; }
+.theme-toggle__icon--sun  { color:#f59e0b; opacity:1; transform:rotate(0); }
+:root[data-theme="dark"] .theme-toggle__icon--sun  { color:var(--text-muted); opacity:.5; transform:rotate(360deg); }
+.theme-toggle__icon--moon { color:var(--text-muted); opacity:.5; transform:rotate(-360deg); }
+:root[data-theme="dark"] .theme-toggle__icon--moon { color:#93c5fd; opacity:1; transform:rotate(0); }
 
 /* Crossfade global del tema (solo durante el cambio) */
 .theme-transition,
