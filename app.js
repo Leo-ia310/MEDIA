@@ -27,7 +27,7 @@ const I18N = {
     composer_placeholder:"Escribe un mensaje a AIAME…", mic_record:"Grabar audio", mic_stop:"Detener grabación",
     send:"Enviar", composer_hint:"AIAME puede cometer errores. Verifica la información importante.",
     settings_title:"Configuración", settings_appearance:"Apariencia", settings_theme:"Tema", settings_dark:"Modo oscuro",
-    settings_language:"Idioma", close:"Cerrar", back:"Volver", settings_general:"General",
+    settings_language:"Idioma", settings_sound:"Sonido al responder", close:"Cerrar", back:"Volver", settings_general:"General",
     data_title:"Control de datos", data_desc:"Gestiona qué datos usa AIAME",
     data_metadata:"Meta datos", data_metadata_desc:"Permite guardar datos sobre tus conversaciones (fechas, títulos) para organizarlas mejor.",
     data_analytics:"Analytics", data_analytics_desc:"Comparte estadísticas de uso anónimas para ayudarnos a mejorar AIAME.",
@@ -54,7 +54,7 @@ const I18N = {
     composer_placeholder:"Message AIAME…", mic_record:"Record audio", mic_stop:"Stop recording",
     send:"Send", composer_hint:"AIAME can make mistakes. Check important information.",
     settings_title:"Settings", settings_appearance:"Appearance", settings_theme:"Theme", settings_dark:"Dark mode",
-    settings_language:"Language", close:"Close", back:"Back", settings_general:"General",
+    settings_language:"Language", settings_sound:"Sound on reply", close:"Close", back:"Back", settings_general:"General",
     data_title:"Data controls", data_desc:"Manage what data AIAME uses",
     data_metadata:"Metadata", data_metadata_desc:"Allow saving data about your conversations (dates, titles) to organize them better.",
     data_analytics:"Analytics", data_analytics_desc:"Share anonymous usage statistics to help us improve AIAME.",
@@ -81,7 +81,7 @@ const I18N = {
     composer_placeholder:"Écris un message à AIAME…", mic_record:"Enregistrer un audio", mic_stop:"Arrêter l'enregistrement",
     send:"Envoyer", composer_hint:"AIAME peut faire des erreurs. Vérifie les informations importantes.",
     settings_title:"Paramètres", settings_appearance:"Apparence", settings_theme:"Thème", settings_dark:"Mode sombre",
-    settings_language:"Langue", close:"Fermer", back:"Retour", settings_general:"Général",
+    settings_language:"Langue", settings_sound:"Son à la réponse", close:"Fermer", back:"Retour", settings_general:"Général",
     data_title:"Contrôle des données", data_desc:"Gère les données utilisées par AIAME",
     data_metadata:"Métadonnées", data_metadata_desc:"Autorise l'enregistrement de données sur tes conversations (dates, titres) pour mieux les organiser.",
     data_analytics:"Analytique", data_analytics_desc:"Partage des statistiques d'utilisation anonymes pour nous aider à améliorer AIAME.",
@@ -108,7 +108,7 @@ const I18N = {
     composer_placeholder:"Escreva uma mensagem para AIAME…", mic_record:"Gravar áudio", mic_stop:"Parar gravação",
     send:"Enviar", composer_hint:"AIAME pode cometer erros. Verifique informações importantes.",
     settings_title:"Configurações", settings_appearance:"Aparência", settings_theme:"Tema", settings_dark:"Modo escuro",
-    settings_language:"Idioma", close:"Fechar", back:"Voltar", settings_general:"Geral",
+    settings_language:"Idioma", settings_sound:"Som ao responder", close:"Fechar", back:"Voltar", settings_general:"Geral",
     data_title:"Controle de dados", data_desc:"Gerencie quais dados a AIAME usa",
     data_metadata:"Metadados", data_metadata_desc:"Permite salvar dados sobre suas conversas (datas, títulos) para organizá-las melhor.",
     data_analytics:"Análises", data_analytics_desc:"Compartilhe estatísticas de uso anônimas para nos ajudar a melhorar a AIAME.",
@@ -409,6 +409,7 @@ function buildMessageNode(m, index, chat) {
 
   const bubble = node.querySelector(".msg__bubble");
   if (role === "assistant" && m.streaming) {
+    node.classList.add("msg--thinking");
     bubble.classList.add("is-streaming");
     if (m.content) bubble.textContent = m.content;
     else bubble.innerHTML = `<span class="typing"><span></span><span></span><span></span></span>`;
@@ -506,6 +507,7 @@ async function runAssistant(chat) {
         scrollToBottom();
       }
     });
+    notifyResponse();   // sonido/vibración opcional al terminar
   } catch (err) {
     aiMsg.content = t("error_msg");
     console.error(err);
@@ -820,12 +822,12 @@ el.messages.addEventListener("click", (e) => {
     });
   } else if (action === "regen") {
     regenerateLast();
-  } else if (action === "up") {
-    m.feedback = m.feedback === "up" ? null : "up";
-    renderMessages();
-  } else if (action === "down") {
-    m.feedback = m.feedback === "down" ? null : "down";
-    renderMessages();
+  } else if (action === "up" || action === "down") {
+    m.feedback = m.feedback === action ? null : action;
+    // Actualiza en el sitio (evita re-animar los mensajes)
+    const row = btn.closest(".msg__actions");
+    row.querySelector('[data-action="up"]')?.classList.toggle("is-active", m.feedback === "up");
+    row.querySelector('[data-action="down"]')?.classList.toggle("is-active", m.feedback === "down");
   }
 });
 
@@ -940,7 +942,33 @@ el.langMenu.querySelectorAll(".lang-dd__option").forEach((opt) => {
 document.addEventListener("click", (e) => { if (!e.target.closest("#langDD")) toggleLangMenu(false); });
 
 // ---------- Control de datos (toggles activables + persistencia) ----------
-const DATA_DEFAULTS = { metadata: true, analytics: false, models: true };
+const DATA_DEFAULTS = { metadata: true, analytics: false, models: true, sound: false };
+
+// Sonido + vibración al recibir respuesta (opcional)
+function playChime() {
+  try {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return;
+    const ctx = new Ctx();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.type = "sine";
+    o.frequency.setValueAtTime(620, ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(920, ctx.currentTime + 0.12);
+    g.gain.setValueAtTime(0.0001, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.28);
+    o.start();
+    o.stop(ctx.currentTime + 0.3);
+    o.onended = () => ctx.close();
+  } catch (_) {}
+}
+function notifyResponse() {
+  if (!getDataPref("sound")) return;
+  playChime();
+  try { navigator.vibrate?.(30); } catch (_) {}
+}
 
 function getDataPref(key) {
   try {
