@@ -165,7 +165,14 @@
       </button>
 
       <div class="composer">
+        <div class="composer__attachments" id="attachPreview" hidden></div>
         <form class="composer__form" id="composerForm">
+          <button class="composer__attach" id="btnAttach" type="button" aria-label="Adjuntar" data-i18n-aria="attach">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+              <path d="M21 11.5l-8.6 8.6a5 5 0 0 1-7.1-7.1l8.6-8.6a3.3 3.3 0 0 1 4.7 4.7l-8.6 8.6a1.6 1.6 0 0 1-2.3-2.3l7.9-7.9" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
           <textarea id="input" class="composer__input" placeholder="Escribe un mensaje a AIAME…" data-i18n-placeholder="composer_placeholder" rows="1" autocomplete="off"></textarea>
 
           <button class="composer__mic" id="btnMic" type="button" aria-label="Grabar audio" data-i18n-aria="mic_record">
@@ -181,6 +188,8 @@
             </svg>
           </button>
         </form>
+        <input type="file" id="fileInput" multiple hidden
+               accept="image/*,.pdf,.txt,.md,.doc,.docx,.csv,.json,.zip" />
         <p class="composer__hint" data-i18n="composer_hint">AIAME puede cometer errores. Verifica la información importante.</p>
       </div>
     </main>

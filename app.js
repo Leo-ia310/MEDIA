@@ -38,6 +38,7 @@ const I18N = {
     act_copy:"Copiar", act_copied:"Copiado", act_regenerate:"Regenerar", act_good:"Buena respuesta", act_bad:"Mala respuesta",
     scroll_bottom:"Bajar al final",
     sugg_1:"Explícame un concepto difícil", sugg_2:"Ayúdame a redactar un texto", sugg_3:"Dame ideas para un proyecto", sugg_4:"Resume esto por mí",
+    attach:"Adjuntar", remove:"Quitar",
   },
   en: {
     rail_new:"New chat", rail_search:"Search chats", rail_images:"Images", rail_models:"Models", rail_settings:"Settings",
@@ -62,6 +63,7 @@ const I18N = {
     act_copy:"Copy", act_copied:"Copied", act_regenerate:"Regenerate", act_good:"Good response", act_bad:"Bad response",
     scroll_bottom:"Scroll to bottom",
     sugg_1:"Explain a difficult concept", sugg_2:"Help me write something", sugg_3:"Give me project ideas", sugg_4:"Summarize this for me",
+    attach:"Attach", remove:"Remove",
   },
   fr: {
     rail_new:"Nouveau chat", rail_search:"Rechercher", rail_images:"Images", rail_models:"Modèles", rail_settings:"Paramètres",
@@ -86,6 +88,7 @@ const I18N = {
     act_copy:"Copier", act_copied:"Copié", act_regenerate:"Régénérer", act_good:"Bonne réponse", act_bad:"Mauvaise réponse",
     scroll_bottom:"Aller en bas",
     sugg_1:"Explique-moi un concept difficile", sugg_2:"Aide-moi à rédiger un texte", sugg_3:"Donne-moi des idées de projet", sugg_4:"Résume ceci pour moi",
+    attach:"Joindre", remove:"Retirer",
   },
   pt: {
     rail_new:"Novo chat", rail_search:"Buscar chats", rail_images:"Imagens", rail_models:"Modelos", rail_settings:"Configurações",
@@ -110,6 +113,7 @@ const I18N = {
     act_copy:"Copiar", act_copied:"Copiado", act_regenerate:"Regenerar", act_good:"Boa resposta", act_bad:"Resposta ruim",
     scroll_bottom:"Ir para o fim",
     sugg_1:"Explique um conceito difícil", sugg_2:"Ajude-me a redigir um texto", sugg_3:"Dê-me ideias para um projeto", sugg_4:"Resuma isto para mim",
+    attach:"Anexar", remove:"Remover",
   },
 };
 let lang = "es";
@@ -160,6 +164,9 @@ const el = {
   btnSend:     document.getElementById("btnSend"),
   btnMic:      document.getElementById("btnMic"),
   scrollBottom: document.getElementById("scrollBottom"),
+  btnAttach:   document.getElementById("btnAttach"),
+  fileInput:   document.getElementById("fileInput"),
+  attachPreview: document.getElementById("attachPreview"),
   sidebar:     document.getElementById("sidebar"),
   overlay:     document.getElementById("overlay"),
   suggestions: document.getElementById("suggestions"),
@@ -347,7 +354,18 @@ function buildMessageNode(m, index, chat) {
   } else if (role === "assistant") {
     bubble.innerHTML = renderMarkdown(m.content);
   } else {
-    bubble.textContent = m.content;
+    if (m.attachments && m.attachments.length) {
+      const box = document.createElement("div");
+      box.className = "msg__attachments";
+      m.attachments.forEach((a) => box.appendChild(attachmentEl(a, false)));
+      bubble.appendChild(box);
+    }
+    if (m.content) {
+      const txt = document.createElement("div");
+      txt.className = "msg__text";
+      txt.textContent = m.content;
+      bubble.appendChild(txt);
+    }
   }
 
   buildActions(node.querySelector(".msg__actions"), m, index, chat);
@@ -388,14 +406,20 @@ function buildActions(container, m, index, chat) {
 // ---------- Envío de mensajes ----------
 async function sendMessage(text) {
   const content = text.trim();
-  if (!content || state.isResponding) return;
+  if ((!content && pendingAttachments.length === 0) || state.isResponding) return;
 
   let chat = getActiveChat();
   if (!chat) chat = createChat();
 
-  chat.messages.push({ role: "user", content });
+  const attachments = pendingAttachments.slice();
+  chat.messages.push({ role: "user", content, attachments });
+  pendingAttachments = [];
+  renderAttachPreview();
+
   if (chat.messages.length === 1) {
-    chat.title = content.slice(0, 40) + (content.length > 40 ? "…" : "");
+    chat.title = content
+      ? content.slice(0, 40) + (content.length > 40 ? "…" : "")
+      : (attachments[0]?.name || t("attach"));
     renderChatList();
   }
   renderMessages();
@@ -442,9 +466,83 @@ function regenerateLast() {
   runAssistant(chat);
 }
 
+// ---------- Adjuntos (archivos e imágenes) ----------
+let pendingAttachments = [];   // [{ id, name, type, size, url }]
+
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + " B";
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+  return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+}
+
+function addFiles(fileList) {
+  [...fileList].forEach((file) => {
+    const att = {
+      id: uid(),
+      name: file.name,
+      type: file.type || "",
+      size: file.size,
+      url: file.type.startsWith("image/") ? URL.createObjectURL(file) : null,
+    };
+    pendingAttachments.push(att);
+  });
+  renderAttachPreview();
+  updateSendState();
+}
+
+function removeAttachment(id) {
+  const i = pendingAttachments.findIndex((a) => a.id === id);
+  if (i === -1) return;
+  if (pendingAttachments[i].url) URL.revokeObjectURL(pendingAttachments[i].url);
+  pendingAttachments.splice(i, 1);
+  renderAttachPreview();
+  updateSendState();
+}
+
+// Construye la miniatura/chip de un adjunto (removable = con botón quitar)
+function attachmentEl(att, removable) {
+  const isImg = att.type.startsWith("image/") && att.url;
+  const node = document.createElement("div");
+  node.className = "attach-item" + (isImg ? " attach-item--img" : "");
+  if (isImg) {
+    node.innerHTML = `<img src="${att.url}" alt="${escapeHtml(att.name)}" />`;
+  } else {
+    node.innerHTML = `
+      <span class="attach-item__icon">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path d="M14 3v5h5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+          <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="attach-item__meta">
+        <span class="attach-item__name">${escapeHtml(att.name)}</span>
+        <span class="attach-item__size">${formatSize(att.size)}</span>
+      </span>`;
+  }
+  if (removable) {
+    const rm = document.createElement("button");
+    rm.type = "button";
+    rm.className = "attach-item__remove";
+    rm.setAttribute("aria-label", t("remove"));
+    rm.title = t("remove");
+    rm.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>`;
+    rm.addEventListener("click", () => removeAttachment(att.id));
+    node.appendChild(rm);
+  }
+  return node;
+}
+
+function renderAttachPreview() {
+  if (!el.attachPreview) return;
+  el.attachPreview.innerHTML = "";
+  el.attachPreview.hidden = pendingAttachments.length === 0;
+  pendingAttachments.forEach((att) => el.attachPreview.appendChild(attachmentEl(att, true)));
+}
+
 // ---------- Input helpers ----------
 function updateSendState() {
-  el.btnSend.disabled = state.isResponding || el.input.value.trim() === "";
+  const empty = el.input.value.trim() === "" && pendingAttachments.length === 0;
+  el.btnSend.disabled = state.isResponding || empty;
 }
 
 function autoGrow() {
@@ -597,6 +695,29 @@ if (el.btnMic) {
     const recording = el.btnMic.classList.toggle("is-recording");
     el.btnMic.setAttribute("aria-label", recording ? t("mic_stop") : t("mic_record"));
     // TODO: iniciar/parar la captura de audio real y enviarla al agente.
+  });
+}
+
+// Adjuntar archivos/imágenes
+if (el.btnAttach) el.btnAttach.addEventListener("click", () => el.fileInput?.click());
+if (el.fileInput) {
+  el.fileInput.addEventListener("change", (e) => {
+    if (e.target.files?.length) addFiles(e.target.files);
+    e.target.value = "";   // permite volver a elegir el mismo archivo
+  });
+}
+// Arrastrar y soltar sobre el composer
+if (el.form) {
+  ["dragenter", "dragover"].forEach((ev) =>
+    el.form.addEventListener(ev, (e) => { e.preventDefault(); el.form.classList.add("is-dragover"); })
+  );
+  el.form.addEventListener("dragleave", (e) => {
+    if (!el.form.contains(e.relatedTarget)) el.form.classList.remove("is-dragover");
+  });
+  el.form.addEventListener("drop", (e) => {
+    e.preventDefault();
+    el.form.classList.remove("is-dragover");
+    if (e.dataTransfer?.files?.length) addFiles(e.dataTransfer.files);
   });
 }
 

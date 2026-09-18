@@ -493,10 +493,19 @@ a { color:inherit; text-decoration:none; }
 .composer__form {
   max-width:620px; margin:0 auto; display:flex; align-items:flex-end; gap:6px;
   background:var(--bg-soft); border:1.5px solid var(--border); border-radius:28px;
-  padding:5px 6px 5px 16px; box-shadow:var(--shadow-sm);
+  padding:5px 6px; box-shadow:var(--shadow-sm);
   transition:border-color .18s ease, box-shadow .18s ease;
 }
 .composer__form:focus-within { border-color:var(--primary); box-shadow:0 0 0 4px var(--primary-soft); }
+.composer__form.is-dragover { border-color:var(--primary); border-style:dashed; background:var(--primary-soft); }
+.composer__attach {
+  flex-shrink:0; width:36px; height:36px;
+  border:none; border-radius:50%;
+  background:transparent; color:var(--text-muted);
+  display:grid; place-items:center;
+  transition:background .15s ease, color .15s ease;
+}
+.composer__attach:hover { background:var(--primary-soft); color:var(--text); }
 .composer__input { flex:1; border:none; outline:none; resize:none; background:transparent; color:var(--text); font-size:15px; line-height:1.45; max-height:180px; padding:7px 0; }
 .composer__input::placeholder { color:var(--text-muted); }
 .composer__mic {
@@ -514,6 +523,46 @@ a { color:inherit; text-decoration:none; }
 .composer__send:active:not(:disabled){ transform:scale(.94); }
 .composer__send:disabled { opacity:.4; cursor:not-allowed; }
 .composer__hint { max-width:620px; margin:9px auto 0; text-align:center; font-size:12px; color:var(--text-muted); }
+
+/* ---------- ADJUNTOS ---------- */
+.composer__attachments {
+  max-width:620px; margin:0 auto 8px;
+  display:flex; flex-wrap:wrap; gap:8px;
+}
+.composer__attachments[hidden] { display:none; }
+
+.attach-item {
+  position:relative; display:flex; align-items:center; gap:8px;
+  background:var(--surface); border:1px solid var(--border); border-radius:12px;
+  padding:8px 10px; max-width:220px;
+  box-shadow:var(--shadow-sm);
+}
+.attach-item__icon { display:grid; place-items:center; color:var(--primary); flex-shrink:0; }
+.attach-item__meta { display:flex; flex-direction:column; min-width:0; }
+.attach-item__name { font-size:13px; font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.attach-item__size { font-size:11px; color:var(--text-muted); }
+
+.attach-item--img { padding:0; width:64px; height:64px; border-radius:12px; overflow:hidden; }
+.attach-item--img img { width:100%; height:100%; object-fit:cover; display:block; }
+
+.attach-item__remove {
+  position:absolute; top:-7px; right:-7px;
+  width:20px; height:20px; border-radius:50%;
+  border:2px solid var(--surface); background:#0f1e3d; color:#fff;
+  display:grid; place-items:center; cursor:pointer; padding:0;
+}
+.attach-item__remove:hover { background:#ef4444; }
+
+/* Adjuntos dentro de un mensaje enviado */
+.msg__attachments { display:flex; flex-wrap:wrap; gap:8px; }
+.msg__text { margin-top:8px; }
+.msg__attachments:only-child { margin:0; }
+.msg--user .msg__attachments .attach-item {
+  background:rgba(255,255,255,.15); border-color:rgba(255,255,255,.25); box-shadow:none;
+}
+.msg--user .msg__attachments .attach-item__name { color:#fff; }
+.msg--user .msg__attachments .attach-item__size { color:rgba(255,255,255,.7); }
+.msg--user .msg__attachments .attach-item__icon { color:#fff; }
 
 /* Estado inicial (sin mensajes): saludo + barra de chat centrados */
 .main.is-empty { justify-content:center; }
