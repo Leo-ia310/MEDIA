@@ -355,10 +355,9 @@ a { color:inherit; text-decoration:none; }
 /* ---------- MAIN ---------- */
 .main {
   display:flex; flex-direction:column; min-height:0;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow-sm);
+  background:transparent;
+  border:none;
+  box-shadow:none;
   overflow:hidden;
 }
 
@@ -401,7 +400,7 @@ a { color:inherit; text-decoration:none; }
 }
 .suggestion:hover { border-color:var(--primary); color:var(--text); transform:translateY(-2px); }
 
-.composer { padding:14px 20px 18px; border-top:1px solid var(--border); background:var(--surface); }
+.composer { padding:14px 20px 18px; border-top:none; background:transparent; }
 .composer__form {
   max-width:620px; margin:0 auto; display:flex; align-items:flex-end; gap:6px;
   background:var(--bg-soft); border:1.5px solid var(--border); border-radius:28px;
