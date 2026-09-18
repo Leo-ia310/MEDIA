@@ -148,8 +148,21 @@
           <img src="assets/logo.svg" alt="" class="welcome__logo" />
           <h1 class="welcome__title" data-i18n-html="welcome_title">Hola, soy <span>AIAME</span></h1>
           <p class="welcome__subtitle" data-i18n="welcome_subtitle">¿En qué puedo ayudarte hoy?</p>
+
+          <div class="suggestions" id="suggestions">
+            <button class="suggestion" type="button" data-i18n="sugg_1">Explícame un concepto difícil</button>
+            <button class="suggestion" type="button" data-i18n="sugg_2">Ayúdame a redactar un texto</button>
+            <button class="suggestion" type="button" data-i18n="sugg_3">Dame ideas para un proyecto</button>
+            <button class="suggestion" type="button" data-i18n="sugg_4">Resume esto por mí</button>
+          </div>
         </div>
       </section>
+
+      <button class="scroll-bottom" id="scrollBottom" type="button" aria-label="Bajar al final" data-i18n-aria="scroll_bottom" hidden>
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
 
       <div class="composer">
         <form class="composer__form" id="composerForm">

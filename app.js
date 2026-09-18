@@ -36,6 +36,8 @@ const I18N = {
     mock_you_wrote:"Tú escribiste:",
     error_msg:"⚠️ Hubo un problema al obtener la respuesta. Inténtalo de nuevo.",
     act_copy:"Copiar", act_copied:"Copiado", act_regenerate:"Regenerar", act_good:"Buena respuesta", act_bad:"Mala respuesta",
+    scroll_bottom:"Bajar al final",
+    sugg_1:"Explícame un concepto difícil", sugg_2:"Ayúdame a redactar un texto", sugg_3:"Dame ideas para un proyecto", sugg_4:"Resume esto por mí",
   },
   en: {
     rail_new:"New chat", rail_search:"Search chats", rail_images:"Images", rail_models:"Models", rail_settings:"Settings",
@@ -58,6 +60,8 @@ const I18N = {
     mock_you_wrote:"You wrote:",
     error_msg:"⚠️ There was a problem getting the response. Please try again.",
     act_copy:"Copy", act_copied:"Copied", act_regenerate:"Regenerate", act_good:"Good response", act_bad:"Bad response",
+    scroll_bottom:"Scroll to bottom",
+    sugg_1:"Explain a difficult concept", sugg_2:"Help me write something", sugg_3:"Give me project ideas", sugg_4:"Summarize this for me",
   },
   fr: {
     rail_new:"Nouveau chat", rail_search:"Rechercher", rail_images:"Images", rail_models:"Modèles", rail_settings:"Paramètres",
@@ -80,6 +84,8 @@ const I18N = {
     mock_you_wrote:"Tu as écrit :",
     error_msg:"⚠️ Un problème est survenu lors de la réponse. Réessaie.",
     act_copy:"Copier", act_copied:"Copié", act_regenerate:"Régénérer", act_good:"Bonne réponse", act_bad:"Mauvaise réponse",
+    scroll_bottom:"Aller en bas",
+    sugg_1:"Explique-moi un concept difficile", sugg_2:"Aide-moi à rédiger un texte", sugg_3:"Donne-moi des idées de projet", sugg_4:"Résume ceci pour moi",
   },
   pt: {
     rail_new:"Novo chat", rail_search:"Buscar chats", rail_images:"Imagens", rail_models:"Modelos", rail_settings:"Configurações",
@@ -102,6 +108,8 @@ const I18N = {
     mock_you_wrote:"Você escreveu:",
     error_msg:"⚠️ Ocorreu um problema ao obter a resposta. Tente novamente.",
     act_copy:"Copiar", act_copied:"Copiado", act_regenerate:"Regenerar", act_good:"Boa resposta", act_bad:"Resposta ruim",
+    scroll_bottom:"Ir para o fim",
+    sugg_1:"Explique um conceito difícil", sugg_2:"Ajude-me a redigir um texto", sugg_3:"Dê-me ideias para um projeto", sugg_4:"Resuma isto para mim",
   },
 };
 let lang = "es";
@@ -151,6 +159,7 @@ const el = {
   input:       document.getElementById("input"),
   btnSend:     document.getElementById("btnSend"),
   btnMic:      document.getElementById("btnMic"),
+  scrollBottom: document.getElementById("scrollBottom"),
   sidebar:     document.getElementById("sidebar"),
   overlay:     document.getElementById("overlay"),
   suggestions: document.getElementById("suggestions"),
@@ -449,8 +458,18 @@ function resetInput() {
   updateSendState();
 }
 
-function scrollToBottom() {
-  el.messages.scrollTop = el.messages.scrollHeight;
+function scrollToBottom(smooth) {
+  el.messages.scrollTo({ top: el.messages.scrollHeight, behavior: smooth ? "smooth" : "auto" });
+  updateScrollBtn();
+}
+
+// Botón "bajar al final": visible cuando hay contenido por debajo
+function updateScrollBtn() {
+  if (!el.scrollBottom) return;
+  const m = el.messages;
+  const hasMsgs = !!m.querySelector(".msg-wrap");
+  const farFromBottom = m.scrollHeight - m.scrollTop - m.clientHeight > 120;
+  el.scrollBottom.hidden = !(hasMsgs && farFromBottom);
 }
 
 function escapeHtml(str) {
@@ -551,6 +570,10 @@ el.messages.addEventListener("click", (e) => {
 });
 
 el.input.addEventListener("input", () => { autoGrow(); updateSendState(); });
+
+// Botón "bajar al final"
+el.messages.addEventListener("scroll", updateScrollBtn);
+if (el.scrollBottom) el.scrollBottom.addEventListener("click", () => scrollToBottom(true));
 
 el.input.addEventListener("keydown", (e) => {
   if (e.key === "Enter" && !e.shiftKey) {
