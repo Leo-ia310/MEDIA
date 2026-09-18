@@ -71,9 +71,17 @@
 
         <div class="dropdown dropdown--right" id="accountMenu" hidden>
           <p class="account-menu__hint" data-i18n="acc_hint">Accede para guardar tus conversaciones</p>
+          <form class="account-menu__form" id="authForm">
+            <input class="auth-input" id="authEmail" type="email" placeholder="Email" autocomplete="email" required />
+            <input class="auth-input" id="authPassword" type="password" placeholder="Contraseña" autocomplete="current-password" minlength="6" required />
+            <input class="auth-input" id="authPasswordConfirm" type="password" placeholder="Confirmar contraseña" autocomplete="new-password" minlength="6" hidden />
+            <p class="auth-status" id="authStatus" aria-live="polite"></p>
+            <button class="btn-auth btn-auth--primary" id="btnAuthSubmit" type="submit">Entrar</button>
+          </form>
           <div class="account-menu__auth">
-            <button class="btn-auth btn-auth--primary" id="btnLogin" type="button" data-i18n="acc_login">Iniciar sesión</button>
+            <button class="btn-auth btn-auth--ghost" id="btnLogin" type="button" data-i18n="acc_login">Iniciar sesión</button>
             <button class="btn-auth btn-auth--ghost" id="btnRegister" type="button" data-i18n="acc_register">Registrarse</button>
+            <button class="btn-auth btn-auth--ghost" id="btnLogout" type="button" hidden>Cerrar sesión</button>
           </div>
         </div>
       </div>

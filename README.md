@@ -1,60 +1,112 @@
-# AIAME · Frontend
+# AIAME · Tutor medico IA
 
-Interfaz web tipo chat IA. Solo frontend por ahora; preparada para conectar un agente de IA real más adelante.
+Interfaz web tipo chat IA con una base backend FastAPI para Supabase, Cloudflare Workers AI, memoria educativa, RAG preparado y controles anti-alucinacion.
 
 ## Estructura
 
 ```
 AIAME/
-├── index.html        # Estructura de la página (sidebar, header, mensajes, composer)
-├── styles.css        # Estilos, tokens de color (azul/blanco), tema claro/oscuro, responsive
-├── app.js            # Lógica: estado, render de chats/mensajes, envío, tema
+├── index.html        # Frontend estatico existente
+├── styles.css        # Estilos existentes
+├── app.js            # UI de chat; login basico y llamada a /api/chat con Bearer token
+├── backend/
+│   ├── app/          # FastAPI, servicios, IA, Supabase
+│   ├── migrations/   # SQL reproducible para Supabase/Postgres
+│   ├── tests/        # Pruebas criticas
+│   ├── .env.example  # Variables sin secretos
+│   └── requirements.txt
 ├── assets/
-│   ├── logo.svg      # Logo temporal de AIAME
-│   └── fonts/        # (vacío) coloca aquí Etrixo/Jubble/Ritteru en .woff2
+│   └── logo.svg
 └── README.md
 ```
 
-## Cómo verlo
-
-Abre `index.html` en el navegador, o sirve la carpeta:
+## Ejecutar backend
 
 ```bash
-npx serve .
+cd backend
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-## Conectar el agente IA real
+El health check queda en:
 
-Todo pasa por **una sola función** en `app.js`:
-
-```js
-async function getAgentResponse(messages) { ... }
+```text
+GET http://127.0.0.1:8000/api/health
 ```
 
-Hoy devuelve un mock. Sustituye su cuerpo por la llamada a tu backend/API
-(hay un ejemplo comentado en el propio archivo). La UI no necesita cambios.
+## Ejecutar frontend
 
-Para respuestas en **streaming** (token a token) ya existe `appendStreaming()`.
+El frontend puede servirse desde la raiz:
 
-## Tipografías
+```bash
+python -m http.server 5173
+```
 
-Orden de prioridad: **Etrixo → Jubble → Ritteru → Poppins/Inter** (fallback).
+El menu de cuenta incluye registro e inicio de sesion basicos con email/password mediante:
 
-Estas tres primeras no están en bibliotecas abiertas comunes. Cuando tengas
-los archivos:
+```text
+POST /api/auth/register
+POST /api/auth/login
+```
 
-1. Copia los `.woff2` en `assets/fonts/`.
-2. Descomenta los bloques `@font-face` al inicio de `styles.css`.
+Al autenticarse, el frontend guarda el access token en `localStorage` y llama a:
 
-## Paleta
+```text
+POST /api/chat
+```
 
-Azul + blanco. Todos los colores son variables CSS en `:root` (`styles.css`),
-fáciles de ajustar. Incluye tema oscuro con `data-theme="dark"`.
+## Variables de entorno
 
-## Pendiente / ideas futuras
+Copiar `backend/.env.example` a `.env` en la raiz del repo o a `backend/.env`.
+No colocar secretos en archivos versionados.
 
-- Persistencia del historial (localStorage o backend).
-- Autenticación de usuario.
-- Renderizado de Markdown en las respuestas.
-- Adjuntar archivos / imágenes.
-- Logo definitivo (el actual es temporal).
+Variables esperadas:
+
+```env
+SUPABASE_URL=
+SUPABASE_PUBLISHABLE_KEY=
+SUPABASE_SECRET_KEY=
+CLOUDFLARE_ACCOUNT_ID=
+CLOUDFLARE_API_TOKEN=
+AI_MODEL_LOW=
+AI_MODEL_MEDIUM=
+AI_MODEL_HIGH=
+AI_EMBEDDING_MODEL=
+STRICT_DOCUMENT_GROUNDING=
+APP_ENV=
+LOG_LEVEL=
+BACKEND_CORS_ORIGINS=
+REQUEST_TIMEOUT_SECONDS=
+```
+
+## Supabase
+
+Aplicar en Supabase SQL Editor:
+
+```text
+backend/migrations/001_initial_aiame_backend.sql
+```
+
+Incluye `pgvector`, tablas de conversaciones, mensajes, perfil educativo, documentos medicos, chunks, solicitudes de conocimiento, casos clinicos, quizzes, flashcards, mindmaps, feedback, indices y RLS.
+
+## Cloudflare Workers AI
+
+Modelos configurados por defecto:
+
+```env
+AI_MODEL_LOW=@cf/zai-org/glm-4.7-flash
+AI_MODEL_MEDIUM=@cf/qwen/qwen3.8-27b
+AI_MODEL_HIGH=@cf/qwen/qwen3.8-27b
+AI_EMBEDDING_MODEL=@cf/qwen/qwen3-embedding-0.6b
+```
+
+El backend no inventa citas. Con `STRICT_DOCUMENT_GROUNDING=false`, respuestas sin documentos se marcan como `unverified_model_knowledge`. Con `STRICT_DOCUMENT_GROUNDING=true` y RAG vacio, responde `insufficient_evidence`.
+
+## Tests
+
+```bash
+cd backend
+pytest
+```

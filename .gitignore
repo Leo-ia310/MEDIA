@@ -16,3 +16,6 @@ build/
 # Logs / temporales
 *.log
 .cache/
+
+# Entorno
+.env

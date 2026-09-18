@@ -215,7 +215,20 @@ a { color:inherit; text-decoration:none; }
 
 /* Menú de cuenta (sin sesión) */
 .account-menu__hint { padding:8px 10px 4px; font-size:13px; color:var(--text-soft); }
-.account-menu__auth { display:flex; flex-direction:column; gap:8px; padding:4px 6px 6px; }
+.account-menu__form { display:grid; gap:8px; padding:4px 6px 8px; }
+.auth-input {
+  width:100%; min-height:38px; padding:0 10px; border:1px solid var(--border);
+  border-radius:10px; background:var(--surface); color:var(--text); font:inherit; outline:none;
+}
+.auth-input:focus {
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+.auth-status {
+  min-height:18px; margin:0; color:var(--text-soft); font-size:12px; line-height:1.35;
+}
+.account-menu__form .btn-auth { margin-top:2px; }
+.account-menu__auth { display:flex; flex-direction:column; gap:8px; padding:0 6px 6px; }
 .btn-auth {
   width:100%; padding:10px 12px; border-radius:12px;
   font-size:14px; font-weight:600; border:1px solid transparent;

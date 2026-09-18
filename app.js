@@ -21,6 +21,8 @@ const I18N = {
     notif_header:"Notificaciones", notif1_title:"Bienvenido a AIAME", notif1_text:"Tu asistente está listo para conversar.",
     notif2_title:"Consejo", notif2_text:"Pulsa <kbd>Shift</kbd>+<kbd>Enter</kbd> para saltar de línea.",
     acc_hint:"Accede para guardar tus conversaciones", acc_login:"Iniciar sesión", acc_register:"Registrarse",
+    acc_logout:"Cerrar sesión", auth_email:"Email", auth_password:"Contraseña", auth_ready:"Sesión iniciada", auth_missing:"Escribe email y contraseña.", auth_failed:"No se pudo autenticar.",
+    auth_confirm_password:"Confirmar contraseña", auth_enter:"Entrar", auth_create:"Crear cuenta", auth_password_mismatch:"Las contraseñas no coinciden.", auth_switch_login:"Ya tengo cuenta", auth_switch_register:"Crear cuenta nueva",
     welcome_title:"Hola, soy <span>AIAME</span>", welcome_subtitle:"¿En qué puedo ayudarte hoy?",
     composer_placeholder:"Escribe un mensaje a AIAME…", mic_record:"Grabar audio", mic_stop:"Detener grabación",
     send:"Enviar", composer_hint:"AIAME puede cometer errores. Verifica la información importante.",
@@ -46,6 +48,8 @@ const I18N = {
     notif_header:"Notifications", notif1_title:"Welcome to AIAME", notif1_text:"Your assistant is ready to chat.",
     notif2_title:"Tip", notif2_text:"Press <kbd>Shift</kbd>+<kbd>Enter</kbd> for a new line.",
     acc_hint:"Sign in to save your conversations", acc_login:"Log in", acc_register:"Sign up",
+    acc_logout:"Log out", auth_email:"Email", auth_password:"Password", auth_ready:"Signed in", auth_missing:"Enter email and password.", auth_failed:"Could not authenticate.",
+    auth_confirm_password:"Confirm password", auth_enter:"Enter", auth_create:"Create account", auth_password_mismatch:"Passwords do not match.", auth_switch_login:"I already have an account", auth_switch_register:"Create new account",
     welcome_title:"Hi, I'm <span>AIAME</span>", welcome_subtitle:"How can I help you today?",
     composer_placeholder:"Message AIAME…", mic_record:"Record audio", mic_stop:"Stop recording",
     send:"Send", composer_hint:"AIAME can make mistakes. Check important information.",
@@ -71,6 +75,8 @@ const I18N = {
     notif_header:"Notifications", notif1_title:"Bienvenue sur AIAME", notif1_text:"Votre assistant est prêt à discuter.",
     notif2_title:"Astuce", notif2_text:"Appuie sur <kbd>Shift</kbd>+<kbd>Enter</kbd> pour un saut de ligne.",
     acc_hint:"Connecte-toi pour sauvegarder tes conversations", acc_login:"Se connecter", acc_register:"S'inscrire",
+    acc_logout:"Se déconnecter", auth_email:"Email", auth_password:"Mot de passe", auth_ready:"Session ouverte", auth_missing:"Saisis email et mot de passe.", auth_failed:"Authentification impossible.",
+    auth_confirm_password:"Confirmer le mot de passe", auth_enter:"Entrer", auth_create:"Créer un compte", auth_password_mismatch:"Les mots de passe ne correspondent pas.", auth_switch_login:"J'ai déjà un compte", auth_switch_register:"Créer un nouveau compte",
     welcome_title:"Bonjour, je suis <span>AIAME</span>", welcome_subtitle:"Comment puis-je t'aider aujourd'hui ?",
     composer_placeholder:"Écris un message à AIAME…", mic_record:"Enregistrer un audio", mic_stop:"Arrêter l'enregistrement",
     send:"Envoyer", composer_hint:"AIAME peut faire des erreurs. Vérifie les informations importantes.",
@@ -96,6 +102,8 @@ const I18N = {
     notif_header:"Notificações", notif1_title:"Bem-vindo a AIAME", notif1_text:"Seu assistente está pronto para conversar.",
     notif2_title:"Dica", notif2_text:"Pressione <kbd>Shift</kbd>+<kbd>Enter</kbd> para pular linha.",
     acc_hint:"Entre para salvar suas conversas", acc_login:"Entrar", acc_register:"Cadastrar-se",
+    acc_logout:"Sair", auth_email:"Email", auth_password:"Senha", auth_ready:"Sessão iniciada", auth_missing:"Digite email e senha.", auth_failed:"Não foi possível autenticar.",
+    auth_confirm_password:"Confirmar senha", auth_enter:"Entrar", auth_create:"Criar conta", auth_password_mismatch:"As senhas não coincidem.", auth_switch_login:"Já tenho conta", auth_switch_register:"Criar nova conta",
     welcome_title:"Olá, sou <span>AIAME</span>", welcome_subtitle:"Como posso ajudar você hoje?",
     composer_placeholder:"Escreva uma mensagem para AIAME…", mic_record:"Gravar áudio", mic_stop:"Parar gravação",
     send:"Enviar", composer_hint:"AIAME pode cometer erros. Verifique informações importantes.",
@@ -117,6 +125,11 @@ const I18N = {
   },
 };
 let lang = "es";
+let authMode = "login";
+const API_BASE_URL = (
+  location.protocol === "file:" ||
+  ["5500", "5173", "3000", "8080"].includes(location.port)
+) ? "http://127.0.0.1:8000" : "";
 
 function t(key) {
   return (I18N[lang] && I18N[lang][key]) || I18N.es[key] || key;
@@ -128,6 +141,11 @@ function applyI18n() {
   document.querySelectorAll("[data-i18n-html]").forEach((n) => { n.innerHTML = t(n.dataset.i18nHtml); });
   document.querySelectorAll("[data-i18n-placeholder]").forEach((n) => { n.setAttribute("placeholder", t(n.dataset.i18nPlaceholder)); });
   document.querySelectorAll("[data-i18n-aria]").forEach((n) => { n.setAttribute("aria-label", t(n.dataset.i18nAria)); });
+  if (el.authEmail) el.authEmail.setAttribute("placeholder", t("auth_email"));
+  if (el.authPassword) el.authPassword.setAttribute("placeholder", t("auth_password"));
+  if (el.authPasswordConfirm) el.authPasswordConfirm.setAttribute("placeholder", t("auth_confirm_password"));
+  if (el.btnLogout) el.btnLogout.textContent = t("acc_logout");
+  updateAuthModeUI();
   renderMessages(); // re-traduce mensajes ya pintados (roles, etc.)
   if (el.btnMic) el.btnMic.setAttribute("aria-label", el.btnMic.classList.contains("is-recording") ? t("mic_stop") : t("mic_record"));
   // Desplegable de idioma: etiqueta actual + opción activa
@@ -180,6 +198,15 @@ const el = {
   notifBadge:  document.getElementById("notifBadge"),
   btnAccount:  document.getElementById("btnAccount"),
   accountMenu: document.getElementById("accountMenu"),
+  authForm:    document.getElementById("authForm"),
+  authEmail:   document.getElementById("authEmail"),
+  authPassword: document.getElementById("authPassword"),
+  authPasswordConfirm: document.getElementById("authPasswordConfirm"),
+  authStatus:  document.getElementById("authStatus"),
+  btnAuthSubmit: document.getElementById("btnAuthSubmit"),
+  btnLogin:    document.getElementById("btnLogin"),
+  btnRegister: document.getElementById("btnRegister"),
+  btnLogout:   document.getElementById("btnLogout"),
 
   // Ajustes (paneles slide)
   settingsPanel: document.getElementById("settingsPanel"),
@@ -215,19 +242,54 @@ const el = {
      }
    ========================================================= */
 async function streamAgentResponse(messages, onToken) {
-  await sleep(400 + Math.random() * 400); // latencia inicial simulada
   const last = messages[messages.length - 1]?.content ?? "";
-  const full =
-    t("mock_l1") + "\n\n" +
-    t("mock_l2") + "\n\n" +
-    "```js\nconsole.log(\"" + t("role_ai") + "\");\n```\n\n" +
-    t("mock_you_wrote") + " *" + last + "*";
-
-  const tokens = full.match(/\s*\S+|\s+/g) || [full];
-  for (const tk of tokens) {
-    await sleep(18 + Math.random() * 40);
-    onToken(tk);
+  const token = localStorage.getItem("aiame-auth-token");
+  if (!token) {
+    await sleep(300);
+    onToken("Para guardar conversaciones y usar el tutor medico real, inicia sesion con Supabase Auth. El backend ya expone POST /api/chat y espera un Bearer token.");
+    return;
   }
+
+  const activeChat = getActiveChat();
+  let res;
+  try {
+    res = await fetch(`${API_BASE_URL}/api/chat`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        conversation_id: activeChat?.backendConversationId ?? null,
+        message: last,
+        effort: "low",
+      }),
+    });
+  } catch (err) {
+    onToken("⚠️ Hubo un error de red al conectar con el backend.");
+    return;
+  }
+
+  if (res.status === 401) {
+    clearAuthSession();
+    onToken("Tu sesión no está activa o expiró. Inicia sesión otra vez desde el botón de cuenta para usar el tutor.");
+    return;
+  }
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    onToken(errorData.detail || `El backend respondió con error ${res.status}. Inténtalo de nuevo.`);
+    return;
+  }
+  
+  const data = await res.json();
+  if (activeChat && data.conversation_id) activeChat.backendConversationId = data.conversation_id;
+  
+  const status = data.answer_status === "unverified_model_knowledge"
+    ? "\n\n_Esta respuesta usa conocimiento general del modelo y aun no tiene citas documentales verificadas._"
+    : "";
+    
+  // Since the backend doesn't stream yet, we just send the whole chunk
+  onToken(`${data.answer}${status}`);
 }
 
 // ---------- Markdown + código ----------
@@ -622,6 +684,106 @@ function toggleMenu(menu, btn) {
   btn.setAttribute("aria-expanded", String(willOpen));
 }
 
+// ---------- Supabase Auth vía backend ----------
+function getAuthToken() {
+  try { return localStorage.getItem("aiame-auth-token"); } catch (_) { return null; }
+}
+
+function getStoredEmail() {
+  try { return localStorage.getItem("aiame-user-email"); } catch (_) { return null; }
+}
+
+function setAuthSession(session) {
+  try {
+    localStorage.setItem("aiame-auth-token", session.access_token);
+    if (session.refresh_token) localStorage.setItem("aiame-refresh-token", session.refresh_token);
+    if (session.user?.email) localStorage.setItem("aiame-user-email", session.user.email);
+  } catch (_) {}
+  updateAuthUI();
+}
+
+function clearAuthSession() {
+  try {
+    localStorage.removeItem("aiame-auth-token");
+    localStorage.removeItem("aiame-refresh-token");
+    localStorage.removeItem("aiame-user-email");
+  } catch (_) {}
+  updateAuthUI();
+}
+
+function updateAuthUI() {
+  const signedIn = Boolean(getAuthToken());
+  if (el.btnLogin) el.btnLogin.hidden = signedIn;
+  if (el.btnRegister) el.btnRegister.hidden = signedIn;
+  if (el.btnLogout) el.btnLogout.hidden = !signedIn;
+  if (el.authForm) el.authForm.hidden = signedIn;
+  if (el.authStatus) el.authStatus.textContent = signedIn ? `${t("auth_ready")}${getStoredEmail() ? ": " + getStoredEmail() : ""}` : "";
+  updateAuthModeUI();
+}
+
+function setAuthMode(mode) {
+  authMode = mode === "register" ? "register" : "login";
+  if (el.authStatus && !getAuthToken()) el.authStatus.textContent = "";
+  updateAuthModeUI();
+}
+
+function updateAuthModeUI() {
+  const signedIn = Boolean(getAuthToken());
+  if (el.authPasswordConfirm) {
+    el.authPasswordConfirm.hidden = signedIn || authMode !== "register";
+    el.authPasswordConfirm.required = !signedIn && authMode === "register";
+  }
+  if (el.btnAuthSubmit) el.btnAuthSubmit.textContent = authMode === "register" ? t("auth_create") : t("auth_enter");
+  if (el.btnLogin) el.btnLogin.textContent = authMode === "register" ? t("auth_switch_login") : t("acc_login");
+  if (el.btnRegister) el.btnRegister.textContent = authMode === "register" ? t("acc_register") : t("auth_switch_register");
+}
+
+async function authenticate(mode) {
+  setAuthMode(mode);
+  const email = el.authEmail?.value.trim();
+  const password = el.authPassword?.value;
+  if (!email || !password) {
+    if (el.authStatus) el.authStatus.textContent = t("auth_missing");
+    return;
+  }
+  if (mode === "register" && password !== el.authPasswordConfirm?.value) {
+    if (el.authStatus) el.authStatus.textContent = t("auth_password_mismatch");
+    return;
+  }
+
+  const endpoint = mode === "register" ? `${API_BASE_URL}/api/auth/register` : `${API_BASE_URL}/api/auth/login`;
+  [el.btnLogin, el.btnRegister, el.btnAuthSubmit].forEach((btn) => { if (btn) btn.disabled = true; });
+  if (el.authStatus) el.authStatus.textContent = mode === "register" ? "Creando cuenta..." : "Iniciando sesion...";
+
+  try {
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(normalizeAuthError(data.detail || data.message || t("auth_failed")));
+    if (!data.access_token) {
+      if (el.authStatus) el.authStatus.textContent = data.message || "Cuenta creada. Revisa tu correo e inicia sesion.";
+      setAuthMode("login");
+      return;
+    }
+    setAuthSession(data);
+    closeMenus(null);
+  } catch (err) {
+    if (el.authStatus) el.authStatus.textContent = err.message || t("auth_failed");
+  } finally {
+    [el.btnLogin, el.btnRegister, el.btnAuthSubmit].forEach((btn) => { if (btn) btn.disabled = false; });
+  }
+}
+
+function normalizeAuthError(detail) {
+  if (Array.isArray(detail)) return detail.map((item) => item.msg || item.message || String(item)).join(" ");
+  if (typeof detail === "string") return detail;
+  if (detail && typeof detail === "object") return detail.msg || detail.message || JSON.stringify(detail);
+  return t("auth_failed");
+}
+
 // ---------- Buscador ----------
 function toggleSearch() {
   if (!el.searchBox) return;           // sin panel de historial no hay buscador
@@ -820,14 +982,25 @@ el.btnAccount.addEventListener("click", (e) => {
   toggleMenu(el.accountMenu, el.btnAccount);
 });
 
-// Autenticación (placeholder; conectar con el sistema de cuentas en el futuro)
-document.getElementById("btnLogin")?.addEventListener("click", () => {
-  closeMenus(null);
-  // TODO: abrir flujo de inicio de sesión
+el.btnLogin?.addEventListener("click", () => {
+  if (authMode === "register") setAuthMode("login");
+  else authenticate("login");
 });
-document.getElementById("btnRegister")?.addEventListener("click", () => {
+el.btnRegister?.addEventListener("click", () => {
+  if (authMode === "login") {
+    setAuthMode("register");
+    el.authPasswordConfirm?.focus();
+  } else {
+    authenticate("register");
+  }
+});
+el.btnLogout?.addEventListener("click", () => {
+  clearAuthSession();
   closeMenus(null);
-  // TODO: abrir flujo de registro
+});
+el.authForm?.addEventListener("submit", (e) => {
+  e.preventDefault();
+  authenticate(authMode);
 });
 
 // Cerrar menús al hacer clic fuera o con Escape
@@ -847,5 +1020,6 @@ document.addEventListener("keydown", (e) => {
 initTheme();
 initLang();
 initDataToggles();
+updateAuthUI();
 createChat();
 applyI18n();
