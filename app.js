@@ -35,6 +35,7 @@ const I18N = {
     mock_l2:"Todavía no estoy conectada a un modelo de IA real, pero la interfaz ya está lista para recibir respuestas.",
     mock_you_wrote:"Tú escribiste:",
     error_msg:"⚠️ Hubo un problema al obtener la respuesta. Inténtalo de nuevo.",
+    act_copy:"Copiar", act_copied:"Copiado", act_regenerate:"Regenerar", act_good:"Buena respuesta", act_bad:"Mala respuesta",
   },
   en: {
     rail_new:"New chat", rail_search:"Search chats", rail_images:"Images", rail_models:"Models", rail_settings:"Settings",
@@ -56,6 +57,7 @@ const I18N = {
     mock_l2:"I'm not connected to a real AI model yet, but the interface is ready to receive responses.",
     mock_you_wrote:"You wrote:",
     error_msg:"⚠️ There was a problem getting the response. Please try again.",
+    act_copy:"Copy", act_copied:"Copied", act_regenerate:"Regenerate", act_good:"Good response", act_bad:"Bad response",
   },
   fr: {
     rail_new:"Nouveau chat", rail_search:"Rechercher", rail_images:"Images", rail_models:"Modèles", rail_settings:"Paramètres",
@@ -77,6 +79,7 @@ const I18N = {
     mock_l2:"Je ne suis pas encore connectée à un vrai modèle d'IA, mais l'interface est prête à recevoir des réponses.",
     mock_you_wrote:"Tu as écrit :",
     error_msg:"⚠️ Un problème est survenu lors de la réponse. Réessaie.",
+    act_copy:"Copier", act_copied:"Copié", act_regenerate:"Régénérer", act_good:"Bonne réponse", act_bad:"Mauvaise réponse",
   },
   pt: {
     rail_new:"Novo chat", rail_search:"Buscar chats", rail_images:"Imagens", rail_models:"Modelos", rail_settings:"Configurações",
@@ -98,6 +101,7 @@ const I18N = {
     mock_l2:"Ainda não estou conectada a um modelo de IA real, mas a interface já está pronta para receber respostas.",
     mock_you_wrote:"Você escreveu:",
     error_msg:"⚠️ Ocorreu um problema ao obter a resposta. Tente novamente.",
+    act_copy:"Copiar", act_copied:"Copiado", act_regenerate:"Regenerar", act_good:"Boa resposta", act_bad:"Resposta ruim",
   },
 };
 let lang = "es";
@@ -175,30 +179,71 @@ const el = {
 };
 
 /* =========================================================
-   PUNTO DE INTEGRACIÓN DEL AGENTE IA (futuro)
+   PUNTO DE INTEGRACIÓN DEL AGENTE IA (futuro) — STREAMING
    ---------------------------------------------------------
-   Cuando exista el backend/agente real, reemplaza el cuerpo
-   de esta función por una llamada tipo:
+   streamAgentResponse recibe el historial y un callback onToken
+   que se llama con cada fragmento de texto. Hoy es un mock que
+   simula el streaming; para el agente real, reemplaza el cuerpo
+   por una lectura de stream (SSE / ReadableStream), p. ej.:
 
      const res = await fetch("/api/chat", {
-       method: "POST",
-       headers: { "Content-Type": "application/json" },
+       method:"POST", headers:{ "Content-Type":"application/json" },
        body: JSON.stringify({ messages })
      });
-     const data = await res.json();
-     return data.reply;
-
-   Para respuestas en streaming (token a token) hay un hueco
-   preparado en appendStreaming() más abajo.
+     const reader = res.body.getReader();
+     const dec = new TextDecoder();
+     while (true) {
+       const { value, done } = await reader.read();
+       if (done) break;
+       onToken(dec.decode(value, { stream:true }));
+     }
    ========================================================= */
-async function getAgentResponse(messages) {
-  await sleep(700 + Math.random() * 600); // simula latencia
+async function streamAgentResponse(messages, onToken) {
+  await sleep(400 + Math.random() * 400); // latencia inicial simulada
   const last = messages[messages.length - 1]?.content ?? "";
-  return (
+  const full =
     t("mock_l1") + "\n\n" +
     t("mock_l2") + "\n\n" +
-    t("mock_you_wrote") + " “" + last + "”."
-  );
+    "```js\nconsole.log(\"" + t("role_ai") + "\");\n```\n\n" +
+    t("mock_you_wrote") + " *" + last + "*";
+
+  const tokens = full.match(/\s*\S+|\s+/g) || [full];
+  for (const tk of tokens) {
+    await sleep(18 + Math.random() * 40);
+    onToken(tk);
+  }
+}
+
+// ---------- Markdown + código ----------
+function renderMarkdown(text) {
+  try {
+    if (window.marked && window.DOMPurify) {
+      const html = window.marked.parse(text, { breaks: true, gfm: true });
+      return window.DOMPurify.sanitize(html);
+    }
+  } catch (_) {}
+  return escapeHtml(text).replace(/\n/g, "<br>");
+}
+
+function enhanceCodeBlocks(container) {
+  container.querySelectorAll("pre code").forEach((block) => {
+    try { if (window.hljs) window.hljs.highlightElement(block); } catch (_) {}
+    const pre = block.closest("pre");
+    if (pre && !pre.querySelector(".code-copy")) {
+      const btn = document.createElement("button");
+      btn.className = "code-copy";
+      btn.type = "button";
+      btn.textContent = t("act_copy");
+      btn.addEventListener("click", () => {
+        navigator.clipboard?.writeText(block.textContent).then(() => {
+          btn.textContent = t("act_copied");
+          btn.classList.add("is-done");
+          setTimeout(() => { btn.textContent = t("act_copy"); btn.classList.remove("is-done"); }, 1500);
+        });
+      });
+      pre.appendChild(btn);
+    }
+  });
 }
 
 // ---------- Utilidades ----------
@@ -250,9 +295,12 @@ function renderChatList(filter = "") {
 }
 
 // ---------- Render: mensajes ----------
+let streamingBubble = null;   // referencia al mensaje que se está escribiendo
+
 function renderMessages() {
   const chat = getActiveChat();
   el.messages.querySelectorAll(".msg-wrap").forEach((n) => n.remove());
+  streamingBubble = null;
 
   const hasMessages = chat && chat.messages.length > 0;
   el.welcome.style.display = hasMessages ? "none" : "flex";
@@ -261,26 +309,71 @@ function renderMessages() {
 
   const wrap = document.createElement("div");
   wrap.className = "msg-wrap";
-  chat.messages.forEach((m) => wrap.appendChild(buildMessageNode(m.role, m.content)));
+  chat.messages.forEach((m, i) => wrap.appendChild(buildMessageNode(m, i, chat)));
   el.messages.appendChild(wrap);
+  enhanceCodeBlocks(wrap);
   scrollToBottom();
 }
 
-function buildMessageNode(role, content) {
+function buildMessageNode(m, index, chat) {
+  const role = m.role;
   const node = document.createElement("div");
   node.className = "msg msg--" + (role === "user" ? "user" : "ai");
 
-  const avatar = role === "user"
-    ? "U"
-    : `<img src="assets/logo.svg" alt="AIAME" />`;
-
+  const avatar = role === "user" ? "U" : `<img src="assets/logo.svg" alt="AIAME" />`;
   node.innerHTML = `
     <div class="msg__avatar">${avatar}</div>
     <div class="msg__body">
       <div class="msg__role">${role === "user" ? t("role_you") : t("role_ai")}</div>
-      <div class="msg__bubble">${escapeHtml(content)}</div>
+      <div class="msg__bubble"></div>
+      <div class="msg__actions"></div>
     </div>`;
+
+  const bubble = node.querySelector(".msg__bubble");
+  if (role === "assistant" && m.streaming) {
+    bubble.classList.add("is-streaming");
+    if (m.content) bubble.textContent = m.content;
+    else bubble.innerHTML = `<span class="typing"><span></span><span></span><span></span></span>`;
+    streamingBubble = bubble;
+  } else if (role === "assistant") {
+    bubble.innerHTML = renderMarkdown(m.content);
+  } else {
+    bubble.textContent = m.content;
+  }
+
+  buildActions(node.querySelector(".msg__actions"), m, index, chat);
   return node;
+}
+
+// ---------- Acciones por mensaje ----------
+const ICONS = {
+  copy: '<svg viewBox="0 0 24 24" width="16" height="16"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M5 15V5a2 2 0 0 1 2-2h10" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>',
+  regen: '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 4v5h-5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  up: '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M7 11v9H4a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h3zm0 0l5-8a2 2 0 0 1 2 2v3h5.5a2 2 0 0 1 2 2.4l-1.4 7A2 2 0 0 1 18 20H7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/></svg>',
+  down: '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M17 13V4h3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-3zm0 0l-5 8a2 2 0 0 1-2-2v-3H4.5a2 2 0 0 1-2-2.4l1.4-7A2 2 0 0 1 6 4h11" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/></svg>',
+};
+
+function actionBtn(action, label, active) {
+  const b = document.createElement("button");
+  b.className = "msg__action" + (active ? " is-active" : "");
+  b.type = "button";
+  b.dataset.action = action;
+  b.setAttribute("aria-label", label);
+  b.title = label;
+  b.innerHTML = ICONS[action];
+  return b;
+}
+
+function buildActions(container, m, index, chat) {
+  if (m.streaming) return;
+  const isLastAssistant = m.role === "assistant" && index === chat.messages.length - 1;
+  const add = (b) => { b.dataset.index = index; container.appendChild(b); };
+  add(actionBtn("copy", t("act_copy")));
+  if (m.role === "assistant") {
+    if (isLastAssistant) add(actionBtn("regen", t("act_regenerate")));
+    add(actionBtn("up", t("act_good"), m.feedback === "up"));
+    add(actionBtn("down", t("act_bad"), m.feedback === "down"));
+  }
 }
 
 // ---------- Envío de mensajes ----------
@@ -291,7 +384,6 @@ async function sendMessage(text) {
   let chat = getActiveChat();
   if (!chat) chat = createChat();
 
-  // Mensaje del usuario
   chat.messages.push({ role: "user", content });
   if (chat.messages.length === 1) {
     chat.title = content.slice(0, 40) + (content.length > 40 ? "…" : "");
@@ -299,62 +391,46 @@ async function sendMessage(text) {
   }
   renderMessages();
   resetInput();
+  await runAssistant(chat);
+}
 
-  // Indicador "escribiendo…"
+// Genera (o regenera) la respuesta del asistente con streaming
+async function runAssistant(chat) {
   state.isResponding = true;
   el.btnSend.disabled = true;
-  const typingNode = showTyping();
+
+  const aiMsg = { role: "assistant", content: "", streaming: true, feedback: null };
+  chat.messages.push(aiMsg);
+  renderMessages();
 
   try {
-    const reply = await getAgentResponse(chat.messages);
-    typingNode.remove();
-    chat.messages.push({ role: "assistant", content: reply });
-    renderMessages();
-  } catch (err) {
-    typingNode.remove();
-    chat.messages.push({
-      role: "assistant",
-      content: t("error_msg"),
+    await streamAgentResponse(chat.messages.slice(0, -1), (chunk) => {
+      aiMsg.content += chunk;
+      if (streamingBubble) {
+        streamingBubble.textContent = aiMsg.content;
+        scrollToBottom();
+      }
     });
-    renderMessages();
+  } catch (err) {
+    aiMsg.content = t("error_msg");
     console.error(err);
   } finally {
+    aiMsg.streaming = false;
     state.isResponding = false;
+    renderMessages();
     updateSendState();
   }
 }
 
-function showTyping() {
-  let wrap = el.messages.querySelector(".msg-wrap");
-  if (!wrap) {
-    wrap = document.createElement("div");
-    wrap.className = "msg-wrap";
-    el.messages.appendChild(wrap);
+function regenerateLast() {
+  if (state.isResponding) return;
+  const chat = getActiveChat();
+  if (!chat || !chat.messages.length) return;
+  if (chat.messages[chat.messages.length - 1].role === "assistant") {
+    chat.messages.pop();
   }
-  const node = document.createElement("div");
-  node.className = "msg msg--ai";
-  node.innerHTML = `
-    <div class="msg__avatar"><img src="assets/logo.svg" alt="AIAME" /></div>
-    <div class="msg__body">
-      <div class="msg__role">AIAME</div>
-      <div class="typing"><span></span><span></span><span></span></div>
-    </div>`;
-  wrap.appendChild(node);
-  scrollToBottom();
-  return node;
-}
-
-/* Hueco para STREAMING futuro:
-   Crea un nodo vacío y ve añadiendo texto a medida que llegan tokens.
-   let node = appendStreaming();
-   for await (const token of stream) node.textContent += token;
-*/
-function appendStreaming() {
-  let wrap = el.messages.querySelector(".msg-wrap");
-  const node = buildMessageNode("assistant", "");
-  wrap.appendChild(node);
-  scrollToBottom();
-  return node.querySelector(".msg__bubble");
+  renderMessages();
+  runAssistant(chat);
 }
 
 // ---------- Input helpers ----------
@@ -446,6 +522,32 @@ function toggleSearch() {
 el.form.addEventListener("submit", (e) => {
   e.preventDefault();
   sendMessage(el.input.value);
+});
+
+// Acciones por mensaje (copiar, regenerar, feedback) via delegación
+el.messages.addEventListener("click", (e) => {
+  const btn = e.target.closest(".msg__action");
+  if (!btn) return;
+  const chat = getActiveChat();
+  if (!chat) return;
+  const m = chat.messages[+btn.dataset.index];
+  if (!m) return;
+  const action = btn.dataset.action;
+
+  if (action === "copy") {
+    navigator.clipboard?.writeText(m.content).then(() => {
+      btn.classList.add("is-done");
+      setTimeout(() => btn.classList.remove("is-done"), 1200);
+    });
+  } else if (action === "regen") {
+    regenerateLast();
+  } else if (action === "up") {
+    m.feedback = m.feedback === "up" ? null : "up";
+    renderMessages();
+  } else if (action === "down") {
+    m.feedback = m.feedback === "down" ? null : "down";
+    renderMessages();
+  }
 });
 
 el.input.addEventListener("input", () => { autoGrow(); updateSendState(); });
