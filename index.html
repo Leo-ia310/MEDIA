@@ -181,7 +181,7 @@
             </svg>
           </button>
 
-          <textarea id="input" class="composer__input" placeholder="Escribe un mensaje a AIAME…" data-i18n-placeholder="composer_placeholder" rows="1" autocomplete="off"></textarea>
+          <textarea id="input" class="composer__input" placeholder="Escribe un mensaje a AIAME…" data-i18n-placeholder="composer_placeholder" rows="1" maxlength="4000" autocomplete="off"></textarea>
 
           <button class="composer__mic" id="btnMic" type="button" aria-label="Grabar audio" data-i18n-aria="mic_record">
             <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
@@ -198,6 +198,10 @@
         </form>
         <input type="file" id="fileInput" multiple hidden
                accept="image/*,.pdf,.txt,.md,.doc,.docx,.csv,.json,.zip" />
+        <div class="composer__meta" id="composerMeta" hidden>
+          <span class="composer__shortcuts" data-i18n-html="kbd_hint"><kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nueva línea</span>
+          <span class="composer__count" id="charCount">0 / 4000</span>
+        </div>
         <p class="composer__hint" data-i18n="composer_hint">AIAME puede cometer errores. Verifica la información importante.</p>
       </div>
     </main>
@@ -264,6 +268,13 @@
       <button class="setting-row setting-row--toggle" data-toggle="sound" type="button">
         <div class="setting-row__text">
           <p class="setting-row__label" data-i18n="settings_sound">Sonido al responder</p>
+        </div>
+        <span class="toggle"></span>
+      </button>
+
+      <button class="setting-row setting-row--toggle" id="focusToggle" type="button">
+        <div class="setting-row__text">
+          <p class="setting-row__label" data-i18n="settings_focus">Modo enfoque</p>
         </div>
         <span class="toggle"></span>
       </button>

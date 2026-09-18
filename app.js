@@ -41,6 +41,7 @@ const I18N = {
     scroll_bottom:"Bajar al final",
     sugg_1:"Explícame un concepto difícil", sugg_2:"Ayúdame a redactar un texto", sugg_3:"Dame ideas para un proyecto", sugg_4:"Resume esto por mí",
     attach:"Adjuntar", remove:"Quitar",
+    settings_focus:"Modo enfoque", kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nueva línea",
   },
   en: {
     rail_new:"New chat", rail_search:"Search chats", rail_images:"Images", rail_models:"Models", rail_settings:"Settings",
@@ -68,6 +69,7 @@ const I18N = {
     scroll_bottom:"Scroll to bottom",
     sugg_1:"Explain a difficult concept", sugg_2:"Help me write something", sugg_3:"Give me project ideas", sugg_4:"Summarize this for me",
     attach:"Attach", remove:"Remove",
+    settings_focus:"Focus mode", kbd_hint:"<kbd>Enter</kbd> to send · <kbd>Shift</kbd>+<kbd>Enter</kbd> new line",
   },
   fr: {
     rail_new:"Nouveau chat", rail_search:"Rechercher", rail_images:"Images", rail_models:"Modèles", rail_settings:"Paramètres",
@@ -95,6 +97,7 @@ const I18N = {
     scroll_bottom:"Aller en bas",
     sugg_1:"Explique-moi un concept difficile", sugg_2:"Aide-moi à rédiger un texte", sugg_3:"Donne-moi des idées de projet", sugg_4:"Résume ceci pour moi",
     attach:"Joindre", remove:"Retirer",
+    settings_focus:"Mode concentration", kbd_hint:"<kbd>Entrée</kbd> envoyer · <kbd>Shift</kbd>+<kbd>Entrée</kbd> nouvelle ligne",
   },
   pt: {
     rail_new:"Novo chat", rail_search:"Buscar chats", rail_images:"Imagens", rail_models:"Modelos", rail_settings:"Configurações",
@@ -122,6 +125,7 @@ const I18N = {
     scroll_bottom:"Ir para o fim",
     sugg_1:"Explique um conceito difícil", sugg_2:"Ajude-me a redigir um texto", sugg_3:"Dê-me ideias para um projeto", sugg_4:"Resuma isto para mim",
     attach:"Anexar", remove:"Remover",
+    settings_focus:"Modo foco", kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nova linha",
   },
 };
 let lang = "es";
@@ -185,6 +189,9 @@ const el = {
   btnAttach:   document.getElementById("btnAttach"),
   fileInput:   document.getElementById("fileInput"),
   attachPreview: document.getElementById("attachPreview"),
+  composerMeta: document.getElementById("composerMeta"),
+  charCount:   document.getElementById("charCount"),
+  focusToggle: document.getElementById("focusToggle"),
   sidebar:     document.getElementById("sidebar"),
   overlay:     document.getElementById("overlay"),
   suggestions: document.getElementById("suggestions"),
@@ -831,7 +838,22 @@ el.messages.addEventListener("click", (e) => {
   }
 });
 
-el.input.addEventListener("input", () => { autoGrow(); updateSendState(); });
+el.input.addEventListener("input", () => { autoGrow(); updateSendState(); updateComposerMeta(); });
+el.input.addEventListener("focus", updateComposerMeta);
+el.input.addEventListener("blur", updateComposerMeta);
+
+// Contador de caracteres + atajos (visibles al escribir/enfocar)
+function updateComposerMeta() {
+  if (!el.composerMeta) return;
+  const len = el.input.value.length;
+  const max = el.input.getAttribute("maxlength") || 4000;
+  if (el.charCount) {
+    el.charCount.textContent = `${len} / ${max}`;
+    el.charCount.classList.toggle("is-warn", len > max * 0.9);
+  }
+  const active = document.activeElement === el.input || len > 0;
+  el.composerMeta.hidden = !active;
+}
 
 // Botón "bajar al final"
 el.messages.addEventListener("scroll", updateScrollBtn);
@@ -981,7 +1003,7 @@ function setDataPref(key, on) {
   try { localStorage.setItem("aiame-data-" + key, on ? "1" : "0"); } catch (_) {}
 }
 function initDataToggles() {
-  document.querySelectorAll(".setting-row--toggle").forEach((row) => {
+  document.querySelectorAll(".setting-row--toggle[data-toggle]").forEach((row) => {
     const key = row.dataset.toggle;
     row.classList.toggle("is-on", getDataPref(key));
     row.setAttribute("aria-pressed", String(getDataPref(key)));
@@ -1031,6 +1053,23 @@ el.authForm?.addEventListener("submit", (e) => {
   authenticate(authMode);
 });
 
+// Modo enfoque (oculta el rail para una vista más limpia)
+function getFocusPref() {
+  try { return localStorage.getItem("aiame-focus") === "1"; } catch (_) { return false; }
+}
+function applyFocusMode(on) {
+  document.body.classList.toggle("focus-mode", on);
+  el.focusToggle?.classList.toggle("is-on", on);
+  el.focusToggle?.setAttribute("aria-pressed", String(on));
+}
+if (el.focusToggle) {
+  el.focusToggle.addEventListener("click", () => {
+    const on = !document.body.classList.contains("focus-mode");
+    applyFocusMode(on);
+    try { localStorage.setItem("aiame-focus", on ? "1" : "0"); } catch (_) {}
+  });
+}
+
 // Cerrar menús al hacer clic fuera o con Escape
 document.addEventListener("click", (e) => {
   if (!e.target.closest(".menu-anchor")) closeMenus(null);
@@ -1048,6 +1087,7 @@ document.addEventListener("keydown", (e) => {
 initTheme();
 initLang();
 initDataToggles();
+applyFocusMode(getFocusPref());
 updateAuthUI();
 createChat();
 applyI18n();
