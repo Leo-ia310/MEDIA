@@ -42,6 +42,7 @@ const I18N = {
     sugg_1:"Explícame un concepto difícil", sugg_2:"Ayúdame a redactar un texto", sugg_3:"Dame ideas para un proyecto", sugg_4:"Resume esto por mí",
     attach:"Adjuntar", remove:"Quitar",
     settings_focus:"Modo enfoque", kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nueva línea",
+    sources:"Fuentes",
   },
   en: {
     rail_new:"New chat", rail_search:"Search chats", rail_images:"Images", rail_models:"Models", rail_settings:"Settings",
@@ -70,6 +71,7 @@ const I18N = {
     sugg_1:"Explain a difficult concept", sugg_2:"Help me write something", sugg_3:"Give me project ideas", sugg_4:"Summarize this for me",
     attach:"Attach", remove:"Remove",
     settings_focus:"Focus mode", kbd_hint:"<kbd>Enter</kbd> to send · <kbd>Shift</kbd>+<kbd>Enter</kbd> new line",
+    sources:"Sources",
   },
   fr: {
     rail_new:"Nouveau chat", rail_search:"Rechercher", rail_images:"Images", rail_models:"Modèles", rail_settings:"Paramètres",
@@ -98,6 +100,7 @@ const I18N = {
     sugg_1:"Explique-moi un concept difficile", sugg_2:"Aide-moi à rédiger un texte", sugg_3:"Donne-moi des idées de projet", sugg_4:"Résume ceci pour moi",
     attach:"Joindre", remove:"Retirer",
     settings_focus:"Mode concentration", kbd_hint:"<kbd>Entrée</kbd> envoyer · <kbd>Shift</kbd>+<kbd>Entrée</kbd> nouvelle ligne",
+    sources:"Sources",
   },
   pt: {
     rail_new:"Novo chat", rail_search:"Buscar chats", rail_images:"Imagens", rail_models:"Modelos", rail_settings:"Configurações",
@@ -126,6 +129,7 @@ const I18N = {
     sugg_1:"Explique um conceito difícil", sugg_2:"Ajude-me a redigir um texto", sugg_3:"Dê-me ideias para um projeto", sugg_4:"Resuma isto para mim",
     attach:"Anexar", remove:"Remover",
     settings_focus:"Modo foco", kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nova linha",
+    sources:"Fontes",
   },
 };
 let lang = "es";
@@ -290,13 +294,27 @@ async function streamAgentResponse(messages, onToken) {
   
   const data = await res.json();
   if (activeChat && data.conversation_id) activeChat.backendConversationId = data.conversation_id;
-  
+
   const status = data.answer_status === "unverified_model_knowledge"
     ? "\n\n_Esta respuesta usa conocimiento general del modelo y aun no tiene citas documentales verificadas._"
     : "";
-    
-  // Since the backend doesn't stream yet, we just send the whole chunk
-  onToken(`${data.answer}${status}`);
+
+  // Citas del tutor médico (si las hay) como fuentes en Markdown
+  let sources = "";
+  if (Array.isArray(data.citations) && data.citations.length) {
+    sources = `\n\n**${t("sources")}:**\n` + data.citations.map((c) => {
+      const label = c.section ? `${c.title} — ${c.section}` : c.title;
+      return c.pdf_url ? `- [${label}](${c.pdf_url})` : `- ${label}`;
+    }).join("\n");
+  }
+
+  // El backend responde completo; lo emitimos por trozos para el efecto de escritura
+  const full = `${data.answer}${status}${sources}`;
+  const chunks = full.match(/\s*\S+|\s+/g) || [full];
+  for (const ch of chunks) {
+    await sleep(10 + Math.random() * 22);
+    onToken(ch);
+  }
 }
 
 // ---------- Markdown + código ----------
