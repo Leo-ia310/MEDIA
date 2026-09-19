@@ -43,6 +43,7 @@ const I18N = {
     attach:"Adjuntar", remove:"Quitar",
     settings_focus:"Modo enfoque", kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nueva línea",
     sources:"Fuentes",
+    conv_title:"Conversaciones", conv_search:"Buscar conversaciones…", conv_empty:"Aún no tienes conversaciones.", conv_login:"Inicia sesión para ver tu historial de conversaciones.", conv_loading:"Cargando…", conv_error:"No se pudo cargar el historial.",
   },
   en: {
     rail_new:"New chat", rail_search:"Search chats", rail_images:"Images", rail_models:"Models", rail_settings:"Settings",
@@ -72,6 +73,7 @@ const I18N = {
     attach:"Attach", remove:"Remove",
     settings_focus:"Focus mode", kbd_hint:"<kbd>Enter</kbd> to send · <kbd>Shift</kbd>+<kbd>Enter</kbd> new line",
     sources:"Sources",
+    conv_title:"Conversations", conv_search:"Search conversations…", conv_empty:"You don't have any conversations yet.", conv_login:"Sign in to see your conversation history.", conv_loading:"Loading…", conv_error:"Could not load history.",
   },
   fr: {
     rail_new:"Nouveau chat", rail_search:"Rechercher", rail_images:"Images", rail_models:"Modèles", rail_settings:"Paramètres",
@@ -101,6 +103,7 @@ const I18N = {
     attach:"Joindre", remove:"Retirer",
     settings_focus:"Mode concentration", kbd_hint:"<kbd>Entrée</kbd> envoyer · <kbd>Shift</kbd>+<kbd>Entrée</kbd> nouvelle ligne",
     sources:"Sources",
+    conv_title:"Conversations", conv_search:"Rechercher des conversations…", conv_empty:"Tu n'as pas encore de conversations.", conv_login:"Connecte-toi pour voir ton historique de conversations.", conv_loading:"Chargement…", conv_error:"Impossible de charger l'historique.",
   },
   pt: {
     rail_new:"Novo chat", rail_search:"Buscar chats", rail_images:"Imagens", rail_models:"Modelos", rail_settings:"Configurações",
@@ -130,6 +133,7 @@ const I18N = {
     attach:"Anexar", remove:"Remover",
     settings_focus:"Modo foco", kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nova linha",
     sources:"Fontes",
+    conv_title:"Conversas", conv_search:"Buscar conversas…", conv_empty:"Você ainda não tem conversas.", conv_login:"Entre para ver seu histórico de conversas.", conv_loading:"Carregando…", conv_error:"Não foi possível carregar o histórico.",
   },
 };
 let lang = "es";
@@ -230,6 +234,12 @@ const el = {
   openData:      document.getElementById("openData"),
   dataPanel:     document.getElementById("dataPanel"),
   dataBack:      document.getElementById("dataBack"),
+
+  // Conversaciones (historial)
+  conversationsPanel: document.getElementById("conversationsPanel"),
+  convBack:    document.getElementById("convBack"),
+  convSearch:  document.getElementById("convSearch"),
+  convList:    document.getElementById("convList"),
 };
 
 /* =========================================================
@@ -932,13 +942,7 @@ document.querySelectorAll(".rail__item").forEach((item) => {
 
     // Acciones directas
     if (section === "nuevo")  { createChat(); return; }
-    if (section === "buscar") {
-      if (el.searchBox) {
-        if (el.searchBox.hidden) toggleSearch();
-        el.searchInput.focus();
-      }
-      return;
-    }
+    if (section === "buscar") { openConversations(); return; }
 
     if (section === "ajustes") { openSettings(); return; }
 
@@ -963,10 +967,96 @@ function closeSettings() {
 function openData()  { openPanel(el.dataPanel); el.settingsPanel.classList.add("is-pushed"); }
 function closeData() { closePanel(el.dataPanel); el.settingsPanel.classList.remove("is-pushed"); }
 
+// ---------- Conversaciones (historial desde /api/conversations) ----------
+let conversationsCache = [];
+
+function authToken() {
+  try { return localStorage.getItem("aiame-auth-token"); } catch (_) { return null; }
+}
+
+function openConversations() {
+  openPanel(el.conversationsPanel);
+  loadConversations();
+}
+function closeConversations() { closePanel(el.conversationsPanel); }
+
+async function loadConversations() {
+  const token = authToken();
+  if (!token) { renderConvMessage(t("conv_login")); return; }
+  renderConvMessage(t("conv_loading"));
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/conversations`, {
+      headers: { "Authorization": `Bearer ${token}` },
+    });
+    if (res.status === 401) { clearAuthSession(); renderConvMessage(t("conv_login")); return; }
+    if (!res.ok) { renderConvMessage(t("conv_error")); return; }
+    conversationsCache = await res.json();
+    renderConvList(el.convSearch?.value || "");
+  } catch (_) {
+    renderConvMessage(t("conv_error"));
+  }
+}
+
+function renderConvMessage(msg) {
+  if (!el.convList) return;
+  el.convList.innerHTML = `<p class="conv-empty">${escapeHtml(msg)}</p>`;
+}
+
+function renderConvList(filter = "") {
+  if (!el.convList) return;
+  const q = filter.trim().toLowerCase();
+  const items = conversationsCache
+    .filter((c) => !c.archived)
+    .filter((c) => !q || (c.title || "").toLowerCase().includes(q));
+  if (!items.length) { renderConvMessage(t("conv_empty")); return; }
+  el.convList.innerHTML = "";
+  items.forEach((c) => {
+    const btn = document.createElement("button");
+    btn.className = "conv-item" + (getActiveChat()?.backendConversationId === c.id ? " is-active" : "");
+    btn.type = "button";
+    const when = c.updated_at || c.created_at;
+    const date = when ? new Date(when).toLocaleDateString(lang, { day: "2-digit", month: "short" }) : "";
+    btn.innerHTML = `
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+        <path d="M4 5h16v11H8l-4 4V5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <span class="conv-item__title">${escapeHtml(c.title || t("default_chat_title"))}</span>
+      <span class="conv-item__date">${escapeHtml(date)}</span>`;
+    btn.addEventListener("click", () => openConversation(c.id));
+    el.convList.appendChild(btn);
+  });
+}
+
+async function openConversation(id) {
+  const token = authToken();
+  if (!token) return;
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/conversations/${id}`, {
+      headers: { "Authorization": `Bearer ${token}` },
+    });
+    if (!res.ok) return;
+    const detail = await res.json();
+    const chat = {
+      id: uid(),
+      title: detail.title || t("default_chat_title"),
+      backendConversationId: detail.id,
+      messages: (detail.messages || [])
+        .filter((m) => m.role === "user" || m.role === "assistant")
+        .map((m) => ({ role: m.role, content: m.content, feedback: null })),
+    };
+    state.chats.unshift(chat);
+    state.activeChatId = chat.id;
+    renderMessages();
+    closeConversations();
+  } catch (_) { /* silencioso */ }
+}
+
 el.settingsBack.addEventListener("click", closeSettings);
 el.settingsTheme.addEventListener("click", toggleTheme);
 el.openData.addEventListener("click", openData);
 el.dataBack.addEventListener("click", closeData);
+el.convBack?.addEventListener("click", closeConversations);
+el.convSearch?.addEventListener("input", () => renderConvList(el.convSearch.value));
 
 // Desplegable de idioma (personalizado)
 function toggleLangMenu(open) {
@@ -1096,6 +1186,7 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     closeMenus(null);
     if (!el.langMenu.hidden) { toggleLangMenu(false); return; }
+    if (el.conversationsPanel.classList.contains("is-open")) { closeConversations(); return; }
     if (el.dataPanel.classList.contains("is-open")) closeData();
     else if (el.settingsPanel.classList.contains("is-open")) closeSettings();
   }
