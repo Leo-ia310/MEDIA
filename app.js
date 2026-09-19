@@ -43,7 +43,7 @@ const I18N = {
     attach:"Adjuntar", remove:"Quitar",
     settings_focus:"Modo enfoque", kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nueva línea",
     sources:"Fuentes",
-    conv_title:"Conversaciones", conv_search:"Buscar conversaciones…", conv_empty:"Aún no tienes conversaciones.", conv_login:"Inicia sesión para ver tu historial de conversaciones.", conv_loading:"Cargando…", conv_error:"No se pudo cargar el historial.",
+    conv_title:"Conversaciones", conv_search:"Buscar conversaciones…", conv_empty:"Aún no tienes conversaciones.", conv_login:"Inicia sesión para ver tu historial de conversaciones.", conv_loading:"Cargando…", conv_error:"No se pudo cargar el historial.", conv_delete:"Eliminar conversación", conv_delete_confirm:"¿Eliminar esta conversación? No se puede deshacer.", conv_delete_error:"No se pudo eliminar la conversación.",
   },
   en: {
     rail_new:"New chat", rail_search:"Search chats", rail_images:"Images", rail_models:"Models", rail_settings:"Settings",
@@ -73,7 +73,7 @@ const I18N = {
     attach:"Attach", remove:"Remove",
     settings_focus:"Focus mode", kbd_hint:"<kbd>Enter</kbd> to send · <kbd>Shift</kbd>+<kbd>Enter</kbd> new line",
     sources:"Sources",
-    conv_title:"Conversations", conv_search:"Search conversations…", conv_empty:"You don't have any conversations yet.", conv_login:"Sign in to see your conversation history.", conv_loading:"Loading…", conv_error:"Could not load history.",
+    conv_title:"Conversations", conv_search:"Search conversations…", conv_empty:"You don't have any conversations yet.", conv_login:"Sign in to see your conversation history.", conv_loading:"Loading…", conv_error:"Could not load history.", conv_delete:"Delete conversation", conv_delete_confirm:"Delete this conversation? This can't be undone.", conv_delete_error:"Could not delete the conversation.",
   },
   fr: {
     rail_new:"Nouveau chat", rail_search:"Rechercher", rail_images:"Images", rail_models:"Modèles", rail_settings:"Paramètres",
@@ -103,7 +103,7 @@ const I18N = {
     attach:"Joindre", remove:"Retirer",
     settings_focus:"Mode concentration", kbd_hint:"<kbd>Entrée</kbd> envoyer · <kbd>Shift</kbd>+<kbd>Entrée</kbd> nouvelle ligne",
     sources:"Sources",
-    conv_title:"Conversations", conv_search:"Rechercher des conversations…", conv_empty:"Tu n'as pas encore de conversations.", conv_login:"Connecte-toi pour voir ton historique de conversations.", conv_loading:"Chargement…", conv_error:"Impossible de charger l'historique.",
+    conv_title:"Conversations", conv_search:"Rechercher des conversations…", conv_empty:"Tu n'as pas encore de conversations.", conv_login:"Connecte-toi pour voir ton historique de conversations.", conv_loading:"Chargement…", conv_error:"Impossible de charger l'historique.", conv_delete:"Supprimer la conversation", conv_delete_confirm:"Supprimer cette conversation ? Action irréversible.", conv_delete_error:"Impossible de supprimer la conversation.",
   },
   pt: {
     rail_new:"Novo chat", rail_search:"Buscar chats", rail_images:"Imagens", rail_models:"Modelos", rail_settings:"Configurações",
@@ -133,7 +133,7 @@ const I18N = {
     attach:"Anexar", remove:"Remover",
     settings_focus:"Modo foco", kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nova linha",
     sources:"Fontes",
-    conv_title:"Conversas", conv_search:"Buscar conversas…", conv_empty:"Você ainda não tem conversas.", conv_login:"Entre para ver seu histórico de conversas.", conv_loading:"Carregando…", conv_error:"Não foi possível carregar o histórico.",
+    conv_title:"Conversas", conv_search:"Buscar conversas…", conv_empty:"Você ainda não tem conversas.", conv_login:"Entre para ver seu histórico de conversas.", conv_loading:"Carregando…", conv_error:"Não foi possível carregar o histórico.", conv_delete:"Excluir conversa", conv_delete_confirm:"Excluir esta conversa? Não é possível desfazer.", conv_delete_error:"Não foi possível excluir a conversa.",
   },
 };
 let lang = "es";
@@ -1011,20 +1011,58 @@ function renderConvList(filter = "") {
   if (!items.length) { renderConvMessage(t("conv_empty")); return; }
   el.convList.innerHTML = "";
   items.forEach((c) => {
-    const btn = document.createElement("button");
-    btn.className = "conv-item" + (getActiveChat()?.backendConversationId === c.id ? " is-active" : "");
-    btn.type = "button";
+    const row = document.createElement("div");
+    row.className = "conv-item" + (getActiveChat()?.backendConversationId === c.id ? " is-active" : "");
     const when = c.updated_at || c.created_at;
     const date = when ? new Date(when).toLocaleDateString(lang, { day: "2-digit", month: "short" }) : "";
-    btn.innerHTML = `
+
+    const main = document.createElement("button");
+    main.className = "conv-item__main";
+    main.type = "button";
+    main.innerHTML = `
       <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
         <path d="M4 5h16v11H8l-4 4V5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/>
       </svg>
       <span class="conv-item__title">${escapeHtml(c.title || t("default_chat_title"))}</span>
       <span class="conv-item__date">${escapeHtml(date)}</span>`;
-    btn.addEventListener("click", () => openConversation(c.id));
-    el.convList.appendChild(btn);
+    main.addEventListener("click", () => openConversation(c.id));
+
+    const del = document.createElement("button");
+    del.className = "conv-item__delete";
+    del.type = "button";
+    del.setAttribute("aria-label", t("conv_delete"));
+    del.title = t("conv_delete");
+    del.innerHTML = `
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+        <path d="M4 7h16M9 7V5h6v2m-8 0 1 13h8l1-13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>`;
+    del.addEventListener("click", () => deleteConversation(c.id));
+
+    row.appendChild(main);
+    row.appendChild(del);
+    el.convList.appendChild(row);
   });
+}
+
+async function deleteConversation(id) {
+  const token = authToken();
+  if (!token) return;
+  if (!window.confirm(t("conv_delete_confirm"))) return;
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/conversations/${id}`, {
+      method: "DELETE",
+      headers: { "Authorization": `Bearer ${token}` },
+    });
+    if (res.status === 401) { clearAuthSession(); renderConvMessage(t("conv_login")); return; }
+    if (!res.ok && res.status !== 204) { renderConvMessage(t("conv_delete_error")); return; }
+    conversationsCache = conversationsCache.filter((c) => c.id !== id);
+    // Si la conversación activa fue eliminada, la desvinculamos del chat abierto.
+    const active = getActiveChat();
+    if (active && active.backendConversationId === id) active.backendConversationId = null;
+    renderConvList(el.convSearch?.value || "");
+  } catch (_) {
+    renderConvMessage(t("conv_delete_error"));
+  }
 }
 
 async function openConversation(id) {

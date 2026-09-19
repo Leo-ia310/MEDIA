@@ -6,6 +6,7 @@ desktop.ini
 # Editores / IDE
 .vscode/
 .idea/
+.claude/
 *.swp
 
 # Dependencias (futuro)
