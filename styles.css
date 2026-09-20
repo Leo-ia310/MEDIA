@@ -573,9 +573,6 @@ a { color:inherit; text-decoration:none; }
 .composer__count.is-warn { color:#ef4444; font-weight:600; }
 @media (max-width:520px){ .composer__shortcuts { display:none; } }
 
-/* Modo enfoque: oculta el rail para una vista más limpia */
-body.focus-mode .rail { display:none; }
-body.focus-mode .workspace { grid-template-columns:1fr; }
 
 /* ---------- ADJUNTOS ---------- */
 .composer__attachments {

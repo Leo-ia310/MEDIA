@@ -41,7 +41,7 @@ const I18N = {
     scroll_bottom:"Bajar al final",
     sugg_1:"Explícame un concepto difícil", sugg_2:"Ayúdame a redactar un texto", sugg_3:"Dame ideas para un proyecto", sugg_4:"Resume esto por mí",
     attach:"Adjuntar", remove:"Quitar",
-    settings_focus:"Modo enfoque", kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nueva línea",
+    kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nueva línea",
     sources:"Fuentes",
     conv_title:"Conversaciones", conv_search:"Buscar conversaciones…", conv_empty:"Aún no tienes conversaciones.", conv_login:"Inicia sesión para ver tu historial de conversaciones.", conv_loading:"Cargando…", conv_error:"No se pudo cargar el historial.", conv_delete:"Eliminar conversación", conv_delete_confirm:"¿Eliminar esta conversación? No se puede deshacer.", conv_delete_error:"No se pudo eliminar la conversación.",
   },
@@ -71,7 +71,7 @@ const I18N = {
     scroll_bottom:"Scroll to bottom",
     sugg_1:"Explain a difficult concept", sugg_2:"Help me write something", sugg_3:"Give me project ideas", sugg_4:"Summarize this for me",
     attach:"Attach", remove:"Remove",
-    settings_focus:"Focus mode", kbd_hint:"<kbd>Enter</kbd> to send · <kbd>Shift</kbd>+<kbd>Enter</kbd> new line",
+    kbd_hint:"<kbd>Enter</kbd> to send · <kbd>Shift</kbd>+<kbd>Enter</kbd> new line",
     sources:"Sources",
     conv_title:"Conversations", conv_search:"Search conversations…", conv_empty:"You don't have any conversations yet.", conv_login:"Sign in to see your conversation history.", conv_loading:"Loading…", conv_error:"Could not load history.", conv_delete:"Delete conversation", conv_delete_confirm:"Delete this conversation? This can't be undone.", conv_delete_error:"Could not delete the conversation.",
   },
@@ -101,7 +101,7 @@ const I18N = {
     scroll_bottom:"Aller en bas",
     sugg_1:"Explique-moi un concept difficile", sugg_2:"Aide-moi à rédiger un texte", sugg_3:"Donne-moi des idées de projet", sugg_4:"Résume ceci pour moi",
     attach:"Joindre", remove:"Retirer",
-    settings_focus:"Mode concentration", kbd_hint:"<kbd>Entrée</kbd> envoyer · <kbd>Shift</kbd>+<kbd>Entrée</kbd> nouvelle ligne",
+    kbd_hint:"<kbd>Entrée</kbd> envoyer · <kbd>Shift</kbd>+<kbd>Entrée</kbd> nouvelle ligne",
     sources:"Sources",
     conv_title:"Conversations", conv_search:"Rechercher des conversations…", conv_empty:"Tu n'as pas encore de conversations.", conv_login:"Connecte-toi pour voir ton historique de conversations.", conv_loading:"Chargement…", conv_error:"Impossible de charger l'historique.", conv_delete:"Supprimer la conversation", conv_delete_confirm:"Supprimer cette conversation ? Action irréversible.", conv_delete_error:"Impossible de supprimer la conversation.",
   },
@@ -131,7 +131,7 @@ const I18N = {
     scroll_bottom:"Ir para o fim",
     sugg_1:"Explique um conceito difícil", sugg_2:"Ajude-me a redigir um texto", sugg_3:"Dê-me ideias para um projeto", sugg_4:"Resuma isto para mim",
     attach:"Anexar", remove:"Remover",
-    settings_focus:"Modo foco", kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nova linha",
+    kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nova linha",
     sources:"Fontes",
     conv_title:"Conversas", conv_search:"Buscar conversas…", conv_empty:"Você ainda não tem conversas.", conv_login:"Entre para ver seu histórico de conversas.", conv_loading:"Carregando…", conv_error:"Não foi possível carregar o histórico.", conv_delete:"Excluir conversa", conv_delete_confirm:"Excluir esta conversa? Não é possível desfazer.", conv_delete_error:"Não foi possível excluir a conversa.",
   },
@@ -199,7 +199,6 @@ const el = {
   attachPreview: document.getElementById("attachPreview"),
   composerMeta: document.getElementById("composerMeta"),
   charCount:   document.getElementById("charCount"),
-  focusToggle: document.getElementById("focusToggle"),
   sidebar:     document.getElementById("sidebar"),
   overlay:     document.getElementById("overlay"),
   suggestions: document.getElementById("suggestions"),
@@ -737,6 +736,8 @@ function setAuthSession(session) {
     if (session.user?.email) localStorage.setItem("aiame-user-email", session.user.email);
   } catch (_) {}
   updateAuthUI();
+  // Pre-carga el historial para que "Buscar chats" abra al instante.
+  loadConversations();
 }
 
 function clearAuthSession() {
@@ -745,6 +746,8 @@ function clearAuthSession() {
     localStorage.removeItem("aiame-refresh-token");
     localStorage.removeItem("aiame-user-email");
   } catch (_) {}
+  conversationsCache = [];
+  renderConvMessage(t("conv_login"));
   updateAuthUI();
 }
 
@@ -1199,23 +1202,6 @@ el.authForm?.addEventListener("submit", (e) => {
   authenticate(authMode);
 });
 
-// Modo enfoque (oculta el rail para una vista más limpia)
-function getFocusPref() {
-  try { return localStorage.getItem("aiame-focus") === "1"; } catch (_) { return false; }
-}
-function applyFocusMode(on) {
-  document.body.classList.toggle("focus-mode", on);
-  el.focusToggle?.classList.toggle("is-on", on);
-  el.focusToggle?.setAttribute("aria-pressed", String(on));
-}
-if (el.focusToggle) {
-  el.focusToggle.addEventListener("click", () => {
-    const on = !document.body.classList.contains("focus-mode");
-    applyFocusMode(on);
-    try { localStorage.setItem("aiame-focus", on ? "1" : "0"); } catch (_) {}
-  });
-}
-
 // Cerrar menús al hacer clic fuera o con Escape
 document.addEventListener("click", (e) => {
   if (!e.target.closest(".menu-anchor")) closeMenus(null);
@@ -1234,7 +1220,6 @@ document.addEventListener("keydown", (e) => {
 initTheme();
 initLang();
 initDataToggles();
-applyFocusMode(getFocusPref());
 updateAuthUI();
 createChat();
 applyI18n();
