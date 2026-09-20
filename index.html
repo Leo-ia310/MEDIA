@@ -15,8 +15,7 @@
   <header class="topbar">
     <div class="topbar__left">
       <a class="brand" href="#" aria-label="AIAME inicio">
-        <img src="assets/logo.svg" alt="" class="brand__logo" />
-        <span class="brand__name">AIAME</span>
+        <img src="assets/logo.svg" alt="AIAME" class="brand__logo" />
       </a>
     </div>
 
@@ -86,13 +85,16 @@
     <!-- Rail de iconos (secciones principales) -->
     <nav class="rail" id="rail" aria-label="Secciones">
       <div class="rail__group">
-        <button class="rail__toggle" id="railToggle" type="button" aria-expanded="true" data-i18n-aria="rail_toggle" aria-label="Contraer menú">
-          <span class="rail__icon">
-            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-              <path d="M13 6l-6 6 6 6M19 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            </svg>
-          </span>
-        </button>
+        <div class="rail__header">
+          <span class="rail__brand">AIAME</span>
+          <button class="rail__toggle" id="railToggle" type="button" aria-expanded="true" data-i18n-aria="rail_toggle" aria-label="Contraer menú">
+            <span class="rail__icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                <path d="M13 6l-6 6 6 6M19 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </svg>
+            </span>
+          </button>
+        </div>
 
         <button class="rail__item" type="button" data-section="nuevo">
           <span class="rail__icon">
