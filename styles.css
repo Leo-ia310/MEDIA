@@ -309,17 +309,18 @@ a { color:inherit; text-decoration:none; }
   display:flex; flex-direction:column;
   justify-content:space-between;
   padding:12px 8px;
-  overflow-y:auto;
+  overflow-y:auto; overflow-x:hidden;
 }
 .rail__group { display:flex; flex-direction:column; gap:6px; }
 
 .rail__item {
   width:100%;
-  display:flex; flex-direction:row; align-items:center; gap:12px;
+  display:flex; flex-direction:row; align-items:center;
   padding:11px 14px;
   border:none; background:transparent;
   border-radius:12px;
   color:var(--text-soft);
+  overflow:hidden;
   transition:background .15s ease, color .15s ease;
 }
 .rail__item:hover { background:var(--primary-soft); color:var(--text); }
@@ -327,7 +328,12 @@ a { color:inherit; text-decoration:none; }
 :root[data-theme="dark"] .rail__item.is-active { background:var(--primary-soft); color:var(--text); }
 
 .rail__icon { display:grid; place-items:center; flex-shrink:0; }
-.rail__label { font-size:14px; font-weight:500; text-align:left; line-height:1.2; white-space:nowrap; }
+.rail__label {
+  font-size:14px; font-weight:500; text-align:left; line-height:1.2;
+  white-space:nowrap; overflow:hidden;
+  margin-left:12px; max-width:160px; opacity:1;
+  transition:max-width .3s cubic-bezier(.4,0,.2,1), opacity .2s ease, margin-left .3s cubic-bezier(.4,0,.2,1);
+}
 
 /* Botón para desplegar/contraer el rail */
 .rail__header {
@@ -337,6 +343,8 @@ a { color:inherit; text-decoration:none; }
 .rail__brand {
   font-family:var(--font-title); font-size:20px; font-weight:700;
   letter-spacing:.5px; color:var(--text); white-space:nowrap; overflow:hidden;
+  max-width:120px; opacity:1;
+  transition:max-width .3s cubic-bezier(.4,0,.2,1), opacity .2s ease;
 }
 .rail__toggle {
   flex-shrink:0;
@@ -357,12 +365,12 @@ a { color:inherit; text-decoration:none; }
   transition:opacity .25s ease, transform .28s cubic-bezier(.4,0,.2,1);
 }
 body.rail-collapsed .rail__toggle-fill { opacity:.9; transform:scaleX(1); }
-body.rail-collapsed .rail__header { justify-content:center; padding:2px 0; }
-body.rail-collapsed .rail__brand { display:none; }
+body.rail-collapsed .rail__header { justify-content:center; gap:0; padding:2px 0; }
+body.rail-collapsed .rail__brand { max-width:0; opacity:0; }
 
 /* Rail contraído: solo iconos */
 body.rail-collapsed { --rail-w:68px; }
-body.rail-collapsed .rail__label { display:none; }
+body.rail-collapsed .rail__label { max-width:0; opacity:0; margin-left:0; }
 body.rail-collapsed .rail__item { justify-content:center; padding:11px 0; }
 
 /* ---------- SIDEBAR ---------- */
