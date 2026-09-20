@@ -350,6 +350,13 @@ a { color:inherit; text-decoration:none; }
 .rail__toggle:active { transform:scale(.9); }
 .rail__toggle svg { transition:transform .25s cubic-bezier(.34,1.56,.64,1); }
 .rail__toggle:hover svg { transform:scale(1.12); }
+/* La columna interior se rellena al contraer (estilo toggle de sidebar) */
+.rail__toggle-fill {
+  opacity:0; transform:scaleX(0);
+  transform-box:view-box; transform-origin:8px 12px;
+  transition:opacity .25s ease, transform .28s cubic-bezier(.4,0,.2,1);
+}
+body.rail-collapsed .rail__toggle-fill { opacity:.9; transform:scaleX(1); }
 body.rail-collapsed .rail__header { justify-content:center; padding:2px 0; }
 body.rail-collapsed .rail__brand { display:none; }
 
