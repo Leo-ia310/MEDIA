@@ -349,7 +349,6 @@ a { color:inherit; text-decoration:none; }
 .rail__toggle svg { transition:transform .2s ease; }
 body.rail-collapsed .rail__header { justify-content:center; padding:2px 0; }
 body.rail-collapsed .rail__brand { display:none; }
-body.rail-collapsed .rail__toggle svg { transform:rotate(180deg); }
 
 /* Rail contraído: solo iconos */
 body.rail-collapsed { --rail-w:68px; }
