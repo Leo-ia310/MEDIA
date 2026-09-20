@@ -79,9 +79,12 @@
   --text-soft:     #b8b8b8;
   --text-muted:    #808080;
 
-  --topbar-bg:     #000000;
-  --topbar-border: rgba(255,255,255,.10);
-  --frame:         #000000;
+  /* Marco (topbar + laterales + inferior) blanco para distinguir del interior negro */
+  --topbar-bg:     #ffffff;
+  --topbar-text:   #14181f;
+  --topbar-border: rgba(0,0,0,.12);
+  --topbar-hover:  rgba(0,0,0,.06);
+  --frame:         #ffffff;
 
   --primary:       var(--blue-500);
   --primary-hover: var(--blue-400);
@@ -149,7 +152,7 @@ a { color:inherit; text-decoration:none; }
   color:var(--topbar-text);
   transition:background .15s ease, border-color .15s ease;
 }
-.topbar__btn:hover { background:var(--topbar-hover); border-color:rgba(255,255,255,.28); }
+.topbar__btn:hover { background:var(--topbar-hover); border-color:color-mix(in srgb, var(--topbar-text) 28%, transparent); }
 .topbar__btn--account { background:var(--topbar-hover); }
 
 .badge {
@@ -240,7 +243,9 @@ a { color:inherit; text-decoration:none; }
 .btn-auth--ghost:hover { background:var(--primary-soft); }
 
 /* ---------- LOGIN A PANTALLA COMPLETA ---------- */
-.auth-panel__body { display:grid; place-items:center; padding:24px 20px 48px; }
+.auth-panel .panel__head { justify-content:flex-start; }
+.auth-panel .panel__back { position:static; transform:none; }
+.auth-panel__body { display:grid; place-items:center; padding:8px 20px 48px; }
 .auth-card { width:100%; max-width:380px; text-align:center; }
 .auth-card__brand {
   display:flex; align-items:center; justify-content:center; gap:10px;
@@ -331,12 +336,15 @@ a { color:inherit; text-decoration:none; }
 /* Botón para desplegar/contraer el rail */
 .rail__toggle {
   display:flex; align-items:center; justify-content:center;
-  width:44px; height:44px; margin:0 auto 6px;
-  border:none; background:transparent; border-radius:12px;
+  width:40px; height:40px; margin:0 4px 8px auto;
+  border:1px solid var(--border); background:transparent; border-radius:10px;
   color:var(--text-soft); cursor:pointer;
-  transition:background .15s ease, color .15s ease;
+  transition:background .15s ease, color .15s ease, border-color .15s ease;
 }
-.rail__toggle:hover { background:var(--primary-soft); color:var(--text); }
+.rail__toggle:hover { background:var(--primary-soft); color:var(--text); border-color:var(--primary); }
+.rail__toggle svg { transition:transform .2s ease; }
+body.rail-collapsed .rail__toggle { margin:0 auto 8px; }
+body.rail-collapsed .rail__toggle svg { transform:rotate(180deg); }
 
 /* Rail contraído: solo iconos */
 body.rail-collapsed { --rail-w:68px; }

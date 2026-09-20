@@ -784,10 +784,6 @@ function setAuthMode(mode) {
 
 function updateAuthModeUI() {
   const isReg = authMode === "register";
-  if (el.authPasswordConfirm) {
-    el.authPasswordConfirm.hidden = !isReg;
-    el.authPasswordConfirm.required = isReg;
-  }
   if (el.authPassword) el.authPassword.setAttribute("autocomplete", isReg ? "new-password" : "current-password");
   if (el.btnAuthSubmit) el.btnAuthSubmit.textContent = isReg ? t("auth_create") : t("auth_enter");
   if (el.authTitle) el.authTitle.textContent = isReg ? t("auth_title_register") : t("auth_title_login");
@@ -810,10 +806,6 @@ async function authenticate(mode) {
   const password = el.authPassword?.value;
   if (!email || !password) {
     if (el.authStatus) el.authStatus.textContent = t("auth_missing");
-    return;
-  }
-  if (mode === "register" && password !== el.authPasswordConfirm?.value) {
-    if (el.authStatus) el.authStatus.textContent = t("auth_password_mismatch");
     return;
   }
 
@@ -1235,7 +1227,6 @@ el.btnAccount.addEventListener("click", (e) => {
 
 el.authSwitchBtn?.addEventListener("click", () => {
   setAuthMode(authMode === "register" ? "login" : "register");
-  if (authMode === "register") el.authPasswordConfirm?.focus();
 });
 el.authBack?.addEventListener("click", closeAuth);
 el.btnLogout?.addEventListener("click", () => {
