@@ -70,18 +70,9 @@
         </button>
 
         <div class="dropdown dropdown--right" id="accountMenu" hidden>
-          <p class="account-menu__hint" data-i18n="acc_hint">Accede para guardar tus conversaciones</p>
-          <form class="account-menu__form" id="authForm">
-            <input class="auth-input" id="authEmail" type="email" placeholder="Email" autocomplete="email" required />
-            <input class="auth-input" id="authPassword" type="password" placeholder="Contraseña" autocomplete="current-password" minlength="6" required />
-            <input class="auth-input" id="authPasswordConfirm" type="password" placeholder="Confirmar contraseña" autocomplete="new-password" minlength="6" hidden />
-            <p class="auth-status" id="authStatus" aria-live="polite"></p>
-            <button class="btn-auth btn-auth--primary" id="btnAuthSubmit" type="submit">Entrar</button>
-          </form>
+          <p class="account-menu__hint" id="accountEmail" data-i18n="acc_hint">Accede para guardar tus conversaciones</p>
           <div class="account-menu__auth">
-            <button class="btn-auth btn-auth--ghost" id="btnLogin" type="button" data-i18n="acc_login">Iniciar sesión</button>
-            <button class="btn-auth btn-auth--ghost" id="btnRegister" type="button" data-i18n="acc_register">Registrarse</button>
-            <button class="btn-auth btn-auth--ghost" id="btnLogout" type="button" hidden>Cerrar sesión</button>
+            <button class="btn-auth btn-auth--ghost" id="btnLogout" type="button" data-i18n="acc_logout" hidden>Cerrar sesión</button>
           </div>
         </div>
       </div>
@@ -95,6 +86,14 @@
     <!-- Rail de iconos (secciones principales) -->
     <nav class="rail" id="rail" aria-label="Secciones">
       <div class="rail__group">
+        <button class="rail__toggle" id="railToggle" type="button" aria-expanded="true" data-i18n-aria="rail_toggle" aria-label="Contraer menú">
+          <span class="rail__icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </button>
+
         <button class="rail__item" type="button" data-section="nuevo">
           <span class="rail__icon">
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
@@ -231,6 +230,46 @@
         <input type="text" id="convSearch" placeholder="Buscar conversaciones…" data-i18n-placeholder="conv_search" autocomplete="off" />
       </div>
       <div class="conv-list" id="convList"></div>
+    </div>
+  </section>
+
+  <!-- ===================== PANEL DE LOGIN (pantalla completa) ===================== -->
+  <section class="panel auth-panel" id="authPanel" aria-hidden="true" aria-labelledby="authTitle">
+    <header class="panel__head">
+      <button class="panel__back" id="authBack" type="button" aria-label="Volver" data-i18n-aria="back">
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </header>
+
+    <div class="panel__body auth-panel__body">
+      <div class="auth-card">
+        <div class="auth-card__brand">
+          <span class="auth-card__logo">
+            <svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true">
+              <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/>
+              <path d="M4 7.5 12 12l8-4.5M12 12v9" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </span>
+          <span class="auth-card__name">AIAME</span>
+        </div>
+        <h2 class="auth-card__title" id="authTitle" data-i18n="auth_title_login">Inicia sesión</h2>
+        <p class="auth-card__sub" id="authSub" data-i18n="auth_sub_login">Accede para guardar tus conversaciones</p>
+
+        <form class="auth-card__form" id="authForm">
+          <input class="auth-input" id="authEmail" type="email" placeholder="Email" autocomplete="email" required />
+          <input class="auth-input" id="authPassword" type="password" placeholder="Contraseña" autocomplete="current-password" minlength="6" required />
+          <input class="auth-input" id="authPasswordConfirm" type="password" placeholder="Confirmar contraseña" autocomplete="new-password" minlength="6" hidden />
+          <p class="auth-status" id="authStatus" aria-live="polite"></p>
+          <button class="btn-auth btn-auth--primary auth-card__submit" id="btnAuthSubmit" type="submit">Entrar</button>
+        </form>
+
+        <p class="auth-switch">
+          <span id="authSwitchText" data-i18n="auth_no_account">¿No tienes cuenta?</span>
+          <button class="auth-switch__btn" id="authSwitchBtn" type="button" data-i18n="acc_register">Regístrate</button>
+        </p>
+      </div>
     </div>
   </section>
 

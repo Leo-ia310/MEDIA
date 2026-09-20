@@ -16,13 +16,14 @@ const state = {
 // ---------- i18n (traducción) ----------
 const I18N = {
   es: {
-    rail_new:"Nuevo chat", rail_search:"Buscar chats", rail_images:"Imágenes", rail_models:"Modelos", rail_settings:"Configuración",
+    rail_new:"Nuevo chat", rail_search:"Buscar chats", rail_images:"Imágenes", rail_models:"Modelos", rail_settings:"Configuración", rail_toggle:"Contraer menú", rail_toggle_expand:"Expandir menú",
     tb_search:"Buscar", tb_notifications:"Notificaciones", tb_account:"Cuenta",
     notif_header:"Notificaciones", notif1_title:"Bienvenido a AIAME", notif1_text:"Tu asistente está listo para conversar.",
     notif2_title:"Consejo", notif2_text:"Pulsa <kbd>Shift</kbd>+<kbd>Enter</kbd> para saltar de línea.",
     acc_hint:"Accede para guardar tus conversaciones", acc_login:"Iniciar sesión", acc_register:"Registrarse",
     acc_logout:"Cerrar sesión", auth_email:"Email", auth_password:"Contraseña", auth_ready:"Sesión iniciada", auth_missing:"Escribe email y contraseña.", auth_failed:"No se pudo autenticar.",
     auth_confirm_password:"Confirmar contraseña", auth_enter:"Entrar", auth_create:"Crear cuenta", auth_password_mismatch:"Las contraseñas no coinciden.", auth_switch_login:"Ya tengo cuenta", auth_switch_register:"Crear cuenta nueva",
+    auth_title_login:"Inicia sesión", auth_title_register:"Crea tu cuenta", auth_sub_login:"Accede para guardar tus conversaciones", auth_sub_register:"Regístrate para guardar tu historial", auth_no_account:"¿No tienes cuenta?", auth_have_account:"¿Ya tienes cuenta?",
     welcome_title:"Hola, soy <span>AIAME</span>", welcome_subtitle:"¿En qué puedo ayudarte hoy?",
     composer_placeholder:"Escribe un mensaje a AIAME…", mic_record:"Grabar audio", mic_stop:"Detener grabación",
     send:"Enviar", composer_hint:"AIAME puede cometer errores. Verifica la información importante.",
@@ -46,13 +47,14 @@ const I18N = {
     conv_title:"Conversaciones", conv_search:"Buscar conversaciones…", conv_empty:"Aún no tienes conversaciones.", conv_login:"Inicia sesión para ver tu historial de conversaciones.", conv_loading:"Cargando…", conv_error:"No se pudo cargar el historial.", conv_delete:"Eliminar conversación", conv_delete_confirm:"¿Eliminar esta conversación? No se puede deshacer.", conv_delete_error:"No se pudo eliminar la conversación.",
   },
   en: {
-    rail_new:"New chat", rail_search:"Search chats", rail_images:"Images", rail_models:"Models", rail_settings:"Settings",
+    rail_new:"New chat", rail_search:"Search chats", rail_images:"Images", rail_models:"Models", rail_settings:"Settings", rail_toggle:"Collapse menu", rail_toggle_expand:"Expand menu",
     tb_search:"Search", tb_notifications:"Notifications", tb_account:"Account",
     notif_header:"Notifications", notif1_title:"Welcome to AIAME", notif1_text:"Your assistant is ready to chat.",
     notif2_title:"Tip", notif2_text:"Press <kbd>Shift</kbd>+<kbd>Enter</kbd> for a new line.",
     acc_hint:"Sign in to save your conversations", acc_login:"Log in", acc_register:"Sign up",
     acc_logout:"Log out", auth_email:"Email", auth_password:"Password", auth_ready:"Signed in", auth_missing:"Enter email and password.", auth_failed:"Could not authenticate.",
     auth_confirm_password:"Confirm password", auth_enter:"Enter", auth_create:"Create account", auth_password_mismatch:"Passwords do not match.", auth_switch_login:"I already have an account", auth_switch_register:"Create new account",
+    auth_title_login:"Sign in", auth_title_register:"Create your account", auth_sub_login:"Sign in to save your conversations", auth_sub_register:"Sign up to keep your history", auth_no_account:"No account yet?", auth_have_account:"Already have an account?",
     welcome_title:"Hi, I'm <span>AIAME</span>", welcome_subtitle:"How can I help you today?",
     composer_placeholder:"Message AIAME…", mic_record:"Record audio", mic_stop:"Stop recording",
     send:"Send", composer_hint:"AIAME can make mistakes. Check important information.",
@@ -76,13 +78,14 @@ const I18N = {
     conv_title:"Conversations", conv_search:"Search conversations…", conv_empty:"You don't have any conversations yet.", conv_login:"Sign in to see your conversation history.", conv_loading:"Loading…", conv_error:"Could not load history.", conv_delete:"Delete conversation", conv_delete_confirm:"Delete this conversation? This can't be undone.", conv_delete_error:"Could not delete the conversation.",
   },
   fr: {
-    rail_new:"Nouveau chat", rail_search:"Rechercher", rail_images:"Images", rail_models:"Modèles", rail_settings:"Paramètres",
+    rail_new:"Nouveau chat", rail_search:"Rechercher", rail_images:"Images", rail_models:"Modèles", rail_settings:"Paramètres", rail_toggle:"Réduire le menu", rail_toggle_expand:"Développer le menu",
     tb_search:"Rechercher", tb_notifications:"Notifications", tb_account:"Compte",
     notif_header:"Notifications", notif1_title:"Bienvenue sur AIAME", notif1_text:"Votre assistant est prêt à discuter.",
     notif2_title:"Astuce", notif2_text:"Appuie sur <kbd>Shift</kbd>+<kbd>Enter</kbd> pour un saut de ligne.",
     acc_hint:"Connecte-toi pour sauvegarder tes conversations", acc_login:"Se connecter", acc_register:"S'inscrire",
     acc_logout:"Se déconnecter", auth_email:"Email", auth_password:"Mot de passe", auth_ready:"Session ouverte", auth_missing:"Saisis email et mot de passe.", auth_failed:"Authentification impossible.",
     auth_confirm_password:"Confirmer le mot de passe", auth_enter:"Entrer", auth_create:"Créer un compte", auth_password_mismatch:"Les mots de passe ne correspondent pas.", auth_switch_login:"J'ai déjà un compte", auth_switch_register:"Créer un nouveau compte",
+    auth_title_login:"Connexion", auth_title_register:"Crée ton compte", auth_sub_login:"Connecte-toi pour sauvegarder tes conversations", auth_sub_register:"Inscris-toi pour conserver ton historique", auth_no_account:"Pas encore de compte ?", auth_have_account:"Tu as déjà un compte ?",
     welcome_title:"Bonjour, je suis <span>AIAME</span>", welcome_subtitle:"Comment puis-je t'aider aujourd'hui ?",
     composer_placeholder:"Écris un message à AIAME…", mic_record:"Enregistrer un audio", mic_stop:"Arrêter l'enregistrement",
     send:"Envoyer", composer_hint:"AIAME peut faire des erreurs. Vérifie les informations importantes.",
@@ -106,13 +109,14 @@ const I18N = {
     conv_title:"Conversations", conv_search:"Rechercher des conversations…", conv_empty:"Tu n'as pas encore de conversations.", conv_login:"Connecte-toi pour voir ton historique de conversations.", conv_loading:"Chargement…", conv_error:"Impossible de charger l'historique.", conv_delete:"Supprimer la conversation", conv_delete_confirm:"Supprimer cette conversation ? Action irréversible.", conv_delete_error:"Impossible de supprimer la conversation.",
   },
   pt: {
-    rail_new:"Novo chat", rail_search:"Buscar chats", rail_images:"Imagens", rail_models:"Modelos", rail_settings:"Configurações",
+    rail_new:"Novo chat", rail_search:"Buscar chats", rail_images:"Imagens", rail_models:"Modelos", rail_settings:"Configurações", rail_toggle:"Recolher menu", rail_toggle_expand:"Expandir menu",
     tb_search:"Buscar", tb_notifications:"Notificações", tb_account:"Conta",
     notif_header:"Notificações", notif1_title:"Bem-vindo a AIAME", notif1_text:"Seu assistente está pronto para conversar.",
     notif2_title:"Dica", notif2_text:"Pressione <kbd>Shift</kbd>+<kbd>Enter</kbd> para pular linha.",
     acc_hint:"Entre para salvar suas conversas", acc_login:"Entrar", acc_register:"Cadastrar-se",
     acc_logout:"Sair", auth_email:"Email", auth_password:"Senha", auth_ready:"Sessão iniciada", auth_missing:"Digite email e senha.", auth_failed:"Não foi possível autenticar.",
     auth_confirm_password:"Confirmar senha", auth_enter:"Entrar", auth_create:"Criar conta", auth_password_mismatch:"As senhas não coincidem.", auth_switch_login:"Já tenho conta", auth_switch_register:"Criar nova conta",
+    auth_title_login:"Entrar", auth_title_register:"Crie sua conta", auth_sub_login:"Entre para salvar suas conversas", auth_sub_register:"Cadastre-se para guardar seu histórico", auth_no_account:"Ainda não tem conta?", auth_have_account:"Já tem conta?",
     welcome_title:"Olá, sou <span>AIAME</span>", welcome_subtitle:"Como posso ajudar você hoje?",
     composer_placeholder:"Escreva uma mensagem para AIAME…", mic_record:"Gravar áudio", mic_stop:"Parar gravação",
     send:"Enviar", composer_hint:"AIAME pode cometer erros. Verifique informações importantes.",
@@ -174,6 +178,10 @@ function setLang(next) {
   lang = I18N[next] ? next : "es";
   try { localStorage.setItem("aiame-lang", lang); } catch (_) {}
   applyI18n();
+  if (typeof applyRailCollapsed === "function") {
+    applyRailCollapsed(document.body.classList.contains("rail-collapsed"));
+  }
+  if (typeof updateAuthUI === "function") updateAuthUI();
 }
 
 function initLang() {
@@ -200,6 +208,7 @@ const el = {
   composerMeta: document.getElementById("composerMeta"),
   charCount:   document.getElementById("charCount"),
   sidebar:     document.getElementById("sidebar"),
+  railToggle:  document.getElementById("railToggle"),
   overlay:     document.getElementById("overlay"),
   suggestions: document.getElementById("suggestions"),
 
@@ -218,9 +227,14 @@ const el = {
   authPasswordConfirm: document.getElementById("authPasswordConfirm"),
   authStatus:  document.getElementById("authStatus"),
   btnAuthSubmit: document.getElementById("btnAuthSubmit"),
-  btnLogin:    document.getElementById("btnLogin"),
-  btnRegister: document.getElementById("btnRegister"),
   btnLogout:   document.getElementById("btnLogout"),
+  authPanel:   document.getElementById("authPanel"),
+  authBack:    document.getElementById("authBack"),
+  authSwitchBtn:  document.getElementById("authSwitchBtn"),
+  authSwitchText: document.getElementById("authSwitchText"),
+  authTitle:   document.getElementById("authTitle"),
+  authSub:     document.getElementById("authSub"),
+  accountEmail: document.getElementById("accountEmail"),
 
   // Ajustes (paneles slide)
   settingsPanel: document.getElementById("settingsPanel"),
@@ -753,11 +767,12 @@ function clearAuthSession() {
 
 function updateAuthUI() {
   const signedIn = Boolean(getAuthToken());
-  if (el.btnLogin) el.btnLogin.hidden = signedIn;
-  if (el.btnRegister) el.btnRegister.hidden = signedIn;
   if (el.btnLogout) el.btnLogout.hidden = !signedIn;
-  if (el.authForm) el.authForm.hidden = signedIn;
-  if (el.authStatus) el.authStatus.textContent = signedIn ? `${t("auth_ready")}${getStoredEmail() ? ": " + getStoredEmail() : ""}` : "";
+  if (el.accountEmail) {
+    el.accountEmail.textContent = signedIn
+      ? `${t("auth_ready")}${getStoredEmail() ? ": " + getStoredEmail() : ""}`
+      : t("acc_hint");
+  }
   updateAuthModeUI();
 }
 
@@ -768,15 +783,26 @@ function setAuthMode(mode) {
 }
 
 function updateAuthModeUI() {
-  const signedIn = Boolean(getAuthToken());
+  const isReg = authMode === "register";
   if (el.authPasswordConfirm) {
-    el.authPasswordConfirm.hidden = signedIn || authMode !== "register";
-    el.authPasswordConfirm.required = !signedIn && authMode === "register";
+    el.authPasswordConfirm.hidden = !isReg;
+    el.authPasswordConfirm.required = isReg;
   }
-  if (el.btnAuthSubmit) el.btnAuthSubmit.textContent = authMode === "register" ? t("auth_create") : t("auth_enter");
-  if (el.btnLogin) el.btnLogin.textContent = authMode === "register" ? t("auth_switch_login") : t("acc_login");
-  if (el.btnRegister) el.btnRegister.textContent = authMode === "register" ? t("acc_register") : t("auth_switch_register");
+  if (el.authPassword) el.authPassword.setAttribute("autocomplete", isReg ? "new-password" : "current-password");
+  if (el.btnAuthSubmit) el.btnAuthSubmit.textContent = isReg ? t("auth_create") : t("auth_enter");
+  if (el.authTitle) el.authTitle.textContent = isReg ? t("auth_title_register") : t("auth_title_login");
+  if (el.authSub) el.authSub.textContent = isReg ? t("auth_sub_register") : t("auth_sub_login");
+  if (el.authSwitchText) el.authSwitchText.textContent = isReg ? t("auth_have_account") : t("auth_no_account");
+  if (el.authSwitchBtn) el.authSwitchBtn.textContent = isReg ? t("acc_login") : t("acc_register");
 }
+
+function openAuth() {
+  setAuthMode("login");
+  if (el.authStatus) el.authStatus.textContent = "";
+  openPanel(el.authPanel);
+  setTimeout(() => el.authEmail?.focus(), 60);
+}
+function closeAuth() { closePanel(el.authPanel); }
 
 async function authenticate(mode) {
   setAuthMode(mode);
@@ -792,7 +818,7 @@ async function authenticate(mode) {
   }
 
   const endpoint = mode === "register" ? `${API_BASE_URL}/api/auth/register` : `${API_BASE_URL}/api/auth/login`;
-  [el.btnLogin, el.btnRegister, el.btnAuthSubmit].forEach((btn) => { if (btn) btn.disabled = true; });
+  [el.authSwitchBtn, el.btnAuthSubmit].forEach((btn) => { if (btn) btn.disabled = true; });
   if (el.authStatus) el.authStatus.textContent = mode === "register" ? "Creando cuenta..." : "Iniciando sesion...";
 
   try {
@@ -809,11 +835,12 @@ async function authenticate(mode) {
       return;
     }
     setAuthSession(data);
+    closeAuth();
     closeMenus(null);
   } catch (err) {
     if (el.authStatus) el.authStatus.textContent = err.message || t("auth_failed");
   } finally {
-    [el.btnLogin, el.btnRegister, el.btnAuthSubmit].forEach((btn) => { if (btn) btn.disabled = false; });
+    [el.authSwitchBtn, el.btnAuthSubmit].forEach((btn) => { if (btn) btn.disabled = false; });
   }
 }
 
@@ -955,6 +982,26 @@ document.querySelectorAll(".rail__item").forEach((item) => {
     // TODO: conmutar aquí el contenido de .main según item.dataset.section
   });
 });
+
+// ---------- Rail desplegable (contraer a solo iconos) ----------
+function applyRailCollapsed(collapsed) {
+  document.body.classList.toggle("rail-collapsed", collapsed);
+  if (el.railToggle) {
+    el.railToggle.setAttribute("aria-expanded", String(!collapsed));
+    const label = t(collapsed ? "rail_toggle_expand" : "rail_toggle");
+    el.railToggle.setAttribute("aria-label", label);
+    el.railToggle.setAttribute("title", label);
+  }
+}
+function getRailCollapsedPref() {
+  try { return localStorage.getItem("aiame-rail") === "1"; } catch (_) { return false; }
+}
+el.railToggle?.addEventListener("click", () => {
+  const collapsed = !document.body.classList.contains("rail-collapsed");
+  applyRailCollapsed(collapsed);
+  try { localStorage.setItem("aiame-rail", collapsed ? "1" : "0"); } catch (_) {}
+});
+applyRailCollapsed(getRailCollapsedPref());
 
 // ---------- Ajustes (paneles deslizantes) ----------
 function openPanel(node)  { node.classList.add("is-open"); node.setAttribute("aria-hidden", "false"); }
@@ -1178,21 +1225,19 @@ el.btnNotif.addEventListener("click", (e) => {
 });
 el.btnAccount.addEventListener("click", (e) => {
   e.stopPropagation();
-  toggleMenu(el.accountMenu, el.btnAccount);
-});
-
-el.btnLogin?.addEventListener("click", () => {
-  if (authMode === "register") setAuthMode("login");
-  else authenticate("login");
-});
-el.btnRegister?.addEventListener("click", () => {
-  if (authMode === "login") {
-    setAuthMode("register");
-    el.authPasswordConfirm?.focus();
+  if (getAuthToken()) {
+    toggleMenu(el.accountMenu, el.btnAccount);
   } else {
-    authenticate("register");
+    closeMenus(null);
+    openAuth();
   }
 });
+
+el.authSwitchBtn?.addEventListener("click", () => {
+  setAuthMode(authMode === "register" ? "login" : "register");
+  if (authMode === "register") el.authPasswordConfirm?.focus();
+});
+el.authBack?.addEventListener("click", closeAuth);
 el.btnLogout?.addEventListener("click", () => {
   clearAuthSession();
   closeMenus(null);
@@ -1210,6 +1255,7 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     closeMenus(null);
     if (!el.langMenu.hidden) { toggleLangMenu(false); return; }
+    if (el.authPanel.classList.contains("is-open")) { closeAuth(); return; }
     if (el.conversationsPanel.classList.contains("is-open")) { closeConversations(); return; }
     if (el.dataPanel.classList.contains("is-open")) closeData();
     else if (el.settingsPanel.classList.contains("is-open")) closeSettings();

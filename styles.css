@@ -71,21 +71,21 @@
 }
 
 :root[data-theme="dark"] {
-  --bg:            #060d1c;
-  --bg-soft:       #0e1a33;
-  --surface:       #0f1d3a;
-  --border:        #1e2f52;
-  --text:          #eaf1ff;
-  --text-soft:     #a9bce0;
-  --text-muted:    #6b80aa;
+  --bg:            #0a0a0a;   /* negro neutro */
+  --bg-soft:       #141414;
+  --surface:       #1a1a1a;   /* tarjetas/paneles */
+  --border:        #2a2a2a;
+  --text:          #f2f2f2;
+  --text-soft:     #b8b8b8;
+  --text-muted:    #808080;
 
-  --topbar-bg:     #05091a;
+  --topbar-bg:     #000000;
   --topbar-border: rgba(255,255,255,.10);
-  --frame:         #02040d;
+  --frame:         #000000;
 
   --primary:       var(--blue-500);
   --primary-hover: var(--blue-400);
-  --primary-soft:  #14224a;
+  --primary-soft:  #1e1e1e;
 
   --shadow-sm:0 1px 2px rgba(0,0,0,.3);
   --shadow-md:0 6px 20px rgba(0,0,0,.35);
@@ -239,6 +239,31 @@ a { color:inherit; text-decoration:none; }
 .btn-auth--ghost { background:transparent; color:var(--text); border-color:var(--border); }
 .btn-auth--ghost:hover { background:var(--primary-soft); }
 
+/* ---------- LOGIN A PANTALLA COMPLETA ---------- */
+.auth-panel__body { display:grid; place-items:center; padding:24px 20px 48px; }
+.auth-card { width:100%; max-width:380px; text-align:center; }
+.auth-card__brand {
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  color:var(--primary); margin-bottom:22px;
+}
+.auth-card__logo { display:grid; place-items:center; }
+.auth-card__name {
+  font-family:var(--font-title); font-size:24px; font-weight:700;
+  letter-spacing:.5px; color:var(--text);
+}
+.auth-card__title { font-size:24px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.auth-card__sub { font-size:14px; color:var(--text-soft); margin-bottom:24px; }
+.auth-card__form { display:grid; gap:12px; text-align:left; }
+.auth-card__form .auth-input { min-height:46px; border-radius:12px; padding:0 14px; }
+.auth-card__submit { min-height:46px; margin-top:4px; font-size:15px; }
+.auth-card .auth-status { text-align:center; }
+.auth-switch { margin-top:20px; font-size:14px; color:var(--text-soft); }
+.auth-switch__btn {
+  background:none; border:none; padding:0 0 0 6px;
+  font:inherit; font-weight:600; color:var(--primary); cursor:pointer;
+}
+.auth-switch__btn:hover { text-decoration:underline; }
+
 /* Switch del tema */
 .switch {
   width:38px; height:22px; border-radius:11px;
@@ -301,7 +326,22 @@ a { color:inherit; text-decoration:none; }
 :root[data-theme="dark"] .rail__item.is-active { background:var(--primary-soft); color:var(--text); }
 
 .rail__icon { display:grid; place-items:center; flex-shrink:0; }
-.rail__label { font-size:14px; font-weight:500; text-align:left; line-height:1.2; }
+.rail__label { font-size:14px; font-weight:500; text-align:left; line-height:1.2; white-space:nowrap; }
+
+/* Botón para desplegar/contraer el rail */
+.rail__toggle {
+  display:flex; align-items:center; justify-content:center;
+  width:44px; height:44px; margin:0 auto 6px;
+  border:none; background:transparent; border-radius:12px;
+  color:var(--text-soft); cursor:pointer;
+  transition:background .15s ease, color .15s ease;
+}
+.rail__toggle:hover { background:var(--primary-soft); color:var(--text); }
+
+/* Rail contraído: solo iconos */
+body.rail-collapsed { --rail-w:68px; }
+body.rail-collapsed .rail__label { display:none; }
+body.rail-collapsed .rail__item { justify-content:center; padding:11px 0; }
 
 /* ---------- SIDEBAR ---------- */
 .sidebar {
@@ -441,7 +481,7 @@ a { color:inherit; text-decoration:none; }
   background:var(--primary-soft); color:var(--primary-hover);
   padding:1.5px 6px; border-radius:6px;
 }
-:root[data-theme="dark"] .msg--ai .msg__bubble code { background:#14224a; color:#bfd3ff; }
+:root[data-theme="dark"] .msg--ai .msg__bubble code { background:#262626; color:#e0e0e0; }
 .msg--ai .msg__bubble table { border-collapse:collapse; margin:0 0 10px; font-size:14px; }
 .msg--ai .msg__bubble th,
 .msg--ai .msg__bubble td { border:1px solid var(--border); padding:6px 10px; text-align:left; }
