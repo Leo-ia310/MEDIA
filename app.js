@@ -43,7 +43,7 @@ const I18N = {
     sugg_1:"Explícame un concepto difícil", sugg_2:"Ayúdame a redactar un texto", sugg_3:"Dame ideas para un proyecto", sugg_4:"Resume esto por mí",
     attach:"Adjuntar", remove:"Quitar",
     kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nueva línea",
-    sources:"Fuentes",
+    sources:"Fuentes", kb_request:"Solicitar fuente verificada", kb_requested:"Solicitud enviada", kb_error:"No se pudo enviar", related_title:"Relacionado",
     conv_title:"Conversaciones", conv_search:"Buscar conversaciones…", conv_empty:"Aún no tienes conversaciones.", conv_login:"Inicia sesión para ver tu historial de conversaciones.", conv_loading:"Cargando…", conv_error:"No se pudo cargar el historial.", conv_delete:"Eliminar conversación", conv_delete_confirm:"¿Eliminar esta conversación? No se puede deshacer.", conv_delete_error:"No se pudo eliminar la conversación.",
   },
   en: {
@@ -74,7 +74,7 @@ const I18N = {
     sugg_1:"Explain a difficult concept", sugg_2:"Help me write something", sugg_3:"Give me project ideas", sugg_4:"Summarize this for me",
     attach:"Attach", remove:"Remove",
     kbd_hint:"<kbd>Enter</kbd> to send · <kbd>Shift</kbd>+<kbd>Enter</kbd> new line",
-    sources:"Sources",
+    sources:"Sources", kb_request:"Request verified source", kb_requested:"Request sent", kb_error:"Could not send", related_title:"Related",
     conv_title:"Conversations", conv_search:"Search conversations…", conv_empty:"You don't have any conversations yet.", conv_login:"Sign in to see your conversation history.", conv_loading:"Loading…", conv_error:"Could not load history.", conv_delete:"Delete conversation", conv_delete_confirm:"Delete this conversation? This can't be undone.", conv_delete_error:"Could not delete the conversation.",
   },
   fr: {
@@ -105,7 +105,7 @@ const I18N = {
     sugg_1:"Explique-moi un concept difficile", sugg_2:"Aide-moi à rédiger un texte", sugg_3:"Donne-moi des idées de projet", sugg_4:"Résume ceci pour moi",
     attach:"Joindre", remove:"Retirer",
     kbd_hint:"<kbd>Entrée</kbd> envoyer · <kbd>Shift</kbd>+<kbd>Entrée</kbd> nouvelle ligne",
-    sources:"Sources",
+    sources:"Sources", kb_request:"Demander une source vérifiée", kb_requested:"Demande envoyée", kb_error:"Envoi impossible", related_title:"Associé",
     conv_title:"Conversations", conv_search:"Rechercher des conversations…", conv_empty:"Tu n'as pas encore de conversations.", conv_login:"Connecte-toi pour voir ton historique de conversations.", conv_loading:"Chargement…", conv_error:"Impossible de charger l'historique.", conv_delete:"Supprimer la conversation", conv_delete_confirm:"Supprimer cette conversation ? Action irréversible.", conv_delete_error:"Impossible de supprimer la conversation.",
   },
   pt: {
@@ -136,7 +136,7 @@ const I18N = {
     sugg_1:"Explique um conceito difícil", sugg_2:"Ajude-me a redigir um texto", sugg_3:"Dê-me ideias para um projeto", sugg_4:"Resuma isto para mim",
     attach:"Anexar", remove:"Remover",
     kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nova linha",
-    sources:"Fontes",
+    sources:"Fontes", kb_request:"Solicitar fonte verificada", kb_requested:"Solicitação enviada", kb_error:"Não foi possível enviar", related_title:"Relacionado",
     conv_title:"Conversas", conv_search:"Buscar conversas…", conv_empty:"Você ainda não tem conversas.", conv_login:"Entre para ver seu histórico de conversas.", conv_loading:"Carregando…", conv_error:"Não foi possível carregar o histórico.", conv_delete:"Excluir conversa", conv_delete_confirm:"Excluir esta conversa? Não é possível desfazer.", conv_delete_error:"Não foi possível excluir a conversa.",
   },
 };
@@ -338,6 +338,15 @@ async function streamAgentResponse(messages, onToken) {
     await sleep(10 + Math.random() * 22);
     onToken(ch);
   }
+
+  // Metadatos extra de la respuesta para enriquecer el mensaje
+  return {
+    followup: data.suggested_followup || null,
+    assets: Array.isArray(data.related_assets) ? data.related_assets : [],
+    canRequestKnowledge: !!data.can_request_knowledge,
+    originalQuestion: last,
+    normalizedTopic: (data.metadata && data.metadata.normalized_topic) || null,
+  };
 }
 
 // ---------- Markdown + código ----------
@@ -480,7 +489,122 @@ function buildMessageNode(m, index, chat) {
   }
 
   buildActions(node.querySelector(".msg__actions"), m, index, chat);
+  if (role === "assistant" && !m.streaming) {
+    buildMessageExtras(node.querySelector(".msg__body"), m, chat);
+  }
   return node;
+}
+
+// ---------- Extras del mensaje: assets, follow-up y solicitud de conocimiento ----------
+function buildMessageExtras(body, m, chat) {
+  // 2) Assets relacionados (imágenes / documentos)
+  if (Array.isArray(m.assets) && m.assets.length) {
+    const box = document.createElement("div");
+    box.className = "msg__assets";
+    m.assets.forEach((a) => box.appendChild(assetCard(a)));
+    body.appendChild(box);
+  }
+
+  // 1) Chip de seguimiento sugerido
+  if (m.followup) {
+    const chip = document.createElement("button");
+    chip.className = "msg__followup";
+    chip.type = "button";
+    chip.innerHTML = `
+      <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+        <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span></span>`;
+    chip.querySelector("span").textContent = m.followup;
+    chip.addEventListener("click", () => {
+      if (state.isResponding) return;
+      sendMessage(m.followup);
+    });
+    body.appendChild(chip);
+  }
+
+  // 3) Botón para solicitar fuente verificada (base de conocimiento)
+  if (m.canRequestKnowledge) {
+    if (m.knowledgeRequested) {
+      body.appendChild(knowledgeDoneEl());
+    } else {
+      const btn = document.createElement("button");
+      btn.className = "msg__knowledge";
+      btn.type = "button";
+      btn.innerHTML = `
+        <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+          <path d="M4 5h11l5 5v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linejoin="round"/>
+          <path d="M9 13h6M12 10v6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        <span>${escapeHtml(t("kb_request"))}</span>`;
+      btn.addEventListener("click", () => requestKnowledge(m, chat, btn));
+      body.appendChild(btn);
+    }
+  }
+}
+
+function assetCard(a) {
+  const isImage = (a.type || "").toLowerCase().includes("image") ||
+    /\.(png|jpe?g|gif|webp|svg)$/i.test(a.path || "");
+  const el = document.createElement("a");
+  el.className = "msg__asset" + (isImage ? " msg__asset--img" : "");
+  el.target = "_blank";
+  el.rel = "noopener noreferrer";
+  if (a.path) el.href = a.path;
+  if (isImage && a.path) {
+    el.innerHTML = `<img src="${encodeURI(a.path)}" alt="" loading="lazy" />`;
+    if (a.caption) {
+      const cap = document.createElement("span");
+      cap.className = "msg__asset-cap";
+      cap.textContent = a.caption;
+      el.appendChild(cap);
+    }
+  } else {
+    el.innerHTML = `
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-6-6z" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linejoin="round"/>
+        <path d="M14 3v6h6" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linejoin="round"/>
+      </svg>
+      <span></span>`;
+    el.querySelector("span").textContent = a.caption || a.path || a.type || "Recurso";
+  }
+  return el;
+}
+
+function knowledgeDoneEl() {
+  const done = document.createElement("div");
+  done.className = "msg__knowledge is-done";
+  done.innerHTML = `
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+      <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span>${escapeHtml(t("kb_requested"))}</span>`;
+  return done;
+}
+
+async function requestKnowledge(m, chat, btn) {
+  const token = authToken();
+  if (!token) return;
+  btn.disabled = true;
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/knowledge`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+      body: JSON.stringify({
+        conversation_id: chat?.backendConversationId ?? null,
+        original_question: m.originalQuestion || "",
+        normalized_topic: m.normalizedTopic || null,
+      }),
+    });
+    if (res.status === 401) { clearAuthSession(); return; }
+    if (!res.ok) throw new Error("kb");
+    m.knowledgeRequested = true;
+    btn.replaceWith(knowledgeDoneEl());
+  } catch (_) {
+    btn.disabled = false;
+    const span = btn.querySelector("span");
+    if (span) span.textContent = t("kb_error");
+  }
 }
 
 // ---------- Acciones por mensaje ----------
@@ -548,13 +672,20 @@ async function runAssistant(chat) {
   renderMessages();
 
   try {
-    await streamAgentResponse(chat.messages.slice(0, -1), (chunk) => {
+    const meta = await streamAgentResponse(chat.messages.slice(0, -1), (chunk) => {
       aiMsg.content += chunk;
       if (streamingBubble) {
         streamingBubble.textContent = aiMsg.content;
         scrollToBottom();
       }
     });
+    if (meta) {
+      aiMsg.followup = meta.followup;
+      aiMsg.assets = meta.assets;
+      aiMsg.canRequestKnowledge = meta.canRequestKnowledge;
+      aiMsg.originalQuestion = meta.originalQuestion;
+      aiMsg.normalizedTopic = meta.normalizedTopic;
+    }
     notifyResponse();   // sonido/vibración opcional al terminar
   } catch (err) {
     aiMsg.content = t("error_msg");
