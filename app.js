@@ -44,6 +44,7 @@ const I18N = {
     attach:"Adjuntar", remove:"Quitar",
     kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nueva línea",
     sources:"Fuentes", kb_request:"Solicitar fuente verificada", kb_requested:"Solicitud enviada", kb_error:"No se pudo enviar", related_title:"Relacionado",
+    learn_title:"Perfil de aprendizaje", learn_desc:"Cómo AIAME adapta sus explicaciones a ti", learn_style:"Estilo de explicación", learn_difficulty:"Nivel de dificultad", learn_strengths:"Fortalezas", learn_growth:"Áreas de mejora", learn_confusions:"Confusiones frecuentes", learn_none:"Aún no hay datos.", learn_error:"No se pudo cargar tu perfil.", learn_style_balanced:"Equilibrado", learn_style_concise:"Conciso", learn_style_detailed:"Detallado", learn_style_visual:"Visual", learn_diff_basic:"Básico", learn_diff_intermediate:"Intermedio", learn_diff_advanced:"Avanzado",
     conv_title:"Conversaciones", conv_search:"Buscar conversaciones…", conv_empty:"Aún no tienes conversaciones.", conv_login:"Inicia sesión para ver tu historial de conversaciones.", conv_loading:"Cargando…", conv_error:"No se pudo cargar el historial.", conv_delete:"Eliminar conversación", conv_delete_confirm:"¿Eliminar esta conversación? No se puede deshacer.", conv_delete_error:"No se pudo eliminar la conversación.",
   },
   en: {
@@ -75,6 +76,7 @@ const I18N = {
     attach:"Attach", remove:"Remove",
     kbd_hint:"<kbd>Enter</kbd> to send · <kbd>Shift</kbd>+<kbd>Enter</kbd> new line",
     sources:"Sources", kb_request:"Request verified source", kb_requested:"Request sent", kb_error:"Could not send", related_title:"Related",
+    learn_title:"Learning profile", learn_desc:"How AIAME tailors its explanations to you", learn_style:"Explanation style", learn_difficulty:"Difficulty level", learn_strengths:"Strengths", learn_growth:"Growth areas", learn_confusions:"Frequent confusions", learn_none:"No data yet.", learn_error:"Could not load your profile.", learn_style_balanced:"Balanced", learn_style_concise:"Concise", learn_style_detailed:"Detailed", learn_style_visual:"Visual", learn_diff_basic:"Basic", learn_diff_intermediate:"Intermediate", learn_diff_advanced:"Advanced",
     conv_title:"Conversations", conv_search:"Search conversations…", conv_empty:"You don't have any conversations yet.", conv_login:"Sign in to see your conversation history.", conv_loading:"Loading…", conv_error:"Could not load history.", conv_delete:"Delete conversation", conv_delete_confirm:"Delete this conversation? This can't be undone.", conv_delete_error:"Could not delete the conversation.",
   },
   fr: {
@@ -106,6 +108,7 @@ const I18N = {
     attach:"Joindre", remove:"Retirer",
     kbd_hint:"<kbd>Entrée</kbd> envoyer · <kbd>Shift</kbd>+<kbd>Entrée</kbd> nouvelle ligne",
     sources:"Sources", kb_request:"Demander une source vérifiée", kb_requested:"Demande envoyée", kb_error:"Envoi impossible", related_title:"Associé",
+    learn_title:"Profil d'apprentissage", learn_desc:"Comment AIAME adapte ses explications", learn_style:"Style d'explication", learn_difficulty:"Niveau de difficulté", learn_strengths:"Points forts", learn_growth:"Axes de progrès", learn_confusions:"Confusions fréquentes", learn_none:"Pas encore de données.", learn_error:"Impossible de charger ton profil.", learn_style_balanced:"Équilibré", learn_style_concise:"Concis", learn_style_detailed:"Détaillé", learn_style_visual:"Visuel", learn_diff_basic:"Basique", learn_diff_intermediate:"Intermédiaire", learn_diff_advanced:"Avancé",
     conv_title:"Conversations", conv_search:"Rechercher des conversations…", conv_empty:"Tu n'as pas encore de conversations.", conv_login:"Connecte-toi pour voir ton historique de conversations.", conv_loading:"Chargement…", conv_error:"Impossible de charger l'historique.", conv_delete:"Supprimer la conversation", conv_delete_confirm:"Supprimer cette conversation ? Action irréversible.", conv_delete_error:"Impossible de supprimer la conversation.",
   },
   pt: {
@@ -137,6 +140,7 @@ const I18N = {
     attach:"Anexar", remove:"Remover",
     kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nova linha",
     sources:"Fontes", kb_request:"Solicitar fonte verificada", kb_requested:"Solicitação enviada", kb_error:"Não foi possível enviar", related_title:"Relacionado",
+    learn_title:"Perfil de aprendizado", learn_desc:"Como o AIAME adapta as explicações a você", learn_style:"Estilo de explicação", learn_difficulty:"Nível de dificuldade", learn_strengths:"Pontos fortes", learn_growth:"Áreas de melhoria", learn_confusions:"Confusões frequentes", learn_none:"Ainda não há dados.", learn_error:"Não foi possível carregar seu perfil.", learn_style_balanced:"Equilibrado", learn_style_concise:"Conciso", learn_style_detailed:"Detalhado", learn_style_visual:"Visual", learn_diff_basic:"Básico", learn_diff_intermediate:"Intermediário", learn_diff_advanced:"Avançado",
     conv_title:"Conversas", conv_search:"Buscar conversas…", conv_empty:"Você ainda não tem conversas.", conv_login:"Entre para ver seu histórico de conversas.", conv_loading:"Carregando…", conv_error:"Não foi possível carregar o histórico.", conv_delete:"Excluir conversa", conv_delete_confirm:"Excluir esta conversa? Não é possível desfazer.", conv_delete_error:"Não foi possível excluir a conversa.",
   },
 };
@@ -247,6 +251,10 @@ const el = {
   openData:      document.getElementById("openData"),
   dataPanel:     document.getElementById("dataPanel"),
   dataBack:      document.getElementById("dataBack"),
+  openLearning:  document.getElementById("openLearning"),
+  learningPanel: document.getElementById("learningPanel"),
+  learnBack:     document.getElementById("learnBack"),
+  learnBody:     document.getElementById("learnBody"),
 
   // Conversaciones (historial)
   conversationsPanel: document.getElementById("conversationsPanel"),
@@ -1140,6 +1148,93 @@ function closeSettings() {
 function openData()  { openPanel(el.dataPanel); el.settingsPanel.classList.add("is-pushed"); }
 function closeData() { closePanel(el.dataPanel); el.settingsPanel.classList.remove("is-pushed"); }
 
+// ---------- Perfil de aprendizaje (GET /api/learning/profile) ----------
+function openLearning() { openPanel(el.learningPanel); el.settingsPanel.classList.add("is-pushed"); loadLearning(); }
+function closeLearning() { closePanel(el.learningPanel); el.settingsPanel.classList.remove("is-pushed"); }
+
+const STYLE_LABELS = {
+  balanced: "learn_style_balanced", concise: "learn_style_concise",
+  detailed: "learn_style_detailed", visual: "learn_style_visual",
+};
+const DIFF_LABELS = {
+  basic: "learn_diff_basic", intermediate: "learn_diff_intermediate", advanced: "learn_diff_advanced",
+};
+
+function learnMsg(msg) {
+  if (el.learnBody) el.learnBody.innerHTML = `<p class="conv-empty">${escapeHtml(msg)}</p>`;
+}
+
+async function loadLearning() {
+  const token = authToken();
+  if (!token) { learnMsg(t("conv_login")); return; }
+  learnMsg(t("conv_loading"));
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/learning/profile`, {
+      headers: { "Authorization": `Bearer ${token}` },
+    });
+    if (res.status === 401) { clearAuthSession(); learnMsg(t("conv_login")); return; }
+    if (!res.ok) { learnMsg(t("learn_error")); return; }
+    renderLearning(await res.json());
+  } catch (_) {
+    learnMsg(t("learn_error"));
+  }
+}
+
+function renderLearning(p) {
+  if (!el.learnBody) return;
+  const styleKey = STYLE_LABELS[p.preferred_explanation_style];
+  const diffKey = DIFF_LABELS[p.preferred_difficulty];
+  const style = styleKey ? t(styleKey) : (p.preferred_explanation_style || "—");
+  const diff = diffKey ? t(diffKey) : (p.preferred_difficulty || "—");
+
+  el.learnBody.innerHTML = "";
+
+  const prefs = document.createElement("div");
+  prefs.className = "learn-prefs";
+  prefs.appendChild(prefCard(t("learn_style"), style));
+  prefs.appendChild(prefCard(t("learn_difficulty"), diff));
+  el.learnBody.appendChild(prefs);
+
+  el.learnBody.appendChild(chipSection(t("learn_strengths"), p.strengths, "is-pos"));
+  el.learnBody.appendChild(chipSection(t("learn_growth"), p.growth_areas, "is-warn"));
+  el.learnBody.appendChild(chipSection(t("learn_confusions"), p.recurring_confusions, ""));
+}
+
+function prefCard(label, value) {
+  const card = document.createElement("div");
+  card.className = "learn-pref";
+  card.innerHTML = `<span class="learn-pref__label"></span><span class="learn-pref__value"></span>`;
+  card.querySelector(".learn-pref__label").textContent = label;
+  card.querySelector(".learn-pref__value").textContent = value;
+  return card;
+}
+
+function chipSection(title, items, tone) {
+  const sec = document.createElement("div");
+  sec.className = "learn-sec";
+  const h = document.createElement("h3");
+  h.className = "learn-sec__title";
+  h.textContent = title;
+  sec.appendChild(h);
+  if (Array.isArray(items) && items.length) {
+    const box = document.createElement("div");
+    box.className = "learn-chips";
+    items.forEach((it) => {
+      const chip = document.createElement("span");
+      chip.className = "learn-chip " + tone;
+      chip.textContent = it;
+      box.appendChild(chip);
+    });
+    sec.appendChild(box);
+  } else {
+    const empty = document.createElement("p");
+    empty.className = "learn-sec__empty";
+    empty.textContent = t("learn_none");
+    sec.appendChild(empty);
+  }
+  return sec;
+}
+
 // ---------- Conversaciones (historial desde /api/conversations) ----------
 let conversationsCache = [];
 
@@ -1265,6 +1360,8 @@ async function openConversation(id) {
 el.settingsBack.addEventListener("click", closeSettings);
 el.settingsTheme.addEventListener("click", toggleTheme);
 el.openData.addEventListener("click", openData);
+el.openLearning?.addEventListener("click", openLearning);
+el.learnBack?.addEventListener("click", closeLearning);
 el.dataBack.addEventListener("click", closeData);
 el.convBack?.addEventListener("click", closeConversations);
 el.convSearch?.addEventListener("input", () => renderConvList(el.convSearch.value));
@@ -1380,6 +1477,7 @@ document.addEventListener("keydown", (e) => {
     if (el.authPanel.classList.contains("is-open")) { closeAuth(); return; }
     if (el.conversationsPanel.classList.contains("is-open")) { closeConversations(); return; }
     if (el.dataPanel.classList.contains("is-open")) closeData();
+    else if (el.learningPanel.classList.contains("is-open")) closeLearning();
     else if (el.settingsPanel.classList.contains("is-open")) closeSettings();
   }
 });

@@ -346,6 +346,16 @@
           <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
+
+      <button class="setting-row setting-row--nav" id="openLearning" type="button">
+        <div class="setting-row__text">
+          <p class="setting-row__label" data-i18n="learn_title">Perfil de aprendizaje</p>
+          <p class="setting-row__desc" data-i18n="learn_desc">Cómo AIAME adapta sus explicaciones a ti</p>
+        </div>
+        <svg class="setting-row__chevron" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
   </section>
 
@@ -385,6 +395,20 @@
         <p class="data-option__desc" data-i18n="data_models_desc">Usa tus interacciones para acceder a modelos más avanzados y respuestas de mayor calidad.</p>
       </div>
     </div>
+  </section>
+
+  <!-- ===================== PANEL PERFIL DE APRENDIZAJE (slide) ===================== -->
+  <section class="panel" id="learningPanel" aria-hidden="true" aria-labelledby="learnPanelTitle">
+    <header class="panel__head">
+      <button class="panel__back" id="learnBack" type="button" aria-label="Volver" data-i18n-aria="back">
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <h2 class="panel__title" id="learnPanelTitle" data-i18n="learn_title">Perfil de aprendizaje</h2>
+    </header>
+
+    <div class="panel__body" id="learnBody"></div>
   </section>
 
   <!-- Markdown + saneado + resaltado de código (local) -->
