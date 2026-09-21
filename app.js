@@ -45,6 +45,7 @@ const I18N = {
     kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nueva línea",
     sources:"Fuentes", kb_request:"Solicitar fuente verificada", kb_requested:"Solicitud enviada", kb_error:"No se pudo enviar", related_title:"Relacionado",
     learn_title:"Perfil de aprendizaje", learn_desc:"Cómo AIAME adapta sus explicaciones a ti", learn_style:"Estilo de explicación", learn_difficulty:"Nivel de dificultad", learn_strengths:"Fortalezas", learn_growth:"Áreas de mejora", learn_confusions:"Confusiones frecuentes", learn_none:"Aún no hay datos.", learn_error:"No se pudo cargar tu perfil.", learn_style_balanced:"Equilibrado", learn_style_concise:"Conciso", learn_style_detailed:"Detallado", learn_style_visual:"Visual", learn_diff_basic:"Básico", learn_diff_intermediate:"Intermedio", learn_diff_advanced:"Avanzado",
+    demo_topic:"tu consulta", demo_intro:"Aquí tienes una explicación sobre", demo_point1:"Idea clave relacionada con el tema.", demo_point2:"Un segundo punto con más detalle.", demo_point3:"Un tercer punto para ampliar.", demo_code_intro:"También puedo usar formato enriquecido y bloques de código:", demo_note:"Respuesta de demostración. Inicia sesión para el tutor médico real con fuentes verificadas.", demo_followup:"¿Quieres que profundice en", demo_asset:"Recurso de ejemplo",
     conv_title:"Conversaciones", conv_search:"Buscar conversaciones…", conv_empty:"Aún no tienes conversaciones.", conv_login:"Inicia sesión para ver tu historial de conversaciones.", conv_loading:"Cargando…", conv_error:"No se pudo cargar el historial.", conv_delete:"Eliminar conversación", conv_delete_confirm:"¿Eliminar esta conversación? No se puede deshacer.", conv_delete_error:"No se pudo eliminar la conversación.",
   },
   en: {
@@ -77,6 +78,7 @@ const I18N = {
     kbd_hint:"<kbd>Enter</kbd> to send · <kbd>Shift</kbd>+<kbd>Enter</kbd> new line",
     sources:"Sources", kb_request:"Request verified source", kb_requested:"Request sent", kb_error:"Could not send", related_title:"Related",
     learn_title:"Learning profile", learn_desc:"How AIAME tailors its explanations to you", learn_style:"Explanation style", learn_difficulty:"Difficulty level", learn_strengths:"Strengths", learn_growth:"Growth areas", learn_confusions:"Frequent confusions", learn_none:"No data yet.", learn_error:"Could not load your profile.", learn_style_balanced:"Balanced", learn_style_concise:"Concise", learn_style_detailed:"Detailed", learn_style_visual:"Visual", learn_diff_basic:"Basic", learn_diff_intermediate:"Intermediate", learn_diff_advanced:"Advanced",
+    demo_topic:"your question", demo_intro:"Here's an explanation about", demo_point1:"A key idea related to the topic.", demo_point2:"A second point with more detail.", demo_point3:"A third point to expand on.", demo_code_intro:"I can also use rich formatting and code blocks:", demo_note:"Demo response. Sign in for the real medical tutor with verified sources.", demo_followup:"Want me to go deeper into", demo_asset:"Example resource",
     conv_title:"Conversations", conv_search:"Search conversations…", conv_empty:"You don't have any conversations yet.", conv_login:"Sign in to see your conversation history.", conv_loading:"Loading…", conv_error:"Could not load history.", conv_delete:"Delete conversation", conv_delete_confirm:"Delete this conversation? This can't be undone.", conv_delete_error:"Could not delete the conversation.",
   },
   fr: {
@@ -109,6 +111,7 @@ const I18N = {
     kbd_hint:"<kbd>Entrée</kbd> envoyer · <kbd>Shift</kbd>+<kbd>Entrée</kbd> nouvelle ligne",
     sources:"Sources", kb_request:"Demander une source vérifiée", kb_requested:"Demande envoyée", kb_error:"Envoi impossible", related_title:"Associé",
     learn_title:"Profil d'apprentissage", learn_desc:"Comment AIAME adapte ses explications", learn_style:"Style d'explication", learn_difficulty:"Niveau de difficulté", learn_strengths:"Points forts", learn_growth:"Axes de progrès", learn_confusions:"Confusions fréquentes", learn_none:"Pas encore de données.", learn_error:"Impossible de charger ton profil.", learn_style_balanced:"Équilibré", learn_style_concise:"Concis", learn_style_detailed:"Détaillé", learn_style_visual:"Visuel", learn_diff_basic:"Basique", learn_diff_intermediate:"Intermédiaire", learn_diff_advanced:"Avancé",
+    demo_topic:"ta question", demo_intro:"Voici une explication sur", demo_point1:"Une idée clé liée au sujet.", demo_point2:"Un deuxième point plus détaillé.", demo_point3:"Un troisième point pour approfondir.", demo_code_intro:"Je peux aussi utiliser du formatage riche et des blocs de code :", demo_note:"Réponse de démonstration. Connecte-toi pour le vrai tuteur médical avec des sources vérifiées.", demo_followup:"Veux-tu que j'approfondisse", demo_asset:"Ressource d'exemple",
     conv_title:"Conversations", conv_search:"Rechercher des conversations…", conv_empty:"Tu n'as pas encore de conversations.", conv_login:"Connecte-toi pour voir ton historique de conversations.", conv_loading:"Chargement…", conv_error:"Impossible de charger l'historique.", conv_delete:"Supprimer la conversation", conv_delete_confirm:"Supprimer cette conversation ? Action irréversible.", conv_delete_error:"Impossible de supprimer la conversation.",
   },
   pt: {
@@ -141,6 +144,7 @@ const I18N = {
     kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nova linha",
     sources:"Fontes", kb_request:"Solicitar fonte verificada", kb_requested:"Solicitação enviada", kb_error:"Não foi possível enviar", related_title:"Relacionado",
     learn_title:"Perfil de aprendizado", learn_desc:"Como o AIAME adapta as explicações a você", learn_style:"Estilo de explicação", learn_difficulty:"Nível de dificuldade", learn_strengths:"Pontos fortes", learn_growth:"Áreas de melhoria", learn_confusions:"Confusões frequentes", learn_none:"Ainda não há dados.", learn_error:"Não foi possível carregar seu perfil.", learn_style_balanced:"Equilibrado", learn_style_concise:"Conciso", learn_style_detailed:"Detalhado", learn_style_visual:"Visual", learn_diff_basic:"Básico", learn_diff_intermediate:"Intermediário", learn_diff_advanced:"Avançado",
+    demo_topic:"sua pergunta", demo_intro:"Aqui está uma explicação sobre", demo_point1:"Uma ideia-chave relacionada ao tema.", demo_point2:"Um segundo ponto com mais detalhe.", demo_point3:"Um terceiro ponto para ampliar.", demo_code_intro:"Também posso usar formatação rica e blocos de código:", demo_note:"Resposta de demonstração. Entre para o tutor médico real com fontes verificadas.", demo_followup:"Quer que eu aprofunde em", demo_asset:"Recurso de exemplo",
     conv_title:"Conversas", conv_search:"Buscar conversas…", conv_empty:"Você ainda não tem conversas.", conv_login:"Entre para ver seu histórico de conversas.", conv_loading:"Carregando…", conv_error:"Não foi possível carregar o histórico.", conv_delete:"Excluir conversa", conv_delete_confirm:"Excluir esta conversa? Não é possível desfazer.", conv_delete_error:"Não foi possível excluir a conversa.",
   },
 };
@@ -283,14 +287,34 @@ const el = {
        onToken(dec.decode(value, { stream:true }));
      }
    ========================================================= */
+// Respuesta simulada (sin sesión) que ejercita todas las funcionalidades del chat.
+async function demoResponse(question, onToken) {
+  const q = (question || "").trim();
+  const topic = (q ? q.replace(/[?¿.!¡]+\s*$/g, "") : t("demo_topic")) || t("demo_topic");
+  const full =
+    `${t("demo_intro")} **${topic}**:\n\n` +
+    `- ${t("demo_point1")}\n` +
+    `- ${t("demo_point2")}\n` +
+    `- ${t("demo_point3")}\n\n` +
+    `${t("demo_code_intro")}\n\n` +
+    "```js\nconsole.log('Hola desde AIAME');\n```\n\n" +
+    `_${t("demo_note")}_`;
+  const chunks = full.match(/\s*\S+|\s+/g) || [full];
+  for (const ch of chunks) { await sleep(12 + Math.random() * 20); onToken(ch); }
+  return {
+    followup: `${t("demo_followup")} ${topic}?`,
+    assets: [{ id: "demo", type: "image", caption: t("demo_asset"), path: "assets/logo.svg" }],
+    canRequestKnowledge: true,
+    originalQuestion: q,
+    normalizedTopic: null,
+  };
+}
+
 async function streamAgentResponse(messages, onToken) {
   const last = messages[messages.length - 1]?.content ?? "";
   const token = localStorage.getItem("aiame-auth-token");
-  if (!token) {
-    await sleep(300);
-    onToken("Para guardar conversaciones y usar el tutor medico real, inicia sesion con Supabase Auth. El backend ya expone POST /api/chat y espera un Bearer token.");
-    return;
-  }
+  // Sin sesión: modo demostración con el chat completo y todas sus funcionalidades.
+  if (!token) return demoResponse(last, onToken);
 
   const activeChat = getActiveChat();
   let res;
@@ -592,7 +616,11 @@ function knowledgeDoneEl() {
 
 async function requestKnowledge(m, chat, btn) {
   const token = authToken();
-  if (!token) return;
+  if (!token) {   // modo demostración: simula el envío
+    m.knowledgeRequested = true;
+    btn.replaceWith(knowledgeDoneEl());
+    return;
+  }
   btn.disabled = true;
   try {
     const res = await fetch(`${API_BASE_URL}/api/knowledge`, {
