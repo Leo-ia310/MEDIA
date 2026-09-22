@@ -193,6 +193,9 @@ function setLang(next) {
   if (typeof applyRailCollapsed === "function") {
     applyRailCollapsed(document.body.classList.contains("rail-collapsed"));
   }
+  if (typeof applyPracticeCollapsed === "function") {
+    applyPracticeCollapsed(document.body.classList.contains("practice-collapsed"));
+  }
   if (typeof updateAuthUI === "function") updateAuthUI();
 }
 
@@ -221,6 +224,7 @@ const el = {
   charCount:   document.getElementById("charCount"),
   sidebar:     document.getElementById("sidebar"),
   railToggle:  document.getElementById("railToggle"),
+  practiceToggle: document.getElementById("practiceToggle"),
   overlay:     document.getElementById("overlay"),
   suggestions: document.getElementById("suggestions"),
 
@@ -1165,6 +1169,26 @@ el.railToggle?.addEventListener("click", () => {
   try { localStorage.setItem("aiame-rail", collapsed ? "1" : "0"); } catch (_) {}
 });
 applyRailCollapsed(getRailCollapsedPref());
+
+// Rail derecho "Practicar" (mismo botón de despliegue, colapso independiente)
+function applyPracticeCollapsed(collapsed) {
+  document.body.classList.toggle("practice-collapsed", collapsed);
+  if (el.practiceToggle) {
+    el.practiceToggle.setAttribute("aria-expanded", String(!collapsed));
+    const label = t(collapsed ? "rail_toggle_expand" : "rail_toggle");
+    el.practiceToggle.setAttribute("aria-label", label);
+    el.practiceToggle.setAttribute("title", label);
+  }
+}
+function getPracticeCollapsedPref() {
+  try { return localStorage.getItem("aiame-practice") === "1"; } catch (_) { return false; }
+}
+el.practiceToggle?.addEventListener("click", () => {
+  const collapsed = !document.body.classList.contains("practice-collapsed");
+  applyPracticeCollapsed(collapsed);
+  try { localStorage.setItem("aiame-practice", collapsed ? "1" : "0"); } catch (_) {}
+});
+applyPracticeCollapsed(getPracticeCollapsedPref());
 
 // ---------- Ajustes (paneles deslizantes) ----------
 function openPanel(node)  { node.classList.add("is-open"); node.setAttribute("aria-hidden", "false"); }
