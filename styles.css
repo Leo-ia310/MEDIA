@@ -64,6 +64,7 @@
 
   --topbar-h: 60px;
   --rail-w: 200px;
+  --rail-right-w: 210px;
   --sidebar-w: 280px;
   --frame:   #d5deef;   /* marco exterior alrededor de la interfaz */
   --frame-pad: 12px;    /* grosor del marco */
@@ -292,7 +293,7 @@ a { color:inherit; text-decoration:none; }
 .workspace {
   flex:1; min-height:0;
   display:grid;
-  grid-template-columns:var(--rail-w) 1fr;
+  grid-template-columns:var(--rail-w) 1fr var(--rail-right-w);
   transition:grid-template-columns .3s cubic-bezier(.4,0,.2,1);
   gap:12px;
   padding:12px;
@@ -370,8 +371,19 @@ body.rail-collapsed .rail__brand { max-width:0; opacity:0; }
 
 /* Rail contraído: solo iconos */
 body.rail-collapsed { --rail-w:68px; }
-body.rail-collapsed .rail__label { max-width:0; opacity:0; margin-left:0; }
-body.rail-collapsed .rail__item { justify-content:center; padding:11px 0; }
+body.rail-collapsed #rail .rail__label { max-width:0; opacity:0; margin-left:0; }
+body.rail-collapsed #rail .rail__item { justify-content:center; padding:11px 0; }
+
+/* ---------- RAIL DERECHO (practicar) ---------- */
+.rail__section {
+  font-size:12px; font-weight:700; letter-spacing:.6px; text-transform:uppercase;
+  color:var(--text-muted); padding:4px 12px 8px;
+}
+.rail--right .rail__item { color:var(--text-soft); }
+@media (max-width:900px) {
+  .rail--right { display:none; }
+  .workspace { grid-template-columns:var(--rail-w) 1fr; }
+}
 
 /* ---------- SIDEBAR ---------- */
 .sidebar {
