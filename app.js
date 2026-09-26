@@ -789,8 +789,111 @@ function practiceArtifactEl(artifact) {
     btn.addEventListener("click", () => downloadPracticeArtifact(artifact, format, editor.value));
     actions.appendChild(btn);
   });
-  box.append(title, editor, actions);
+  box.append(title, editor);
+  const visualTools = practiceVisualTasksEl(artifact);
+  if (visualTools) box.appendChild(visualTools);
+  box.appendChild(actions);
   return box;
+}
+
+function practiceVisualTasksEl(artifact) {
+  const tasks = artifact.data?.image_tasks || [];
+  if (!tasks.length) return null;
+  const box = document.createElement("div");
+  box.className = "practice-visuals";
+  const head = document.createElement("div");
+  head.className = "practice-visuals__title";
+  head.textContent = "Imágenes educativas con Gemini";
+  box.appendChild(head);
+  tasks.forEach((task) => {
+    const item = document.createElement("div");
+    item.className = "practice-visuals__item";
+    const label = document.createElement("div");
+    label.className = "practice-visuals__label";
+    label.textContent = task.label || "Imagen educativa";
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "practice-artifact__download";
+    btn.textContent = "Generar imagen con Gemini";
+    const preview = document.createElement("div");
+    preview.className = "practice-visuals__preview";
+    const existing = (artifact.data?.generated_visuals || []).find((visual) => visual.task_id === task.id);
+    if (existing) renderPracticeVisualPreview(preview, existing, artifact);
+    btn.addEventListener("click", () => generatePracticeVisual(task, artifact, btn, preview));
+    item.append(label, btn, preview);
+    box.appendChild(item);
+  });
+  return box;
+}
+
+async function generatePracticeVisual(task, artifact, btn, preview) {
+  const token = authToken();
+  if (!token) {
+    window.alert(t("practice_login"));
+    return;
+  }
+  btn.disabled = true;
+  const previous = btn.textContent;
+  btn.textContent = "Generando con Gemini...";
+  try {
+    const res = await fetchWithAuth(`${API_BASE_URL}/api/tools/image`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        prompt: task.prompt,
+        quality: task.quality || "fast",
+        aspect_ratio: task.aspect_ratio || "1:1",
+      }),
+    });
+    if (res.status === 401) { clearAuthSession(); return; }
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.image) {
+      window.alert(data.detail || t("practice_error"));
+      return;
+    }
+    const visual = {
+      task_id: task.id,
+      label: task.label || "Imagen educativa",
+      provider: "gemini",
+      mime_type: data.image.mime_type || "image/png",
+      data: data.image.data,
+      model: data.image.model,
+      asset_kind: "generated_visual",
+    };
+    artifact.data = artifact.data || {};
+    artifact.data.generated_visuals = artifact.data.generated_visuals || [];
+    artifact.data.generated_visuals = artifact.data.generated_visuals.filter((item) => item.task_id !== task.id);
+    artifact.data.generated_visuals.push(visual);
+    renderPracticeVisualPreview(preview, visual, artifact);
+    saveLocalChats();
+  } catch (_) {
+    window.alert(t("practice_error"));
+  } finally {
+    btn.disabled = false;
+    btn.textContent = previous;
+  }
+}
+
+function renderPracticeVisualPreview(preview, visual, artifact) {
+  preview.innerHTML = "";
+  const img = document.createElement("img");
+  img.alt = visual.label || "Imagen educativa generada";
+  img.src = `data:${visual.mime_type || "image/png"};base64,${visual.data}`;
+  const download = document.createElement("button");
+  download.type = "button";
+  download.className = "practice-artifact__download";
+  download.textContent = "Descargar PNG";
+  download.addEventListener("click", () => downloadGeneratedVisual(visual, artifact));
+  preview.append(img, download);
+}
+
+function downloadGeneratedVisual(visual, artifact) {
+  const link = document.createElement("a");
+  link.href = `data:${visual.mime_type || "image/png"};base64,${visual.data}`;
+  link.download = `${artifact.filename || "imagen"}-${visual.task_id || "gemini"}.png`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
 }
 
 function downloadPracticeArtifact(artifact, format, editableText) {

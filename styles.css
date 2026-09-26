@@ -1026,6 +1026,41 @@ body.practice-collapsed #practiceRail .rail__toggle-fill { opacity:.9; transform
   border-color:var(--primary);
   background:color-mix(in srgb, var(--primary) 18%, transparent);
 }
+.practice-visuals {
+  margin-top:12px;
+  padding:12px;
+  border:1px dashed color-mix(in srgb, var(--primary) 40%, var(--border));
+  border-radius:16px;
+  background:color-mix(in srgb, var(--primary) 7%, transparent);
+}
+.practice-visuals__title {
+  font-size:13px;
+  font-weight:800;
+  color:var(--text);
+  margin-bottom:10px;
+}
+.practice-visuals__item {
+  display:grid;
+  gap:8px;
+  padding:10px 0;
+  border-top:1px solid color-mix(in srgb, var(--border) 70%, transparent);
+}
+.practice-visuals__item:first-of-type { border-top:0; padding-top:0; }
+.practice-visuals__label {
+  font-size:13px;
+  color:var(--text-soft);
+}
+.practice-visuals__preview {
+  display:grid;
+  gap:8px;
+  justify-items:start;
+}
+.practice-visuals__preview img {
+  width:min(100%, 520px);
+  border-radius:14px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow-md);
+}
 
 .practice-modal {
   position:fixed;

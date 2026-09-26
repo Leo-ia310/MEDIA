@@ -29,7 +29,13 @@ class ToolsService:
                 "filename": _safe_filename(f"presentacion-{topic}"),
                 "format": "markdown",
                 "editable_text": markdown,
-                "data": {"slides": slides, "options": request.model_dump(mode="json"), "source": _source_summary(context)},
+                "data": {
+                    "slides": slides,
+                    "options": request.model_dump(mode="json"),
+                    "source": _source_summary(context),
+                    "providers": _practice_provider_policy(),
+                    "image_tasks": _presentation_image_tasks(topic, slides) if request.include_images else [],
+                },
                 "downloads": ["markdown", "html", "json"],
             },
         )
@@ -48,7 +54,7 @@ class ToolsService:
                 "filename": _safe_filename(f"cuestionario-{request.topic}"),
                 "format": "markdown",
                 "editable_text": markdown,
-                "data": {"questions": questions, "options": request.model_dump(mode="json"), "source": _source_summary(context)},
+                "data": {"questions": questions, "options": request.model_dump(mode="json"), "source": _source_summary(context), "providers": _practice_provider_policy()},
                 "downloads": ["markdown", "json"],
             },
         )
@@ -67,7 +73,7 @@ class ToolsService:
                 "filename": _safe_filename(f"tarjetas-{request.topic}"),
                 "format": "markdown",
                 "editable_text": markdown,
-                "data": {"cards": cards, "options": request.model_dump(mode="json"), "source": _source_summary(context)},
+                "data": {"cards": cards, "options": request.model_dump(mode="json"), "source": _source_summary(context), "providers": _practice_provider_policy()},
                 "downloads": ["markdown", "json", "csv"],
             },
         )
@@ -91,6 +97,7 @@ class ToolsService:
                     "mindmap": validated.model_dump(mode="json"),
                     "options": request.model_dump(mode="json"),
                     "source": _source_summary(context),
+                    "providers": _practice_provider_policy(),
                     "structured_output": {"provider": "groq", "schema": "StructuredMindmap", "validated": True},
                     "renderer": {"target": "svg_html", "export_ready": ["png", "pdf"]},
                 },
@@ -137,7 +144,12 @@ class ToolsService:
                 "filename": _safe_filename(f"informe-{topic}"),
                 "format": "markdown",
                 "editable_text": markdown,
-                "data": {"options": request.model_dump(mode="json"), "source": _source_summary(context)},
+                "data": {
+                    "options": request.model_dump(mode="json"),
+                    "source": _source_summary(context),
+                    "providers": _practice_provider_policy(),
+                    "image_tasks": _report_image_tasks(topic, request),
+                },
                 "downloads": ["markdown", "html", "json"],
             },
         )
@@ -263,6 +275,14 @@ def _source_summary(context: dict) -> dict:
     }
 
 
+def _practice_provider_policy() -> dict:
+    return {
+        "text_provider": "groq",
+        "image_provider": "gemini",
+        "rule": "Groq genera texto y estructuras; Gemini genera únicamente imágenes educativas bajo demanda.",
+    }
+
+
 def _safe_filename(name: str) -> str:
     allowed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
     slug = "-".join("".join(ch if ch in allowed else " " for ch in name).split()).lower()
@@ -301,6 +321,25 @@ def _presentation_markdown(topic: str, slides: list[dict], request: Presentation
         lines += [f"- {bullet}" for bullet in slide["bullets"]]
         lines += ["", f"Notas del expositor: {slide['speaker_notes']}", ""]
     return "\n".join(lines).strip()
+
+
+def _presentation_image_tasks(topic: str, slides: list[dict]) -> list[dict]:
+    tasks = []
+    for slide in slides[:2]:
+        tasks.append({
+            "id": f"slide-{slide['slide']}",
+            "label": f"Imagen educativa para diapositiva {slide['slide']}",
+            "provider": "gemini",
+            "quality": "fast",
+            "aspect_ratio": "16:9",
+            "prompt": (
+                "Crea una ilustración educativa médica, clara y no diagnóstica, "
+                f"para una presentación sobre {topic}. Diapositiva: {slide['title']}. "
+                "Debe parecer material de estudio, con composición limpia, colores sobrios, "
+                "sin simular una imagen clínica real ni afirmar evidencia diagnóstica."
+            ),
+        })
+    return tasks
 
 
 def _quiz_questions(topic: str, count: int, difficulty: str, context: dict) -> list[dict]:
@@ -394,3 +433,20 @@ def _report_markdown(topic: str, context: dict, request: ReportRequest) -> str:
     if request.include_recommendations:
         lines += ["", "## Recomendaciones de estudio", "- Repasar definiciones y mecanismos antes de memorizar listas.", "- Hacer preguntas de práctica y explicar el tema en voz alta.", "- Verificar las fuentes citadas por el backend cuando estén disponibles."]
     return "\n".join(lines).strip()
+
+
+def _report_image_tasks(topic: str, request: ReportRequest) -> list[dict]:
+    if request.report_type != "study_summary":
+        return []
+    return [{
+        "id": "report-infographic",
+        "label": "Infografía educativa del informe",
+        "provider": "gemini",
+        "quality": "fast",
+        "aspect_ratio": "16:9",
+        "prompt": (
+            "Crea una infografía educativa médica, conceptual y no diagnóstica, "
+            f"para resumir el tema: {topic}. Enfoque: {request.focus or 'puntos clave de estudio'}. "
+            "No debe representar una prueba clínica auténtica ni una evidencia diagnóstica."
+        ),
+    }]

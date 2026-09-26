@@ -133,7 +133,14 @@ Las herramientas educativas expuestas en el rail derecho llaman al backend:
 - `POST /api/tools/report`
 - `POST /api/tools/image`
 
-Las presentaciones pueden preparar prompts visuales para Gemini. Los mapas mentales se entregan como JSON estructurado, no como imagen generativa. Para probar imagenes generadas:
+Regla de proveedores en `Practicar`:
+
+- Groq se usa solo para texto, razonamiento y estructuras educativas.
+- Gemini se usa solo para imagenes generadas.
+- Presentaciones e informes pueden preparar tareas visuales. El frontend muestra "Generar imagen con Gemini" y llama a `POST /api/tools/image` bajo demanda.
+- Mapas mentales, mapas conceptuales, cuadros sinopticos y diagramas de relaciones se entregan como JSON estructurado; no se generan como imagen generativa.
+
+Para probar imagenes generadas:
 
 ```bash
 curl -X POST http://127.0.0.1:8000/api/tools/image \

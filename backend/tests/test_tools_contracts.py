@@ -63,6 +63,8 @@ async def test_quiz_contract_does_not_fake_generation() -> None:
     artifact = response.contract["artifact"]
     assert artifact["kind"] == "quiz"
     assert artifact["data"]["questions"]
+    assert artifact["data"]["providers"]["text_provider"] == "groq"
+    assert artifact["data"]["providers"]["image_provider"] == "gemini"
     assert artifact["editable_text"].startswith("# Cuestionario:")
     assert "json" in artifact["downloads"]
 
@@ -89,6 +91,10 @@ async def test_presentation_contract_uses_gemini_for_images() -> None:
     artifact = response.contract["artifact"]
     assert artifact["kind"] == "presentation"
     assert artifact["data"]["options"]["include_images"] is True
+    assert artifact["data"]["providers"]["text_provider"] == "groq"
+    assert artifact["data"]["providers"]["image_provider"] == "gemini"
+    assert artifact["data"]["image_tasks"]
+    assert {task["provider"] for task in artifact["data"]["image_tasks"]} == {"gemini"}
     assert artifact["data"]["source"]["message_count"] == 2
     assert artifact["editable_text"].startswith("# Presentación:")
     assert "html" in artifact["downloads"]
@@ -113,6 +119,8 @@ async def test_report_contract_uses_conversation_context() -> None:
     artifact = response.contract["artifact"]
     assert artifact["kind"] == "report"
     assert artifact["data"]["source"]["message_count"] == 2
+    assert artifact["data"]["providers"]["text_provider"] == "groq"
+    assert artifact["data"]["image_tasks"][0]["provider"] == "gemini"
     assert artifact["editable_text"].startswith("# Informe:")
 
 
