@@ -49,6 +49,7 @@ const I18N = {
     practice_title:"Practicar", practice_slides:"Presentación", practice_mindmap:"Mapa mental", practice_quiz:"Cuestionario", practice_cards:"Tarjetas didácticas", practice_reports:"Informes",
     practice_no_conversation:"No tienes ninguna conversacion.", practice_login:"Inicia sesión para guardar y generar recursos desde tu conversación.", practice_ready:"Recurso preparado", practice_error:"No se pudo preparar el recurso.",
     img_title:"Generar imagen", img_desc:"Crea una imagen educativa con IA a partir de una descripción.", img_prompt:"Descripción", img_prompt_ph:"Ej: diagrama del ciclo cardíaco con sus fases", img_aspect:"Proporción", img_quality:"Calidad", img_quality_fast:"Rápida", img_quality_high:"Alta calidad", img_close:"Cerrar", img_generate:"Generar", img_generating:"Generando con Gemini…", img_download:"Descargar PNG", img_empty:"Escribe una descripción (mín. 3 caracteres).", img_error:"No se pudo generar la imagen.",
+    model_title:"Modelos", model_desc:"Elige la calidad de las respuestas del chat.", model_low:"Bajo", model_medium:"Medio", model_high:"Alto", model_low_desc:"Respuestas rápidas y directas.", model_medium_desc:"Equilibrio entre rapidez y detalle.", model_high_desc:"Respuestas más completas y razonadas.", model_unavailable:"No configurado", model_status:"Estado", model_health_error:"No se pudo obtener el estado del backend.",
     conv_title:"Conversaciones", conv_search:"Buscar conversaciones…", conv_empty:"Aún no tienes conversaciones.", conv_login:"Inicia sesión para ver tu historial de conversaciones.", conv_loading:"Cargando…", conv_error:"No se pudo cargar el historial.", conv_delete:"Eliminar conversación", conv_delete_confirm:"¿Eliminar esta conversación? No se puede deshacer.", conv_delete_error:"No se pudo eliminar la conversación.",
   },
   en: {
@@ -85,6 +86,7 @@ const I18N = {
     practice_title:"Practice", practice_slides:"Presentation", practice_mindmap:"Mind map", practice_quiz:"Quiz", practice_cards:"Flashcards", practice_reports:"Reports",
     practice_no_conversation:"You don't have any conversations.", practice_login:"Sign in to save and generate resources from your conversation.", practice_ready:"Resource prepared", practice_error:"Could not prepare the resource.",
     img_title:"Generate image", img_desc:"Create an AI educational image from a description.", img_prompt:"Description", img_prompt_ph:"e.g. diagram of the cardiac cycle with its phases", img_aspect:"Aspect ratio", img_quality:"Quality", img_quality_fast:"Fast", img_quality_high:"High quality", img_close:"Close", img_generate:"Generate", img_generating:"Generating with Gemini…", img_download:"Download PNG", img_empty:"Write a description (min. 3 characters).", img_error:"Could not generate the image.",
+    model_title:"Models", model_desc:"Choose the quality of chat responses.", model_low:"Low", model_medium:"Medium", model_high:"High", model_low_desc:"Fast, direct answers.", model_medium_desc:"Balance of speed and detail.", model_high_desc:"More complete, reasoned answers.", model_unavailable:"Not configured", model_status:"Status", model_health_error:"Could not fetch backend status.",
     conv_title:"Conversations", conv_search:"Search conversations…", conv_empty:"You don't have any conversations yet.", conv_login:"Sign in to see your conversation history.", conv_loading:"Loading…", conv_error:"Could not load history.", conv_delete:"Delete conversation", conv_delete_confirm:"Delete this conversation? This can't be undone.", conv_delete_error:"Could not delete the conversation.",
   },
   fr: {
@@ -121,6 +123,7 @@ const I18N = {
     practice_title:"S'entraîner", practice_slides:"Présentation", practice_mindmap:"Carte mentale", practice_quiz:"Questionnaire", practice_cards:"Cartes mémo", practice_reports:"Rapports",
     practice_no_conversation:"Tu n'as aucune conversation.", practice_login:"Connecte-toi pour sauvegarder et générer des ressources depuis ta conversation.", practice_ready:"Ressource préparée", practice_error:"Impossible de préparer la ressource.",
     img_title:"Générer une image", img_desc:"Crée une image éducative par IA à partir d'une description.", img_prompt:"Description", img_prompt_ph:"ex : schéma du cycle cardiaque et ses phases", img_aspect:"Format", img_quality:"Qualité", img_quality_fast:"Rapide", img_quality_high:"Haute qualité", img_close:"Fermer", img_generate:"Générer", img_generating:"Génération avec Gemini…", img_download:"Télécharger PNG", img_empty:"Écris une description (min. 3 caractères).", img_error:"Impossible de générer l'image.",
+    model_title:"Modèles", model_desc:"Choisis la qualité des réponses du chat.", model_low:"Bas", model_medium:"Moyen", model_high:"Élevé", model_low_desc:"Réponses rapides et directes.", model_medium_desc:"Équilibre entre rapidité et détail.", model_high_desc:"Réponses plus complètes et raisonnées.", model_unavailable:"Non configuré", model_status:"État", model_health_error:"Impossible d'obtenir l'état du backend.",
     conv_title:"Conversations", conv_search:"Rechercher des conversations…", conv_empty:"Tu n'as pas encore de conversations.", conv_login:"Connecte-toi pour voir ton historique de conversations.", conv_loading:"Chargement…", conv_error:"Impossible de charger l'historique.", conv_delete:"Supprimer la conversation", conv_delete_confirm:"Supprimer cette conversation ? Action irréversible.", conv_delete_error:"Impossible de supprimer la conversation.",
   },
   pt: {
@@ -157,6 +160,7 @@ const I18N = {
     practice_title:"Praticar", practice_slides:"Apresentação", practice_mindmap:"Mapa mental", practice_quiz:"Questionário", practice_cards:"Cartões didáticos", practice_reports:"Relatórios",
     practice_no_conversation:"Você não tem nenhuma conversa.", practice_login:"Entre para salvar e gerar recursos a partir da sua conversa.", practice_ready:"Recurso preparado", practice_error:"Não foi possível preparar o recurso.",
     img_title:"Gerar imagem", img_desc:"Crie uma imagem educativa com IA a partir de uma descrição.", img_prompt:"Descrição", img_prompt_ph:"ex: diagrama do ciclo cardíaco com suas fases", img_aspect:"Proporção", img_quality:"Qualidade", img_quality_fast:"Rápida", img_quality_high:"Alta qualidade", img_close:"Fechar", img_generate:"Gerar", img_generating:"Gerando com Gemini…", img_download:"Baixar PNG", img_empty:"Escreva uma descrição (mín. 3 caracteres).", img_error:"Não foi possível gerar a imagem.",
+    model_title:"Modelos", model_desc:"Escolha a qualidade das respostas do chat.", model_low:"Baixo", model_medium:"Médio", model_high:"Alto", model_low_desc:"Respostas rápidas e diretas.", model_medium_desc:"Equilíbrio entre rapidez e detalhe.", model_high_desc:"Respostas mais completas e fundamentadas.", model_unavailable:"Não configurado", model_status:"Estado", model_health_error:"Não foi possível obter o estado do backend.",
     conv_title:"Conversas", conv_search:"Buscar conversas…", conv_empty:"Você ainda não tem conversas.", conv_login:"Entre para ver seu histórico de conversas.", conv_loading:"Carregando…", conv_error:"Não foi possível carregar o histórico.", conv_delete:"Excluir conversa", conv_delete_confirm:"Excluir esta conversa? Não é possível desfazer.", conv_delete_error:"Não foi possível excluir a conversa.",
   },
 };
@@ -344,7 +348,7 @@ async function streamAgentResponse(messages, onToken) {
       body: JSON.stringify({
         conversation_id: activeChat?.backendConversationId ?? null,
         message: last,
-        effort: "low",
+        effort: getEffortPref(),
         attachments: chatAttachmentsForBackend(lastMessage.attachments || []),
       }),
     });
@@ -1015,6 +1019,111 @@ function openImageGenerator() {
   });
 
   form.querySelector("textarea")?.focus();
+}
+
+// ---------- Modelos: calidad de respuesta (effort) + estado (/api/health) ----------
+const MODEL_TIERS = [
+  { key: "low",    label: "model_low",    desc: "model_low_desc" },
+  { key: "medium", label: "model_medium", desc: "model_medium_desc" },
+  { key: "high",   label: "model_high",   desc: "model_high_desc" },
+];
+
+function getEffortPref() {
+  try {
+    const v = localStorage.getItem("aiame-effort");
+    return v === "low" || v === "medium" || v === "high" ? v : "medium";
+  } catch (_) { return "medium"; }
+}
+function setEffortPref(v) {
+  try { localStorage.setItem("aiame-effort", v); } catch (_) {}
+}
+
+function openModels() {
+  ensurePracticeModalStyles();
+  ensureModelModalStyles();
+  const overlay = document.createElement("div");
+  overlay.className = "practice-modal";
+  overlay.innerHTML = `
+    <div class="practice-modal__card" role="dialog" aria-modal="true">
+      <h2>${escapeHtml(t("model_title"))}</h2>
+      <p>${escapeHtml(t("model_desc"))}</p>
+      <div class="model-list"></div>
+      <div class="model-status" hidden></div>
+      <div class="practice-modal__actions">
+        <button type="button" data-cancel>${escapeHtml(t("img_close"))}</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  const list = overlay.querySelector(".model-list");
+  const statusEl = overlay.querySelector(".model-status");
+  const close = () => { overlay.remove(); document.removeEventListener("keydown", onKey); };
+  const onKey = (e) => { if (e.key === "Escape") close(); };
+  document.addEventListener("keydown", onKey);
+  overlay.querySelector("[data-cancel]").addEventListener("click", close);
+  overlay.addEventListener("click", (e) => { if (e.target === overlay) close(); });
+
+  const renderList = (models, configured) => {
+    list.innerHTML = "";
+    const current = getEffortPref();
+    MODEL_TIERS.forEach((tier) => {
+      const card = document.createElement("button");
+      card.type = "button";
+      card.className = "model-card" + (tier.key === current ? " is-selected" : "");
+      const available = !configured || configured[tier.key] !== false;
+      if (!available) card.classList.add("is-unavailable");
+      const modelName = models ? models[`${tier.key}_model`] : "";
+      card.innerHTML = `
+        <span class="model-card__head">
+          <span class="model-card__name">${escapeHtml(t(tier.label))}</span>
+          <span class="model-card__check" aria-hidden="true">✓</span>
+        </span>
+        <span class="model-card__desc">${escapeHtml(t(tier.desc))}</span>
+        <span class="model-card__model">${escapeHtml(modelName || (available ? "" : t("model_unavailable")))}</span>`;
+      card.addEventListener("click", () => {
+        setEffortPref(tier.key);
+        list.querySelectorAll(".model-card").forEach((c) => c.classList.remove("is-selected"));
+        card.classList.add("is-selected");
+      });
+      list.appendChild(card);
+    });
+  };
+
+  renderList(null, null);
+  // Estado del backend + nombres reales de modelo (endpoint público)
+  fetchWithAuth(`${API_BASE_URL}/api/health`)
+    .then((res) => res.ok ? res.json() : Promise.reject())
+    .then((data) => {
+      const primary = data.details?.providers?.primary || {};
+      renderList(primary, data.details?.models_configured || null);
+      statusEl.hidden = false;
+      const dot = data.status === "healthy" ? "🟢" : data.status === "degraded" ? "🟡" : "🔴";
+      statusEl.textContent = `${dot} ${t("model_status")}: ${data.status} · IA: ${data.ai_provider_configuration}`;
+    })
+    .catch(() => {
+      statusEl.hidden = false;
+      statusEl.textContent = t("model_health_error");
+    });
+}
+
+function ensureModelModalStyles() {
+  if (document.getElementById("model-modal-runtime-styles")) return;
+  const style = document.createElement("style");
+  style.id = "model-modal-runtime-styles";
+  style.textContent = `
+    .model-list{display:grid!important;gap:10px!important}
+    .model-card{display:grid!important;gap:4px!important;text-align:left!important;width:100%!important;box-sizing:border-box!important;padding:14px 16px!important;border:1.5px solid var(--border,#2b3344)!important;border-radius:16px!important;background:var(--bg-soft,#0b0b0b)!important;color:var(--text,#fff)!important;cursor:pointer!important;transition:border-color .15s ease,background .15s ease!important}
+    .model-card:hover{border-color:var(--primary,#2f6df6)!important}
+    .model-card.is-selected{border-color:var(--primary,#2f6df6)!important;background:color-mix(in srgb,var(--primary,#2f6df6) 12%,transparent)!important}
+    .model-card.is-unavailable{opacity:.55!important}
+    .model-card__head{display:flex!important;align-items:center!important;justify-content:space-between!important}
+    .model-card__name{font-size:15.5px!important;font-weight:700!important}
+    .model-card__check{color:var(--primary,#2f6df6)!important;font-weight:800!important;opacity:0!important}
+    .model-card.is-selected .model-card__check{opacity:1!important}
+    .model-card__desc{font-size:13px!important;color:var(--text-soft,#d7dce7)!important}
+    .model-card__model{font-size:11.5px!important;color:var(--text-muted,#9aa3b2)!important;font-family:ui-monospace,monospace!important}
+    .model-status{margin-top:16px!important;font-size:12.5px!important;color:var(--text-muted,#9aa3b2)!important;text-align:center!important}
+  `;
+  document.head.appendChild(style);
 }
 
 function downloadPracticeArtifact(artifact, format, editableText) {
@@ -1887,8 +1996,9 @@ document.querySelectorAll(".rail__item").forEach((item) => {
 
     if (section === "ajustes") { openSettings(); return; }
     if (section === "imagenes") { openImageGenerator(); return; }
+    if (section === "modelos") { openModels(); return; }
 
-    // Secciones (placeholder para futuras vistas: Modelos)
+    // Secciones (placeholder para futuras vistas)
     document.querySelectorAll(".rail__item").forEach((i) => i.classList.remove("is-active"));
     item.classList.add("is-active");
     // TODO: conmutar aquí el contenido de .main según item.dataset.section
