@@ -1477,8 +1477,8 @@ function openSidebarMobile() {
   el.overlay.hidden = false;
 }
 function closeSidebarMobile() {
-  el.sidebar.classList.remove("is-open");
-  el.overlay.hidden = true;
+  el.sidebar?.classList.remove("is-open");
+  if (el.overlay) el.overlay.hidden = true;
 }
 
 // ---------- Tema ----------
@@ -2159,17 +2159,73 @@ function closeConversations() { closePanel(el.conversationsPanel); }
 
 async function loadConversations() {
   const token = authToken();
-  if (!token) { renderConvMessage(t("conv_login")); return; }
+  // Sin sesión: historial local (chats guardados en el navegador).
+  if (!token) { renderLocalChats(el.convSearch?.value || ""); return; }
   renderConvMessage(t("conv_loading"));
   try {
     const res = await fetchWithAuth(`${API_BASE_URL}/api/conversations`);
-    if (res.status === 401) { clearAuthSession(); renderConvMessage(t("conv_login")); return; }
+    if (res.status === 401) { clearAuthSession(); renderLocalChats(el.convSearch?.value || ""); return; }
     if (!res.ok) { renderConvMessage(t("conv_error")); return; }
     conversationsCache = await res.json();
     renderConvList(el.convSearch?.value || "");
   } catch (_) {
     renderConvMessage(t("conv_error"));
   }
+}
+
+// Renderiza los chats guardados localmente (modo sin sesión)
+function renderLocalChats(filter = "") {
+  if (!el.convList) return;
+  const q = filter.trim().toLowerCase();
+  const items = state.chats
+    .filter((c) => Array.isArray(c.messages) && c.messages.some((m) => !m.streaming && (m.content || "").trim()))
+    .filter((c) => !q || (c.title || "").toLowerCase().includes(q));
+  if (!items.length) { renderConvMessage(t("conv_empty")); return; }
+  el.convList.innerHTML = "";
+  items.forEach((c) => {
+    const row = document.createElement("div");
+    row.className = "conv-item" + (c.id === state.activeChatId ? " is-active" : "");
+    const when = c.updatedAt || c.createdAt;
+    const date = when ? new Date(when).toLocaleDateString(lang, { day: "2-digit", month: "short" }) : "";
+
+    const main = document.createElement("button");
+    main.className = "conv-item__main";
+    main.type = "button";
+    main.innerHTML = `
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+        <path d="M4 5h16v11H8l-4 4V5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <span class="conv-item__title">${escapeHtml(c.title || t("default_chat_title"))}</span>
+      <span class="conv-item__date">${escapeHtml(date)}</span>`;
+    main.addEventListener("click", () => { switchChat(c.id); closeConversations(); });
+
+    const del = document.createElement("button");
+    del.className = "conv-item__delete";
+    del.type = "button";
+    del.setAttribute("aria-label", t("conv_delete"));
+    del.title = t("conv_delete");
+    del.innerHTML = `
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+        <path d="M4 7h16M9 7V5h6v2m-8 0 1 13h8l1-13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>`;
+    del.addEventListener("click", () => deleteLocalChat(c.id));
+
+    row.appendChild(main);
+    row.appendChild(del);
+    el.convList.appendChild(row);
+  });
+}
+
+function deleteLocalChat(id) {
+  if (!window.confirm(t("conv_delete_confirm"))) return;
+  state.chats = state.chats.filter((c) => c.id !== id);
+  if (state.activeChatId === id) {
+    if (state.chats.length) state.activeChatId = state.chats[0].id;
+    else createChat();
+  }
+  saveLocalChats();
+  renderMessages();
+  renderLocalChats(el.convSearch?.value || "");
 }
 
 function renderConvMessage(msg) {
@@ -2281,7 +2337,10 @@ el.openLearning?.addEventListener("click", openLearning);
 el.learnBack?.addEventListener("click", closeLearning);
 el.dataBack.addEventListener("click", closeData);
 el.convBack?.addEventListener("click", closeConversations);
-el.convSearch?.addEventListener("input", () => renderConvList(el.convSearch.value));
+el.convSearch?.addEventListener("input", () => {
+  if (authToken()) renderConvList(el.convSearch.value);
+  else renderLocalChats(el.convSearch.value);
+});
 
 // Desplegable de idioma (personalizado)
 function toggleLangMenu(open) {
