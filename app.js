@@ -1537,9 +1537,58 @@ function setAuthSession(session) {
     if (session.user?.email) localStorage.setItem("aiame-user-email", session.user.email);
   } catch (_) {}
   updateAuthUI();
-  if (getActiveChat()) ensureBackendConversation(getActiveChat());
+  // Reconstruye los chats locales en el backend (reenvía cada pregunta por /api/chat).
+  syncLocalChatsToBackend().finally(() => loadConversations());
   // Pre-carga el historial para que "Buscar chats" abra al instante.
   loadConversations();
+}
+
+// Sincroniza los chats locales al backend rehaciéndolos vía POST /api/chat.
+// El backend no permite importar mensajes: reenvía cada pregunta del usuario y
+// el backend regenera las respuestas (pueden diferir de las locales).
+let isSyncingChats = false;
+async function syncLocalChatsToBackend() {
+  const token = authToken();
+  if (!token || isSyncingChats) return;
+  const active = getActiveChat();
+  // El chat activo primero (para enlazarlo cuanto antes), luego el resto.
+  const ordered = [active, ...state.chats.filter((c) => c !== active)].filter(Boolean);
+  const pending = ordered.filter((c) =>
+    !c.backendConversationId &&
+    Array.isArray(c.messages) &&
+    c.messages.some((m) => m.role === "user" && (m.content || "").trim())
+  );
+  if (!pending.length) return;
+  isSyncingChats = true;
+  try {
+    for (const chat of pending) {
+      const userMsgs = chat.messages.filter((m) => m.role === "user" && (m.content || "").trim());
+      for (const msg of userMsgs) {
+        let res;
+        try {
+          res = await fetchWithAuth(`${API_BASE_URL}/api/chat`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              conversation_id: chat.backendConversationId ?? null,
+              message: msg.content,
+              effort: getEffortPref(),
+            }),
+          });
+        } catch (_) { return; }  // backend caído: se reintenta en el próximo inicio de sesión
+        if (res.status === 401) { clearAuthSession(); return; }
+        if (!res.ok) break;      // error en este chat: pasa al siguiente
+        const data = await res.json().catch(() => ({}));
+        if (data.conversation_id && !chat.backendConversationId) {
+          chat.backendConversationId = data.conversation_id;
+          saveLocalChats();
+        }
+      }
+    }
+  } finally {
+    isSyncingChats = false;
+    saveLocalChats();
+  }
 }
 
 function clearAuthSession() {
