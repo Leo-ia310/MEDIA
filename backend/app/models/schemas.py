@@ -39,10 +39,19 @@ class AuthUser(BaseModel):
     token: str
 
 
+class ChatAttachment(BaseModel):
+    type: Literal["image", "file"] = "file"
+    name: str | None = Field(default=None, max_length=240)
+    mime_type: str | None = Field(default=None, max_length=120)
+    url: str | None = Field(default=None, max_length=2_000_000)
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+
 class ChatRequest(BaseModel):
     conversation_id: UUID | None = None
     message: str = Field(min_length=1, max_length=8000)
     effort: Effort = Effort.medium
+    attachments: list[ChatAttachment] = Field(default_factory=list, max_length=6)
 
 
 class Citation(BaseModel):
@@ -142,6 +151,7 @@ class QuizRequest(BaseModel):
     topic: str = Field(min_length=1, max_length=200)
     difficulty: Literal["basic", "intermediate", "advanced"] = "intermediate"
     question_count: int = Field(default=5, ge=1, le=20)
+    question_type: Literal["multiple_choice", "short_answer", "mixed"] = "multiple_choice"
 
 
 class FlashcardRequest(BaseModel):
@@ -151,11 +161,71 @@ class FlashcardRequest(BaseModel):
     difficulty: Literal["basic", "intermediate", "advanced"] = "intermediate"
     answer_length: Literal["short", "medium"] = "short"
     clinical_context: bool = False
+    mode: Literal["concepts", "clinical", "exam"] = "concepts"
 
 
 class MindmapRequest(BaseModel):
+    conversation_id: UUID | None = None
     topic: str = Field(min_length=1, max_length=200)
     type: Literal["mind_map", "concept_map", "synoptic_chart", "relationship_diagram"] = "mind_map"
+    detail_level: Literal["basic", "intermediate", "advanced"] = "intermediate"
+
+
+class PresentationRequest(BaseModel):
+    conversation_id: UUID
+    topic: str | None = Field(default=None, max_length=200)
+    slide_count: int = Field(default=8, ge=3, le=20)
+    include_images: bool = True
+    presentation_type: Literal["class", "oral_expo", "study_summary", "clinical_case"] = "study_summary"
+    audience: str | None = Field(default=None, max_length=120)
+
+
+class ReportRequest(BaseModel):
+    conversation_id: UUID
+    topic: str | None = Field(default=None, max_length=200)
+    report_type: Literal["study_summary", "progress_report", "clinical_brief"] = "study_summary"
+    include_recommendations: bool = True
+    focus: str | None = Field(default=None, max_length=200)
+
+
+class ImageGenerationRequest(BaseModel):
+    prompt: str = Field(min_length=3, max_length=3000)
+    quality: Literal["fast", "quality"] = "fast"
+    aspect_ratio: Literal["1:1", "4:3", "3:4", "16:9", "9:16"] = "1:1"
+
+
+class GeneratedImageOut(BaseModel):
+    mime_type: str
+    data: str
+    model: str
+    provider: str = "gemini"
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+class ImageGenerationResponse(BaseModel):
+    status: Literal["generated"]
+    image: GeneratedImageOut
+
+
+class MindmapNode(BaseModel):
+    id: str = Field(min_length=1, max_length=80)
+    label: str = Field(min_length=1, max_length=160)
+    description: str | None = Field(default=None, max_length=600)
+    level: int | None = Field(default=None, ge=0, le=12)
+    category: str | None = Field(default=None, max_length=80)
+
+
+class MindmapEdge(BaseModel):
+    source: str = Field(min_length=1, max_length=80)
+    target: str = Field(min_length=1, max_length=80)
+    label: str | None = Field(default=None, max_length=160)
+
+
+class StructuredMindmap(BaseModel):
+    title: str = Field(min_length=1, max_length=200)
+    description: str | None = Field(default=None, max_length=800)
+    nodes: list[MindmapNode] = Field(min_length=1, max_length=80)
+    edges: list[MindmapEdge] = Field(default_factory=list, max_length=160)
 
 
 class ToolPreparedResponse(BaseModel):
@@ -185,6 +255,10 @@ class HealthResponse(BaseModel):
 class AuthCredentials(BaseModel):
     email: str = Field(min_length=5, max_length=320)
     password: str = Field(min_length=6, max_length=128)
+
+
+class RefreshTokenIn(BaseModel):
+    refresh_token: str = Field(min_length=10, max_length=4096)
 
 
 class AuthSessionOut(BaseModel):

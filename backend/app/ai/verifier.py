@@ -4,7 +4,8 @@ from app.models.schemas import AnswerStatus, VerificationResult, VerificationSta
 
 class AnswerVerifier:
     async def verify(self, *, answer: str, evidence: list[EvidenceChunk], strict_grounding: bool) -> VerificationResult:
-        if strict_grounding and not evidence:
+        medical_evidence = [chunk for chunk in evidence if chunk.metadata.get("source") == "supabase_medical"]
+        if strict_grounding and not medical_evidence:
             return VerificationResult(
                 evidence_sufficient=False,
                 claims_supported=False,
@@ -14,7 +15,7 @@ class AnswerVerifier:
                 verification_status=VerificationStatus.insufficient_evidence,
                 answer_status=AnswerStatus.insufficient_evidence,
             )
-        if not evidence:
+        if not medical_evidence:
             return VerificationResult(
                 evidence_sufficient=False,
                 claims_supported=False,

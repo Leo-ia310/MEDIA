@@ -2,7 +2,10 @@ from fastapi import Depends
 
 from app.ai.model_router import ModelRouter
 from app.ai.orchestrator import AIOrchestrator
+from app.ai.project_context import ProjectContextService
+from app.ai.provider_router import AIProviderRouter
 from app.ai.providers.cloudflare import CloudflareWorkersAIProvider
+from app.ai.providers.groq import GroqProvider
 from app.ai.retrieval import RetrievalService
 from app.ai.verifier import AnswerVerifier
 from app.core.config import Settings, get_settings
@@ -27,11 +30,13 @@ def get_learning_service(repo: SupabaseRepository = Depends(get_repo)) -> Learni
 
 
 def get_orchestrator(settings: Settings = Depends(get_settings)) -> AIOrchestrator:
+    repo = SupabaseRepository(settings)
     return AIOrchestrator(
         settings=settings,
-        provider=CloudflareWorkersAIProvider(settings),
+        provider=AIProviderRouter(settings, primary=GroqProvider(settings), fallback=CloudflareWorkersAIProvider(settings)),
         router=ModelRouter(settings),
-        retrieval=RetrievalService(settings),
+        retrieval=RetrievalService(settings, repo),
+        project_context=ProjectContextService(settings),
         verifier=AnswerVerifier(),
     )
 
@@ -48,5 +53,5 @@ def get_knowledge_service(repo: SupabaseRepository = Depends(get_repo)) -> Knowl
     return KnowledgeService(repo)
 
 
-def get_tools_service() -> ToolsService:
-    return ToolsService()
+def get_tools_service(settings: Settings = Depends(get_settings), repo: SupabaseRepository = Depends(get_repo)) -> ToolsService:
+    return ToolsService(settings=settings, repo=repo)

@@ -20,3 +20,6 @@ build/
 
 # Entorno
 .env
+
+# Archivo local muy grande; mantener fuera del repo y de LFS por ahora
+Referencias/anatomy-and-physiology-2e_-_WEB.pdf

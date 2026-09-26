@@ -31,6 +31,9 @@ class SupabaseClient:
     async def sign_in_with_password(self, *, email: str, password: str) -> dict[str, Any]:
         return await self._auth_request("token?grant_type=password", {"email": email, "password": password})
 
+    async def refresh_session(self, *, refresh_token: str) -> dict[str, Any]:
+        return await self._auth_request("token?grant_type=refresh_token", {"refresh_token": refresh_token})
+
     async def _auth_request(self, path: str, payload: dict[str, Any]) -> dict[str, Any]:
         if not self.settings.supabase_configured:
             raise AuthenticationError("Supabase is not configured")

@@ -1,6 +1,9 @@
+from pathlib import Path
+
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from app.api import auth, chat, clinical, conversations, health, knowledge, learning, tools
 from app.core.config import get_settings
@@ -11,6 +14,10 @@ settings = get_settings()
 configure_logging(settings.log_level)
 
 app = FastAPI(title="AIAME Medical Tutor Backend", version="0.1.0")
+
+references_path = Path(settings.references_dir).expanduser()
+if references_path.exists():
+    app.mount("/references", StaticFiles(directory=references_path), name="references")
 
 
 def cors_headers_for(request: Request) -> dict[str, str]:

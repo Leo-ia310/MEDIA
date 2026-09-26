@@ -47,6 +47,7 @@ const I18N = {
     learn_title:"Perfil de aprendizaje", learn_desc:"Cómo AIAME adapta sus explicaciones a ti", learn_style:"Estilo de explicación", learn_difficulty:"Nivel de dificultad", learn_strengths:"Fortalezas", learn_growth:"Áreas de mejora", learn_confusions:"Confusiones frecuentes", learn_none:"Aún no hay datos.", learn_error:"No se pudo cargar tu perfil.", learn_style_balanced:"Equilibrado", learn_style_concise:"Conciso", learn_style_detailed:"Detallado", learn_style_visual:"Visual", learn_diff_basic:"Básico", learn_diff_intermediate:"Intermedio", learn_diff_advanced:"Avanzado",
     demo_topic:"tu consulta", demo_intro:"Aquí tienes una explicación sobre", demo_point1:"Idea clave relacionada con el tema.", demo_point2:"Un segundo punto con más detalle.", demo_point3:"Un tercer punto para ampliar.", demo_code_intro:"También puedo usar formato enriquecido y bloques de código:", demo_note:"Respuesta de demostración. Inicia sesión para el tutor médico real con fuentes verificadas.", demo_followup:"¿Quieres que profundice en", demo_asset:"Recurso de ejemplo",
     practice_title:"Practicar", practice_slides:"Presentación", practice_mindmap:"Mapa mental", practice_quiz:"Cuestionario", practice_cards:"Tarjetas didácticas", practice_reports:"Informes",
+    practice_no_conversation:"No tienes ninguna conversacion.", practice_login:"Inicia sesión para guardar y generar recursos desde tu conversación.", practice_ready:"Recurso preparado", practice_error:"No se pudo preparar el recurso.",
     conv_title:"Conversaciones", conv_search:"Buscar conversaciones…", conv_empty:"Aún no tienes conversaciones.", conv_login:"Inicia sesión para ver tu historial de conversaciones.", conv_loading:"Cargando…", conv_error:"No se pudo cargar el historial.", conv_delete:"Eliminar conversación", conv_delete_confirm:"¿Eliminar esta conversación? No se puede deshacer.", conv_delete_error:"No se pudo eliminar la conversación.",
   },
   en: {
@@ -81,6 +82,7 @@ const I18N = {
     learn_title:"Learning profile", learn_desc:"How AIAME tailors its explanations to you", learn_style:"Explanation style", learn_difficulty:"Difficulty level", learn_strengths:"Strengths", learn_growth:"Growth areas", learn_confusions:"Frequent confusions", learn_none:"No data yet.", learn_error:"Could not load your profile.", learn_style_balanced:"Balanced", learn_style_concise:"Concise", learn_style_detailed:"Detailed", learn_style_visual:"Visual", learn_diff_basic:"Basic", learn_diff_intermediate:"Intermediate", learn_diff_advanced:"Advanced",
     demo_topic:"your question", demo_intro:"Here's an explanation about", demo_point1:"A key idea related to the topic.", demo_point2:"A second point with more detail.", demo_point3:"A third point to expand on.", demo_code_intro:"I can also use rich formatting and code blocks:", demo_note:"Demo response. Sign in for the real medical tutor with verified sources.", demo_followup:"Want me to go deeper into", demo_asset:"Example resource",
     practice_title:"Practice", practice_slides:"Presentation", practice_mindmap:"Mind map", practice_quiz:"Quiz", practice_cards:"Flashcards", practice_reports:"Reports",
+    practice_no_conversation:"You don't have any conversations.", practice_login:"Sign in to save and generate resources from your conversation.", practice_ready:"Resource prepared", practice_error:"Could not prepare the resource.",
     conv_title:"Conversations", conv_search:"Search conversations…", conv_empty:"You don't have any conversations yet.", conv_login:"Sign in to see your conversation history.", conv_loading:"Loading…", conv_error:"Could not load history.", conv_delete:"Delete conversation", conv_delete_confirm:"Delete this conversation? This can't be undone.", conv_delete_error:"Could not delete the conversation.",
   },
   fr: {
@@ -115,6 +117,7 @@ const I18N = {
     learn_title:"Profil d'apprentissage", learn_desc:"Comment AIAME adapte ses explications", learn_style:"Style d'explication", learn_difficulty:"Niveau de difficulté", learn_strengths:"Points forts", learn_growth:"Axes de progrès", learn_confusions:"Confusions fréquentes", learn_none:"Pas encore de données.", learn_error:"Impossible de charger ton profil.", learn_style_balanced:"Équilibré", learn_style_concise:"Concis", learn_style_detailed:"Détaillé", learn_style_visual:"Visuel", learn_diff_basic:"Basique", learn_diff_intermediate:"Intermédiaire", learn_diff_advanced:"Avancé",
     demo_topic:"ta question", demo_intro:"Voici une explication sur", demo_point1:"Une idée clé liée au sujet.", demo_point2:"Un deuxième point plus détaillé.", demo_point3:"Un troisième point pour approfondir.", demo_code_intro:"Je peux aussi utiliser du formatage riche et des blocs de code :", demo_note:"Réponse de démonstration. Connecte-toi pour le vrai tuteur médical avec des sources vérifiées.", demo_followup:"Veux-tu que j'approfondisse", demo_asset:"Ressource d'exemple",
     practice_title:"S'entraîner", practice_slides:"Présentation", practice_mindmap:"Carte mentale", practice_quiz:"Questionnaire", practice_cards:"Cartes mémo", practice_reports:"Rapports",
+    practice_no_conversation:"Tu n'as aucune conversation.", practice_login:"Connecte-toi pour sauvegarder et générer des ressources depuis ta conversation.", practice_ready:"Ressource préparée", practice_error:"Impossible de préparer la ressource.",
     conv_title:"Conversations", conv_search:"Rechercher des conversations…", conv_empty:"Tu n'as pas encore de conversations.", conv_login:"Connecte-toi pour voir ton historique de conversations.", conv_loading:"Chargement…", conv_error:"Impossible de charger l'historique.", conv_delete:"Supprimer la conversation", conv_delete_confirm:"Supprimer cette conversation ? Action irréversible.", conv_delete_error:"Impossible de supprimer la conversation.",
   },
   pt: {
@@ -149,6 +152,7 @@ const I18N = {
     learn_title:"Perfil de aprendizado", learn_desc:"Como o AIAME adapta as explicações a você", learn_style:"Estilo de explicação", learn_difficulty:"Nível de dificuldade", learn_strengths:"Pontos fortes", learn_growth:"Áreas de melhoria", learn_confusions:"Confusões frequentes", learn_none:"Ainda não há dados.", learn_error:"Não foi possível carregar seu perfil.", learn_style_balanced:"Equilibrado", learn_style_concise:"Conciso", learn_style_detailed:"Detalhado", learn_style_visual:"Visual", learn_diff_basic:"Básico", learn_diff_intermediate:"Intermediário", learn_diff_advanced:"Avançado",
     demo_topic:"sua pergunta", demo_intro:"Aqui está uma explicação sobre", demo_point1:"Uma ideia-chave relacionada ao tema.", demo_point2:"Um segundo ponto com mais detalhe.", demo_point3:"Um terceiro ponto para ampliar.", demo_code_intro:"Também posso usar formatação rica e blocos de código:", demo_note:"Resposta de demonstração. Entre para o tutor médico real com fontes verificadas.", demo_followup:"Quer que eu aprofunde em", demo_asset:"Recurso de exemplo",
     practice_title:"Praticar", practice_slides:"Apresentação", practice_mindmap:"Mapa mental", practice_quiz:"Questionário", practice_cards:"Cartões didáticos", practice_reports:"Relatórios",
+    practice_no_conversation:"Você não tem nenhuma conversa.", practice_login:"Entre para salvar e gerar recursos a partir da sua conversa.", practice_ready:"Recurso preparado", practice_error:"Não foi possível preparar o recurso.",
     conv_title:"Conversas", conv_search:"Buscar conversas…", conv_empty:"Você ainda não tem conversas.", conv_login:"Entre para ver seu histórico de conversas.", conv_loading:"Carregando…", conv_error:"Não foi possível carregar o histórico.", conv_delete:"Excluir conversa", conv_delete_confirm:"Excluir esta conversa? Não é possível desfazer.", conv_delete_error:"Não foi possível excluir a conversa.",
   },
 };
@@ -319,7 +323,8 @@ async function demoResponse(question, onToken) {
 }
 
 async function streamAgentResponse(messages, onToken) {
-  const last = messages[messages.length - 1]?.content ?? "";
+  const lastMessage = messages[messages.length - 1] || {};
+  const last = lastMessage.content ?? "";
   const token = localStorage.getItem("aiame-auth-token");
   // Sin sesión: modo demostración con el chat completo y todas sus funcionalidades.
   if (!token) return demoResponse(last, onToken);
@@ -327,25 +332,24 @@ async function streamAgentResponse(messages, onToken) {
   const activeChat = getActiveChat();
   let res;
   try {
-    res = await fetch(`${API_BASE_URL}/api/chat`, {
+    res = await fetchWithAuth(`${API_BASE_URL}/api/chat`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify({
         conversation_id: activeChat?.backendConversationId ?? null,
         message: last,
         effort: "low",
+        attachments: chatAttachmentsForBackend(lastMessage.attachments || []),
       }),
     });
   } catch (err) {
-    onToken("⚠️ Hubo un error de red al conectar con el backend.");
+    onToken("⚠️ No pude conectar con el backend en http://127.0.0.1:8000. Abre el backend con `uvicorn app.main:app --host 127.0.0.1 --port 8000` dentro de la carpeta `backend` y verifica `/api/health`.");
     return;
   }
 
   if (res.status === 401) {
-    clearAuthSession();
     onToken("Tu sesión no está activa o expiró. Inicia sesión otra vez desde el botón de cuenta para usar el tutor.");
     return;
   }
@@ -356,20 +360,16 @@ async function streamAgentResponse(messages, onToken) {
   }
   
   const data = await res.json();
-  if (activeChat && data.conversation_id) activeChat.backendConversationId = data.conversation_id;
+  if (activeChat && data.conversation_id) {
+    activeChat.backendConversationId = data.conversation_id;
+    touchChat(activeChat);
+  }
 
   const status = data.answer_status === "unverified_model_knowledge"
     ? "\n\n_Esta respuesta usa conocimiento general del modelo y aun no tiene citas documentales verificadas._"
     : "";
 
-  // Citas del tutor médico (si las hay) como fuentes en Markdown
-  let sources = "";
-  if (Array.isArray(data.citations) && data.citations.length) {
-    sources = `\n\n**${t("sources")}:**\n` + data.citations.map((c) => {
-      const label = c.section ? `${c.title} — ${c.section}` : c.title;
-      return c.pdf_url ? `- [${label}](${c.pdf_url})` : `- ${label}`;
-    }).join("\n");
-  }
+  const sources = formatCitationSources(data.citations);
 
   // El backend responde completo; lo emitimos por trozos para el efecto de escritura
   const full = `${data.answer}${status}${sources}`;
@@ -400,6 +400,65 @@ function renderMarkdown(text) {
   return escapeHtml(text).replace(/\n/g, "<br>");
 }
 
+function enhanceLinks(container) {
+  container.querySelectorAll('a[href]').forEach((link) => {
+    const href = link.getAttribute('href') || '';
+    if (/^(https?:)?\/\//i.test(href) || href.startsWith('/references/')) {
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
+    }
+  });
+}
+
+function formatCitationSources(citations) {
+  if (!Array.isArray(citations) || !citations.length) return '';
+  const grouped = new Map();
+  citations.forEach((citation) => {
+    if (!citation || !citation.title) return;
+    const key = citation.pdf_url || citation.document_id || citation.title;
+    if (!grouped.has(key)) {
+      grouped.set(key, {
+        title: citation.title,
+        pdf_url: citation.pdf_url || null,
+        sections: new Set(),
+        pages: new Set(),
+      });
+    }
+    const item = grouped.get(key);
+    const section = cleanCitationSection(citation.section);
+    if (section) item.sections.add(section);
+    const pages = citationPageLabel(citation);
+    if (pages) item.pages.add(pages);
+  });
+
+  const lines = [...grouped.values()].map((item) => {
+    const details = [];
+    const sections = [...item.sections].slice(0, 2);
+    const pages = [...item.pages].slice(0, 4);
+    if (sections.length) details.push(sections.join('; '));
+    if (pages.length) details.push(pages.join(', '));
+    const label = details.length ? `${item.title} — ${details.join(' · ')}` : item.title;
+    return item.pdf_url ? `- [${label}](${item.pdf_url})` : `- ${label}`;
+  });
+  return lines.length ? `\n\n**${t('sources')}:**\n${lines.join('\n')}` : '';
+}
+
+function cleanCitationSection(section) {
+  const value = String(section || '').trim();
+  if (!value) return '';
+  if (/^[IVXLCDM]+\.?$/i.test(value)) return '';
+  if (value.length < 4) return '';
+  return value.replace(/\s+/g, ' ');
+}
+
+function citationPageLabel(citation) {
+  const start = Number.isFinite(Number(citation.page_start)) ? Number(citation.page_start) : null;
+  const end = Number.isFinite(Number(citation.page_end)) ? Number(citation.page_end) : null;
+  if (!start && !end) return '';
+  if (start && end && start !== end) return `págs. ${start}-${end}`;
+  return `pág. ${start || end}`;
+}
+
 function enhanceCodeBlocks(container) {
   container.querySelectorAll("pre code").forEach((block) => {
     try { if (window.hljs) window.hljs.highlightElement(block); } catch (_) {}
@@ -424,18 +483,118 @@ function enhanceCodeBlocks(container) {
 // ---------- Utilidades ----------
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const uid = () => Math.random().toString(36).slice(2, 10);
+const CHAT_STORAGE_KEY = "aiame-chats-v1";
+const CHAT_STORAGE_LIMIT = 50;
 
 function getActiveChat() {
   return state.chats.find((c) => c.id === state.activeChatId) ?? null;
 }
 
+function serializeChat(chat) {
+  return {
+    id: chat.id,
+    title: chat.title,
+    backendConversationId: chat.backendConversationId || null,
+    createdAt: chat.createdAt || new Date().toISOString(),
+    updatedAt: chat.updatedAt || new Date().toISOString(),
+    messages: (chat.messages || [])
+      .filter((m) => !m.streaming)
+      .map((m) => ({
+        role: m.role,
+        content: m.content || "",
+        attachments: (m.attachments || []).map((att) => ({ ...att, dataUrl: null })),
+        feedback: m.feedback || null,
+        followup: m.followup || null,
+        assets: m.assets || [],
+        canRequestKnowledge: !!m.canRequestKnowledge,
+        originalQuestion: m.originalQuestion || null,
+        normalizedTopic: m.normalizedTopic || null,
+        knowledgeRequested: !!m.knowledgeRequested,
+        practiceArtifact: m.practiceArtifact || null,
+      })),
+  };
+}
+
+function saveLocalChats() {
+  try {
+    const chats = state.chats
+      .filter((chat) => chat.messages?.length || chat.backendConversationId)
+      .slice(0, CHAT_STORAGE_LIMIT)
+      .map(serializeChat);
+    localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify({ activeChatId: state.activeChatId, chats }));
+  } catch (_) {}
+}
+
+function loadLocalChats() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(CHAT_STORAGE_KEY) || "null");
+    if (!parsed || !Array.isArray(parsed.chats) || !parsed.chats.length) return false;
+    let migrated = false;
+    state.chats = parsed.chats.map((chat) => ({
+      ...chat,
+      backendSyncPromise: null,
+      messages: (chat.messages || []).map((message) => {
+        if (message.role === "assistant" && isLegacyPracticeContract(message.content) && !message.practiceArtifact) {
+          migrated = true;
+          return {
+            ...message,
+            content: "**Recurso preparado**\n\nEste recurso fue creado con una versión anterior. Vuelve a presionar el botón de Practicar para generarlo como recurso editable y descargable.",
+          };
+        }
+        return message;
+      }),
+    }));
+    state.activeChatId = state.chats.some((chat) => chat.id === parsed.activeChatId)
+      ? parsed.activeChatId
+      : state.chats[0].id;
+    if (migrated) saveLocalChats();
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
+
+function touchChat(chat) {
+  if (!chat) return;
+  chat.updatedAt = new Date().toISOString();
+  saveLocalChats();
+}
+
+async function ensureBackendConversation(chat) {
+  const token = authToken();
+  if (!chat || !token) return null;
+  if (chat.backendConversationId) return chat.backendConversationId;
+  if (chat.backendSyncPromise) return chat.backendSyncPromise;
+  chat.backendSyncPromise = (async () => {
+    const res = await fetchWithAuth(`${API_BASE_URL}/api/conversations`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title: chat.title || t("default_chat_title") }),
+    });
+    if (res.status === 401) { clearAuthSession(); return null; }
+    if (!res.ok) return null;
+    const data = await res.json();
+    chat.backendConversationId = data.id;
+    touchChat(chat);
+    return data.id;
+  })();
+  try {
+    return await chat.backendSyncPromise;
+  } finally {
+    chat.backendSyncPromise = null;
+  }
+}
+
 // ---------- Gestión de chats ----------
-function createChat() {
-  const chat = { id: uid(), title: t("default_chat_title"), messages: [] };
+function createChat(options = {}) {
+  const now = new Date().toISOString();
+  const chat = { id: uid(), title: t("default_chat_title"), messages: [], createdAt: now, updatedAt: now };
   state.chats.unshift(chat);
   state.activeChatId = chat.id;
   renderChatList();
   renderMessages();
+  saveLocalChats();
+  if (options.syncBackend) ensureBackendConversation(chat);
   el.input.focus();
   return chat;
 }
@@ -444,6 +603,7 @@ function switchChat(id) {
   state.activeChatId = id;
   renderChatList();
   renderMessages();
+  saveLocalChats();
   closeSidebarMobile();
 }
 
@@ -487,6 +647,7 @@ function renderMessages() {
   chat.messages.forEach((m, i) => wrap.appendChild(buildMessageNode(m, i, chat)));
   el.messages.appendChild(wrap);
   enhanceCodeBlocks(wrap);
+  enhanceLinks(wrap);
   scrollToBottom();
 }
 
@@ -512,7 +673,7 @@ function buildMessageNode(m, index, chat) {
     else bubble.innerHTML = `<span class="typing"><span></span><span></span><span></span></span>`;
     streamingBubble = bubble;
   } else if (role === "assistant") {
-    bubble.innerHTML = renderMarkdown(m.content);
+    bubble.innerHTML = renderMarkdown(displayMessageContent(m));
   } else {
     if (m.attachments && m.attachments.length) {
       const box = document.createElement("div");
@@ -528,6 +689,8 @@ function buildMessageNode(m, index, chat) {
     }
   }
 
+  if (role === "assistant" && !m.streaming) enhanceLinks(bubble);
+
   buildActions(node.querySelector(".msg__actions"), m, index, chat);
   if (role === "assistant" && !m.streaming) {
     buildMessageExtras(node.querySelector(".msg__body"), m, chat);
@@ -535,8 +698,25 @@ function buildMessageNode(m, index, chat) {
   return node;
 }
 
+function displayMessageContent(message) {
+  const content = message?.content || "";
+  if (message?.practiceArtifact) return content;
+  if (isLegacyPracticeContract(content)) {
+    return "**Recurso preparado**\n\nEste recurso fue creado con una versión anterior. Vuelve a presionar el botón de Practicar para generarlo como recurso editable y descargable.";
+  }
+  return content;
+}
+
+function isLegacyPracticeContract(content) {
+  const text = String(content || "");
+  return /generation contract is ready|enabled after vetted sources/i.test(text)
+    || (/^\*\*Recurso preparado:/i.test(text) && /```json|\"conversation_id\"|\"source\"/i.test(text));
+}
+
 // ---------- Extras del mensaje: assets, follow-up y solicitud de conocimiento ----------
 function buildMessageExtras(body, m, chat) {
+  if (m.practiceArtifact) body.appendChild(practiceArtifactEl(m.practiceArtifact));
+
   // 2) Assets relacionados (imágenes / documentos)
   if (Array.isArray(m.assets) && m.assets.length) {
     const box = document.createElement("div");
@@ -581,6 +761,75 @@ function buildMessageExtras(body, m, chat) {
       body.appendChild(btn);
     }
   }
+}
+
+
+function practiceArtifactEl(artifact) {
+  const box = document.createElement("div");
+  box.className = "practice-artifact";
+  const title = document.createElement("div");
+  title.className = "practice-artifact__title";
+  title.textContent = artifact.title || "Recurso";
+  const editor = document.createElement("textarea");
+  editor.className = "practice-artifact__editor";
+  editor.value = artifact.editable_text || "";
+  editor.rows = Math.min(18, Math.max(8, editor.value.split("\n").length + 1));
+  editor.addEventListener("input", () => {
+    artifact.editable_text = editor.value;
+    const chat = getActiveChat();
+    if (chat) saveLocalChats();
+  });
+  const actions = document.createElement("div");
+  actions.className = "practice-artifact__actions";
+  (artifact.downloads || ["markdown", "json"]).forEach((format) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "practice-artifact__download";
+    btn.textContent = `Descargar ${format.toUpperCase()}`;
+    btn.addEventListener("click", () => downloadPracticeArtifact(artifact, format, editor.value));
+    actions.appendChild(btn);
+  });
+  box.append(title, editor, actions);
+  return box;
+}
+
+function downloadPracticeArtifact(artifact, format, editableText) {
+  const base = artifact.filename || "recurso";
+  let content = editableText || "";
+  let mime = "text/plain;charset=utf-8";
+  let ext = "txt";
+  if (format === "json") {
+    content = JSON.stringify({ ...artifact, editable_text: editableText }, null, 2);
+    mime = "application/json;charset=utf-8";
+    ext = "json";
+  } else if (format === "html") {
+    content = `<!doctype html><html lang="es"><meta charset="utf-8"><title>${escapeHtml(artifact.title || "Recurso")}</title><body>${renderMarkdown(editableText)}</body></html>`;
+    mime = "text/html;charset=utf-8";
+    ext = "html";
+  } else if (format === "csv") {
+    const cards = artifact.data?.cards || [];
+    content = cards.length
+      ? "front,back,difficulty\n" + cards.map((c) => [c.front, c.back, c.difficulty].map(csvCell).join(",")).join("\n")
+      : editableText;
+    mime = "text/csv;charset=utf-8";
+    ext = "csv";
+  } else if (format === "markdown") {
+    mime = "text/markdown;charset=utf-8";
+    ext = "md";
+  }
+  const blob = new Blob([content], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${base}.${ext}`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function csvCell(value) {
+  return `"${String(value || "").replace(/"/g, '""')}"`;
 }
 
 function assetCard(a) {
@@ -631,9 +880,9 @@ async function requestKnowledge(m, chat, btn) {
   }
   btn.disabled = true;
   try {
-    const res = await fetch(`${API_BASE_URL}/api/knowledge`, {
+    const res = await fetchWithAuth(`${API_BASE_URL}/api/knowledge-requests`, {
       method: "POST",
-      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         conversation_id: chat?.backendConversationId ?? null,
         original_question: m.originalQuestion || "",
@@ -702,7 +951,9 @@ async function sendMessage(text) {
     renderChatList();
   }
   renderMessages();
+  touchChat(chat);
   resetInput();
+  await ensureBackendConversation(chat);
   await runAssistant(chat);
 }
 
@@ -730,6 +981,7 @@ async function runAssistant(chat) {
       aiMsg.originalQuestion = meta.originalQuestion;
       aiMsg.normalizedTopic = meta.normalizedTopic;
     }
+    touchChat(chat);
     notifyResponse();   // sonido/vibración opcional al terminar
   } catch (err) {
     aiMsg.content = t("error_msg");
@@ -737,6 +989,7 @@ async function runAssistant(chat) {
   } finally {
     aiMsg.streaming = false;
     state.isResponding = false;
+    touchChat(chat);
     renderMessages();
     updateSendState();
   }
@@ -750,6 +1003,7 @@ function regenerateLast() {
     chat.messages.pop();
   }
   renderMessages();
+  touchChat(chat);
   runAssistant(chat);
 }
 
@@ -764,17 +1018,38 @@ function formatSize(bytes) {
 
 function addFiles(fileList) {
   [...fileList].forEach((file) => {
+    const isImage = file.type.startsWith("image/");
     const att = {
       id: uid(),
       name: file.name,
       type: file.type || "",
       size: file.size,
-      url: file.type.startsWith("image/") ? URL.createObjectURL(file) : null,
+      url: isImage ? URL.createObjectURL(file) : null,
+      dataUrl: null,
     };
     pendingAttachments.push(att);
+    if (isImage) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        att.dataUrl = typeof reader.result === "string" ? reader.result : null;
+      };
+      reader.readAsDataURL(file);
+    }
   });
   renderAttachPreview();
   updateSendState();
+}
+
+function chatAttachmentsForBackend(attachments) {
+  return (attachments || [])
+    .filter((att) => att.type?.startsWith("image/") && att.dataUrl)
+    .slice(0, 4)
+    .map((att) => ({
+      type: "image",
+      name: att.name || null,
+      mime_type: att.type || "image/png",
+      url: att.dataUrl,
+    }));
 }
 
 function removeAttachment(id) {
@@ -914,17 +1189,22 @@ function getAuthToken() {
   try { return localStorage.getItem("aiame-auth-token"); } catch (_) { return null; }
 }
 
+function getRefreshToken() {
+  try { return localStorage.getItem("aiame-refresh-token"); } catch (_) { return null; }
+}
+
 function getStoredEmail() {
   try { return localStorage.getItem("aiame-user-email"); } catch (_) { return null; }
 }
 
 function setAuthSession(session) {
   try {
-    localStorage.setItem("aiame-auth-token", session.access_token);
+    if (session.access_token) localStorage.setItem("aiame-auth-token", session.access_token);
     if (session.refresh_token) localStorage.setItem("aiame-refresh-token", session.refresh_token);
     if (session.user?.email) localStorage.setItem("aiame-user-email", session.user.email);
   } catch (_) {}
   updateAuthUI();
+  if (getActiveChat()) ensureBackendConversation(getActiveChat());
   // Pre-carga el historial para que "Buscar chats" abra al instante.
   loadConversations();
 }
@@ -936,8 +1216,43 @@ function clearAuthSession() {
     localStorage.removeItem("aiame-user-email");
   } catch (_) {}
   conversationsCache = [];
+  state.chats.forEach((chat) => { chat.backendConversationId = null; });
+  saveLocalChats();
   renderConvMessage(t("conv_login"));
   updateAuthUI();
+}
+
+async function refreshAuthSession() {
+  const refreshToken = getRefreshToken();
+  if (!refreshToken) return false;
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/auth/refresh`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ refresh_token: refreshToken }),
+    });
+    if (!res.ok) return false;
+    const data = await res.json();
+    if (!data.access_token) return false;
+    setAuthSession(data);
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
+
+async function fetchWithAuth(url, options = {}, retry = true) {
+  const token = authToken();
+  const headers = { ...(options.headers || {}) };
+  if (token) headers.Authorization = `Bearer ${token}`;
+  const res = await fetch(url, { ...options, headers });
+  if (res.status !== 401 || !retry) return res;
+  const refreshed = await refreshAuthSession();
+  if (!refreshed) {
+    clearAuthSession();
+    return res;
+  }
+  return fetchWithAuth(url, options, false);
 }
 
 function updateAuthUI() {
@@ -1031,6 +1346,206 @@ function toggleSearch() {
   }
 }
 
+async function handlePracticeAction(kind) {
+  const chat = getActiveChat();
+  if (!chatHasConversationData(chat)) {
+    window.alert(t("practice_no_conversation"));
+    return;
+  }
+  const token = authToken();
+  if (!token) {
+    window.alert(t("practice_login"));
+    return;
+  }
+  const conversationId = await ensureBackendConversation(chat);
+  if (!conversationId) {
+    window.alert(t("practice_error"));
+    return;
+  }
+
+  const topic = inferChatTopic(chat);
+  const options = await openPracticeOptions(kind, topic);
+  if (!options) return;
+  const config = practiceConfig(kind, conversationId, topic, options);
+  if (!config) return;
+
+  const item = document.querySelector(`[data-practice="${kind}"]`);
+  if (item) item.disabled = true;
+  try {
+    const res = await fetchWithAuth(`${API_BASE_URL}${config.endpoint}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(config.payload),
+    });
+    if (res.status === 401) { clearAuthSession(); return; }
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      window.alert(data.detail || t("practice_error"));
+      return;
+    }
+    chat.messages.push({
+      role: "assistant",
+      content: practiceResultMarkdown(kind, data),
+      practiceArtifact: data.contract?.artifact || null,
+      feedback: null,
+    });
+    touchChat(chat);
+    renderMessages();
+  } catch (_) {
+    window.alert(t("practice_error"));
+  } finally {
+    if (item) item.disabled = false;
+  }
+}
+
+function chatHasConversationData(chat) {
+  return !!chat && Array.isArray(chat.messages) && chat.messages.some((m) => !m.streaming && (m.content || "").trim());
+}
+
+function inferChatTopic(chat) {
+  const firstUser = chat.messages.find((m) => m.role === "user" && (m.content || "").trim());
+  return (firstUser?.content || chat.title || t("default_chat_title")).slice(0, 160);
+}
+
+function practiceConfig(kind, conversationId, topic, options = {}) {
+  const base = { conversation_id: conversationId, topic };
+  const map = {
+    presentacion: { endpoint: "/api/tools/presentation", payload: { ...base, slide_count: Number(options.slide_count || 8), include_images: !!options.include_images, presentation_type: options.presentation_type || "study_summary", audience: options.audience || "Estudiantes de medicina" } },
+    mapa: { endpoint: "/api/tools/mindmap", payload: { ...base, type: options.type || "mind_map", detail_level: options.detail_level || "intermediate" } },
+    cuestionario: { endpoint: "/api/tools/quiz", payload: { ...base, difficulty: options.difficulty || "intermediate", question_count: Number(options.question_count || 5), question_type: options.question_type || "multiple_choice" } },
+    tarjetas: { endpoint: "/api/tools/flashcards", payload: { ...base, difficulty: options.difficulty || "intermediate", card_count: Number(options.card_count || 10), answer_length: options.answer_length || "short", clinical_context: !!options.clinical_context, mode: options.mode || "concepts" } },
+    informes: { endpoint: "/api/tools/report", payload: { ...base, report_type: options.report_type || "study_summary", include_recommendations: !!options.include_recommendations, focus: options.focus || "" } },
+  };
+  return map[kind] || null;
+}
+
+function practiceResultMarkdown(kind, data) {
+  const title = {
+    presentacion: t("practice_slides"),
+    mapa: t("practice_mindmap"),
+    cuestionario: t("practice_quiz"),
+    tarjetas: t("practice_cards"),
+    informes: t("practice_reports"),
+  }[kind] || t("practice_ready");
+  const artifact = data.contract?.artifact;
+  return `**${t("practice_ready")}: ${title}**\n\n${data.message || ""}\n\n${artifact ? "Puedes editar el recurso abajo y descargarlo." : ""}`;
+}
+
+function openPracticeOptions(kind, topic) {
+  const schema = practiceOptionSchema(kind);
+  if (!schema) return Promise.resolve(null);
+  ensurePracticeModalStyles();
+  return new Promise((resolve) => {
+    const overlay = document.createElement("div");
+    overlay.className = "practice-modal";
+    overlay.innerHTML = `
+      <div class="practice-modal__card" role="dialog" aria-modal="true">
+        <h2>${escapeHtml(schema.title)}</h2>
+        <p>Basado en: ${escapeHtml(topic)}</p>
+        <form class="practice-modal__form"></form>
+        <div class="practice-modal__actions">
+          <button type="button" data-cancel>Cancelar</button>
+          <button type="button" data-submit>Crear recurso</button>
+        </div>
+      </div>`;
+    const form = overlay.querySelector("form");
+    schema.fields.forEach((field) => form.appendChild(practiceFieldEl(field)));
+    document.body.appendChild(overlay);
+    const close = (value) => { overlay.remove(); resolve(value); };
+    overlay.querySelector("[data-cancel]").addEventListener("click", () => close(null));
+    overlay.addEventListener("click", (e) => { if (e.target === overlay) close(null); });
+    overlay.querySelector("[data-submit]").addEventListener("click", () => {
+      const data = {};
+      schema.fields.forEach((field) => {
+        const input = form.querySelector(`[name="${field.name}"]`);
+        data[field.name] = field.type === "checkbox" ? input.checked : input.value;
+      });
+      close(data);
+    });
+    form.querySelector("input,select")?.focus();
+  });
+}
+
+function ensurePracticeModalStyles() {
+  if (document.getElementById("practice-modal-runtime-styles")) return;
+  const style = document.createElement("style");
+  style.id = "practice-modal-runtime-styles";
+  style.textContent = `
+    .practice-modal{position:fixed!important;inset:0!important;z-index:9999!important;display:grid!important;place-items:center!important;padding:22px!important;background:rgba(6,12,28,.62)!important;backdrop-filter:blur(8px)!important}
+    .practice-modal__card{width:min(520px,100%)!important;border:1px solid var(--border,#2b3344)!important;border-radius:26px!important;background:var(--surface,#161616)!important;color:var(--text,#fff)!important;box-shadow:0 22px 70px rgba(0,0,0,.38)!important;padding:24px!important}
+    .practice-modal__card h2{margin:0 0 8px!important;font-family:var(--font-title,inherit)!important;font-size:22px!important;color:var(--text,#fff)!important}
+    .practice-modal__card p{margin:0 0 18px!important;color:var(--text-muted,#9aa3b2)!important;font-size:13.5px!important;line-height:1.45!important}
+    .practice-modal__form{display:grid!important;gap:12px!important}
+    .practice-modal__field{display:grid!important;gap:7px!important;font-size:13.5px!important;font-weight:700!important;color:var(--text-soft,#d7dce7)!important}
+    .practice-modal__field input,.practice-modal__field select{width:100%!important;box-sizing:border-box!important;border:1px solid var(--border,#2b3344)!important;border-radius:14px!important;background:var(--bg-soft,#0b0b0b)!important;color:var(--text,#fff)!important;padding:11px 12px!important;font:inherit!important;outline:none!important}
+    .practice-modal__field input[type=checkbox]{width:20px!important;height:20px!important;accent-color:var(--primary,#2f6df6)!important}
+    .practice-modal__actions{display:flex!important;justify-content:flex-end!important;gap:10px!important;margin-top:20px!important}
+    .practice-modal__actions button{border:1px solid var(--border,#2b3344)!important;border-radius:999px!important;background:var(--bg-soft,#0b0b0b)!important;color:var(--text,#fff)!important;padding:10px 15px!important;font-weight:700!important;cursor:pointer!important}
+    .practice-modal__actions [data-submit]{border-color:var(--primary,#2f6df6)!important;background:var(--primary,#2f6df6)!important;color:#fff!important}
+  `;
+  document.head.appendChild(style);
+}
+
+function practiceOptionSchema(kind) {
+  const schemas = {
+    presentacion: { title: "¿Qué tipo de presentación quieres?", fields: [
+      { name: "presentation_type", label: "Tipo", type: "select", value: "study_summary", options: [["study_summary", "Resumen de estudio"], ["class", "Clase"], ["oral_expo", "Exposición oral"], ["clinical_case", "Caso clínico"]] },
+      { name: "audience", label: "Audiencia", type: "text", value: "Estudiantes de medicina" },
+      { name: "slide_count", label: "Cantidad de diapositivas", type: "number", value: 8, min: 3, max: 20 },
+      { name: "include_images", label: "Preparar sugerencias visuales", type: "checkbox", value: true },
+    ]},
+    mapa: { title: "¿Qué tan detallado quieres el mapa?", fields: [
+      { name: "detail_level", label: "Detalle", type: "select", value: "intermediate", options: [["basic", "Básico"], ["intermediate", "Intermedio"], ["advanced", "Avanzado"]] },
+      { name: "type", label: "Formato", type: "select", value: "mind_map", options: [["mind_map", "Mapa mental"], ["concept_map", "Mapa conceptual"], ["synoptic_chart", "Cuadro sinóptico"], ["relationship_diagram", "Diagrama de relaciones"]] },
+    ]},
+    cuestionario: { title: "Configura el cuestionario", fields: [
+      { name: "difficulty", label: "Dificultad", type: "select", value: "intermediate", options: [["basic", "Básico"], ["intermediate", "Intermedio"], ["advanced", "Avanzado"]] },
+      { name: "question_count", label: "Cantidad de preguntas", type: "number", value: 5, min: 1, max: 20 },
+      { name: "question_type", label: "Tipo", type: "select", value: "multiple_choice", options: [["multiple_choice", "Selección múltiple"], ["short_answer", "Respuesta corta"], ["mixed", "Mixto"]] },
+    ]},
+    tarjetas: { title: "Configura las tarjetas didácticas", fields: [
+      { name: "difficulty", label: "Dificultad", type: "select", value: "intermediate", options: [["basic", "Básico"], ["intermediate", "Intermedio"], ["advanced", "Avanzado"]] },
+      { name: "card_count", label: "Cantidad de tarjetas", type: "number", value: 10, min: 1, max: 40 },
+      { name: "mode", label: "Enfoque", type: "select", value: "concepts", options: [["concepts", "Conceptos"], ["clinical", "Clínico"], ["exam", "Examen"]] },
+      { name: "clinical_context", label: "Incluir aplicación clínica", type: "checkbox", value: true },
+    ]},
+    informes: { title: "Configura el informe", fields: [
+      { name: "report_type", label: "Tipo", type: "select", value: "study_summary", options: [["study_summary", "Resumen de estudio"], ["progress_report", "Reporte de progreso"], ["clinical_brief", "Brief clínico"]] },
+      { name: "focus", label: "Enfoque específico", type: "text", value: "puntos clave y recomendaciones" },
+      { name: "include_recommendations", label: "Incluir recomendaciones", type: "checkbox", value: true },
+    ]},
+  };
+  return schemas[kind];
+}
+
+function practiceFieldEl(field) {
+  const label = document.createElement("label");
+  label.className = "practice-modal__field";
+  const span = document.createElement("span");
+  span.textContent = field.label;
+  label.appendChild(span);
+  let input;
+  if (field.type === "select") {
+    input = document.createElement("select");
+    field.options.forEach(([value, text]) => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = text;
+      input.appendChild(option);
+    });
+  } else {
+    input = document.createElement("input");
+    input.type = field.type;
+    if (field.min) input.min = field.min;
+    if (field.max) input.max = field.max;
+  }
+  input.name = field.name;
+  if (field.type === "checkbox") input.checked = !!field.value;
+  else input.value = field.value || "";
+  label.appendChild(input);
+  return label;
+}
+
 // ---------- Eventos ----------
 el.form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -1056,6 +1571,7 @@ el.messages.addEventListener("click", (e) => {
     regenerateLast();
   } else if (action === "up" || action === "down") {
     m.feedback = m.feedback === action ? null : action;
+    touchChat(chat);
     // Actualiza en el sitio (evita re-animar los mensajes)
     const row = btn.closest(".msg__actions");
     row.querySelector('[data-action="up"]')?.classList.toggle("is-active", m.feedback === "up");
@@ -1135,10 +1651,14 @@ if (el.form) {
 // Rail de iconos
 document.querySelectorAll(".rail__item").forEach((item) => {
   item.addEventListener("click", () => {
+    if (item.dataset.practice) {
+      handlePracticeAction(item.dataset.practice);
+      return;
+    }
     const section = item.dataset.section;
 
     // Acciones directas
-    if (section === "nuevo")  { createChat(); return; }
+    if (section === "nuevo")  { createChat({ syncBackend: true }); return; }
     if (section === "buscar") { openConversations(); return; }
 
     if (section === "ajustes") { openSettings(); return; }
@@ -1225,9 +1745,7 @@ async function loadLearning() {
   if (!token) { learnMsg(t("conv_login")); return; }
   learnMsg(t("conv_loading"));
   try {
-    const res = await fetch(`${API_BASE_URL}/api/learning/profile`, {
-      headers: { "Authorization": `Bearer ${token}` },
-    });
+    const res = await fetchWithAuth(`${API_BASE_URL}/api/learning/profile`);
     if (res.status === 401) { clearAuthSession(); learnMsg(t("conv_login")); return; }
     if (!res.ok) { learnMsg(t("learn_error")); return; }
     renderLearning(await res.json());
@@ -1309,9 +1827,7 @@ async function loadConversations() {
   if (!token) { renderConvMessage(t("conv_login")); return; }
   renderConvMessage(t("conv_loading"));
   try {
-    const res = await fetch(`${API_BASE_URL}/api/conversations`, {
-      headers: { "Authorization": `Bearer ${token}` },
-    });
+    const res = await fetchWithAuth(`${API_BASE_URL}/api/conversations`);
     if (res.status === 401) { clearAuthSession(); renderConvMessage(t("conv_login")); return; }
     if (!res.ok) { renderConvMessage(t("conv_error")); return; }
     conversationsCache = await res.json();
@@ -1373,9 +1889,8 @@ async function deleteConversation(id) {
   if (!token) return;
   if (!window.confirm(t("conv_delete_confirm"))) return;
   try {
-    const res = await fetch(`${API_BASE_URL}/api/conversations/${id}`, {
+    const res = await fetchWithAuth(`${API_BASE_URL}/api/conversations/${id}`, {
       method: "DELETE",
-      headers: { "Authorization": `Bearer ${token}` },
     });
     if (res.status === 401) { clearAuthSession(); renderConvMessage(t("conv_login")); return; }
     if (!res.ok && res.status !== 204) { renderConvMessage(t("conv_delete_error")); return; }
@@ -1383,6 +1898,7 @@ async function deleteConversation(id) {
     // Si la conversación activa fue eliminada, la desvinculamos del chat abierto.
     const active = getActiveChat();
     if (active && active.backendConversationId === id) active.backendConversationId = null;
+    saveLocalChats();
     renderConvList(el.convSearch?.value || "");
   } catch (_) {
     renderConvMessage(t("conv_delete_error"));
@@ -1393,21 +1909,31 @@ async function openConversation(id) {
   const token = authToken();
   if (!token) return;
   try {
-    const res = await fetch(`${API_BASE_URL}/api/conversations/${id}`, {
-      headers: { "Authorization": `Bearer ${token}` },
-    });
+    const res = await fetchWithAuth(`${API_BASE_URL}/api/conversations/${id}`);
     if (!res.ok) return;
     const detail = await res.json();
     const chat = {
       id: uid(),
       title: detail.title || t("default_chat_title"),
       backendConversationId: detail.id,
+      createdAt: detail.created_at || new Date().toISOString(),
+      updatedAt: detail.updated_at || new Date().toISOString(),
       messages: (detail.messages || [])
         .filter((m) => m.role === "user" || m.role === "assistant")
-        .map((m) => ({ role: m.role, content: m.content, feedback: null })),
+        .map((m) => ({
+          role: m.role,
+          content: m.content,
+          feedback: null,
+          practiceArtifact: m.metadata?.practice_artifact || null,
+          assets: m.metadata?.related_assets || [],
+        })),
     };
+    const existingIndex = state.chats.findIndex((c) => c.backendConversationId === detail.id);
+    if (existingIndex >= 0) state.chats.splice(existingIndex, 1);
     state.chats.unshift(chat);
     state.activeChatId = chat.id;
+    saveLocalChats();
+    renderChatList();
     renderMessages();
     closeConversations();
   } catch (_) { /* silencioso */ }
@@ -1543,5 +2069,10 @@ initTheme();
 initLang();
 initDataToggles();
 updateAuthUI();
-createChat();
+if (loadLocalChats()) {
+  renderChatList();
+  renderMessages();
+} else {
+  createChat();
+}
 applyI18n();

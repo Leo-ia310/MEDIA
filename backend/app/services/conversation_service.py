@@ -1,4 +1,5 @@
-from uuid import UUID, uuid4
+from datetime import UTC, datetime
+from uuid import UUID
 
 from app.db.supabase import SupabaseRepository
 from app.models.schemas import AuthUser, ConversationDetail, ConversationOut, MessageOut
@@ -36,8 +37,25 @@ class ConversationService:
     async def _create_message(self, user: AuthUser, conversation_id: UUID, role: str, content: str, **extra) -> MessageOut:
         row = {"conversation_id": str(conversation_id), "user_id": str(user.id), "role": role, "content": content, "metadata": extra.pop("metadata", None) or {}, **{k: v for k, v in extra.items() if v is not None}}
         rows = await self.repo.request(table="messages", method="POST", token=user.token, json=row, prefer="return=representation")
+        await self.touch_conversation(user, conversation_id, role=role, preview=content[:180])
         return MessageOut(**rows[0])
 
     async def recent_messages(self, user: AuthUser, conversation_id: UUID, limit: int = 8) -> list[dict[str, str]]:
         rows = await self.repo.request(table="messages", method="GET", token=user.token, params={"select": "role,content", "conversation_id": f"eq.{conversation_id}", "order": "created_at.desc", "limit": str(limit)})
         return [{"role": row["role"], "content": row["content"]} for row in reversed(rows)]
+
+    async def touch_conversation(self, user: AuthUser, conversation_id: UUID, *, role: str, preview: str) -> None:
+        await self.repo.request(
+            table="conversations",
+            method="PATCH",
+            token=user.token,
+            params={"id": f"eq.{conversation_id}"},
+            json={
+                "metadata": {
+                    "last_message_at": datetime.now(UTC).isoformat(),
+                    "last_message_role": role,
+                    "last_message_preview": preview,
+                }
+            },
+            prefer="return=minimal",
+        )

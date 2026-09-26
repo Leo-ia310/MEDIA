@@ -35,5 +35,15 @@ class ChatService:
             metadata=response.metadata,
         )
         response.message_id = assistant_message.id
-        await self.learning.record_question_event(user, conversation_id=conversation_id, topic=None, metadata={"effort": request.effort.value, "answer_status": response.answer_status.value})
+        await self.learning.record_question_event(
+            user,
+            conversation_id=conversation_id,
+            topic=None,
+            metadata={
+                "question": request.message,
+                "effort": request.effort.value,
+                "answer_status": response.answer_status.value,
+                "medical_retrieval_count": response.metadata.get("medical_retrieval_count", 0),
+            },
+        )
         return response

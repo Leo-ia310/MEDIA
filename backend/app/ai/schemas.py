@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Literal
 
 from app.models.schemas import Citation, Effort
 
@@ -12,6 +12,9 @@ class ModelSelection:
     temperature: float
     retrieval_top_k: int
     verification_passes: int
+    provider: Literal["groq", "cloudflare"] = "groq"
+    reasoning_effort: Literal["low", "medium", "high"] = "medium"
+    supports_vision: bool = False
 
 
 @dataclass
