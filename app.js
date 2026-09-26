@@ -48,6 +48,7 @@ const I18N = {
     demo_topic:"tu consulta", demo_intro:"Aquí tienes una explicación sobre", demo_point1:"Idea clave relacionada con el tema.", demo_point2:"Un segundo punto con más detalle.", demo_point3:"Un tercer punto para ampliar.", demo_code_intro:"También puedo usar formato enriquecido y bloques de código:", demo_note:"Respuesta de demostración. Inicia sesión para el tutor médico real con fuentes verificadas.", demo_followup:"¿Quieres que profundice en", demo_asset:"Recurso de ejemplo",
     practice_title:"Practicar", practice_slides:"Presentación", practice_mindmap:"Mapa mental", practice_quiz:"Cuestionario", practice_cards:"Tarjetas didácticas", practice_reports:"Informes",
     practice_no_conversation:"No tienes ninguna conversacion.", practice_login:"Inicia sesión para guardar y generar recursos desde tu conversación.", practice_ready:"Recurso preparado", practice_error:"No se pudo preparar el recurso.",
+    img_title:"Generar imagen", img_desc:"Crea una imagen educativa con IA a partir de una descripción.", img_prompt:"Descripción", img_prompt_ph:"Ej: diagrama del ciclo cardíaco con sus fases", img_aspect:"Proporción", img_quality:"Calidad", img_quality_fast:"Rápida", img_quality_high:"Alta calidad", img_close:"Cerrar", img_generate:"Generar", img_generating:"Generando con Gemini…", img_download:"Descargar PNG", img_empty:"Escribe una descripción (mín. 3 caracteres).", img_error:"No se pudo generar la imagen.",
     conv_title:"Conversaciones", conv_search:"Buscar conversaciones…", conv_empty:"Aún no tienes conversaciones.", conv_login:"Inicia sesión para ver tu historial de conversaciones.", conv_loading:"Cargando…", conv_error:"No se pudo cargar el historial.", conv_delete:"Eliminar conversación", conv_delete_confirm:"¿Eliminar esta conversación? No se puede deshacer.", conv_delete_error:"No se pudo eliminar la conversación.",
   },
   en: {
@@ -83,6 +84,7 @@ const I18N = {
     demo_topic:"your question", demo_intro:"Here's an explanation about", demo_point1:"A key idea related to the topic.", demo_point2:"A second point with more detail.", demo_point3:"A third point to expand on.", demo_code_intro:"I can also use rich formatting and code blocks:", demo_note:"Demo response. Sign in for the real medical tutor with verified sources.", demo_followup:"Want me to go deeper into", demo_asset:"Example resource",
     practice_title:"Practice", practice_slides:"Presentation", practice_mindmap:"Mind map", practice_quiz:"Quiz", practice_cards:"Flashcards", practice_reports:"Reports",
     practice_no_conversation:"You don't have any conversations.", practice_login:"Sign in to save and generate resources from your conversation.", practice_ready:"Resource prepared", practice_error:"Could not prepare the resource.",
+    img_title:"Generate image", img_desc:"Create an AI educational image from a description.", img_prompt:"Description", img_prompt_ph:"e.g. diagram of the cardiac cycle with its phases", img_aspect:"Aspect ratio", img_quality:"Quality", img_quality_fast:"Fast", img_quality_high:"High quality", img_close:"Close", img_generate:"Generate", img_generating:"Generating with Gemini…", img_download:"Download PNG", img_empty:"Write a description (min. 3 characters).", img_error:"Could not generate the image.",
     conv_title:"Conversations", conv_search:"Search conversations…", conv_empty:"You don't have any conversations yet.", conv_login:"Sign in to see your conversation history.", conv_loading:"Loading…", conv_error:"Could not load history.", conv_delete:"Delete conversation", conv_delete_confirm:"Delete this conversation? This can't be undone.", conv_delete_error:"Could not delete the conversation.",
   },
   fr: {
@@ -118,6 +120,7 @@ const I18N = {
     demo_topic:"ta question", demo_intro:"Voici une explication sur", demo_point1:"Une idée clé liée au sujet.", demo_point2:"Un deuxième point plus détaillé.", demo_point3:"Un troisième point pour approfondir.", demo_code_intro:"Je peux aussi utiliser du formatage riche et des blocs de code :", demo_note:"Réponse de démonstration. Connecte-toi pour le vrai tuteur médical avec des sources vérifiées.", demo_followup:"Veux-tu que j'approfondisse", demo_asset:"Ressource d'exemple",
     practice_title:"S'entraîner", practice_slides:"Présentation", practice_mindmap:"Carte mentale", practice_quiz:"Questionnaire", practice_cards:"Cartes mémo", practice_reports:"Rapports",
     practice_no_conversation:"Tu n'as aucune conversation.", practice_login:"Connecte-toi pour sauvegarder et générer des ressources depuis ta conversation.", practice_ready:"Ressource préparée", practice_error:"Impossible de préparer la ressource.",
+    img_title:"Générer une image", img_desc:"Crée une image éducative par IA à partir d'une description.", img_prompt:"Description", img_prompt_ph:"ex : schéma du cycle cardiaque et ses phases", img_aspect:"Format", img_quality:"Qualité", img_quality_fast:"Rapide", img_quality_high:"Haute qualité", img_close:"Fermer", img_generate:"Générer", img_generating:"Génération avec Gemini…", img_download:"Télécharger PNG", img_empty:"Écris une description (min. 3 caractères).", img_error:"Impossible de générer l'image.",
     conv_title:"Conversations", conv_search:"Rechercher des conversations…", conv_empty:"Tu n'as pas encore de conversations.", conv_login:"Connecte-toi pour voir ton historique de conversations.", conv_loading:"Chargement…", conv_error:"Impossible de charger l'historique.", conv_delete:"Supprimer la conversation", conv_delete_confirm:"Supprimer cette conversation ? Action irréversible.", conv_delete_error:"Impossible de supprimer la conversation.",
   },
   pt: {
@@ -153,6 +156,7 @@ const I18N = {
     demo_topic:"sua pergunta", demo_intro:"Aqui está uma explicação sobre", demo_point1:"Uma ideia-chave relacionada ao tema.", demo_point2:"Um segundo ponto com mais detalhe.", demo_point3:"Um terceiro ponto para ampliar.", demo_code_intro:"Também posso usar formatação rica e blocos de código:", demo_note:"Resposta de demonstração. Entre para o tutor médico real com fontes verificadas.", demo_followup:"Quer que eu aprofunde em", demo_asset:"Recurso de exemplo",
     practice_title:"Praticar", practice_slides:"Apresentação", practice_mindmap:"Mapa mental", practice_quiz:"Questionário", practice_cards:"Cartões didáticos", practice_reports:"Relatórios",
     practice_no_conversation:"Você não tem nenhuma conversa.", practice_login:"Entre para salvar e gerar recursos a partir da sua conversa.", practice_ready:"Recurso preparado", practice_error:"Não foi possível preparar o recurso.",
+    img_title:"Gerar imagem", img_desc:"Crie uma imagem educativa com IA a partir de uma descrição.", img_prompt:"Descrição", img_prompt_ph:"ex: diagrama do ciclo cardíaco com suas fases", img_aspect:"Proporção", img_quality:"Qualidade", img_quality_fast:"Rápida", img_quality_high:"Alta qualidade", img_close:"Fechar", img_generate:"Gerar", img_generating:"Gerando com Gemini…", img_download:"Baixar PNG", img_empty:"Escreva uma descrição (mín. 3 caracteres).", img_error:"Não foi possível gerar a imagem.",
     conv_title:"Conversas", conv_search:"Buscar conversas…", conv_empty:"Você ainda não tem conversas.", conv_login:"Entre para ver seu histórico de conversas.", conv_loading:"Carregando…", conv_error:"Não foi possível carregar o histórico.", conv_delete:"Excluir conversa", conv_delete_confirm:"Excluir esta conversa? Não é possível desfazer.", conv_delete_error:"Não foi possível excluir a conversa.",
   },
 };
@@ -894,6 +898,123 @@ function downloadGeneratedVisual(visual, artifact) {
   document.body.appendChild(link);
   link.click();
   link.remove();
+}
+
+// ---------- Generador de imágenes (POST /api/tools/image, Gemini) ----------
+function ensureImageModalStyles() {
+  if (document.getElementById("image-modal-runtime-styles")) return;
+  const style = document.createElement("style");
+  style.id = "image-modal-runtime-styles";
+  style.textContent = `
+    .practice-modal__field textarea{width:100%!important;box-sizing:border-box!important;border:1px solid var(--border,#2b3344)!important;border-radius:14px!important;background:var(--bg-soft,#0b0b0b)!important;color:var(--text,#fff)!important;padding:11px 12px!important;font:inherit!important;outline:none!important;resize:vertical!important;min-height:84px!important}
+    .image-modal__preview{margin-top:16px!important;display:grid!important;gap:10px!important;justify-items:center!important}
+    .image-modal__preview img{max-width:100%!important;border-radius:16px!important;border:1px solid var(--border,#2b3344)!important}
+    .image-modal__status{margin-top:14px!important;color:var(--text-muted,#9aa3b2)!important;font-size:13px!important;text-align:center!important}
+  `;
+  document.head.appendChild(style);
+}
+
+function openImageGenerator() {
+  const token = authToken();
+  if (!token) { window.alert(t("practice_login")); return; }
+  ensurePracticeModalStyles();
+  ensureImageModalStyles();
+
+  const overlay = document.createElement("div");
+  overlay.className = "practice-modal";
+  overlay.innerHTML = `
+    <div class="practice-modal__card" role="dialog" aria-modal="true">
+      <h2>${escapeHtml(t("img_title"))}</h2>
+      <p>${escapeHtml(t("img_desc"))}</p>
+      <form class="practice-modal__form">
+        <label class="practice-modal__field">${escapeHtml(t("img_prompt"))}
+          <textarea name="prompt" placeholder="${escapeHtml(t("img_prompt_ph"))}" required></textarea>
+        </label>
+        <label class="practice-modal__field">${escapeHtml(t("img_aspect"))}
+          <select name="aspect_ratio">
+            <option value="1:1">1:1</option>
+            <option value="4:3">4:3</option>
+            <option value="3:4">3:4</option>
+            <option value="16:9">16:9</option>
+            <option value="9:16">9:16</option>
+          </select>
+        </label>
+        <label class="practice-modal__field">${escapeHtml(t("img_quality"))}
+          <select name="quality">
+            <option value="fast">${escapeHtml(t("img_quality_fast"))}</option>
+            <option value="quality">${escapeHtml(t("img_quality_high"))}</option>
+          </select>
+        </label>
+      </form>
+      <div class="image-modal__preview" hidden></div>
+      <div class="image-modal__status" hidden></div>
+      <div class="practice-modal__actions">
+        <button type="button" data-cancel>${escapeHtml(t("img_close"))}</button>
+        <button type="button" data-submit>${escapeHtml(t("img_generate"))}</button>
+      </div>
+    </div>`;
+
+  document.body.appendChild(overlay);
+  const form = overlay.querySelector("form");
+  const preview = overlay.querySelector(".image-modal__preview");
+  const status = overlay.querySelector(".image-modal__status");
+  const submit = overlay.querySelector("[data-submit]");
+  const close = () => { overlay.remove(); document.removeEventListener("keydown", onKey); };
+  const onKey = (e) => { if (e.key === "Escape") close(); };
+  document.addEventListener("keydown", onKey);
+  overlay.querySelector("[data-cancel]").addEventListener("click", close);
+  overlay.addEventListener("click", (e) => { if (e.target === overlay) close(); });
+
+  submit.addEventListener("click", async () => {
+    const prompt = form.querySelector('[name="prompt"]').value.trim();
+    if (prompt.length < 3) { status.hidden = false; status.textContent = t("img_empty"); return; }
+    submit.disabled = true;
+    const previous = submit.textContent;
+    submit.textContent = t("img_generating");
+    status.hidden = false; status.textContent = t("img_generating");
+    try {
+      const res = await fetchWithAuth(`${API_BASE_URL}/api/tools/image`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          prompt,
+          quality: form.querySelector('[name="quality"]').value,
+          aspect_ratio: form.querySelector('[name="aspect_ratio"]').value,
+        }),
+      });
+      if (res.status === 401) { clearAuthSession(); close(); return; }
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.image) { status.textContent = data.detail || t("img_error"); return; }
+      const mime = data.image.mime_type || "image/png";
+      const src = `data:${mime};base64,${data.image.data}`;
+      status.hidden = true;
+      preview.hidden = false;
+      preview.innerHTML = "";
+      const img = document.createElement("img");
+      img.alt = prompt;
+      img.src = src;
+      const dl = document.createElement("button");
+      dl.type = "button";
+      dl.className = "practice-artifact__download";
+      dl.textContent = t("img_download");
+      dl.addEventListener("click", () => {
+        const link = document.createElement("a");
+        link.href = src;
+        link.download = "aiame-imagen.png";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      });
+      preview.append(img, dl);
+    } catch (_) {
+      status.textContent = t("img_error");
+    } finally {
+      submit.disabled = false;
+      submit.textContent = previous;
+    }
+  });
+
+  form.querySelector("textarea")?.focus();
 }
 
 function downloadPracticeArtifact(artifact, format, editableText) {
@@ -1765,8 +1886,9 @@ document.querySelectorAll(".rail__item").forEach((item) => {
     if (section === "buscar") { openConversations(); return; }
 
     if (section === "ajustes") { openSettings(); return; }
+    if (section === "imagenes") { openImageGenerator(); return; }
 
-    // Secciones (placeholder para futuras vistas: Imágenes, Modelos)
+    // Secciones (placeholder para futuras vistas: Modelos)
     document.querySelectorAll(".rail__item").forEach((i) => i.classList.remove("is-active"));
     item.classList.add("is-active");
     // TODO: conmutar aquí el contenido de .main según item.dataset.section
