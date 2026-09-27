@@ -46,7 +46,7 @@ const I18N = {
     sources:"Fuentes", kb_request:"Solicitar fuente verificada", kb_requested:"Solicitud enviada", kb_error:"No se pudo enviar", related_title:"Relacionado",
     learn_title:"Perfil de aprendizaje", learn_desc:"Cómo AIAME adapta sus explicaciones a ti", learn_style:"Estilo de explicación", learn_difficulty:"Nivel de dificultad", learn_strengths:"Fortalezas", learn_growth:"Áreas de mejora", learn_confusions:"Confusiones frecuentes", learn_none:"Aún no hay datos.", learn_error:"No se pudo cargar tu perfil.", learn_style_balanced:"Equilibrado", learn_style_concise:"Conciso", learn_style_detailed:"Detallado", learn_style_visual:"Visual", learn_diff_basic:"Básico", learn_diff_intermediate:"Intermedio", learn_diff_advanced:"Avanzado",
     demo_topic:"tu consulta", demo_intro:"Aquí tienes una explicación sobre", demo_point1:"Idea clave relacionada con el tema.", demo_point2:"Un segundo punto con más detalle.", demo_point3:"Un tercer punto para ampliar.", demo_code_intro:"También puedo usar formato enriquecido y bloques de código:", demo_note:"Respuesta de demostración. Inicia sesión para el tutor médico real con fuentes verificadas.", demo_followup:"¿Quieres que profundice en", demo_asset:"Recurso de ejemplo",
-    practice_title:"Practicar", practice_slides:"Presentación", practice_mindmap:"Mapa mental", practice_quiz:"Cuestionario", practice_cards:"Tarjetas didácticas", practice_reports:"Informes",
+    practice_title:"Herramientas de estudio", history_title:"Historial", practice_slides:"Presentación", practice_mindmap:"Mapa mental", practice_quiz:"Cuestionario", practice_cards:"Tarjetas didácticas", practice_reports:"Informes",
     practice_no_conversation:"No tienes ninguna conversacion.", practice_login:"Inicia sesión para guardar y generar recursos desde tu conversación.", practice_ready:"Recurso preparado", practice_error:"No se pudo preparar el recurso.",
     img_title:"Generar imagen", img_desc:"Crea una imagen educativa con IA a partir de una descripción.", img_prompt:"Descripción", img_prompt_ph:"Ej: diagrama del ciclo cardíaco con sus fases", img_aspect:"Proporción", img_quality:"Calidad", img_quality_fast:"Rápida", img_quality_high:"Alta calidad", img_close:"Cerrar", img_generate:"Generar", img_generating:"Generando con Gemini…", img_download:"Descargar PNG", img_empty:"Escribe una descripción (mín. 3 caracteres).", img_error:"No se pudo generar la imagen.",
     model_title:"Modelos", model_desc:"Elige la calidad de las respuestas del chat.", model_low:"Bajo", model_medium:"Medio", model_high:"Alto", model_low_desc:"Respuestas rápidas y directas.", model_medium_desc:"Equilibrio entre rapidez y detalle.", model_high_desc:"Respuestas más completas y razonadas.", model_unavailable:"No configurado", model_status:"Estado", model_health_error:"No se pudo obtener el estado del backend.",
@@ -83,7 +83,7 @@ const I18N = {
     sources:"Sources", kb_request:"Request verified source", kb_requested:"Request sent", kb_error:"Could not send", related_title:"Related",
     learn_title:"Learning profile", learn_desc:"How AIAME tailors its explanations to you", learn_style:"Explanation style", learn_difficulty:"Difficulty level", learn_strengths:"Strengths", learn_growth:"Growth areas", learn_confusions:"Frequent confusions", learn_none:"No data yet.", learn_error:"Could not load your profile.", learn_style_balanced:"Balanced", learn_style_concise:"Concise", learn_style_detailed:"Detailed", learn_style_visual:"Visual", learn_diff_basic:"Basic", learn_diff_intermediate:"Intermediate", learn_diff_advanced:"Advanced",
     demo_topic:"your question", demo_intro:"Here's an explanation about", demo_point1:"A key idea related to the topic.", demo_point2:"A second point with more detail.", demo_point3:"A third point to expand on.", demo_code_intro:"I can also use rich formatting and code blocks:", demo_note:"Demo response. Sign in for the real medical tutor with verified sources.", demo_followup:"Want me to go deeper into", demo_asset:"Example resource",
-    practice_title:"Practice", practice_slides:"Presentation", practice_mindmap:"Mind map", practice_quiz:"Quiz", practice_cards:"Flashcards", practice_reports:"Reports",
+    practice_title:"Study tools", history_title:"History", practice_slides:"Presentation", practice_mindmap:"Mind map", practice_quiz:"Quiz", practice_cards:"Flashcards", practice_reports:"Reports",
     practice_no_conversation:"You don't have any conversations.", practice_login:"Sign in to save and generate resources from your conversation.", practice_ready:"Resource prepared", practice_error:"Could not prepare the resource.",
     img_title:"Generate image", img_desc:"Create an AI educational image from a description.", img_prompt:"Description", img_prompt_ph:"e.g. diagram of the cardiac cycle with its phases", img_aspect:"Aspect ratio", img_quality:"Quality", img_quality_fast:"Fast", img_quality_high:"High quality", img_close:"Close", img_generate:"Generate", img_generating:"Generating with Gemini…", img_download:"Download PNG", img_empty:"Write a description (min. 3 characters).", img_error:"Could not generate the image.",
     model_title:"Models", model_desc:"Choose the quality of chat responses.", model_low:"Low", model_medium:"Medium", model_high:"High", model_low_desc:"Fast, direct answers.", model_medium_desc:"Balance of speed and detail.", model_high_desc:"More complete, reasoned answers.", model_unavailable:"Not configured", model_status:"Status", model_health_error:"Could not fetch backend status.",
@@ -120,7 +120,7 @@ const I18N = {
     sources:"Sources", kb_request:"Demander une source vérifiée", kb_requested:"Demande envoyée", kb_error:"Envoi impossible", related_title:"Associé",
     learn_title:"Profil d'apprentissage", learn_desc:"Comment AIAME adapte ses explications", learn_style:"Style d'explication", learn_difficulty:"Niveau de difficulté", learn_strengths:"Points forts", learn_growth:"Axes de progrès", learn_confusions:"Confusions fréquentes", learn_none:"Pas encore de données.", learn_error:"Impossible de charger ton profil.", learn_style_balanced:"Équilibré", learn_style_concise:"Concis", learn_style_detailed:"Détaillé", learn_style_visual:"Visuel", learn_diff_basic:"Basique", learn_diff_intermediate:"Intermédiaire", learn_diff_advanced:"Avancé",
     demo_topic:"ta question", demo_intro:"Voici une explication sur", demo_point1:"Une idée clé liée au sujet.", demo_point2:"Un deuxième point plus détaillé.", demo_point3:"Un troisième point pour approfondir.", demo_code_intro:"Je peux aussi utiliser du formatage riche et des blocs de code :", demo_note:"Réponse de démonstration. Connecte-toi pour le vrai tuteur médical avec des sources vérifiées.", demo_followup:"Veux-tu que j'approfondisse", demo_asset:"Ressource d'exemple",
-    practice_title:"S'entraîner", practice_slides:"Présentation", practice_mindmap:"Carte mentale", practice_quiz:"Questionnaire", practice_cards:"Cartes mémo", practice_reports:"Rapports",
+    practice_title:"Outils d'étude", history_title:"Historique", practice_slides:"Présentation", practice_mindmap:"Carte mentale", practice_quiz:"Questionnaire", practice_cards:"Cartes mémo", practice_reports:"Rapports",
     practice_no_conversation:"Tu n'as aucune conversation.", practice_login:"Connecte-toi pour sauvegarder et générer des ressources depuis ta conversation.", practice_ready:"Ressource préparée", practice_error:"Impossible de préparer la ressource.",
     img_title:"Générer une image", img_desc:"Crée une image éducative par IA à partir d'une description.", img_prompt:"Description", img_prompt_ph:"ex : schéma du cycle cardiaque et ses phases", img_aspect:"Format", img_quality:"Qualité", img_quality_fast:"Rapide", img_quality_high:"Haute qualité", img_close:"Fermer", img_generate:"Générer", img_generating:"Génération avec Gemini…", img_download:"Télécharger PNG", img_empty:"Écris une description (min. 3 caractères).", img_error:"Impossible de générer l'image.",
     model_title:"Modèles", model_desc:"Choisis la qualité des réponses du chat.", model_low:"Bas", model_medium:"Moyen", model_high:"Élevé", model_low_desc:"Réponses rapides et directes.", model_medium_desc:"Équilibre entre rapidité et détail.", model_high_desc:"Réponses plus complètes et raisonnées.", model_unavailable:"Non configuré", model_status:"État", model_health_error:"Impossible d'obtenir l'état du backend.",
@@ -157,7 +157,7 @@ const I18N = {
     sources:"Fontes", kb_request:"Solicitar fonte verificada", kb_requested:"Solicitação enviada", kb_error:"Não foi possível enviar", related_title:"Relacionado",
     learn_title:"Perfil de aprendizado", learn_desc:"Como o AIAME adapta as explicações a você", learn_style:"Estilo de explicação", learn_difficulty:"Nível de dificuldade", learn_strengths:"Pontos fortes", learn_growth:"Áreas de melhoria", learn_confusions:"Confusões frequentes", learn_none:"Ainda não há dados.", learn_error:"Não foi possível carregar seu perfil.", learn_style_balanced:"Equilibrado", learn_style_concise:"Conciso", learn_style_detailed:"Detalhado", learn_style_visual:"Visual", learn_diff_basic:"Básico", learn_diff_intermediate:"Intermediário", learn_diff_advanced:"Avançado",
     demo_topic:"sua pergunta", demo_intro:"Aqui está uma explicação sobre", demo_point1:"Uma ideia-chave relacionada ao tema.", demo_point2:"Um segundo ponto com mais detalhe.", demo_point3:"Um terceiro ponto para ampliar.", demo_code_intro:"Também posso usar formatação rica e blocos de código:", demo_note:"Resposta de demonstração. Entre para o tutor médico real com fontes verificadas.", demo_followup:"Quer que eu aprofunde em", demo_asset:"Recurso de exemplo",
-    practice_title:"Praticar", practice_slides:"Apresentação", practice_mindmap:"Mapa mental", practice_quiz:"Questionário", practice_cards:"Cartões didáticos", practice_reports:"Relatórios",
+    practice_title:"Ferramentas de estudo", history_title:"Histórico", practice_slides:"Apresentação", practice_mindmap:"Mapa mental", practice_quiz:"Questionário", practice_cards:"Cartões didáticos", practice_reports:"Relatórios",
     practice_no_conversation:"Você não tem nenhuma conversa.", practice_login:"Entre para salvar e gerar recursos a partir da sua conversa.", practice_ready:"Recurso preparado", practice_error:"Não foi possível preparar o recurso.",
     img_title:"Gerar imagem", img_desc:"Crie uma imagem educativa com IA a partir de uma descrição.", img_prompt:"Descrição", img_prompt_ph:"ex: diagrama do ciclo cardíaco com suas fases", img_aspect:"Proporção", img_quality:"Qualidade", img_quality_fast:"Rápida", img_quality_high:"Alta qualidade", img_close:"Fechar", img_generate:"Gerar", img_generating:"Gerando com Gemini…", img_download:"Baixar PNG", img_empty:"Escreva uma descrição (mín. 3 caracteres).", img_error:"Não foi possível gerar a imagem.",
     model_title:"Modelos", model_desc:"Escolha a qualidade das respostas do chat.", model_low:"Baixo", model_medium:"Médio", model_high:"Alto", model_low_desc:"Respostas rápidas e diretas.", model_medium_desc:"Equilíbrio entre rapidez e detalhe.", model_high_desc:"Respostas mais completas e fundamentadas.", model_unavailable:"Não configurado", model_status:"Estado", model_health_error:"Não foi possível obter o estado do backend.",
@@ -220,7 +220,7 @@ function initLang() {
 
 // ---------- Referencias al DOM ----------
 const el = {
-  chatList:    document.getElementById("chatList"),
+  chatList:    document.getElementById("railHistory"),
   main:        document.querySelector(".main"),
   messages:    document.getElementById("messages"),
   welcome:     document.getElementById("welcome"),
@@ -241,7 +241,7 @@ const el = {
   suggestions: document.getElementById("suggestions"),
 
   // Barra superior
-  btnSearch:   document.getElementById("btnSearch"),
+  btnSettingsTop: document.getElementById("btnSettingsTop"),
   searchBox:   document.getElementById("searchBox"),
   searchInput: document.getElementById("searchInput"),
   btnNotif:    document.getElementById("btnNotif"),
@@ -617,23 +617,33 @@ function switchChat(id) {
 
 // ---------- Render: lista de chats ----------
 function renderChatList(filter = "") {
-  if (!el.chatList) return;            // el historial fue retirado de la interfaz
+  if (!el.chatList) return;
   const q = filter.trim().toLowerCase();
+  const items = state.chats.filter((c) =>
+    Array.isArray(c.messages) && c.messages.some((m) => !m.streaming && (m.content || "").trim()) &&
+    (!q || (c.title || "").toLowerCase().includes(q))
+  );
   el.chatList.innerHTML = "";
-  state.chats
-    .filter((chat) => !q || chat.title.toLowerCase().includes(q))
-    .forEach((chat) => {
-    const btn = document.createElement("button");
-    btn.className = "chat-item" + (chat.id === state.activeChatId ? " is-active" : "");
-    btn.type = "button";
-    btn.innerHTML = `
-      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
-        <path d="M4 5h16v10H8l-4 4V5z" stroke="currentColor" stroke-width="2"
-              stroke-linejoin="round" fill="none"/>
-      </svg>
-      <span>${escapeHtml(chat.title)}</span>`;
-    btn.addEventListener("click", () => switchChat(chat.id));
-    el.chatList.appendChild(btn);
+  items.forEach((chat) => {
+    const row = document.createElement("div");
+    row.className = "chat-item" + (chat.id === state.activeChatId ? " is-active" : "");
+
+    const main = document.createElement("button");
+    main.className = "chat-item__main";
+    main.type = "button";
+    main.innerHTML = `<span class="chat-item__title">${escapeHtml(chat.title || t("default_chat_title"))}</span>`;
+    main.addEventListener("click", () => switchChat(chat.id));
+
+    const del = document.createElement("button");
+    del.className = "chat-item__delete";
+    del.type = "button";
+    del.setAttribute("aria-label", t("conv_delete"));
+    del.title = t("conv_delete");
+    del.innerHTML = `<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M4 7h16M9 7V5h6v2m-8 0 1 13h8l1-13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`;
+    del.addEventListener("click", (e) => { e.stopPropagation(); deleteLocalChat(chat.id); });
+
+    row.append(main, del);
+    el.chatList.appendChild(row);
   });
 }
 
@@ -2274,7 +2284,7 @@ function deleteLocalChat(id) {
   }
   saveLocalChats();
   renderMessages();
-  renderLocalChats(el.convSearch?.value || "");
+  renderChatList();
 }
 
 function renderConvMessage(msg) {
@@ -2458,9 +2468,8 @@ function initDataToggles() {
   });
 }
 
-// Barra superior: buscar
-el.btnSearch.addEventListener("click", toggleSearch);
-if (el.searchInput) el.searchInput.addEventListener("input", () => renderChatList(el.searchInput.value));
+// Barra superior: configuración
+el.btnSettingsTop?.addEventListener("click", openSettings);
 
 // Barra superior: notificaciones y cuenta
 el.btnNotif.addEventListener("click", (e) => {

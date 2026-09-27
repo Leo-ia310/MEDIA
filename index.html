@@ -6,7 +6,7 @@
   <title>AIAME — Asistente IA</title>
   <meta name="description" content="AIAME, tu asistente de inteligencia artificial." />
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260926-logo38" />
+  <link rel="stylesheet" href="styles.css?v=20260926-bigchanges2" />
 </head>
 <body>
  <div class="shell">
@@ -17,11 +17,10 @@
       <img src="assets/logo.svg" alt="AIAME" class="brand__logo" />
     </a>
     <div class="topbar__actions">
-      <!-- Buscar -->
-      <button class="topbar__btn" id="btnSearch" type="button" aria-label="Buscar" data-i18n-aria="tb_search">
+      <!-- Configuración -->
+      <button class="topbar__btn" id="btnSettingsTop" type="button" aria-label="Configuración" data-i18n-aria="rail_settings">
         <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" fill="none"/>
-          <path d="M20 20l-3.2-3.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path fill="currentColor" d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.61-.22l-2.39.96a7.03 7.03 0 0 0-1.62-.94l-.36-2.54A.49.49 0 0 0 13.9 2h-3.8a.49.49 0 0 0-.49.42l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.5.5 0 0 0-.61.22L2.31 8.48a.5.5 0 0 0 .12.64l2.03 1.58c-.05.3-.07.62-.07.94 0 .32.02.64.07.94l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32c.14.24.42.32.61.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.25.42.49.42h3.8c.24 0 .44-.18.49-.42l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.24.09.47 0 .61-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/>
         </svg>
       </button>
 
@@ -105,7 +104,7 @@
           <span class="rail__label" data-i18n="rail_new">Nuevo chat</span>
         </button>
 
-        <button class="rail__item" type="button" data-section="buscar">
+        <button class="rail__item" type="button" data-section="buscar" disabled aria-disabled="true">
           <span class="rail__icon">
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
               <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" fill="none"/>
@@ -137,16 +136,8 @@
         </button>
       </div>
 
-      <div class="rail__group rail__group--bottom">
-        <button class="rail__item" type="button" data-section="ajustes">
-          <span class="rail__icon">
-            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-              <path fill="currentColor" d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.61-.22l-2.39.96a7.03 7.03 0 0 0-1.62-.94l-.36-2.54A.49.49 0 0 0 13.9 2h-3.8a.49.49 0 0 0-.49.42l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.5.5 0 0 0-.61.22L2.31 8.48a.5.5 0 0 0 .12.64l2.03 1.58c-.05.3-.07.62-.07.94 0 .32.02.64.07.94l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32c.14.24.42.32.61.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.25.42.49.42h3.8c.24 0 .44-.18.49-.42l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.24.09.47 0 .61-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/>
-            </svg>
-          </span>
-          <span class="rail__label" data-i18n="rail_settings">Configuración</span>
-        </button>
-      </div>
+      <p class="rail__history-title rail__label" data-i18n="history_title">Historial</p>
+      <div class="rail__history" id="railHistory"></div>
     </nav>
 
     <!-- Panel principal -->
@@ -155,13 +146,6 @@
         <div class="welcome" id="welcome">
           <h1 class="welcome__title" data-i18n-html="welcome_title">Hola, soy <span>AIAME</span></h1>
           <p class="welcome__subtitle" data-i18n="welcome_subtitle">¿En qué puedo ayudarte hoy?</p>
-
-          <div class="suggestions" id="suggestions">
-            <button class="suggestion" type="button" data-i18n="sugg_1">Explícame un concepto difícil</button>
-            <button class="suggestion" type="button" data-i18n="sugg_2">Ayúdame a redactar un texto</button>
-            <button class="suggestion" type="button" data-i18n="sugg_3">Dame ideas para un proyecto</button>
-            <button class="suggestion" type="button" data-i18n="sugg_4">Resume esto por mí</button>
-          </div>
         </div>
       </section>
 
@@ -180,7 +164,7 @@
             </svg>
           </button>
 
-          <textarea id="input" class="composer__input" placeholder="Escribe un mensaje a AIAME…" data-i18n-placeholder="composer_placeholder" rows="1" maxlength="4000" autocomplete="off"></textarea>
+          <textarea id="input" class="composer__input" placeholder="Escribe un mensaje a AIAME…" data-i18n-placeholder="composer_placeholder" rows="1" autocomplete="off"></textarea>
 
           <button class="composer__mic" id="btnMic" type="button" aria-label="Grabar audio" data-i18n-aria="mic_record">
             <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
@@ -197,18 +181,15 @@
         </form>
         <input type="file" id="fileInput" multiple hidden
                accept="image/*,.pdf,.txt,.md,.doc,.docx,.csv,.json,.zip" />
-        <div class="composer__meta" id="composerMeta" hidden>
-          <span class="composer__shortcuts" data-i18n-html="kbd_hint"><kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nueva línea</span>
-          <span class="composer__count" id="charCount">0 / 4000</span>
-        </div>
-        <p class="composer__hint" data-i18n="composer_hint">AIAME puede cometer errores. Verifica la información importante.</p>
       </div>
+      <p class="composer__hint" data-i18n="composer_hint">AIAME puede cometer errores. Verifica la información importante.</p>
     </main>
 
     <!-- Rail derecho: practicar el tema (sin funcionalidad por ahora) -->
     <nav class="rail rail--right" id="practiceRail" aria-label="Practicar">
       <div class="rail__group">
         <div class="rail__header rail__header--right">
+          <span class="rail__brand" data-i18n="practice_title">Herramientas de estudio</span>
           <button class="rail__toggle" id="practiceToggle" type="button" aria-expanded="true" data-i18n-aria="rail_toggle" aria-label="Contraer menú">
             <span class="rail__icon">
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
@@ -218,7 +199,6 @@
               </svg>
             </span>
           </button>
-          <span class="rail__brand" data-i18n="practice_title">Practicar</span>
         </div>
 
         <button class="rail__item" type="button" data-practice="presentacion">
@@ -485,6 +465,6 @@
   <script src="vendor/purify.min.js"></script>
   <script src="vendor/highlight.min.js"></script>
 
-  <script src="app.js?v=20260926-logo38"></script>
+  <script src="app.js?v=20260926-bigchanges2"></script>
 </body>
 </html>
