@@ -128,6 +128,8 @@ a { color:inherit; text-decoration:none; }
   background:var(--bg);
 }
 .topbar__actions { display:flex; align-items:center; gap:10px; }
+.brand { display:flex; align-items:center; }
+.brand__logo { width:26px; height:26px; }
 
 .topbar__btn {
   position:relative;
