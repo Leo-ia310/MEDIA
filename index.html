@@ -6,13 +6,14 @@
   <title>AIAME — Asistente IA</title>
   <meta name="description" content="AIAME, tu asistente de inteligencia artificial." />
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260926-flat" />
+  <link rel="stylesheet" href="styles.css?v=20260926-topbar" />
 </head>
 <body>
  <div class="shell">
 
-  <!-- ===================== ACCIONES FLOTANTES (arriba a la derecha) ===================== -->
-  <div class="floating-actions">
+  <!-- ===================== BARRA SUPERIOR (sin marco) ===================== -->
+  <header class="topbar">
+    <div class="topbar__actions">
       <!-- Buscar -->
       <button class="topbar__btn" id="btnSearch" type="button" aria-label="Buscar" data-i18n-aria="tb_search">
         <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
@@ -68,7 +69,8 @@
           </div>
         </div>
       </div>
-  </div>
+    </div>
+  </header>
 
   <!-- ===================== CUERPO ===================== -->
   <div class="app" id="app">
@@ -483,6 +485,6 @@
   <script src="vendor/purify.min.js"></script>
   <script src="vendor/highlight.min.js"></script>
 
-  <script src="app.js?v=20260926-flat"></script>
+  <script src="app.js?v=20260926-topbar"></script>
 </body>
 </html>
