@@ -6,20 +6,13 @@
   <title>AIAME — Asistente IA</title>
   <meta name="description" content="AIAME, tu asistente de inteligencia artificial." />
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260926-sync" />
+  <link rel="stylesheet" href="styles.css?v=20260926-flat" />
 </head>
 <body>
  <div class="shell">
 
-  <!-- ===================== BARRA SUPERIOR ===================== -->
-  <header class="topbar">
-    <div class="topbar__left">
-      <a class="brand" href="#" aria-label="AIAME inicio">
-        <img src="assets/logo.svg" alt="AIAME" class="brand__logo" />
-      </a>
-    </div>
-
-    <div class="topbar__actions">
+  <!-- ===================== ACCIONES FLOTANTES (arriba a la derecha) ===================== -->
+  <div class="floating-actions">
       <!-- Buscar -->
       <button class="topbar__btn" id="btnSearch" type="button" aria-label="Buscar" data-i18n-aria="tb_search">
         <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
@@ -75,8 +68,7 @@
           </div>
         </div>
       </div>
-    </div>
-  </header>
+  </div>
 
   <!-- ===================== CUERPO ===================== -->
   <div class="app" id="app">
@@ -86,7 +78,10 @@
     <nav class="rail" id="rail" aria-label="Secciones">
       <div class="rail__group">
         <div class="rail__header">
-          <span class="rail__brand">AIAME</span>
+          <span class="rail__brandbox">
+            <img src="assets/logo.svg" alt="" class="rail__logo" />
+            <span class="rail__brand">AIAME</span>
+          </span>
           <button class="rail__toggle" id="railToggle" type="button" aria-expanded="true" data-i18n-aria="rail_toggle" aria-label="Contraer menú">
             <span class="rail__icon">
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
@@ -156,7 +151,6 @@
     <main class="main">
       <section class="messages" id="messages" aria-live="polite">
         <div class="welcome" id="welcome">
-          <img src="assets/logo.svg" alt="" class="welcome__logo" />
           <h1 class="welcome__title" data-i18n-html="welcome_title">Hola, soy <span>AIAME</span></h1>
           <p class="welcome__subtitle" data-i18n="welcome_subtitle">¿En qué puedo ayudarte hoy?</p>
 
@@ -489,6 +483,6 @@
   <script src="vendor/purify.min.js"></script>
   <script src="vendor/highlight.min.js"></script>
 
-  <script src="app.js?v=20260926-sync"></script>
+  <script src="app.js?v=20260926-flat"></script>
 </body>
 </html>

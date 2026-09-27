@@ -101,55 +101,44 @@
 html, body { height:100%; }
 body {
   font-family:var(--font-body);
-  background:var(--topbar-bg);   /* el color de la barra envuelve todo */
+  background:var(--bg);
   color:var(--text);
   -webkit-font-smoothing:antialiased;
   line-height:1.55;
   height:100dvh; overflow:hidden;
 }
 
-/* Contenedor de la interfaz: barra superior pegada arriba + cuerpo debajo */
+/* Contenedor de la interfaz (sin marco ni barra superior) */
 .shell {
+  position:relative;
   height:100%;
   display:flex; flex-direction:column;
   min-height:0;
-  background:var(--topbar-bg);
+  background:var(--bg);
 }
 button { font-family:inherit; cursor:pointer; }
 textarea { font-family:inherit; }
 a { color:inherit; text-decoration:none; }
 
-/* ===================== BARRA SUPERIOR ===================== */
-.topbar {
-  height:var(--topbar-h);
-  flex-shrink:0;
-  background:var(--topbar-bg);
-  color:var(--topbar-text);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 18px 0 14px;
-  z-index:40;
+/* ===================== ACCIONES FLOTANTES (arriba a la derecha) ===================== */
+.floating-actions {
+  position:fixed; top:14px; right:18px; z-index:90;
+  display:flex; align-items:center; gap:10px;
 }
-.topbar__left { display:flex; align-items:center; gap:6px; }
-
-.brand { display:flex; align-items:center; gap:9px; padding:4px 2px; border-radius:12px; }
-.brand__logo { width:32px; height:32px; }
-
-.topbar__actions { display:flex; align-items:center; gap:10px; }
 
 .topbar__btn {
   position:relative;
   width:42px; height:42px;
   display:grid; place-items:center;
-  border:1px solid var(--topbar-border);
+  border:1px solid var(--border);
   border-radius:50%;
-  background:transparent;
-  color:var(--topbar-text);
-  transition:background .15s ease, border-color .15s ease;
+  background:var(--surface);
+  color:var(--text-soft);
+  box-shadow:var(--shadow-sm);
+  transition:background .15s ease, border-color .15s ease, color .15s ease;
 }
-.topbar__btn:hover { background:var(--topbar-hover); border-color:color-mix(in srgb, var(--topbar-text) 28%, transparent); }
-.topbar__btn--account { background:var(--topbar-hover); }
+.topbar__btn:hover { background:var(--bg-soft); border-color:var(--primary); color:var(--text); }
+.topbar__btn--account { background:var(--surface); }
 
 .badge {
   position:absolute; top:-3px; right:-3px;
@@ -158,11 +147,10 @@ a { color:inherit; text-decoration:none; }
   background:#ef4444; color:#fff;
   font-size:11px; font-weight:700;
   display:grid; place-items:center;
-  border:2px solid var(--topbar-bg);
+  border:2px solid var(--surface);
 }
 
 .topbar__menu { display:none; border:none; }
-.topbar__menu:hover { background:var(--topbar-hover); }
 
 /* Botón genérico de icono (menú móvil en topbar) */
 .icon-btn {
@@ -280,33 +268,29 @@ a { color:inherit; text-decoration:none; }
 :root[data-theme="dark"] .switch { background:var(--primary); }
 :root[data-theme="dark"] .switch::after { transform:translateX(16px); }
 
-/* ===================== CUERPO ===================== */
-/* Marco oscuro (color de la barra) que rodea el área de contenido */
+/* ===================== CUERPO (sin marco) ===================== */
 .app {
   flex:1; min-height:0;
   display:flex;
-  padding:0 12px 12px;          /* marco a los lados y abajo; arriba pega a la barra */
-  background:var(--topbar-bg);
+  padding:0;
+  background:var(--bg);
 }
 
-/* Área de trabajo redondeada, "encerrada" por la barra */
+/* Área de trabajo a sangre completa */
 .workspace {
   flex:1; min-height:0;
   display:grid;
   grid-template-columns:var(--rail-w) 1fr var(--rail-right-w);
   transition:grid-template-columns .3s cubic-bezier(.4,0,.2,1);
-  gap:12px;
-  padding:12px;
+  gap:0;
+  padding:0;
   background:var(--bg);
-  border-radius:var(--radius-lg);
 }
 
-/* ---------- RAIL DE ICONOS ---------- */
+/* ---------- RAIL DE ICONOS (plano, sin bordes) ---------- */
 .rail {
   background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow-sm);
+  border:none;
   display:flex; flex-direction:column;
   justify-content:space-between;
   padding:12px 8px;
@@ -341,6 +325,9 @@ a { color:inherit; text-decoration:none; }
   display:flex; align-items:center; justify-content:space-between;
   gap:8px; margin-bottom:8px; padding:2px 4px 2px 8px;
 }
+.rail__brandbox { display:flex; align-items:center; gap:8px; min-width:0; }
+.rail__logo { width:26px; height:26px; flex-shrink:0; }
+body.rail-collapsed #rail .rail__logo { display:none; }
 .rail__brand {
   font-family:var(--font-title); font-size:20px; font-weight:700;
   letter-spacing:.5px; color:var(--text); white-space:nowrap; overflow:hidden;
@@ -380,6 +367,8 @@ body.rail-collapsed #rail .rail__item { justify-content:center; padding:11px 0; 
   color:var(--text-muted); padding:4px 12px 8px;
 }
 .rail--right .rail__item { color:var(--text-soft); }
+/* Deja hueco arriba para las acciones flotantes */
+.rail--right { padding-top:64px; }
 .rail__header--right { padding:2px 4px 2px 8px; }
 .rail--right .rail__brand { text-align:right; flex:1; }
 
@@ -394,6 +383,7 @@ body.practice-collapsed #practiceRail .rail__toggle-fill { opacity:.9; transform
 @media (max-width:900px) {
   .rail--right { display:none; }
   .workspace { grid-template-columns:var(--rail-w) 1fr; }
+  .main { padding-top:56px; }   /* hueco para las acciones flotantes en móvil */
 }
 
 /* ---------- SIDEBAR ---------- */
@@ -656,7 +646,6 @@ body.practice-collapsed #practiceRail .rail__toggle-fill { opacity:.9; transform
 }
 
 .welcome { height:100%; min-height:50vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:10px; padding:20px; }
-.welcome__logo { width:72px; height:72px; margin-bottom:6px; animation:floaty 4s ease-in-out infinite; }
 .welcome__title { font-family:var(--font-title); font-size:32px; font-weight:700; }
 .welcome__title span { color:var(--primary); }
 .welcome__subtitle { color:var(--text-soft); font-size:17px; margin-bottom:18px; }
