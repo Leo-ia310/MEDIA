@@ -6,13 +6,16 @@
   <title>AIAME — Asistente IA</title>
   <meta name="description" content="AIAME, tu asistente de inteligencia artificial." />
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260926-railradius" />
+  <link rel="stylesheet" href="styles.css?v=20260926-logotop" />
 </head>
 <body>
  <div class="shell">
 
   <!-- ===================== BARRA SUPERIOR (sin marco) ===================== -->
   <header class="topbar">
+    <a class="brand" href="#" aria-label="AIAME inicio">
+      <img src="assets/logo.svg" alt="AIAME" class="brand__logo" />
+    </a>
     <div class="topbar__actions">
       <!-- Buscar -->
       <button class="topbar__btn" id="btnSearch" type="button" aria-label="Buscar" data-i18n-aria="tb_search">
@@ -80,10 +83,7 @@
     <nav class="rail" id="rail" aria-label="Secciones">
       <div class="rail__group">
         <div class="rail__header">
-          <span class="rail__brandbox">
-            <img src="assets/logo.svg" alt="" class="rail__logo" />
-            <span class="rail__brand">AIAME</span>
-          </span>
+          <span class="rail__brand">AIAME</span>
           <button class="rail__toggle" id="railToggle" type="button" aria-expanded="true" data-i18n-aria="rail_toggle" aria-label="Contraer menú">
             <span class="rail__icon">
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
@@ -485,6 +485,6 @@
   <script src="vendor/purify.min.js"></script>
   <script src="vendor/highlight.min.js"></script>
 
-  <script src="app.js?v=20260926-railradius"></script>
+  <script src="app.js?v=20260926-logotop"></script>
 </body>
 </html>
