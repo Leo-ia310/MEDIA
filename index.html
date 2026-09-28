@@ -155,84 +155,11 @@
         <div class="welcome" id="welcome">
           <div class="landing">
             <section class="landing__hero" id="landingHero">
-              <div class="landing__copy">
-                <p class="landing__eyebrow">Tutor IA medico + estudio visual</p>
-                <h1 class="welcome__title">Media</h1>
-                <p class="welcome__subtitle">Un espacio tipo Claude con energia de Codex: conversa, genera recursos, revisa mapas, arma presentaciones y controla tus limites sin perder la sesion.</p>
-                <div class="landing__actions">
-                  <button class="landing__cta landing__cta--primary" id="landingStart" type="button">Empezar chat</button>
-                  <button class="landing__cta" id="landingLogin" type="button" onclick="var p=document.getElementById('authPanel'); if(p){p.className='panel auth-panel is-open'; p.setAttribute('aria-hidden','false');}">Iniciar sesion</button>
-                  <button class="landing__cta" id="landingPlans" type="button">Ver planes beta</button>
                 </div>
               </div>
               <div class="ai-console" aria-label="Panel Media">
-                <div class="ai-console__bar">
-                  <span></span><span></span><span></span>
-                  <strong>Media Core</strong>
-                </div>
-                <div class="ai-console__body">
-                  <div class="ai-console__line"><span>chat</span> razonamiento medico con fuentes</div>
-                  <div class="ai-console__line"><span>codex</span> tareas, recursos y estructura</div>
-                  <div class="ai-console__line"><span>study</span> mapas, tarjetas, quiz, informes</div>
-                </div>
-                <div class="token-card">
-                  <div class="token-card__head">
-                    <span id="planName">Plan Free</span>
-                    <strong id="tokenUsed">0</strong>
-                  </div>
-                  <div class="token-card__bar"><span id="tokenMeterFill"></span></div>
-                  <p><span id="tokenLimit">4,000</span> tokens visuales por mensaje</p>
-                </div>
-              </div>
-            </section>
 
-            <section class="landing__band" aria-label="Accesos rapidos">
-              <button class="quick-card" type="button" data-quick="resume">Resumir tema</button>
-              <button class="quick-card" type="button" data-quick="mapa">Crear mapa mental</button>
-              <button class="quick-card" type="button" data-quick="presentacion">Armar presentacion</button>
-              <button class="quick-card" type="button" data-quick="quiz">Practicar con quiz</button>
             </section>
-
-            <section class="landing__plans" id="plansBeta" aria-label="Planes beta visuales">
-              <div class="landing__section-head">
-                <p>Planes beta visuales</p>
-                <h2>Controla potencia y limite sin tocar backend todavia</h2>
-              </div>
-              <div class="plan-grid">
-                <button class="plan-card" type="button" data-plan="free">
-                  <span class="plan-card__badge">Free</span>
-                  <strong>$0 · 4k tokens</strong>
-                  <small>Chat, demo y herramientas basicas.</small>
-                </button>
-                <button class="plan-card is-featured" type="button" data-plan="plus">
-                  <span class="plan-card__badge">Plus</span>
-                  <strong>$5 · 32k tokens</strong>
-                  <small>Practica visual, imagenes y mas contexto.</small>
-                </button>
-                <button class="plan-card" type="button" data-plan="pro">
-                  <span class="plan-card__badge">Pro</span>
-                  <strong>$10 · 128k tokens</strong>
-                  <small>Sesiones largas estilo Claude + Codex.</small>
-                </button>
-              </div>
-            </section>
-
-            <section class="landing__practice" aria-label="Vista previa de practica">
-              <div class="landing__section-head">
-                <p>Practica instantanea</p>
-                <h2>Los mapas, presentaciones, tarjetas e informes aparecen como recursos editables.</h2>
-              </div>
-              <div class="practice-preview">
-                <div class="practice-preview__node is-root">Tema</div>
-                <div class="practice-preview__node">Mapa mental</div>
-                <div class="practice-preview__node">Presentacion</div>
-                <div class="practice-preview__node">Quiz</div>
-                <div class="practice-preview__node">Informe</div>
-              </div>
-            </section>
-          </div>
-        </div>
-      </section>
 
       <button class="scroll-bottom" id="scrollBottom" type="button" aria-label="Bajar al final" data-i18n-aria="scroll_bottom" hidden>
         <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">

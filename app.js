@@ -16,144 +16,144 @@ const state = {
 // ---------- i18n (traducción) ----------
 const I18N = {
   es: {
-    rail_new:"Nuevo chat", rail_search:"Buscar chats", rail_images:"Imágenes", rail_settings:"Configuración", rail_toggle:"Contraer menú", rail_toggle_expand:"Expandir menú",
-    tb_search:"Buscar", tb_notifications:"Notificaciones", tb_account:"Cuenta",
-    notif_header:"Notificaciones", notif1_title:"Bienvenido a Media", notif1_text:"Tu asistente está listo para conversar.",
-    notif2_title:"Consejo", notif2_text:"Pulsa <kbd>Shift</kbd>+<kbd>Enter</kbd> para saltar de línea.",
-    acc_hint:"Accede para guardar tus conversaciones", acc_login:"Iniciar sesión", acc_register:"Registrarse",
-    acc_logout:"Cerrar sesión", auth_email:"Email", auth_password:"Contraseña", auth_ready:"Sesión iniciada", auth_missing:"Escribe email y contraseña.", auth_failed:"No se pudo autenticar.",
-    auth_confirm_password:"Confirmar contraseña", auth_enter:"Entrar", auth_create:"Crear cuenta", auth_password_mismatch:"Las contraseñas no coinciden.", auth_switch_login:"Ya tengo cuenta", auth_switch_register:"Crear cuenta nueva",
-    auth_title_login:"Inicia sesión", auth_title_register:"Crea tu cuenta", auth_sub_login:"Accede para guardar tus conversaciones", auth_sub_register:"Regístrate para guardar tu historial", auth_no_account:"¿No tienes cuenta?", auth_have_account:"¿Ya tienes cuenta?",
-    welcome_title:"Hola, soy <span>Media</span>", welcome_subtitle:"¿En qué puedo ayudarte hoy?",
-    composer_placeholder:"Escribe un mensaje a Media…", mic_record:"Grabar audio", mic_stop:"Detener grabación",
-    send:"Enviar", composer_hint:"Media puede cometer errores. Verifica la información importante.",
-    settings_title:"Configuración", settings_appearance:"Apariencia", settings_theme:"Tema", settings_dark:"Modo oscuro",
-    settings_language:"Idioma", settings_sound:"Sonido al responder", close:"Cerrar", back:"Volver", settings_general:"General",
-    data_title:"Control de datos", data_desc:"Gestiona qué datos usa Media",
-    data_metadata:"Meta datos", data_metadata_desc:"Permite guardar datos sobre tus conversaciones (fechas, títulos) para organizarlas mejor.",
-    data_analytics:"Analytics", data_analytics_desc:"Comparte estadísticas de uso anónimas para ayudarnos a mejorar Media.",
-    role_you:"Tú", role_ai:"Media", default_chat_title:"Nuevo chat",
-    mock_l1:"Esta es una respuesta de ejemplo de Media 🤖",
-    mock_l2:"Todavía no estoy conectada a un modelo de IA real, pero la interfaz ya está lista para recibir respuestas.",
-    mock_you_wrote:"Tú escribiste:",
-    error_msg:"⚠️ Hubo un problema al obtener la respuesta. Inténtalo de nuevo.",
-    act_copy:"Copiar", act_copied:"Copiado", act_regenerate:"Regenerar", act_good:"Buena respuesta", act_bad:"Mala respuesta",
-    scroll_bottom:"Bajar al final",
-    sugg_1:"Explícame un concepto difícil", sugg_2:"Ayúdame a redactar un texto", sugg_3:"Dame ideas para un proyecto", sugg_4:"Resume esto por mí",
-    attach:"Adjuntar", remove:"Quitar",
-    kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nueva línea",
-    sources:"Fuentes", kb_request:"Solicitar fuente verificada", kb_requested:"Solicitud enviada", kb_error:"No se pudo enviar", related_title:"Relacionado",
-    learn_title:"Perfil de aprendizaje", learn_desc:"Cómo Media adapta sus explicaciones a ti", learn_style:"Estilo de explicación", learn_difficulty:"Nivel de dificultad", learn_strengths:"Fortalezas", learn_growth:"Áreas de mejora", learn_confusions:"Confusiones frecuentes", learn_none:"Aún no hay datos.", learn_error:"No se pudo cargar tu perfil.", learn_style_balanced:"Equilibrado", learn_style_concise:"Conciso", learn_style_detailed:"Detallado", learn_style_visual:"Visual", learn_diff_basic:"Básico", learn_diff_intermediate:"Intermedio", learn_diff_advanced:"Avanzado",
-    demo_topic:"tu consulta", demo_intro:"Aquí tienes una explicación sobre", demo_point1:"Idea clave relacionada con el tema.", demo_point2:"Un segundo punto con más detalle.", demo_point3:"Un tercer punto para ampliar.", demo_code_intro:"También puedo usar formato enriquecido y bloques de código:", demo_note:"Respuesta de demostración. Inicia sesión para el tutor médico real con fuentes verificadas.", demo_followup:"¿Quieres que profundice en", demo_asset:"Recurso de ejemplo",
-    practice_title:"Herramientas de estudio", history_title:"Historial", practice_slides:"Presentación", practice_mindmap:"Mapa mental", practice_quiz:"Cuestionario", practice_cards:"Tarjetas didácticas", practice_reports:"Informes",
-    practice_no_conversation:"No tienes ninguna conversacion.", practice_login:"Inicia sesión para guardar y generar recursos desde tu conversación.", practice_ready:"Recurso preparado", practice_error:"No se pudo preparar el recurso.",
-    img_title:"Generar imagen", img_desc:"Crea una imagen educativa con IA a partir de una descripción.", img_prompt:"Descripción", img_prompt_ph:"Ej: diagrama del ciclo cardíaco con sus fases", img_aspect:"Proporción", img_quality:"Calidad", img_quality_fast:"Rápida", img_quality_high:"Alta calidad", img_close:"Cerrar", img_generate:"Generar", img_generating:"Generando con Gemini…", img_download:"Descargar PNG", img_empty:"Escribe una descripción (mín. 3 caracteres).", img_error:"No se pudo generar la imagen.",
-    conv_title:"Conversaciones", conv_search:"Buscar conversaciones…", conv_empty:"Aún no tienes conversaciones.", conv_login:"Inicia sesión para ver tu historial de conversaciones.", conv_loading:"Cargando…", conv_error:"No se pudo cargar el historial.", conv_delete:"Eliminar conversación", conv_delete_confirm:"¿Eliminar esta conversación? No se puede deshacer.", conv_delete_error:"No se pudo eliminar la conversación.",
+    rail_new: "Nuevo chat", rail_search: "Buscar chats", rail_images: "Imágenes", rail_settings: "Configuración", rail_toggle: "Contraer menú", rail_toggle_expand: "Expandir menú",
+    tb_search: "Buscar", tb_notifications: "Notificaciones", tb_account: "Cuenta",
+    notif_header: "Notificaciones", notif1_title: "Bienvenido a Media", notif1_text: "Tu asistente está listo para conversar.",
+    notif2_title: "Consejo", notif2_text: "Pulsa <kbd>Shift</kbd>+<kbd>Enter</kbd> para saltar de línea.",
+    acc_hint: "Accede para guardar tus conversaciones", acc_login: "Iniciar sesión", acc_register: "Registrarse",
+    acc_logout: "Cerrar sesión", auth_email: "Email", auth_password: "Contraseña", auth_ready: "Sesión iniciada", auth_missing: "Escribe email y contraseña.", auth_failed: "No se pudo autenticar.",
+    auth_confirm_password: "Confirmar contraseña", auth_enter: "Entrar", auth_create: "Crear cuenta", auth_password_mismatch: "Las contraseñas no coinciden.", auth_switch_login: "Ya tengo cuenta", auth_switch_register: "Crear cuenta nueva",
+    auth_title_login: "Inicia sesión", auth_title_register: "Crea tu cuenta", auth_sub_login: "Accede para guardar tus conversaciones", auth_sub_register: "Regístrate para guardar tu historial", auth_no_account: "¿No tienes cuenta?", auth_have_account: "¿Ya tienes cuenta?",
+    welcome_title: "Hola, soy <span>Media</span>", welcome_subtitle: "¿En qué puedo ayudarte hoy?",
+    composer_placeholder: "Escribe un mensaje a Media…", mic_record: "Grabar audio", mic_stop: "Detener grabación",
+    send: "Enviar", composer_hint: "Media puede cometer errores. Verifica la información importante.",
+    settings_title: "Configuración", settings_appearance: "Apariencia", settings_theme: "Tema", settings_dark: "Modo oscuro",
+    settings_language: "Idioma", settings_sound: "Sonido al responder", close: "Cerrar", back: "Volver", settings_general: "General",
+    data_title: "Control de datos", data_desc: "Gestiona qué datos usa Media",
+    data_metadata: "Meta datos", data_metadata_desc: "Permite guardar datos sobre tus conversaciones (fechas, títulos) para organizarlas mejor.",
+    data_analytics: "Analytics", data_analytics_desc: "Comparte estadísticas de uso anónimas para ayudarnos a mejorar Media.",
+    role_you: "Tú", role_ai: "Media", default_chat_title: "Nuevo chat",
+    mock_l1: "Esta es una respuesta de ejemplo de Media 🤖",
+    mock_l2: "Todavía no estoy conectada a un modelo de IA real, pero la interfaz ya está lista para recibir respuestas.",
+    mock_you_wrote: "Tú escribiste:",
+    error_msg: "⚠️ Hubo un problema al obtener la respuesta. Inténtalo de nuevo.",
+    act_copy: "Copiar", act_copied: "Copiado", act_regenerate: "Regenerar", act_good: "Buena respuesta", act_bad: "Mala respuesta",
+    scroll_bottom: "Bajar al final",
+    sugg_1: "Explícame un concepto difícil", sugg_2: "Ayúdame a redactar un texto", sugg_3: "Dame ideas para un proyecto", sugg_4: "Resume esto por mí",
+    attach: "Adjuntar", remove: "Quitar",
+    kbd_hint: "<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nueva línea",
+    sources: "Fuentes", kb_request: "Solicitar fuente verificada", kb_requested: "Solicitud enviada", kb_error: "No se pudo enviar", related_title: "Relacionado",
+    learn_title: "Perfil de aprendizaje", learn_desc: "Cómo Media adapta sus explicaciones a ti", learn_style: "Estilo de explicación", learn_difficulty: "Nivel de dificultad", learn_strengths: "Fortalezas", learn_growth: "Áreas de mejora", learn_confusions: "Confusiones frecuentes", learn_none: "Aún no hay datos.", learn_error: "No se pudo cargar tu perfil.", learn_style_balanced: "Equilibrado", learn_style_concise: "Conciso", learn_style_detailed: "Detallado", learn_style_visual: "Visual", learn_diff_basic: "Básico", learn_diff_intermediate: "Intermedio", learn_diff_advanced: "Avanzado",
+    demo_topic: "tu consulta", demo_intro: "Aquí tienes una explicación sobre", demo_point1: "Idea clave relacionada con el tema.", demo_point2: "Un segundo punto con más detalle.", demo_point3: "Un tercer punto para ampliar.", demo_code_intro: "También puedo usar formato enriquecido y bloques de código:", demo_note: "Respuesta de demostración. Inicia sesión para el tutor médico real con fuentes verificadas.", demo_followup: "¿Quieres que profundice en", demo_asset: "Recurso de ejemplo",
+    practice_title: "Herramientas de estudio", history_title: "Historial", practice_slides: "Presentación", practice_mindmap: "Mapa mental", practice_quiz: "Cuestionario", practice_cards: "Tarjetas didácticas", practice_reports: "Informes",
+    practice_no_conversation: "No tienes ninguna conversacion.", practice_login: "Inicia sesión para guardar y generar recursos desde tu conversación.", practice_ready: "Recurso preparado", practice_error: "No se pudo preparar el recurso.",
+    img_title: "Generar imagen", img_desc: "Crea una imagen educativa con IA a partir de una descripción.", img_prompt: "Descripción", img_prompt_ph: "Ej: diagrama del ciclo cardíaco con sus fases", img_aspect: "Proporción", img_quality: "Calidad", img_quality_fast: "Rápida", img_quality_high: "Alta calidad", img_close: "Cerrar", img_generate: "Generar", img_generating: "Generando con Gemini…", img_download: "Descargar PNG", img_empty: "Escribe una descripción (mín. 3 caracteres).", img_error: "No se pudo generar la imagen.",
+    conv_title: "Conversaciones", conv_search: "Buscar conversaciones…", conv_empty: "Aún no tienes conversaciones.", conv_login: "Inicia sesión para ver tu historial de conversaciones.", conv_loading: "Cargando…", conv_error: "No se pudo cargar el historial.", conv_delete: "Eliminar conversación", conv_delete_confirm: "¿Eliminar esta conversación? No se puede deshacer.", conv_delete_error: "No se pudo eliminar la conversación.",
   },
   en: {
-    rail_new:"New chat", rail_search:"Search chats", rail_images:"Images", rail_settings:"Settings", rail_toggle:"Collapse menu", rail_toggle_expand:"Expand menu",
-    tb_search:"Search", tb_notifications:"Notifications", tb_account:"Account",
-    notif_header:"Notifications", notif1_title:"Welcome to Media", notif1_text:"Your assistant is ready to chat.",
-    notif2_title:"Tip", notif2_text:"Press <kbd>Shift</kbd>+<kbd>Enter</kbd> for a new line.",
-    acc_hint:"Sign in to save your conversations", acc_login:"Log in", acc_register:"Sign up",
-    acc_logout:"Log out", auth_email:"Email", auth_password:"Password", auth_ready:"Signed in", auth_missing:"Enter email and password.", auth_failed:"Could not authenticate.",
-    auth_confirm_password:"Confirm password", auth_enter:"Enter", auth_create:"Create account", auth_password_mismatch:"Passwords do not match.", auth_switch_login:"I already have an account", auth_switch_register:"Create new account",
-    auth_title_login:"Sign in", auth_title_register:"Create your account", auth_sub_login:"Sign in to save your conversations", auth_sub_register:"Sign up to keep your history", auth_no_account:"No account yet?", auth_have_account:"Already have an account?",
-    welcome_title:"Hi, I'm <span>Media</span>", welcome_subtitle:"How can I help you today?",
-    composer_placeholder:"Message Media…", mic_record:"Record audio", mic_stop:"Stop recording",
-    send:"Send", composer_hint:"Media can make mistakes. Check important information.",
-    settings_title:"Settings", settings_appearance:"Appearance", settings_theme:"Theme", settings_dark:"Dark mode",
-    settings_language:"Language", settings_sound:"Sound on reply", close:"Close", back:"Back", settings_general:"General",
-    data_title:"Data controls", data_desc:"Manage what data Media uses",
-    data_metadata:"Metadata", data_metadata_desc:"Allow saving data about your conversations (dates, titles) to organize them better.",
-    data_analytics:"Analytics", data_analytics_desc:"Share anonymous usage statistics to help us improve Media.",
-    role_you:"You", role_ai:"Media", default_chat_title:"New chat",
-    mock_l1:"This is a sample response from Media 🤖",
-    mock_l2:"I'm not connected to a real AI model yet, but the interface is ready to receive responses.",
-    mock_you_wrote:"You wrote:",
-    error_msg:"⚠️ There was a problem getting the response. Please try again.",
-    act_copy:"Copy", act_copied:"Copied", act_regenerate:"Regenerate", act_good:"Good response", act_bad:"Bad response",
-    scroll_bottom:"Scroll to bottom",
-    sugg_1:"Explain a difficult concept", sugg_2:"Help me write something", sugg_3:"Give me project ideas", sugg_4:"Summarize this for me",
-    attach:"Attach", remove:"Remove",
-    kbd_hint:"<kbd>Enter</kbd> to send · <kbd>Shift</kbd>+<kbd>Enter</kbd> new line",
-    sources:"Sources", kb_request:"Request verified source", kb_requested:"Request sent", kb_error:"Could not send", related_title:"Related",
-    learn_title:"Learning profile", learn_desc:"How Media tailors its explanations to you", learn_style:"Explanation style", learn_difficulty:"Difficulty level", learn_strengths:"Strengths", learn_growth:"Growth areas", learn_confusions:"Frequent confusions", learn_none:"No data yet.", learn_error:"Could not load your profile.", learn_style_balanced:"Balanced", learn_style_concise:"Concise", learn_style_detailed:"Detailed", learn_style_visual:"Visual", learn_diff_basic:"Basic", learn_diff_intermediate:"Intermediate", learn_diff_advanced:"Advanced",
-    demo_topic:"your question", demo_intro:"Here's an explanation about", demo_point1:"A key idea related to the topic.", demo_point2:"A second point with more detail.", demo_point3:"A third point to expand on.", demo_code_intro:"I can also use rich formatting and code blocks:", demo_note:"Demo response. Sign in for the real medical tutor with verified sources.", demo_followup:"Want me to go deeper into", demo_asset:"Example resource",
-    practice_title:"Study tools", history_title:"History", practice_slides:"Presentation", practice_mindmap:"Mind map", practice_quiz:"Quiz", practice_cards:"Flashcards", practice_reports:"Reports",
-    practice_no_conversation:"You don't have any conversations.", practice_login:"Sign in to save and generate resources from your conversation.", practice_ready:"Resource prepared", practice_error:"Could not prepare the resource.",
-    img_title:"Generate image", img_desc:"Create an AI educational image from a description.", img_prompt:"Description", img_prompt_ph:"e.g. diagram of the cardiac cycle with its phases", img_aspect:"Aspect ratio", img_quality:"Quality", img_quality_fast:"Fast", img_quality_high:"High quality", img_close:"Close", img_generate:"Generate", img_generating:"Generating with Gemini…", img_download:"Download PNG", img_empty:"Write a description (min. 3 characters).", img_error:"Could not generate the image.",
-    conv_title:"Conversations", conv_search:"Search conversations…", conv_empty:"You don't have any conversations yet.", conv_login:"Sign in to see your conversation history.", conv_loading:"Loading…", conv_error:"Could not load history.", conv_delete:"Delete conversation", conv_delete_confirm:"Delete this conversation? This can't be undone.", conv_delete_error:"Could not delete the conversation.",
+    rail_new: "New chat", rail_search: "Search chats", rail_images: "Images", rail_settings: "Settings", rail_toggle: "Collapse menu", rail_toggle_expand: "Expand menu",
+    tb_search: "Search", tb_notifications: "Notifications", tb_account: "Account",
+    notif_header: "Notifications", notif1_title: "Welcome to Media", notif1_text: "Your assistant is ready to chat.",
+    notif2_title: "Tip", notif2_text: "Press <kbd>Shift</kbd>+<kbd>Enter</kbd> for a new line.",
+    acc_hint: "Sign in to save your conversations", acc_login: "Log in", acc_register: "Sign up",
+    acc_logout: "Log out", auth_email: "Email", auth_password: "Password", auth_ready: "Signed in", auth_missing: "Enter email and password.", auth_failed: "Could not authenticate.",
+    auth_confirm_password: "Confirm password", auth_enter: "Enter", auth_create: "Create account", auth_password_mismatch: "Passwords do not match.", auth_switch_login: "I already have an account", auth_switch_register: "Create new account",
+    auth_title_login: "Sign in", auth_title_register: "Create your account", auth_sub_login: "Sign in to save your conversations", auth_sub_register: "Sign up to keep your history", auth_no_account: "No account yet?", auth_have_account: "Already have an account?",
+    welcome_title: "Hi, I'm <span>Media</span>", welcome_subtitle: "How can I help you today?",
+    composer_placeholder: "Message Media…", mic_record: "Record audio", mic_stop: "Stop recording",
+    send: "Send", composer_hint: "Media can make mistakes. Check important information.",
+    settings_title: "Settings", settings_appearance: "Appearance", settings_theme: "Theme", settings_dark: "Dark mode",
+    settings_language: "Language", settings_sound: "Sound on reply", close: "Close", back: "Back", settings_general: "General",
+    data_title: "Data controls", data_desc: "Manage what data Media uses",
+    data_metadata: "Metadata", data_metadata_desc: "Allow saving data about your conversations (dates, titles) to organize them better.",
+    data_analytics: "Analytics", data_analytics_desc: "Share anonymous usage statistics to help us improve Media.",
+    role_you: "You", role_ai: "Media", default_chat_title: "New chat",
+    mock_l1: "This is a sample response from Media 🤖",
+    mock_l2: "I'm not connected to a real AI model yet, but the interface is ready to receive responses.",
+    mock_you_wrote: "You wrote:",
+    error_msg: "⚠️ There was a problem getting the response. Please try again.",
+    act_copy: "Copy", act_copied: "Copied", act_regenerate: "Regenerate", act_good: "Good response", act_bad: "Bad response",
+    scroll_bottom: "Scroll to bottom",
+    sugg_1: "Explain a difficult concept", sugg_2: "Help me write something", sugg_3: "Give me project ideas", sugg_4: "Summarize this for me",
+    attach: "Attach", remove: "Remove",
+    kbd_hint: "<kbd>Enter</kbd> to send · <kbd>Shift</kbd>+<kbd>Enter</kbd> new line",
+    sources: "Sources", kb_request: "Request verified source", kb_requested: "Request sent", kb_error: "Could not send", related_title: "Related",
+    learn_title: "Learning profile", learn_desc: "How Media tailors its explanations to you", learn_style: "Explanation style", learn_difficulty: "Difficulty level", learn_strengths: "Strengths", learn_growth: "Growth areas", learn_confusions: "Frequent confusions", learn_none: "No data yet.", learn_error: "Could not load your profile.", learn_style_balanced: "Balanced", learn_style_concise: "Concise", learn_style_detailed: "Detailed", learn_style_visual: "Visual", learn_diff_basic: "Basic", learn_diff_intermediate: "Intermediate", learn_diff_advanced: "Advanced",
+    demo_topic: "your question", demo_intro: "Here's an explanation about", demo_point1: "A key idea related to the topic.", demo_point2: "A second point with more detail.", demo_point3: "A third point to expand on.", demo_code_intro: "I can also use rich formatting and code blocks:", demo_note: "Demo response. Sign in for the real medical tutor with verified sources.", demo_followup: "Want me to go deeper into", demo_asset: "Example resource",
+    practice_title: "Study tools", history_title: "History", practice_slides: "Presentation", practice_mindmap: "Mind map", practice_quiz: "Quiz", practice_cards: "Flashcards", practice_reports: "Reports",
+    practice_no_conversation: "You don't have any conversations.", practice_login: "Sign in to save and generate resources from your conversation.", practice_ready: "Resource prepared", practice_error: "Could not prepare the resource.",
+    img_title: "Generate image", img_desc: "Create an AI educational image from a description.", img_prompt: "Description", img_prompt_ph: "e.g. diagram of the cardiac cycle with its phases", img_aspect: "Aspect ratio", img_quality: "Quality", img_quality_fast: "Fast", img_quality_high: "High quality", img_close: "Close", img_generate: "Generate", img_generating: "Generating with Gemini…", img_download: "Download PNG", img_empty: "Write a description (min. 3 characters).", img_error: "Could not generate the image.",
+    conv_title: "Conversations", conv_search: "Search conversations…", conv_empty: "You don't have any conversations yet.", conv_login: "Sign in to see your conversation history.", conv_loading: "Loading…", conv_error: "Could not load history.", conv_delete: "Delete conversation", conv_delete_confirm: "Delete this conversation? This can't be undone.", conv_delete_error: "Could not delete the conversation.",
   },
   fr: {
-    rail_new:"Nouveau chat", rail_search:"Rechercher", rail_images:"Images", rail_settings:"Paramètres", rail_toggle:"Réduire le menu", rail_toggle_expand:"Développer le menu",
-    tb_search:"Rechercher", tb_notifications:"Notifications", tb_account:"Compte",
-    notif_header:"Notifications", notif1_title:"Bienvenue sur Media", notif1_text:"Votre assistant est prêt à discuter.",
-    notif2_title:"Astuce", notif2_text:"Appuie sur <kbd>Shift</kbd>+<kbd>Enter</kbd> pour un saut de ligne.",
-    acc_hint:"Connecte-toi pour sauvegarder tes conversations", acc_login:"Se connecter", acc_register:"S'inscrire",
-    acc_logout:"Se déconnecter", auth_email:"Email", auth_password:"Mot de passe", auth_ready:"Session ouverte", auth_missing:"Saisis email et mot de passe.", auth_failed:"Authentification impossible.",
-    auth_confirm_password:"Confirmer le mot de passe", auth_enter:"Entrer", auth_create:"Créer un compte", auth_password_mismatch:"Les mots de passe ne correspondent pas.", auth_switch_login:"J'ai déjà un compte", auth_switch_register:"Créer un nouveau compte",
-    auth_title_login:"Connexion", auth_title_register:"Crée ton compte", auth_sub_login:"Connecte-toi pour sauvegarder tes conversations", auth_sub_register:"Inscris-toi pour conserver ton historique", auth_no_account:"Pas encore de compte ?", auth_have_account:"Tu as déjà un compte ?",
-    welcome_title:"Bonjour, je suis <span>Media</span>", welcome_subtitle:"Comment puis-je t'aider aujourd'hui ?",
-    composer_placeholder:"Écris un message à Media…", mic_record:"Enregistrer un audio", mic_stop:"Arrêter l'enregistrement",
-    send:"Envoyer", composer_hint:"Media peut faire des erreurs. Vérifie les informations importantes.",
-    settings_title:"Paramètres", settings_appearance:"Apparence", settings_theme:"Thème", settings_dark:"Mode sombre",
-    settings_language:"Langue", settings_sound:"Son à la réponse", close:"Fermer", back:"Retour", settings_general:"Général",
-    data_title:"Contrôle des données", data_desc:"Gère les données utilisées par Media",
-    data_metadata:"Métadonnées", data_metadata_desc:"Autorise l'enregistrement de données sur tes conversations (dates, titres) pour mieux les organiser.",
-    data_analytics:"Analytique", data_analytics_desc:"Partage des statistiques d'utilisation anonymes pour nous aider à améliorer Media.",
-    role_you:"Toi", role_ai:"Media", default_chat_title:"Nouveau chat",
-    mock_l1:"Ceci est une réponse d'exemple d'Media 🤖",
-    mock_l2:"Je ne suis pas encore connectée à un vrai modèle d'IA, mais l'interface est prête à recevoir des réponses.",
-    mock_you_wrote:"Tu as écrit :",
-    error_msg:"⚠️ Un problème est survenu lors de la réponse. Réessaie.",
-    act_copy:"Copier", act_copied:"Copié", act_regenerate:"Régénérer", act_good:"Bonne réponse", act_bad:"Mauvaise réponse",
-    scroll_bottom:"Aller en bas",
-    sugg_1:"Explique-moi un concept difficile", sugg_2:"Aide-moi à rédiger un texte", sugg_3:"Donne-moi des idées de projet", sugg_4:"Résume ceci pour moi",
-    attach:"Joindre", remove:"Retirer",
-    kbd_hint:"<kbd>Entrée</kbd> envoyer · <kbd>Shift</kbd>+<kbd>Entrée</kbd> nouvelle ligne",
-    sources:"Sources", kb_request:"Demander une source vérifiée", kb_requested:"Demande envoyée", kb_error:"Envoi impossible", related_title:"Associé",
-    learn_title:"Profil d'apprentissage", learn_desc:"Comment Media adapte ses explications", learn_style:"Style d'explication", learn_difficulty:"Niveau de difficulté", learn_strengths:"Points forts", learn_growth:"Axes de progrès", learn_confusions:"Confusions fréquentes", learn_none:"Pas encore de données.", learn_error:"Impossible de charger ton profil.", learn_style_balanced:"Équilibré", learn_style_concise:"Concis", learn_style_detailed:"Détaillé", learn_style_visual:"Visuel", learn_diff_basic:"Basique", learn_diff_intermediate:"Intermédiaire", learn_diff_advanced:"Avancé",
-    demo_topic:"ta question", demo_intro:"Voici une explication sur", demo_point1:"Une idée clé liée au sujet.", demo_point2:"Un deuxième point plus détaillé.", demo_point3:"Un troisième point pour approfondir.", demo_code_intro:"Je peux aussi utiliser du formatage riche et des blocs de code :", demo_note:"Réponse de démonstration. Connecte-toi pour le vrai tuteur médical avec des sources vérifiées.", demo_followup:"Veux-tu que j'approfondisse", demo_asset:"Ressource d'exemple",
-    practice_title:"Outils d'étude", history_title:"Historique", practice_slides:"Présentation", practice_mindmap:"Carte mentale", practice_quiz:"Questionnaire", practice_cards:"Cartes mémo", practice_reports:"Rapports",
-    practice_no_conversation:"Tu n'as aucune conversation.", practice_login:"Connecte-toi pour sauvegarder et générer des ressources depuis ta conversation.", practice_ready:"Ressource préparée", practice_error:"Impossible de préparer la ressource.",
-    img_title:"Générer une image", img_desc:"Crée une image éducative par IA à partir d'une description.", img_prompt:"Description", img_prompt_ph:"ex : schéma du cycle cardiaque et ses phases", img_aspect:"Format", img_quality:"Qualité", img_quality_fast:"Rapide", img_quality_high:"Haute qualité", img_close:"Fermer", img_generate:"Générer", img_generating:"Génération avec Gemini…", img_download:"Télécharger PNG", img_empty:"Écris une description (min. 3 caractères).", img_error:"Impossible de générer l'image.",
-    conv_title:"Conversations", conv_search:"Rechercher des conversations…", conv_empty:"Tu n'as pas encore de conversations.", conv_login:"Connecte-toi pour voir ton historique de conversations.", conv_loading:"Chargement…", conv_error:"Impossible de charger l'historique.", conv_delete:"Supprimer la conversation", conv_delete_confirm:"Supprimer cette conversation ? Action irréversible.", conv_delete_error:"Impossible de supprimer la conversation.",
+    rail_new: "Nouveau chat", rail_search: "Rechercher", rail_images: "Images", rail_settings: "Paramètres", rail_toggle: "Réduire le menu", rail_toggle_expand: "Développer le menu",
+    tb_search: "Rechercher", tb_notifications: "Notifications", tb_account: "Compte",
+    notif_header: "Notifications", notif1_title: "Bienvenue sur Media", notif1_text: "Votre assistant est prêt à discuter.",
+    notif2_title: "Astuce", notif2_text: "Appuie sur <kbd>Shift</kbd>+<kbd>Enter</kbd> pour un saut de ligne.",
+    acc_hint: "Connecte-toi pour sauvegarder tes conversations", acc_login: "Se connecter", acc_register: "S'inscrire",
+    acc_logout: "Se déconnecter", auth_email: "Email", auth_password: "Mot de passe", auth_ready: "Session ouverte", auth_missing: "Saisis email et mot de passe.", auth_failed: "Authentification impossible.",
+    auth_confirm_password: "Confirmer le mot de passe", auth_enter: "Entrer", auth_create: "Créer un compte", auth_password_mismatch: "Les mots de passe ne correspondent pas.", auth_switch_login: "J'ai déjà un compte", auth_switch_register: "Créer un nouveau compte",
+    auth_title_login: "Connexion", auth_title_register: "Crée ton compte", auth_sub_login: "Connecte-toi pour sauvegarder tes conversations", auth_sub_register: "Inscris-toi pour conserver ton historique", auth_no_account: "Pas encore de compte ?", auth_have_account: "Tu as déjà un compte ?",
+    welcome_title: "Bonjour, je suis <span>Media</span>", welcome_subtitle: "Comment puis-je t'aider aujourd'hui ?",
+    composer_placeholder: "Écris un message à Media…", mic_record: "Enregistrer un audio", mic_stop: "Arrêter l'enregistrement",
+    send: "Envoyer", composer_hint: "Media peut faire des erreurs. Vérifie les informations importantes.",
+    settings_title: "Paramètres", settings_appearance: "Apparence", settings_theme: "Thème", settings_dark: "Mode sombre",
+    settings_language: "Langue", settings_sound: "Son à la réponse", close: "Fermer", back: "Retour", settings_general: "Général",
+    data_title: "Contrôle des données", data_desc: "Gère les données utilisées par Media",
+    data_metadata: "Métadonnées", data_metadata_desc: "Autorise l'enregistrement de données sur tes conversations (dates, titres) pour mieux les organiser.",
+    data_analytics: "Analytique", data_analytics_desc: "Partage des statistiques d'utilisation anonymes pour nous aider à améliorer Media.",
+    role_you: "Toi", role_ai: "Media", default_chat_title: "Nouveau chat",
+    mock_l1: "Ceci est une réponse d'exemple d'Media 🤖",
+    mock_l2: "Je ne suis pas encore connectée à un vrai modèle d'IA, mais l'interface est prête à recevoir des réponses.",
+    mock_you_wrote: "Tu as écrit :",
+    error_msg: "⚠️ Un problème est survenu lors de la réponse. Réessaie.",
+    act_copy: "Copier", act_copied: "Copié", act_regenerate: "Régénérer", act_good: "Bonne réponse", act_bad: "Mauvaise réponse",
+    scroll_bottom: "Aller en bas",
+    sugg_1: "Explique-moi un concept difficile", sugg_2: "Aide-moi à rédiger un texte", sugg_3: "Donne-moi des idées de projet", sugg_4: "Résume ceci pour moi",
+    attach: "Joindre", remove: "Retirer",
+    kbd_hint: "<kbd>Entrée</kbd> envoyer · <kbd>Shift</kbd>+<kbd>Entrée</kbd> nouvelle ligne",
+    sources: "Sources", kb_request: "Demander une source vérifiée", kb_requested: "Demande envoyée", kb_error: "Envoi impossible", related_title: "Associé",
+    learn_title: "Profil d'apprentissage", learn_desc: "Comment Media adapte ses explications", learn_style: "Style d'explication", learn_difficulty: "Niveau de difficulté", learn_strengths: "Points forts", learn_growth: "Axes de progrès", learn_confusions: "Confusions fréquentes", learn_none: "Pas encore de données.", learn_error: "Impossible de charger ton profil.", learn_style_balanced: "Équilibré", learn_style_concise: "Concis", learn_style_detailed: "Détaillé", learn_style_visual: "Visuel", learn_diff_basic: "Basique", learn_diff_intermediate: "Intermédiaire", learn_diff_advanced: "Avancé",
+    demo_topic: "ta question", demo_intro: "Voici une explication sur", demo_point1: "Une idée clé liée au sujet.", demo_point2: "Un deuxième point plus détaillé.", demo_point3: "Un troisième point pour approfondir.", demo_code_intro: "Je peux aussi utiliser du formatage riche et des blocs de code :", demo_note: "Réponse de démonstration. Connecte-toi pour le vrai tuteur médical avec des sources vérifiées.", demo_followup: "Veux-tu que j'approfondisse", demo_asset: "Ressource d'exemple",
+    practice_title: "Outils d'étude", history_title: "Historique", practice_slides: "Présentation", practice_mindmap: "Carte mentale", practice_quiz: "Questionnaire", practice_cards: "Cartes mémo", practice_reports: "Rapports",
+    practice_no_conversation: "Tu n'as aucune conversation.", practice_login: "Connecte-toi pour sauvegarder et générer des ressources depuis ta conversation.", practice_ready: "Ressource préparée", practice_error: "Impossible de préparer la ressource.",
+    img_title: "Générer une image", img_desc: "Crée une image éducative par IA à partir d'une description.", img_prompt: "Description", img_prompt_ph: "ex : schéma du cycle cardiaque et ses phases", img_aspect: "Format", img_quality: "Qualité", img_quality_fast: "Rapide", img_quality_high: "Haute qualité", img_close: "Fermer", img_generate: "Générer", img_generating: "Génération avec Gemini…", img_download: "Télécharger PNG", img_empty: "Écris une description (min. 3 caractères).", img_error: "Impossible de générer l'image.",
+    conv_title: "Conversations", conv_search: "Rechercher des conversations…", conv_empty: "Tu n'as pas encore de conversations.", conv_login: "Connecte-toi pour voir ton historique de conversations.", conv_loading: "Chargement…", conv_error: "Impossible de charger l'historique.", conv_delete: "Supprimer la conversation", conv_delete_confirm: "Supprimer cette conversation ? Action irréversible.", conv_delete_error: "Impossible de supprimer la conversation.",
   },
   pt: {
-    rail_new:"Novo chat", rail_search:"Buscar chats", rail_images:"Imagens", rail_settings:"Configurações", rail_toggle:"Recolher menu", rail_toggle_expand:"Expandir menu",
-    tb_search:"Buscar", tb_notifications:"Notificações", tb_account:"Conta",
-    notif_header:"Notificações", notif1_title:"Bem-vindo a Media", notif1_text:"Seu assistente está pronto para conversar.",
-    notif2_title:"Dica", notif2_text:"Pressione <kbd>Shift</kbd>+<kbd>Enter</kbd> para pular linha.",
-    acc_hint:"Entre para salvar suas conversas", acc_login:"Entrar", acc_register:"Cadastrar-se",
-    acc_logout:"Sair", auth_email:"Email", auth_password:"Senha", auth_ready:"Sessão iniciada", auth_missing:"Digite email e senha.", auth_failed:"Não foi possível autenticar.",
-    auth_confirm_password:"Confirmar senha", auth_enter:"Entrar", auth_create:"Criar conta", auth_password_mismatch:"As senhas não coincidem.", auth_switch_login:"Já tenho conta", auth_switch_register:"Criar nova conta",
-    auth_title_login:"Entrar", auth_title_register:"Crie sua conta", auth_sub_login:"Entre para salvar suas conversas", auth_sub_register:"Cadastre-se para guardar seu histórico", auth_no_account:"Ainda não tem conta?", auth_have_account:"Já tem conta?",
-    welcome_title:"Olá, sou <span>Media</span>", welcome_subtitle:"Como posso ajudar você hoje?",
-    composer_placeholder:"Escreva uma mensagem para Media…", mic_record:"Gravar áudio", mic_stop:"Parar gravação",
-    send:"Enviar", composer_hint:"Media pode cometer erros. Verifique informações importantes.",
-    settings_title:"Configurações", settings_appearance:"Aparência", settings_theme:"Tema", settings_dark:"Modo escuro",
-    settings_language:"Idioma", settings_sound:"Som ao responder", close:"Fechar", back:"Voltar", settings_general:"Geral",
-    data_title:"Controle de dados", data_desc:"Gerencie quais dados a Media usa",
-    data_metadata:"Metadados", data_metadata_desc:"Permite salvar dados sobre suas conversas (datas, títulos) para organizá-las melhor.",
-    data_analytics:"Análises", data_analytics_desc:"Compartilhe estatísticas de uso anônimas para nos ajudar a melhorar a Media.",
-    role_you:"Você", role_ai:"Media", default_chat_title:"Novo chat",
-    mock_l1:"Esta é uma resposta de exemplo do Media 🤖",
-    mock_l2:"Ainda não estou conectada a um modelo de IA real, mas a interface já está pronta para receber respostas.",
-    mock_you_wrote:"Você escreveu:",
-    error_msg:"⚠️ Ocorreu um problema ao obter a resposta. Tente novamente.",
-    act_copy:"Copiar", act_copied:"Copiado", act_regenerate:"Regenerar", act_good:"Boa resposta", act_bad:"Resposta ruim",
-    scroll_bottom:"Ir para o fim",
-    sugg_1:"Explique um conceito difícil", sugg_2:"Ajude-me a redigir um texto", sugg_3:"Dê-me ideias para um projeto", sugg_4:"Resuma isto para mim",
-    attach:"Anexar", remove:"Remover",
-    kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nova linha",
-    sources:"Fontes", kb_request:"Solicitar fonte verificada", kb_requested:"Solicitação enviada", kb_error:"Não foi possível enviar", related_title:"Relacionado",
-    learn_title:"Perfil de aprendizado", learn_desc:"Como o Media adapta as explicações a você", learn_style:"Estilo de explicação", learn_difficulty:"Nível de dificuldade", learn_strengths:"Pontos fortes", learn_growth:"Áreas de melhoria", learn_confusions:"Confusões frequentes", learn_none:"Ainda não há dados.", learn_error:"Não foi possível carregar seu perfil.", learn_style_balanced:"Equilibrado", learn_style_concise:"Conciso", learn_style_detailed:"Detalhado", learn_style_visual:"Visual", learn_diff_basic:"Básico", learn_diff_intermediate:"Intermediário", learn_diff_advanced:"Avançado",
-    demo_topic:"sua pergunta", demo_intro:"Aqui está uma explicação sobre", demo_point1:"Uma ideia-chave relacionada ao tema.", demo_point2:"Um segundo ponto com mais detalhe.", demo_point3:"Um terceiro ponto para ampliar.", demo_code_intro:"Também posso usar formatação rica e blocos de código:", demo_note:"Resposta de demonstração. Entre para o tutor médico real com fontes verificadas.", demo_followup:"Quer que eu aprofunde em", demo_asset:"Recurso de exemplo",
-    practice_title:"Ferramentas de estudo", history_title:"Histórico", practice_slides:"Apresentação", practice_mindmap:"Mapa mental", practice_quiz:"Questionário", practice_cards:"Cartões didáticos", practice_reports:"Relatórios",
-    practice_no_conversation:"Você não tem nenhuma conversa.", practice_login:"Entre para salvar e gerar recursos a partir da sua conversa.", practice_ready:"Recurso preparado", practice_error:"Não foi possível preparar o recurso.",
-    img_title:"Gerar imagem", img_desc:"Crie uma imagem educativa com IA a partir de uma descrição.", img_prompt:"Descrição", img_prompt_ph:"ex: diagrama do ciclo cardíaco com suas fases", img_aspect:"Proporção", img_quality:"Qualidade", img_quality_fast:"Rápida", img_quality_high:"Alta qualidade", img_close:"Fechar", img_generate:"Gerar", img_generating:"Gerando com Gemini…", img_download:"Baixar PNG", img_empty:"Escreva uma descrição (mín. 3 caracteres).", img_error:"Não foi possível gerar a imagem.",
-    conv_title:"Conversas", conv_search:"Buscar conversas…", conv_empty:"Você ainda não tem conversas.", conv_login:"Entre para ver seu histórico de conversas.", conv_loading:"Carregando…", conv_error:"Não foi possível carregar o histórico.", conv_delete:"Excluir conversa", conv_delete_confirm:"Excluir esta conversa? Não é possível desfazer.", conv_delete_error:"Não foi possível excluir a conversa.",
+    rail_new: "Novo chat", rail_search: "Buscar chats", rail_images: "Imagens", rail_settings: "Configurações", rail_toggle: "Recolher menu", rail_toggle_expand: "Expandir menu",
+    tb_search: "Buscar", tb_notifications: "Notificações", tb_account: "Conta",
+    notif_header: "Notificações", notif1_title: "Bem-vindo a Media", notif1_text: "Seu assistente está pronto para conversar.",
+    notif2_title: "Dica", notif2_text: "Pressione <kbd>Shift</kbd>+<kbd>Enter</kbd> para pular linha.",
+    acc_hint: "Entre para salvar suas conversas", acc_login: "Entrar", acc_register: "Cadastrar-se",
+    acc_logout: "Sair", auth_email: "Email", auth_password: "Senha", auth_ready: "Sessão iniciada", auth_missing: "Digite email e senha.", auth_failed: "Não foi possível autenticar.",
+    auth_confirm_password: "Confirmar senha", auth_enter: "Entrar", auth_create: "Criar conta", auth_password_mismatch: "As senhas não coincidem.", auth_switch_login: "Já tenho conta", auth_switch_register: "Criar nova conta",
+    auth_title_login: "Entrar", auth_title_register: "Crie sua conta", auth_sub_login: "Entre para salvar suas conversas", auth_sub_register: "Cadastre-se para guardar seu histórico", auth_no_account: "Ainda não tem conta?", auth_have_account: "Já tem conta?",
+    welcome_title: "Olá, sou <span>Media</span>", welcome_subtitle: "Como posso ajudar você hoje?",
+    composer_placeholder: "Escreva uma mensagem para Media…", mic_record: "Gravar áudio", mic_stop: "Parar gravação",
+    send: "Enviar", composer_hint: "Media pode cometer erros. Verifique informações importantes.",
+    settings_title: "Configurações", settings_appearance: "Aparência", settings_theme: "Tema", settings_dark: "Modo escuro",
+    settings_language: "Idioma", settings_sound: "Som ao responder", close: "Fechar", back: "Voltar", settings_general: "Geral",
+    data_title: "Controle de dados", data_desc: "Gerencie quais dados a Media usa",
+    data_metadata: "Metadados", data_metadata_desc: "Permite salvar dados sobre suas conversas (datas, títulos) para organizá-las melhor.",
+    data_analytics: "Análises", data_analytics_desc: "Compartilhe estatísticas de uso anônimas para nos ajudar a melhorar a Media.",
+    role_you: "Você", role_ai: "Media", default_chat_title: "Novo chat",
+    mock_l1: "Esta é uma resposta de exemplo do Media 🤖",
+    mock_l2: "Ainda não estou conectada a um modelo de IA real, mas a interface já está pronta para receber respostas.",
+    mock_you_wrote: "Você escreveu:",
+    error_msg: "⚠️ Ocorreu um problema ao obter a resposta. Tente novamente.",
+    act_copy: "Copiar", act_copied: "Copiado", act_regenerate: "Regenerar", act_good: "Boa resposta", act_bad: "Resposta ruim",
+    scroll_bottom: "Ir para o fim",
+    sugg_1: "Explique um conceito difícil", sugg_2: "Ajude-me a redigir um texto", sugg_3: "Dê-me ideias para um projeto", sugg_4: "Resuma isto para mim",
+    attach: "Anexar", remove: "Remover",
+    kbd_hint: "<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nova linha",
+    sources: "Fontes", kb_request: "Solicitar fonte verificada", kb_requested: "Solicitação enviada", kb_error: "Não foi possível enviar", related_title: "Relacionado",
+    learn_title: "Perfil de aprendizado", learn_desc: "Como o Media adapta as explicações a você", learn_style: "Estilo de explicação", learn_difficulty: "Nível de dificuldade", learn_strengths: "Pontos fortes", learn_growth: "Áreas de melhoria", learn_confusions: "Confusões frequentes", learn_none: "Ainda não há dados.", learn_error: "Não foi possível carregar seu perfil.", learn_style_balanced: "Equilibrado", learn_style_concise: "Conciso", learn_style_detailed: "Detalhado", learn_style_visual: "Visual", learn_diff_basic: "Básico", learn_diff_intermediate: "Intermediário", learn_diff_advanced: "Avançado",
+    demo_topic: "sua pergunta", demo_intro: "Aqui está uma explicação sobre", demo_point1: "Uma ideia-chave relacionada ao tema.", demo_point2: "Um segundo ponto com mais detalhe.", demo_point3: "Um terceiro ponto para ampliar.", demo_code_intro: "Também posso usar formatação rica e blocos de código:", demo_note: "Resposta de demonstração. Entre para o tutor médico real com fontes verificadas.", demo_followup: "Quer que eu aprofunde em", demo_asset: "Recurso de exemplo",
+    practice_title: "Ferramentas de estudo", history_title: "Histórico", practice_slides: "Apresentação", practice_mindmap: "Mapa mental", practice_quiz: "Questionário", practice_cards: "Cartões didáticos", practice_reports: "Relatórios",
+    practice_no_conversation: "Você não tem nenhuma conversa.", practice_login: "Entre para salvar e gerar recursos a partir da sua conversa.", practice_ready: "Recurso preparado", practice_error: "Não foi possível preparar o recurso.",
+    img_title: "Gerar imagem", img_desc: "Crie uma imagem educativa com IA a partir de uma descrição.", img_prompt: "Descrição", img_prompt_ph: "ex: diagrama do ciclo cardíaco com suas fases", img_aspect: "Proporção", img_quality: "Qualidade", img_quality_fast: "Rápida", img_quality_high: "Alta qualidade", img_close: "Fechar", img_generate: "Gerar", img_generating: "Gerando com Gemini…", img_download: "Baixar PNG", img_empty: "Escreva uma descrição (mín. 3 caracteres).", img_error: "Não foi possível gerar a imagem.",
+    conv_title: "Conversas", conv_search: "Buscar conversas…", conv_empty: "Você ainda não tem conversas.", conv_login: "Entre para ver seu histórico de conversas.", conv_loading: "Carregando…", conv_error: "Não foi possível carregar o histórico.", conv_delete: "Excluir conversa", conv_delete_confirm: "Excluir esta conversa? Não é possível desfazer.", conv_delete_error: "Não foi possível excluir a conversa.",
   },
 };
 let lang = "es";
@@ -188,7 +188,7 @@ function applyI18n() {
   if (el.btnMic) el.btnMic.setAttribute("aria-label", el.btnMic.classList.contains("is-recording") ? t("mic_stop") : t("mic_record"));
   // Desplegable de idioma: etiqueta actual + opción activa
   if (el.langCurrent) {
-    const names = { es:"Español", en:"English", fr:"Français", pt:"Português" };
+    const names = { es: "Español", en: "English", fr: "Français", pt: "Português" };
     el.langCurrent.textContent = names[lang] || lang;
     document.querySelectorAll(".lang-dd__option").forEach((o) =>
       o.classList.toggle("is-active", o.dataset.value === lang)
@@ -198,7 +198,7 @@ function applyI18n() {
 
 function setLang(next) {
   lang = I18N[next] ? next : "es";
-  try { localStorage.setItem("Media-lang", lang); } catch (_) {}
+  try { localStorage.setItem("Media-lang", lang); } catch (_) { }
   applyI18n();
   if (typeof applyRailCollapsed === "function") {
     applyRailCollapsed(document.body.classList.contains("rail-collapsed"));
@@ -211,46 +211,46 @@ function setLang(next) {
 
 function initLang() {
   let saved = null;
-  try { saved = localStorage.getItem("Media-lang"); } catch (_) {}
+  try { saved = localStorage.getItem("Media-lang"); } catch (_) { }
   const nav = (navigator.language || "es").slice(0, 2).toLowerCase();
   lang = saved || (I18N[nav] ? nav : "es");
 }
 
 // ---------- Referencias al DOM ----------
 const el = {
-  chatList:    document.getElementById("railHistory"),
-  main:        document.querySelector(".main"),
-  messages:    document.getElementById("messages"),
-  welcome:     document.getElementById("welcome"),
-  form:        document.getElementById("composerForm"),
-  input:       document.getElementById("input"),
-  btnSend:     document.getElementById("btnSend"),
-  btnMic:      document.getElementById("btnMic"),
+  chatList: document.getElementById("railHistory"),
+  main: document.querySelector(".main"),
+  messages: document.getElementById("messages"),
+  welcome: document.getElementById("welcome"),
+  form: document.getElementById("composerForm"),
+  input: document.getElementById("input"),
+  btnSend: document.getElementById("btnSend"),
+  btnMic: document.getElementById("btnMic"),
   scrollBottom: document.getElementById("scrollBottom"),
-  btnAttach:   document.getElementById("btnAttach"),
-  fileInput:   document.getElementById("fileInput"),
+  btnAttach: document.getElementById("btnAttach"),
+  fileInput: document.getElementById("fileInput"),
   attachPreview: document.getElementById("attachPreview"),
   composerMeta: document.getElementById("composerMeta"),
-  charCount:   document.getElementById("charCount"),
-  sidebar:     document.getElementById("sidebar"),
-  railToggle:  document.getElementById("railToggle"),
+  charCount: document.getElementById("charCount"),
+  sidebar: document.getElementById("sidebar"),
+  railToggle: document.getElementById("railToggle"),
   practiceToggle: document.getElementById("practiceToggle"),
-  overlay:     document.getElementById("overlay"),
+  overlay: document.getElementById("overlay"),
   suggestions: document.getElementById("suggestions"),
 
   // Barra superior
   btnSettingsTop: document.getElementById("btnSettingsTop"),
-  btnPlansTop:  document.getElementById("btnPlansTop"),
-  btnChatTop:   document.getElementById("btnChatTop"),
-  searchBox:   document.getElementById("searchBox"),
+  btnPlansTop: document.getElementById("btnPlansTop"),
+  btnChatTop: document.getElementById("btnChatTop"),
+  searchBox: document.getElementById("searchBox"),
   searchInput: document.getElementById("searchInput"),
-  btnNotif:    document.getElementById("btnNotif"),
-  notifMenu:   document.getElementById("notifMenu"),
-  notifBadge:  document.getElementById("notifBadge"),
-  btnAccount:  document.getElementById("btnAccount"),
+  btnNotif: document.getElementById("btnNotif"),
+  notifMenu: document.getElementById("notifMenu"),
+  notifBadge: document.getElementById("notifBadge"),
+  btnAccount: document.getElementById("btnAccount"),
   accountMenu: document.getElementById("accountMenu"),
-  authForm:    document.getElementById("authForm"),
-  authEmail:   document.getElementById("authEmail"),
+  authForm: document.getElementById("authForm"),
+  authEmail: document.getElementById("authEmail"),
   authPassword: document.getElementById("authPassword"),
   authPasswordConfirm: document.getElementById("authPasswordConfirm"),
   authRegisterFields: document.getElementById("authRegisterFields"),
@@ -260,15 +260,15 @@ const el = {
   authRole: document.getElementById("authRole"),
   authSpecialty: document.getElementById("authSpecialty"),
   authLearningChallenges: document.getElementById("authLearningChallenges"),
-  authStatus:  document.getElementById("authStatus"),
+  authStatus: document.getElementById("authStatus"),
   btnAuthSubmit: document.getElementById("btnAuthSubmit"),
-  btnLogout:   document.getElementById("btnLogout"),
-  authPanel:   document.getElementById("authPanel"),
-  authBack:    document.getElementById("authBack"),
-  authSwitchBtn:  document.getElementById("authSwitchBtn"),
+  btnLogout: document.getElementById("btnLogout"),
+  authPanel: document.getElementById("authPanel"),
+  authBack: document.getElementById("authBack"),
+  authSwitchBtn: document.getElementById("authSwitchBtn"),
   authSwitchText: document.getElementById("authSwitchText"),
-  authTitle:   document.getElementById("authTitle"),
-  authSub:     document.getElementById("authSub"),
+  authTitle: document.getElementById("authTitle"),
+  authSub: document.getElementById("authSub"),
   accountEmail: document.getElementById("accountEmail"),
   accountName: document.getElementById("accountName"),
   accountAvatar: document.getElementById("accountAvatar"),
@@ -281,34 +281,34 @@ const el = {
 
   // Ajustes (paneles slide)
   settingsPanel: document.getElementById("settingsPanel"),
-  settingsBack:  document.getElementById("settingsBack"),
+  settingsBack: document.getElementById("settingsBack"),
   settingsTheme: document.getElementById("settingsTheme"),
-  langDD:        document.getElementById("langDD"),
-  langTrigger:   document.getElementById("langTrigger"),
-  langMenu:      document.getElementById("langMenu"),
-  langCurrent:   document.getElementById("langCurrent"),
-  openData:      document.getElementById("openData"),
-  dataPanel:     document.getElementById("dataPanel"),
-  dataBack:      document.getElementById("dataBack"),
-  openLearning:  document.getElementById("openLearning"),
+  langDD: document.getElementById("langDD"),
+  langTrigger: document.getElementById("langTrigger"),
+  langMenu: document.getElementById("langMenu"),
+  langCurrent: document.getElementById("langCurrent"),
+  openData: document.getElementById("openData"),
+  dataPanel: document.getElementById("dataPanel"),
+  dataBack: document.getElementById("dataBack"),
+  openLearning: document.getElementById("openLearning"),
   learningPanel: document.getElementById("learningPanel"),
-  learnBack:     document.getElementById("learnBack"),
-  learnBody:     document.getElementById("learnBody"),
+  learnBack: document.getElementById("learnBack"),
+  learnBody: document.getElementById("learnBody"),
 
   // Conversaciones (historial)
   conversationsPanel: document.getElementById("conversationsPanel"),
-  convBack:    document.getElementById("convBack"),
-  convSearch:  document.getElementById("convSearch"),
-  convList:    document.getElementById("convList"),
+  convBack: document.getElementById("convBack"),
+  convSearch: document.getElementById("convSearch"),
+  convList: document.getElementById("convList"),
 
   // Landing + planes beta
   landingStart: document.getElementById("landingStart"),
   landingLogin: document.getElementById("landingLogin"),
   landingPlans: document.getElementById("landingPlans"),
-  plansBeta:    document.getElementById("plansBeta"),
-  planName:     document.getElementById("planName"),
-  tokenUsed:    document.getElementById("tokenUsed"),
-  tokenLimit:   document.getElementById("tokenLimit"),
+  plansBeta: document.getElementById("plansBeta"),
+  planName: document.getElementById("planName"),
+  tokenUsed: document.getElementById("tokenUsed"),
+  tokenLimit: document.getElementById("tokenLimit"),
   tokenMeterFill: document.getElementById("tokenMeterFill"),
 };
 
@@ -359,8 +359,21 @@ async function streamAgentResponse(messages, onToken) {
   const lastMessage = messages[messages.length - 1] || {};
   const last = lastMessage.content ?? "";
   const token = localStorage.getItem("Media-auth-token");
-  // Sin sesión: modo demostración con el chat completo y todas sus funcionalidades.
-  if (!token) return demoResponse(last, onToken);
+  // Sin sesión: pedir al usuario que inicie sesión en lugar de respuesta demo.
+  if (!token) {
+    const loginMsg = lang === "en"
+      ? "🔒 You need to **sign in** to use the medical tutor. Click the account button (top right) to log in."
+      : lang === "fr"
+        ? "🔒 Tu dois te **connecter** pour utiliser le tuteur médical. Clique sur le bouton compte (en haut à droite) pour te connecter."
+        : lang === "pt"
+          ? "🔒 Você precisa fazer **login** para usar o tutor médico. Clique no botão de conta (canto superior direito) para entrar."
+          : "🔒 Necesitas **iniciar sesión** para usar el tutor médico. Haz clic en el botón de cuenta (arriba a la derecha) para acceder.";
+    const chunks = loginMsg.match(/\s*\S+|\s+/g) || [loginMsg];
+    for (const ch of chunks) { await sleep(10); onToken(ch); }
+    // Abrir automáticamente el panel de login tras mostrar el mensaje
+    setTimeout(() => { if (el.btnAccount) el.btnAccount.click(); }, 800);
+    return;
+  }
 
   const activeChat = getActiveChat();
   let res;
@@ -378,12 +391,35 @@ async function streamAgentResponse(messages, onToken) {
       }),
     });
   } catch (err) {
-    onToken("⚠️ No pude conectar con el backend en http://127.0.0.1:8000. Abre el backend con `uvicorn app.main:app --host 127.0.0.1 --port 8000` dentro de la carpeta `backend` y verifica `/api/health`.");
+    // Si el token fue eliminado por clearAuthSession (tras 401 fallido), pedir login
+    if (!authToken()) {
+      const msg = lang === "en"
+        ? "🔒 Your session has expired. Please **sign in** again to continue."
+        : lang === "fr"
+          ? "🔒 Ta session a expiré. **Reconnecte-toi** pour continuer."
+          : lang === "pt"
+            ? "🔒 Sua sessão expirou. Faça **login** novamente para continuar."
+            : "🔒 Tu sesión expiró. **Inicia sesión** de nuevo para continuar.";
+      const chunks = msg.match(/\s*\S+|\s+/g) || [msg];
+      for (const ch of chunks) { await sleep(10); onToken(ch); }
+      setTimeout(() => { if (el.btnAccount) el.btnAccount.click(); }, 800);
+    } else {
+      onToken(`⚠️ No pude conectar con el servidor (${API_BASE_URL}). Verifica que el backend esté en ejecución.`);
+    }
     return;
   }
 
   if (res.status === 401) {
-    onToken("Tu sesión no está activa o expiró. Inicia sesión otra vez desde el botón de cuenta para usar el tutor.");
+    const msg = lang === "en"
+      ? "🔒 Your session has expired. Please **sign in** again."
+      : lang === "fr"
+        ? "🔒 Ta session a expiré. **Reconnecte-toi** pour continuer."
+        : lang === "pt"
+          ? "🔒 Sua sessão expirou. Faça **login** novamente."
+          : "🔒 Tu sesión expiró. **Inicia sesión** de nuevo para continuar.";
+    const chunks = msg.match(/\s*\S+|\s+/g) || [msg];
+    for (const ch of chunks) { await sleep(10); onToken(ch); }
+    setTimeout(() => { if (el.btnAccount) el.btnAccount.click(); }, 800);
     return;
   }
   if (!res.ok) {
@@ -391,7 +427,7 @@ async function streamAgentResponse(messages, onToken) {
     onToken(errorData.detail || `El backend respondió con error ${res.status}. Inténtalo de nuevo.`);
     return;
   }
-  
+
   const data = await res.json();
   if (activeChat && data.conversation_id) {
     activeChat.backendConversationId = data.conversation_id;
@@ -429,7 +465,7 @@ function renderMarkdown(text) {
       const html = window.marked.parse(text, { breaks: true, gfm: true });
       return window.DOMPurify.sanitize(html);
     }
-  } catch (_) {}
+  } catch (_) { }
   return escapeHtml(text).replace(/\n/g, "<br>");
 }
 
@@ -494,7 +530,7 @@ function citationPageLabel(citation) {
 
 function enhanceCodeBlocks(container) {
   container.querySelectorAll("pre code").forEach((block) => {
-    try { if (window.hljs) window.hljs.highlightElement(block); } catch (_) {}
+    try { if (window.hljs) window.hljs.highlightElement(block); } catch (_) { }
     const pre = block.closest("pre");
     if (pre && !pre.querySelector(".code-copy")) {
       const btn = document.createElement("button");
@@ -555,7 +591,7 @@ function saveLocalChats() {
       .slice(0, CHAT_STORAGE_LIMIT)
       .map(serializeChat);
     localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify({ activeChatId: state.activeChatId, chats }));
-  } catch (_) {}
+  } catch (_) { }
 }
 
 function loadLocalChats() {
@@ -1503,7 +1539,7 @@ function toggleTheme() {
   clearTimeout(themeTransitionTimer);
   themeTransitionTimer = setTimeout(() => root.classList.remove("theme-transition"), 600);
   root.setAttribute("data-theme", next);
-  try { localStorage.setItem("Media-theme", next); } catch (_) {}
+  try { localStorage.setItem("Media-theme", next); } catch (_) { }
 }
 
 // ---------- Dropdowns de la barra superior ----------
@@ -1547,7 +1583,7 @@ function setAuthSession(session) {
     if (session.refresh_token) localStorage.setItem("Media-refresh-token", session.refresh_token);
     if (session.user?.email) localStorage.setItem("Media-user-email", session.user.email);
     if (session.user) localStorage.setItem("Media-user-profile", JSON.stringify(session.user));
-  } catch (_) {}
+  } catch (_) { }
   updateAuthUI();
   // Reconstruye los chats locales en el backend (reenvía cada pregunta por /api/chat).
   syncLocalChatsToBackend().finally(() => loadConversations());
@@ -1609,7 +1645,7 @@ function clearAuthSession() {
     localStorage.removeItem("Media-refresh-token");
     localStorage.removeItem("Media-user-email");
     localStorage.removeItem("Media-user-profile");
-  } catch (_) {}
+  } catch (_) { }
   conversationsCache = [];
   state.chats.forEach((chat) => { chat.backendConversationId = null; });
   saveLocalChats();
@@ -2083,32 +2119,42 @@ function ensurePracticeModalStyles() {
 
 function practiceOptionSchema(kind) {
   const schemas = {
-    presentacion: { title: "¿Qué tipo de presentación quieres?", fields: [
-      { name: "presentation_type", label: "Tipo", type: "select", value: "study_summary", options: [["study_summary", "Resumen de estudio"], ["class", "Clase"], ["oral_expo", "Exposición oral"], ["clinical_case", "Caso clínico"]] },
-      { name: "audience", label: "Audiencia", type: "text", value: "Estudiantes de medicina" },
-      { name: "slide_count", label: "Cantidad de diapositivas", type: "number", value: 8, min: 3, max: 20 },
-      { name: "include_images", label: "Preparar sugerencias visuales", type: "checkbox", value: true },
-    ]},
-    mapa: { title: "¿Qué tan detallado quieres el mapa?", fields: [
-      { name: "detail_level", label: "Detalle", type: "select", value: "intermediate", options: [["basic", "Básico"], ["intermediate", "Intermedio"], ["advanced", "Avanzado"]] },
-      { name: "type", label: "Formato", type: "select", value: "mind_map", options: [["mind_map", "Mapa mental"], ["concept_map", "Mapa conceptual"], ["synoptic_chart", "Cuadro sinóptico"], ["relationship_diagram", "Diagrama de relaciones"]] },
-    ]},
-    cuestionario: { title: "Configura el cuestionario", fields: [
-      { name: "difficulty", label: "Dificultad", type: "select", value: "intermediate", options: [["basic", "Básico"], ["intermediate", "Intermedio"], ["advanced", "Avanzado"]] },
-      { name: "question_count", label: "Cantidad de preguntas", type: "number", value: 5, min: 1, max: 20 },
-      { name: "question_type", label: "Tipo", type: "select", value: "multiple_choice", options: [["multiple_choice", "Selección múltiple"], ["short_answer", "Respuesta corta"], ["mixed", "Mixto"]] },
-    ]},
-    tarjetas: { title: "Configura las tarjetas didácticas", fields: [
-      { name: "difficulty", label: "Dificultad", type: "select", value: "intermediate", options: [["basic", "Básico"], ["intermediate", "Intermedio"], ["advanced", "Avanzado"]] },
-      { name: "card_count", label: "Cantidad de tarjetas", type: "number", value: 10, min: 1, max: 40 },
-      { name: "mode", label: "Enfoque", type: "select", value: "concepts", options: [["concepts", "Conceptos"], ["clinical", "Clínico"], ["exam", "Examen"]] },
-      { name: "clinical_context", label: "Incluir aplicación clínica", type: "checkbox", value: true },
-    ]},
-    informes: { title: "Configura el informe", fields: [
-      { name: "report_type", label: "Tipo", type: "select", value: "study_summary", options: [["study_summary", "Resumen de estudio"], ["progress_report", "Reporte de progreso"], ["clinical_brief", "Brief clínico"]] },
-      { name: "focus", label: "Enfoque específico", type: "text", value: "puntos clave y recomendaciones" },
-      { name: "include_recommendations", label: "Incluir recomendaciones", type: "checkbox", value: true },
-    ]},
+    presentacion: {
+      title: "¿Qué tipo de presentación quieres?", fields: [
+        { name: "presentation_type", label: "Tipo", type: "select", value: "study_summary", options: [["study_summary", "Resumen de estudio"], ["class", "Clase"], ["oral_expo", "Exposición oral"], ["clinical_case", "Caso clínico"]] },
+        { name: "audience", label: "Audiencia", type: "text", value: "Estudiantes de medicina" },
+        { name: "slide_count", label: "Cantidad de diapositivas", type: "number", value: 8, min: 3, max: 20 },
+        { name: "include_images", label: "Preparar sugerencias visuales", type: "checkbox", value: true },
+      ]
+    },
+    mapa: {
+      title: "¿Qué tan detallado quieres el mapa?", fields: [
+        { name: "detail_level", label: "Detalle", type: "select", value: "intermediate", options: [["basic", "Básico"], ["intermediate", "Intermedio"], ["advanced", "Avanzado"]] },
+        { name: "type", label: "Formato", type: "select", value: "mind_map", options: [["mind_map", "Mapa mental"], ["concept_map", "Mapa conceptual"], ["synoptic_chart", "Cuadro sinóptico"], ["relationship_diagram", "Diagrama de relaciones"]] },
+      ]
+    },
+    cuestionario: {
+      title: "Configura el cuestionario", fields: [
+        { name: "difficulty", label: "Dificultad", type: "select", value: "intermediate", options: [["basic", "Básico"], ["intermediate", "Intermedio"], ["advanced", "Avanzado"]] },
+        { name: "question_count", label: "Cantidad de preguntas", type: "number", value: 5, min: 1, max: 20 },
+        { name: "question_type", label: "Tipo", type: "select", value: "multiple_choice", options: [["multiple_choice", "Selección múltiple"], ["short_answer", "Respuesta corta"], ["mixed", "Mixto"]] },
+      ]
+    },
+    tarjetas: {
+      title: "Configura las tarjetas didácticas", fields: [
+        { name: "difficulty", label: "Dificultad", type: "select", value: "intermediate", options: [["basic", "Básico"], ["intermediate", "Intermedio"], ["advanced", "Avanzado"]] },
+        { name: "card_count", label: "Cantidad de tarjetas", type: "number", value: 10, min: 1, max: 40 },
+        { name: "mode", label: "Enfoque", type: "select", value: "concepts", options: [["concepts", "Conceptos"], ["clinical", "Clínico"], ["exam", "Examen"]] },
+        { name: "clinical_context", label: "Incluir aplicación clínica", type: "checkbox", value: true },
+      ]
+    },
+    informes: {
+      title: "Configura el informe", fields: [
+        { name: "report_type", label: "Tipo", type: "select", value: "study_summary", options: [["study_summary", "Resumen de estudio"], ["progress_report", "Reporte de progreso"], ["clinical_brief", "Brief clínico"]] },
+        { name: "focus", label: "Enfoque específico", type: "text", value: "puntos clave y recomendaciones" },
+        { name: "include_recommendations", label: "Incluir recomendaciones", type: "checkbox", value: true },
+      ]
+    },
   };
   return schemas[kind];
 }
@@ -2203,7 +2249,7 @@ function getBetaPlan() {
 
 function setBetaPlan(plan) {
   const key = BETA_PLANS[plan] ? plan : "free";
-  try { localStorage.setItem("Media-beta-plan", key); } catch (_) {}
+  try { localStorage.setItem("Media-beta-plan", key); } catch (_) { }
   applyBetaPlan(key);
 }
 
@@ -2351,7 +2397,7 @@ document.querySelectorAll(".rail__item").forEach((item) => {
     const section = item.dataset.section;
 
     // Acciones directas
-    if (section === "nuevo")  { createChat({ syncBackend: true }); return; }
+    if (section === "nuevo") { createChat({ syncBackend: true }); return; }
     if (section === "buscar") { openConversations(); return; }
 
     if (section === "ajustes") { openSettings(); return; }
@@ -2380,7 +2426,7 @@ function getRailCollapsedPref() {
 el.railToggle?.addEventListener("click", () => {
   const collapsed = !document.body.classList.contains("rail-collapsed");
   applyRailCollapsed(collapsed);
-  try { localStorage.setItem("Media-rail", collapsed ? "1" : "0"); } catch (_) {}
+  try { localStorage.setItem("Media-rail", collapsed ? "1" : "0"); } catch (_) { }
 });
 applyRailCollapsed(getRailCollapsedPref());
 
@@ -2400,12 +2446,12 @@ function getPracticeCollapsedPref() {
 el.practiceToggle?.addEventListener("click", () => {
   const collapsed = !document.body.classList.contains("practice-collapsed");
   applyPracticeCollapsed(collapsed);
-  try { localStorage.setItem("Media-practice", collapsed ? "1" : "0"); } catch (_) {}
+  try { localStorage.setItem("Media-practice", collapsed ? "1" : "0"); } catch (_) { }
 });
 applyPracticeCollapsed(getPracticeCollapsedPref());
 
 // ---------- Ajustes (paneles deslizantes) ----------
-function openPanel(node)  { node.classList.add("is-open"); node.setAttribute("aria-hidden", "false"); }
+function openPanel(node) { node.classList.add("is-open"); node.setAttribute("aria-hidden", "false"); }
 function closePanel(node) { node.classList.remove("is-open"); node.setAttribute("aria-hidden", "true"); }
 
 function openSettings() { openPanel(el.settingsPanel); }
@@ -2415,7 +2461,7 @@ function closeSettings() {
   el.settingsPanel.classList.remove("is-pushed");
   closePanel(el.settingsPanel);
 }
-function openData()  { openPanel(el.dataPanel); el.settingsPanel.classList.add("is-pushed"); }
+function openData() { openPanel(el.dataPanel); el.settingsPanel.classList.add("is-pushed"); }
 function closeData() { closePanel(el.dataPanel); el.settingsPanel.classList.remove("is-pushed"); }
 
 // ---------- Perfil de aprendizaje (GET /api/learning/profile) ----------
@@ -2748,23 +2794,23 @@ function playChime() {
     o.start();
     o.stop(ctx.currentTime + 0.3);
     o.onended = () => ctx.close();
-  } catch (_) {}
+  } catch (_) { }
 }
 function notifyResponse() {
   if (!getDataPref("sound")) return;
   playChime();
-  try { navigator.vibrate?.(30); } catch (_) {}
+  try { navigator.vibrate?.(30); } catch (_) { }
 }
 
 function getDataPref(key) {
   try {
     const v = localStorage.getItem("Media-data-" + key);
     if (v !== null) return v === "1";
-  } catch (_) {}
+  } catch (_) { }
   return DATA_DEFAULTS[key];
 }
 function setDataPref(key, on) {
-  try { localStorage.setItem("Media-data-" + key, on ? "1" : "0"); } catch (_) {}
+  try { localStorage.setItem("Media-data-" + key, on ? "1" : "0"); } catch (_) { }
 }
 function initDataToggles() {
   document.querySelectorAll(".setting-row--toggle[data-toggle]").forEach((row) => {
@@ -2850,4 +2896,30 @@ if (loadLocalChats()) {
   createChat();
 }
 applyI18n();
+
+
+(async function validateSessionOnStartup() {
+  const token = authToken();
+  if (!token) return;
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/health`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (res.ok) return;
+  } catch (_) {
+
+    return;
+  }
+
+  try {
+    const res2 = await fetch(`${API_BASE_URL}/api/conversations`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (res2.status === 401) {
+
+      clearAuthSession();
+      console.warn("[Media] Sesión local expirada. El usuario deberá iniciar sesión de nuevo.");
+    }
+  } catch (_) { }
+})();
 
