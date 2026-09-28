@@ -3,19 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AIAME — Asistente IA</title>
-  <meta name="description" content="AIAME, tu asistente de inteligencia artificial." />
+  <title>Media — Asistente IA</title>
+  <meta name="description" content="Media, tu asistente de inteligencia artificial para estudio medico." />
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260926-bigchanges2" />
+  <link rel="stylesheet" href="styles.css?v=20260928-media" />
 </head>
 <body>
  <div class="shell">
 
   <!-- ===================== BARRA SUPERIOR (sin marco) ===================== -->
   <header class="topbar">
-    <a class="brand" href="#" aria-label="AIAME inicio">
-      <img src="assets/logo.svg" alt="AIAME" class="brand__logo" />
+    <a class="brand" href="#" aria-label="Media">
+      <img src="assets/logo.svg" alt="Media" class="brand__logo" />
+      <span class="brand__word">Media</span>
     </a>
+    <nav class="topbar__nav" aria-label="Principal">
+      <button class="topbar__link" id="btnPlansTop" type="button">Planes <span>beta</span></button>
+      <button class="topbar__link" id="btnChatTop" type="button">Chat IA</button>
+    </nav>
     <div class="topbar__actions">
       <!-- Configuración -->
       <button class="topbar__btn" id="btnSettingsTop" type="button" aria-label="Configuración" data-i18n-aria="rail_settings">
@@ -40,7 +45,7 @@
             <li class="notif-item">
               <span class="notif-dot"></span>
               <div>
-                <p class="notif-title" data-i18n="notif1_title">Bienvenido a AIAME</p>
+                <p class="notif-title" data-i18n="notif1_title">Bienvenido a Media</p>
                 <p class="notif-text" data-i18n="notif1_text">Tu asistente está listo para conversar.</p>
               </div>
             </li>
@@ -57,7 +62,7 @@
 
       <!-- Cuenta -->
       <div class="menu-anchor">
-        <button class="topbar__btn topbar__btn--account" id="btnAccount" type="button" aria-label="Cuenta" data-i18n-aria="tb_account" aria-haspopup="true" aria-expanded="false">
+        <button class="topbar__btn topbar__btn--account" id="btnAccount" type="button" aria-label="Cuenta" data-i18n-aria="tb_account" aria-haspopup="true" aria-expanded="false" onclick="if(!localStorage.getItem('Media-auth-token')){var p=document.getElementById('authPanel'); if(p){p.className='panel auth-panel is-open'; p.setAttribute('aria-hidden','false');}}">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
             <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
             <path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
@@ -65,8 +70,21 @@
         </button>
 
         <div class="dropdown dropdown--right" id="accountMenu" hidden>
-          <p class="account-menu__hint" id="accountEmail" data-i18n="acc_hint">Accede para guardar tus conversaciones</p>
+          <div class="account-menu__profile">
+            <div class="account-menu__avatar" id="accountAvatar">M</div>
+            <div>
+              <p class="account-menu__name" id="accountName">Invitado</p>
+              <p class="account-menu__hint" id="accountEmail" data-i18n="acc_hint">Accede para guardar tus conversaciones</p>
+            </div>
+          </div>
+          <div class="account-menu__details" id="accountDetails" hidden>
+            <span id="accountRole">Perfil no definido</span>
+            <span id="accountUniversity">Universidad no definida</span>
+            <span id="accountPlan">Plan Free</span>
+          </div>
           <div class="account-menu__auth">
+            <button class="btn-auth btn-auth--ghost" id="btnAccountLearning" type="button">Perfil de aprendizaje</button>
+            <button class="btn-auth btn-auth--ghost" id="btnAccountPlans" type="button">Planes</button>
             <button class="btn-auth btn-auth--ghost" id="btnLogout" type="button" data-i18n="acc_logout" hidden>Cerrar sesión</button>
           </div>
         </div>
@@ -82,7 +100,7 @@
     <nav class="rail" id="rail" aria-label="Secciones">
       <div class="rail__group">
         <div class="rail__header">
-          <span class="rail__brand">AIAME</span>
+          <span class="rail__brand">Media</span>
           <button class="rail__toggle" id="railToggle" type="button" aria-expanded="true" data-i18n-aria="rail_toggle" aria-label="Contraer menú">
             <span class="rail__icon">
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
@@ -104,7 +122,7 @@
           <span class="rail__label" data-i18n="rail_new">Nuevo chat</span>
         </button>
 
-        <button class="rail__item" type="button" data-section="buscar" disabled aria-disabled="true">
+        <button class="rail__item" type="button" data-section="buscar">
           <span class="rail__icon">
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
               <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" fill="none"/>
@@ -125,15 +143,6 @@
           <span class="rail__label" data-i18n="rail_images">Imágenes</span>
         </button>
 
-        <button class="rail__item" type="button" data-section="modelos">
-          <span class="rail__icon">
-            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-              <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/>
-              <path d="M4 7.5 12 12l8-4.5M12 12v9" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/>
-            </svg>
-          </span>
-          <span class="rail__label" data-i18n="rail_models">Modelos</span>
-        </button>
       </div>
 
       <p class="rail__history-title rail__label" data-i18n="history_title">Historial</p>
@@ -144,8 +153,84 @@
     <main class="main">
       <section class="messages" id="messages" aria-live="polite">
         <div class="welcome" id="welcome">
-          <h1 class="welcome__title" data-i18n-html="welcome_title">Hola, soy <span>AIAME</span></h1>
-          <p class="welcome__subtitle" data-i18n="welcome_subtitle">¿En qué puedo ayudarte hoy?</p>
+          <div class="landing">
+            <section class="landing__hero" id="landingHero">
+              <div class="landing__copy">
+                <p class="landing__eyebrow">Tutor IA medico + estudio visual</p>
+                <h1 class="welcome__title">Media</h1>
+                <p class="welcome__subtitle">Un espacio tipo Claude con energia de Codex: conversa, genera recursos, revisa mapas, arma presentaciones y controla tus limites sin perder la sesion.</p>
+                <div class="landing__actions">
+                  <button class="landing__cta landing__cta--primary" id="landingStart" type="button">Empezar chat</button>
+                  <button class="landing__cta" id="landingLogin" type="button" onclick="var p=document.getElementById('authPanel'); if(p){p.className='panel auth-panel is-open'; p.setAttribute('aria-hidden','false');}">Iniciar sesion</button>
+                  <button class="landing__cta" id="landingPlans" type="button">Ver planes beta</button>
+                </div>
+              </div>
+              <div class="ai-console" aria-label="Panel Media">
+                <div class="ai-console__bar">
+                  <span></span><span></span><span></span>
+                  <strong>Media Core</strong>
+                </div>
+                <div class="ai-console__body">
+                  <div class="ai-console__line"><span>chat</span> razonamiento medico con fuentes</div>
+                  <div class="ai-console__line"><span>codex</span> tareas, recursos y estructura</div>
+                  <div class="ai-console__line"><span>study</span> mapas, tarjetas, quiz, informes</div>
+                </div>
+                <div class="token-card">
+                  <div class="token-card__head">
+                    <span id="planName">Plan Free</span>
+                    <strong id="tokenUsed">0</strong>
+                  </div>
+                  <div class="token-card__bar"><span id="tokenMeterFill"></span></div>
+                  <p><span id="tokenLimit">4,000</span> tokens visuales por mensaje</p>
+                </div>
+              </div>
+            </section>
+
+            <section class="landing__band" aria-label="Accesos rapidos">
+              <button class="quick-card" type="button" data-quick="resume">Resumir tema</button>
+              <button class="quick-card" type="button" data-quick="mapa">Crear mapa mental</button>
+              <button class="quick-card" type="button" data-quick="presentacion">Armar presentacion</button>
+              <button class="quick-card" type="button" data-quick="quiz">Practicar con quiz</button>
+            </section>
+
+            <section class="landing__plans" id="plansBeta" aria-label="Planes beta visuales">
+              <div class="landing__section-head">
+                <p>Planes beta visuales</p>
+                <h2>Controla potencia y limite sin tocar backend todavia</h2>
+              </div>
+              <div class="plan-grid">
+                <button class="plan-card" type="button" data-plan="free">
+                  <span class="plan-card__badge">Free</span>
+                  <strong>$0 · 4k tokens</strong>
+                  <small>Chat, demo y herramientas basicas.</small>
+                </button>
+                <button class="plan-card is-featured" type="button" data-plan="plus">
+                  <span class="plan-card__badge">Plus</span>
+                  <strong>$5 · 32k tokens</strong>
+                  <small>Practica visual, imagenes y mas contexto.</small>
+                </button>
+                <button class="plan-card" type="button" data-plan="pro">
+                  <span class="plan-card__badge">Pro</span>
+                  <strong>$10 · 128k tokens</strong>
+                  <small>Sesiones largas estilo Claude + Codex.</small>
+                </button>
+              </div>
+            </section>
+
+            <section class="landing__practice" aria-label="Vista previa de practica">
+              <div class="landing__section-head">
+                <p>Practica instantanea</p>
+                <h2>Los mapas, presentaciones, tarjetas e informes aparecen como recursos editables.</h2>
+              </div>
+              <div class="practice-preview">
+                <div class="practice-preview__node is-root">Tema</div>
+                <div class="practice-preview__node">Mapa mental</div>
+                <div class="practice-preview__node">Presentacion</div>
+                <div class="practice-preview__node">Quiz</div>
+                <div class="practice-preview__node">Informe</div>
+              </div>
+            </section>
+          </div>
         </div>
       </section>
 
@@ -164,7 +249,7 @@
             </svg>
           </button>
 
-          <textarea id="input" class="composer__input" placeholder="Escribe un mensaje a AIAME…" data-i18n-placeholder="composer_placeholder" rows="1" autocomplete="off"></textarea>
+          <textarea id="input" class="composer__input" placeholder="Escribe un mensaje a Media…" data-i18n-placeholder="composer_placeholder" rows="1" autocomplete="off" maxlength="4000"></textarea>
 
           <button class="composer__mic" id="btnMic" type="button" aria-label="Grabar audio" data-i18n-aria="mic_record">
             <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
@@ -179,10 +264,14 @@
             </svg>
           </button>
         </form>
+        <div class="composer__meta" id="composerMeta" hidden>
+          <span class="composer__shortcuts" data-i18n-html="kbd_hint"><kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nueva línea</span>
+          <span class="composer__count" id="charCount">0 / 4000</span>
+        </div>
         <input type="file" id="fileInput" multiple hidden
                accept="image/*,.pdf,.txt,.md,.doc,.docx,.csv,.json,.zip" />
       </div>
-      <p class="composer__hint" data-i18n="composer_hint">AIAME puede cometer errores. Verifica la información importante.</p>
+      <p class="composer__hint" data-i18n="composer_hint">Media puede cometer errores. Verifica la información importante.</p>
     </main>
 
     <!-- Rail derecho: practicar el tema (sin funcionalidad por ahora) -->
@@ -296,30 +385,50 @@
     </header>
 
     <div class="panel__body auth-panel__body">
-      <div class="auth-card">
-        <div class="auth-card__brand">
-          <span class="auth-card__logo">
-            <svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true">
-              <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/>
-              <path d="M4 7.5 12 12l8-4.5M12 12v9" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/>
-            </svg>
-          </span>
-          <span class="auth-card__name">AIAME</span>
+      <div class="auth-layout">
+        <aside class="auth-hero">
+          <div class="auth-hero__mark">*</div>
+          <h2>Hello<br />Media</h2>
+          <p>Estudia medicina con memoria personal, recursos visuales y un perfil de aprendizaje que se adapta a ti.</p>
+          <span>© 2026 Media. Learning workspace.</span>
+        </aside>
+
+        <div class="auth-card">
+          <div class="auth-card__brand">
+            <span class="auth-card__name">Media</span>
+          </div>
+          <h2 class="auth-card__title" id="authTitle" data-i18n="auth_title_login">Bienvenido de nuevo</h2>
+          <p class="auth-card__sub" id="authSub" data-i18n="auth_sub_login">Accede para guardar tus conversaciones y memoria de aprendizaje.</p>
+
+          <form class="auth-card__form" id="authForm">
+            <input class="auth-input" id="authEmail" type="email" placeholder="Email" autocomplete="email" required />
+            <input class="auth-input" id="authPassword" type="password" placeholder="Contraseña" autocomplete="current-password" minlength="6" required />
+            <div class="auth-register-fields" id="authRegisterFields" hidden>
+              <input class="auth-input" id="authFullName" type="text" placeholder="Nombre completo" autocomplete="name" />
+              <input class="auth-input" id="authCarnet" type="text" placeholder="Número de carnet" autocomplete="off" />
+              <input class="auth-input" id="authUniversity" type="text" placeholder="Universidad o institución" autocomplete="organization" />
+              <select class="auth-input" id="authRole">
+                <option value="">Rol académico/profesional</option>
+                <option value="student">Estudiante</option>
+                <option value="doctor">Doctor/a</option>
+                <option value="resident">Residente</option>
+                <option value="teacher">Docente</option>
+                <option value="other">Otro</option>
+              </select>
+              <input class="auth-input" id="authSpecialty" type="text" placeholder="Carrera, año o especialidad" autocomplete="off" />
+              <textarea class="auth-input auth-input--area" id="authLearningChallenges" placeholder="¿Qué se te dificulta aprender? Ej: farmacología, memorizar, interpretar casos..."></textarea>
+            </div>
+            <p class="auth-status" id="authStatus" aria-live="polite"></p>
+            <button class="btn-auth btn-auth--primary auth-card__submit" id="btnAuthSubmit" type="submit">Entrar</button>
+          </form>
+
+          <button class="btn-auth btn-auth--google" type="button" disabled>Login with Google</button>
+
+          <p class="auth-switch">
+            <span id="authSwitchText" data-i18n="auth_no_account">¿No tienes cuenta?</span>
+            <button class="auth-switch__btn" id="authSwitchBtn" type="button" data-i18n="acc_register">Regístrate</button>
+          </p>
         </div>
-        <h2 class="auth-card__title" id="authTitle" data-i18n="auth_title_login">Inicia sesión</h2>
-        <p class="auth-card__sub" id="authSub" data-i18n="auth_sub_login">Accede para guardar tus conversaciones</p>
-
-        <form class="auth-card__form" id="authForm">
-          <input class="auth-input" id="authEmail" type="email" placeholder="Email" autocomplete="email" required />
-          <input class="auth-input" id="authPassword" type="password" placeholder="Contraseña" autocomplete="current-password" minlength="6" required />
-          <p class="auth-status" id="authStatus" aria-live="polite"></p>
-          <button class="btn-auth btn-auth--primary auth-card__submit" id="btnAuthSubmit" type="submit">Entrar</button>
-        </form>
-
-        <p class="auth-switch">
-          <span id="authSwitchText" data-i18n="auth_no_account">¿No tienes cuenta?</span>
-          <button class="auth-switch__btn" id="authSwitchBtn" type="button" data-i18n="acc_register">Regístrate</button>
-        </p>
       </div>
     </div>
   </section>
@@ -388,7 +497,7 @@
       <button class="setting-row setting-row--nav" id="openData" type="button">
         <div class="setting-row__text">
           <p class="setting-row__label" data-i18n="data_title">Control de datos</p>
-          <p class="setting-row__desc" data-i18n="data_desc">Gestiona qué datos usa AIAME</p>
+          <p class="setting-row__desc" data-i18n="data_desc">Gestiona qué datos usa Media</p>
         </div>
         <svg class="setting-row__chevron" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
           <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
@@ -398,7 +507,7 @@
       <button class="setting-row setting-row--nav" id="openLearning" type="button">
         <div class="setting-row__text">
           <p class="setting-row__label" data-i18n="learn_title">Perfil de aprendizaje</p>
-          <p class="setting-row__desc" data-i18n="learn_desc">Cómo AIAME adapta sus explicaciones a ti</p>
+          <p class="setting-row__desc" data-i18n="learn_desc">Cómo Media adapta sus explicaciones a ti</p>
         </div>
         <svg class="setting-row__chevron" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
           <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
@@ -432,16 +541,9 @@
           <p class="setting-row__label" data-i18n="data_analytics">Analytics</p>
           <span class="toggle"></span>
         </button>
-        <p class="data-option__desc" data-i18n="data_analytics_desc">Comparte estadísticas de uso anónimas para ayudarnos a mejorar AIAME.</p>
+        <p class="data-option__desc" data-i18n="data_analytics_desc">Comparte estadísticas de uso anónimas para ayudarnos a mejorar Media.</p>
       </div>
 
-      <div class="data-option">
-        <button class="setting-row setting-row--toggle" data-toggle="models" type="button">
-          <p class="setting-row__label" data-i18n="data_models">Modelos Mejorados</p>
-          <span class="toggle"></span>
-        </button>
-        <p class="data-option__desc" data-i18n="data_models_desc">Usa tus interacciones para acceder a modelos más avanzados y respuestas de mayor calidad.</p>
-      </div>
     </div>
   </section>
 
@@ -465,6 +567,6 @@
   <script src="vendor/purify.min.js"></script>
   <script src="vendor/highlight.min.js"></script>
 
-  <script src="app.js?v=20260926-bigchanges2"></script>
+  <script src="app.js?v=20260928-media3"></script>
 </body>
 </html>

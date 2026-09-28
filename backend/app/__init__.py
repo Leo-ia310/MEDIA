@@ -1,1 +1,1 @@
-"""AIAME backend package."""
+"""Media backend package."""

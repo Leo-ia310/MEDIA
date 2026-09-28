@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     supabase_url: str = ""
     supabase_publishable_key: str = ""
     supabase_secret_key: str = ""
+    local_database_path: str = str(Path(__file__).resolve().parents[3] / "backend" / "media_local.db")
 
     groq_api_key: str = ""
     groq_low_model: str = "openai/gpt-oss-20b"

@@ -1,11 +1,11 @@
-# AIAME · Tutor medico IA
+# Media · Tutor medico IA
 
 Interfaz web tipo chat IA con backend FastAPI, Supabase, Groq como proveedor principal de IA, Cloudflare Workers AI como fallback de texto, Gemini para imagenes, memoria educativa, RAG preparado y controles anti-alucinacion.
 
 ## Estructura
 
 ```
-AIAME/
+Media/
 ├── index.html        # Frontend estatico existente
 ├── styles.css        # Estilos existentes
 ├── app.js            # UI de chat; login basico y llamada a /api/chat con Bearer token
@@ -181,7 +181,7 @@ Los mapas mentales, mapas conceptuales, cuadros sinópticos y diagramas de relac
 Aplicar en Supabase SQL Editor:
 
 ```text
-backend/migrations/001_initial_aiame_backend.sql
+backend/migrations/001_initial_Media_backend.sql
 ```
 
 Incluye `pgvector`, tablas de conversaciones, mensajes, perfil educativo, documentos medicos, chunks, solicitudes de conocimiento, casos clinicos, quizzes, flashcards, mindmaps, feedback, indices y RLS.
@@ -210,3 +210,4 @@ Si el frontend muestra `Hubo un error de red al conectar con el backend`, revisa
 1. Que `uvicorn app.main:app --reload --host 127.0.0.1 --port 8000` este corriendo en `backend/`.
 2. Que `GET http://127.0.0.1:8000/api/health` responda.
 3. Que el frontend este servido desde `http://127.0.0.1:5500` o un origen incluido en `BACKEND_CORS_ORIGINS`.
+

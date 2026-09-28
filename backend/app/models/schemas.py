@@ -37,6 +37,7 @@ class AuthUser(BaseModel):
     id: UUID
     email: str | None = None
     token: str
+    profile: dict[str, Any] = Field(default_factory=dict)
 
 
 class ChatAttachment(BaseModel):
@@ -255,6 +256,13 @@ class HealthResponse(BaseModel):
 class AuthCredentials(BaseModel):
     email: str = Field(min_length=5, max_length=320)
     password: str = Field(min_length=6, max_length=128)
+    full_name: str | None = Field(default=None, max_length=160)
+    carnet: str | None = Field(default=None, max_length=80)
+    university: str | None = Field(default=None, max_length=160)
+    role: Literal["student", "doctor", "resident", "teacher", "other"] | None = None
+    specialty: str | None = Field(default=None, max_length=160)
+    academic_level: str | None = Field(default=None, max_length=120)
+    learning_challenges: str | None = Field(default=None, max_length=1200)
 
 
 class RefreshTokenIn(BaseModel):

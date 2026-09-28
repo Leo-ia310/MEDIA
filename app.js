@@ -1,5 +1,5 @@
 /* =========================================================
-   AIAME · Lógica del frontend
+   Media · Lógica del frontend
    ---------------------------------------------------------
    El frontend está desacoplado del "cerebro". Toda respuesta
    pasa por getAgentResponse(). Hoy es un mock; en el futuro
@@ -16,25 +16,24 @@ const state = {
 // ---------- i18n (traducción) ----------
 const I18N = {
   es: {
-    rail_new:"Nuevo chat", rail_search:"Buscar chats", rail_images:"Imágenes", rail_models:"Modelos", rail_settings:"Configuración", rail_toggle:"Contraer menú", rail_toggle_expand:"Expandir menú",
+    rail_new:"Nuevo chat", rail_search:"Buscar chats", rail_images:"Imágenes", rail_settings:"Configuración", rail_toggle:"Contraer menú", rail_toggle_expand:"Expandir menú",
     tb_search:"Buscar", tb_notifications:"Notificaciones", tb_account:"Cuenta",
-    notif_header:"Notificaciones", notif1_title:"Bienvenido a AIAME", notif1_text:"Tu asistente está listo para conversar.",
+    notif_header:"Notificaciones", notif1_title:"Bienvenido a Media", notif1_text:"Tu asistente está listo para conversar.",
     notif2_title:"Consejo", notif2_text:"Pulsa <kbd>Shift</kbd>+<kbd>Enter</kbd> para saltar de línea.",
     acc_hint:"Accede para guardar tus conversaciones", acc_login:"Iniciar sesión", acc_register:"Registrarse",
     acc_logout:"Cerrar sesión", auth_email:"Email", auth_password:"Contraseña", auth_ready:"Sesión iniciada", auth_missing:"Escribe email y contraseña.", auth_failed:"No se pudo autenticar.",
     auth_confirm_password:"Confirmar contraseña", auth_enter:"Entrar", auth_create:"Crear cuenta", auth_password_mismatch:"Las contraseñas no coinciden.", auth_switch_login:"Ya tengo cuenta", auth_switch_register:"Crear cuenta nueva",
     auth_title_login:"Inicia sesión", auth_title_register:"Crea tu cuenta", auth_sub_login:"Accede para guardar tus conversaciones", auth_sub_register:"Regístrate para guardar tu historial", auth_no_account:"¿No tienes cuenta?", auth_have_account:"¿Ya tienes cuenta?",
-    welcome_title:"Hola, soy <span>AIAME</span>", welcome_subtitle:"¿En qué puedo ayudarte hoy?",
-    composer_placeholder:"Escribe un mensaje a AIAME…", mic_record:"Grabar audio", mic_stop:"Detener grabación",
-    send:"Enviar", composer_hint:"AIAME puede cometer errores. Verifica la información importante.",
+    welcome_title:"Hola, soy <span>Media</span>", welcome_subtitle:"¿En qué puedo ayudarte hoy?",
+    composer_placeholder:"Escribe un mensaje a Media…", mic_record:"Grabar audio", mic_stop:"Detener grabación",
+    send:"Enviar", composer_hint:"Media puede cometer errores. Verifica la información importante.",
     settings_title:"Configuración", settings_appearance:"Apariencia", settings_theme:"Tema", settings_dark:"Modo oscuro",
     settings_language:"Idioma", settings_sound:"Sonido al responder", close:"Cerrar", back:"Volver", settings_general:"General",
-    data_title:"Control de datos", data_desc:"Gestiona qué datos usa AIAME",
+    data_title:"Control de datos", data_desc:"Gestiona qué datos usa Media",
     data_metadata:"Meta datos", data_metadata_desc:"Permite guardar datos sobre tus conversaciones (fechas, títulos) para organizarlas mejor.",
-    data_analytics:"Analytics", data_analytics_desc:"Comparte estadísticas de uso anónimas para ayudarnos a mejorar AIAME.",
-    data_models:"Modelos Mejorados", data_models_desc:"Usa tus interacciones para acceder a modelos más avanzados y respuestas de mayor calidad.",
-    role_you:"Tú", role_ai:"AIAME", default_chat_title:"Nuevo chat",
-    mock_l1:"Esta es una respuesta de ejemplo de AIAME 🤖",
+    data_analytics:"Analytics", data_analytics_desc:"Comparte estadísticas de uso anónimas para ayudarnos a mejorar Media.",
+    role_you:"Tú", role_ai:"Media", default_chat_title:"Nuevo chat",
+    mock_l1:"Esta es una respuesta de ejemplo de Media 🤖",
     mock_l2:"Todavía no estoy conectada a un modelo de IA real, pero la interfaz ya está lista para recibir respuestas.",
     mock_you_wrote:"Tú escribiste:",
     error_msg:"⚠️ Hubo un problema al obtener la respuesta. Inténtalo de nuevo.",
@@ -44,34 +43,32 @@ const I18N = {
     attach:"Adjuntar", remove:"Quitar",
     kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nueva línea",
     sources:"Fuentes", kb_request:"Solicitar fuente verificada", kb_requested:"Solicitud enviada", kb_error:"No se pudo enviar", related_title:"Relacionado",
-    learn_title:"Perfil de aprendizaje", learn_desc:"Cómo AIAME adapta sus explicaciones a ti", learn_style:"Estilo de explicación", learn_difficulty:"Nivel de dificultad", learn_strengths:"Fortalezas", learn_growth:"Áreas de mejora", learn_confusions:"Confusiones frecuentes", learn_none:"Aún no hay datos.", learn_error:"No se pudo cargar tu perfil.", learn_style_balanced:"Equilibrado", learn_style_concise:"Conciso", learn_style_detailed:"Detallado", learn_style_visual:"Visual", learn_diff_basic:"Básico", learn_diff_intermediate:"Intermedio", learn_diff_advanced:"Avanzado",
+    learn_title:"Perfil de aprendizaje", learn_desc:"Cómo Media adapta sus explicaciones a ti", learn_style:"Estilo de explicación", learn_difficulty:"Nivel de dificultad", learn_strengths:"Fortalezas", learn_growth:"Áreas de mejora", learn_confusions:"Confusiones frecuentes", learn_none:"Aún no hay datos.", learn_error:"No se pudo cargar tu perfil.", learn_style_balanced:"Equilibrado", learn_style_concise:"Conciso", learn_style_detailed:"Detallado", learn_style_visual:"Visual", learn_diff_basic:"Básico", learn_diff_intermediate:"Intermedio", learn_diff_advanced:"Avanzado",
     demo_topic:"tu consulta", demo_intro:"Aquí tienes una explicación sobre", demo_point1:"Idea clave relacionada con el tema.", demo_point2:"Un segundo punto con más detalle.", demo_point3:"Un tercer punto para ampliar.", demo_code_intro:"También puedo usar formato enriquecido y bloques de código:", demo_note:"Respuesta de demostración. Inicia sesión para el tutor médico real con fuentes verificadas.", demo_followup:"¿Quieres que profundice en", demo_asset:"Recurso de ejemplo",
     practice_title:"Herramientas de estudio", history_title:"Historial", practice_slides:"Presentación", practice_mindmap:"Mapa mental", practice_quiz:"Cuestionario", practice_cards:"Tarjetas didácticas", practice_reports:"Informes",
     practice_no_conversation:"No tienes ninguna conversacion.", practice_login:"Inicia sesión para guardar y generar recursos desde tu conversación.", practice_ready:"Recurso preparado", practice_error:"No se pudo preparar el recurso.",
     img_title:"Generar imagen", img_desc:"Crea una imagen educativa con IA a partir de una descripción.", img_prompt:"Descripción", img_prompt_ph:"Ej: diagrama del ciclo cardíaco con sus fases", img_aspect:"Proporción", img_quality:"Calidad", img_quality_fast:"Rápida", img_quality_high:"Alta calidad", img_close:"Cerrar", img_generate:"Generar", img_generating:"Generando con Gemini…", img_download:"Descargar PNG", img_empty:"Escribe una descripción (mín. 3 caracteres).", img_error:"No se pudo generar la imagen.",
-    model_title:"Modelos", model_desc:"Elige la calidad de las respuestas del chat.", model_low:"Bajo", model_medium:"Medio", model_high:"Alto", model_low_desc:"Respuestas rápidas y directas.", model_medium_desc:"Equilibrio entre rapidez y detalle.", model_high_desc:"Respuestas más completas y razonadas.", model_unavailable:"No configurado", model_status:"Estado", model_health_error:"No se pudo obtener el estado del backend.",
     conv_title:"Conversaciones", conv_search:"Buscar conversaciones…", conv_empty:"Aún no tienes conversaciones.", conv_login:"Inicia sesión para ver tu historial de conversaciones.", conv_loading:"Cargando…", conv_error:"No se pudo cargar el historial.", conv_delete:"Eliminar conversación", conv_delete_confirm:"¿Eliminar esta conversación? No se puede deshacer.", conv_delete_error:"No se pudo eliminar la conversación.",
   },
   en: {
-    rail_new:"New chat", rail_search:"Search chats", rail_images:"Images", rail_models:"Models", rail_settings:"Settings", rail_toggle:"Collapse menu", rail_toggle_expand:"Expand menu",
+    rail_new:"New chat", rail_search:"Search chats", rail_images:"Images", rail_settings:"Settings", rail_toggle:"Collapse menu", rail_toggle_expand:"Expand menu",
     tb_search:"Search", tb_notifications:"Notifications", tb_account:"Account",
-    notif_header:"Notifications", notif1_title:"Welcome to AIAME", notif1_text:"Your assistant is ready to chat.",
+    notif_header:"Notifications", notif1_title:"Welcome to Media", notif1_text:"Your assistant is ready to chat.",
     notif2_title:"Tip", notif2_text:"Press <kbd>Shift</kbd>+<kbd>Enter</kbd> for a new line.",
     acc_hint:"Sign in to save your conversations", acc_login:"Log in", acc_register:"Sign up",
     acc_logout:"Log out", auth_email:"Email", auth_password:"Password", auth_ready:"Signed in", auth_missing:"Enter email and password.", auth_failed:"Could not authenticate.",
     auth_confirm_password:"Confirm password", auth_enter:"Enter", auth_create:"Create account", auth_password_mismatch:"Passwords do not match.", auth_switch_login:"I already have an account", auth_switch_register:"Create new account",
     auth_title_login:"Sign in", auth_title_register:"Create your account", auth_sub_login:"Sign in to save your conversations", auth_sub_register:"Sign up to keep your history", auth_no_account:"No account yet?", auth_have_account:"Already have an account?",
-    welcome_title:"Hi, I'm <span>AIAME</span>", welcome_subtitle:"How can I help you today?",
-    composer_placeholder:"Message AIAME…", mic_record:"Record audio", mic_stop:"Stop recording",
-    send:"Send", composer_hint:"AIAME can make mistakes. Check important information.",
+    welcome_title:"Hi, I'm <span>Media</span>", welcome_subtitle:"How can I help you today?",
+    composer_placeholder:"Message Media…", mic_record:"Record audio", mic_stop:"Stop recording",
+    send:"Send", composer_hint:"Media can make mistakes. Check important information.",
     settings_title:"Settings", settings_appearance:"Appearance", settings_theme:"Theme", settings_dark:"Dark mode",
     settings_language:"Language", settings_sound:"Sound on reply", close:"Close", back:"Back", settings_general:"General",
-    data_title:"Data controls", data_desc:"Manage what data AIAME uses",
+    data_title:"Data controls", data_desc:"Manage what data Media uses",
     data_metadata:"Metadata", data_metadata_desc:"Allow saving data about your conversations (dates, titles) to organize them better.",
-    data_analytics:"Analytics", data_analytics_desc:"Share anonymous usage statistics to help us improve AIAME.",
-    data_models:"Enhanced models", data_models_desc:"Use your interactions to access more advanced models and higher-quality responses.",
-    role_you:"You", role_ai:"AIAME", default_chat_title:"New chat",
-    mock_l1:"This is a sample response from AIAME 🤖",
+    data_analytics:"Analytics", data_analytics_desc:"Share anonymous usage statistics to help us improve Media.",
+    role_you:"You", role_ai:"Media", default_chat_title:"New chat",
+    mock_l1:"This is a sample response from Media 🤖",
     mock_l2:"I'm not connected to a real AI model yet, but the interface is ready to receive responses.",
     mock_you_wrote:"You wrote:",
     error_msg:"⚠️ There was a problem getting the response. Please try again.",
@@ -81,34 +78,32 @@ const I18N = {
     attach:"Attach", remove:"Remove",
     kbd_hint:"<kbd>Enter</kbd> to send · <kbd>Shift</kbd>+<kbd>Enter</kbd> new line",
     sources:"Sources", kb_request:"Request verified source", kb_requested:"Request sent", kb_error:"Could not send", related_title:"Related",
-    learn_title:"Learning profile", learn_desc:"How AIAME tailors its explanations to you", learn_style:"Explanation style", learn_difficulty:"Difficulty level", learn_strengths:"Strengths", learn_growth:"Growth areas", learn_confusions:"Frequent confusions", learn_none:"No data yet.", learn_error:"Could not load your profile.", learn_style_balanced:"Balanced", learn_style_concise:"Concise", learn_style_detailed:"Detailed", learn_style_visual:"Visual", learn_diff_basic:"Basic", learn_diff_intermediate:"Intermediate", learn_diff_advanced:"Advanced",
+    learn_title:"Learning profile", learn_desc:"How Media tailors its explanations to you", learn_style:"Explanation style", learn_difficulty:"Difficulty level", learn_strengths:"Strengths", learn_growth:"Growth areas", learn_confusions:"Frequent confusions", learn_none:"No data yet.", learn_error:"Could not load your profile.", learn_style_balanced:"Balanced", learn_style_concise:"Concise", learn_style_detailed:"Detailed", learn_style_visual:"Visual", learn_diff_basic:"Basic", learn_diff_intermediate:"Intermediate", learn_diff_advanced:"Advanced",
     demo_topic:"your question", demo_intro:"Here's an explanation about", demo_point1:"A key idea related to the topic.", demo_point2:"A second point with more detail.", demo_point3:"A third point to expand on.", demo_code_intro:"I can also use rich formatting and code blocks:", demo_note:"Demo response. Sign in for the real medical tutor with verified sources.", demo_followup:"Want me to go deeper into", demo_asset:"Example resource",
     practice_title:"Study tools", history_title:"History", practice_slides:"Presentation", practice_mindmap:"Mind map", practice_quiz:"Quiz", practice_cards:"Flashcards", practice_reports:"Reports",
     practice_no_conversation:"You don't have any conversations.", practice_login:"Sign in to save and generate resources from your conversation.", practice_ready:"Resource prepared", practice_error:"Could not prepare the resource.",
     img_title:"Generate image", img_desc:"Create an AI educational image from a description.", img_prompt:"Description", img_prompt_ph:"e.g. diagram of the cardiac cycle with its phases", img_aspect:"Aspect ratio", img_quality:"Quality", img_quality_fast:"Fast", img_quality_high:"High quality", img_close:"Close", img_generate:"Generate", img_generating:"Generating with Gemini…", img_download:"Download PNG", img_empty:"Write a description (min. 3 characters).", img_error:"Could not generate the image.",
-    model_title:"Models", model_desc:"Choose the quality of chat responses.", model_low:"Low", model_medium:"Medium", model_high:"High", model_low_desc:"Fast, direct answers.", model_medium_desc:"Balance of speed and detail.", model_high_desc:"More complete, reasoned answers.", model_unavailable:"Not configured", model_status:"Status", model_health_error:"Could not fetch backend status.",
     conv_title:"Conversations", conv_search:"Search conversations…", conv_empty:"You don't have any conversations yet.", conv_login:"Sign in to see your conversation history.", conv_loading:"Loading…", conv_error:"Could not load history.", conv_delete:"Delete conversation", conv_delete_confirm:"Delete this conversation? This can't be undone.", conv_delete_error:"Could not delete the conversation.",
   },
   fr: {
-    rail_new:"Nouveau chat", rail_search:"Rechercher", rail_images:"Images", rail_models:"Modèles", rail_settings:"Paramètres", rail_toggle:"Réduire le menu", rail_toggle_expand:"Développer le menu",
+    rail_new:"Nouveau chat", rail_search:"Rechercher", rail_images:"Images", rail_settings:"Paramètres", rail_toggle:"Réduire le menu", rail_toggle_expand:"Développer le menu",
     tb_search:"Rechercher", tb_notifications:"Notifications", tb_account:"Compte",
-    notif_header:"Notifications", notif1_title:"Bienvenue sur AIAME", notif1_text:"Votre assistant est prêt à discuter.",
+    notif_header:"Notifications", notif1_title:"Bienvenue sur Media", notif1_text:"Votre assistant est prêt à discuter.",
     notif2_title:"Astuce", notif2_text:"Appuie sur <kbd>Shift</kbd>+<kbd>Enter</kbd> pour un saut de ligne.",
     acc_hint:"Connecte-toi pour sauvegarder tes conversations", acc_login:"Se connecter", acc_register:"S'inscrire",
     acc_logout:"Se déconnecter", auth_email:"Email", auth_password:"Mot de passe", auth_ready:"Session ouverte", auth_missing:"Saisis email et mot de passe.", auth_failed:"Authentification impossible.",
     auth_confirm_password:"Confirmer le mot de passe", auth_enter:"Entrer", auth_create:"Créer un compte", auth_password_mismatch:"Les mots de passe ne correspondent pas.", auth_switch_login:"J'ai déjà un compte", auth_switch_register:"Créer un nouveau compte",
     auth_title_login:"Connexion", auth_title_register:"Crée ton compte", auth_sub_login:"Connecte-toi pour sauvegarder tes conversations", auth_sub_register:"Inscris-toi pour conserver ton historique", auth_no_account:"Pas encore de compte ?", auth_have_account:"Tu as déjà un compte ?",
-    welcome_title:"Bonjour, je suis <span>AIAME</span>", welcome_subtitle:"Comment puis-je t'aider aujourd'hui ?",
-    composer_placeholder:"Écris un message à AIAME…", mic_record:"Enregistrer un audio", mic_stop:"Arrêter l'enregistrement",
-    send:"Envoyer", composer_hint:"AIAME peut faire des erreurs. Vérifie les informations importantes.",
+    welcome_title:"Bonjour, je suis <span>Media</span>", welcome_subtitle:"Comment puis-je t'aider aujourd'hui ?",
+    composer_placeholder:"Écris un message à Media…", mic_record:"Enregistrer un audio", mic_stop:"Arrêter l'enregistrement",
+    send:"Envoyer", composer_hint:"Media peut faire des erreurs. Vérifie les informations importantes.",
     settings_title:"Paramètres", settings_appearance:"Apparence", settings_theme:"Thème", settings_dark:"Mode sombre",
     settings_language:"Langue", settings_sound:"Son à la réponse", close:"Fermer", back:"Retour", settings_general:"Général",
-    data_title:"Contrôle des données", data_desc:"Gère les données utilisées par AIAME",
+    data_title:"Contrôle des données", data_desc:"Gère les données utilisées par Media",
     data_metadata:"Métadonnées", data_metadata_desc:"Autorise l'enregistrement de données sur tes conversations (dates, titres) pour mieux les organiser.",
-    data_analytics:"Analytique", data_analytics_desc:"Partage des statistiques d'utilisation anonymes pour nous aider à améliorer AIAME.",
-    data_models:"Modèles améliorés", data_models_desc:"Utilise tes interactions pour accéder à des modèles plus avancés et des réponses de meilleure qualité.",
-    role_you:"Toi", role_ai:"AIAME", default_chat_title:"Nouveau chat",
-    mock_l1:"Ceci est une réponse d'exemple d'AIAME 🤖",
+    data_analytics:"Analytique", data_analytics_desc:"Partage des statistiques d'utilisation anonymes pour nous aider à améliorer Media.",
+    role_you:"Toi", role_ai:"Media", default_chat_title:"Nouveau chat",
+    mock_l1:"Ceci est une réponse d'exemple d'Media 🤖",
     mock_l2:"Je ne suis pas encore connectée à un vrai modèle d'IA, mais l'interface est prête à recevoir des réponses.",
     mock_you_wrote:"Tu as écrit :",
     error_msg:"⚠️ Un problème est survenu lors de la réponse. Réessaie.",
@@ -118,34 +113,32 @@ const I18N = {
     attach:"Joindre", remove:"Retirer",
     kbd_hint:"<kbd>Entrée</kbd> envoyer · <kbd>Shift</kbd>+<kbd>Entrée</kbd> nouvelle ligne",
     sources:"Sources", kb_request:"Demander une source vérifiée", kb_requested:"Demande envoyée", kb_error:"Envoi impossible", related_title:"Associé",
-    learn_title:"Profil d'apprentissage", learn_desc:"Comment AIAME adapte ses explications", learn_style:"Style d'explication", learn_difficulty:"Niveau de difficulté", learn_strengths:"Points forts", learn_growth:"Axes de progrès", learn_confusions:"Confusions fréquentes", learn_none:"Pas encore de données.", learn_error:"Impossible de charger ton profil.", learn_style_balanced:"Équilibré", learn_style_concise:"Concis", learn_style_detailed:"Détaillé", learn_style_visual:"Visuel", learn_diff_basic:"Basique", learn_diff_intermediate:"Intermédiaire", learn_diff_advanced:"Avancé",
+    learn_title:"Profil d'apprentissage", learn_desc:"Comment Media adapte ses explications", learn_style:"Style d'explication", learn_difficulty:"Niveau de difficulté", learn_strengths:"Points forts", learn_growth:"Axes de progrès", learn_confusions:"Confusions fréquentes", learn_none:"Pas encore de données.", learn_error:"Impossible de charger ton profil.", learn_style_balanced:"Équilibré", learn_style_concise:"Concis", learn_style_detailed:"Détaillé", learn_style_visual:"Visuel", learn_diff_basic:"Basique", learn_diff_intermediate:"Intermédiaire", learn_diff_advanced:"Avancé",
     demo_topic:"ta question", demo_intro:"Voici une explication sur", demo_point1:"Une idée clé liée au sujet.", demo_point2:"Un deuxième point plus détaillé.", demo_point3:"Un troisième point pour approfondir.", demo_code_intro:"Je peux aussi utiliser du formatage riche et des blocs de code :", demo_note:"Réponse de démonstration. Connecte-toi pour le vrai tuteur médical avec des sources vérifiées.", demo_followup:"Veux-tu que j'approfondisse", demo_asset:"Ressource d'exemple",
     practice_title:"Outils d'étude", history_title:"Historique", practice_slides:"Présentation", practice_mindmap:"Carte mentale", practice_quiz:"Questionnaire", practice_cards:"Cartes mémo", practice_reports:"Rapports",
     practice_no_conversation:"Tu n'as aucune conversation.", practice_login:"Connecte-toi pour sauvegarder et générer des ressources depuis ta conversation.", practice_ready:"Ressource préparée", practice_error:"Impossible de préparer la ressource.",
     img_title:"Générer une image", img_desc:"Crée une image éducative par IA à partir d'une description.", img_prompt:"Description", img_prompt_ph:"ex : schéma du cycle cardiaque et ses phases", img_aspect:"Format", img_quality:"Qualité", img_quality_fast:"Rapide", img_quality_high:"Haute qualité", img_close:"Fermer", img_generate:"Générer", img_generating:"Génération avec Gemini…", img_download:"Télécharger PNG", img_empty:"Écris une description (min. 3 caractères).", img_error:"Impossible de générer l'image.",
-    model_title:"Modèles", model_desc:"Choisis la qualité des réponses du chat.", model_low:"Bas", model_medium:"Moyen", model_high:"Élevé", model_low_desc:"Réponses rapides et directes.", model_medium_desc:"Équilibre entre rapidité et détail.", model_high_desc:"Réponses plus complètes et raisonnées.", model_unavailable:"Non configuré", model_status:"État", model_health_error:"Impossible d'obtenir l'état du backend.",
     conv_title:"Conversations", conv_search:"Rechercher des conversations…", conv_empty:"Tu n'as pas encore de conversations.", conv_login:"Connecte-toi pour voir ton historique de conversations.", conv_loading:"Chargement…", conv_error:"Impossible de charger l'historique.", conv_delete:"Supprimer la conversation", conv_delete_confirm:"Supprimer cette conversation ? Action irréversible.", conv_delete_error:"Impossible de supprimer la conversation.",
   },
   pt: {
-    rail_new:"Novo chat", rail_search:"Buscar chats", rail_images:"Imagens", rail_models:"Modelos", rail_settings:"Configurações", rail_toggle:"Recolher menu", rail_toggle_expand:"Expandir menu",
+    rail_new:"Novo chat", rail_search:"Buscar chats", rail_images:"Imagens", rail_settings:"Configurações", rail_toggle:"Recolher menu", rail_toggle_expand:"Expandir menu",
     tb_search:"Buscar", tb_notifications:"Notificações", tb_account:"Conta",
-    notif_header:"Notificações", notif1_title:"Bem-vindo a AIAME", notif1_text:"Seu assistente está pronto para conversar.",
+    notif_header:"Notificações", notif1_title:"Bem-vindo a Media", notif1_text:"Seu assistente está pronto para conversar.",
     notif2_title:"Dica", notif2_text:"Pressione <kbd>Shift</kbd>+<kbd>Enter</kbd> para pular linha.",
     acc_hint:"Entre para salvar suas conversas", acc_login:"Entrar", acc_register:"Cadastrar-se",
     acc_logout:"Sair", auth_email:"Email", auth_password:"Senha", auth_ready:"Sessão iniciada", auth_missing:"Digite email e senha.", auth_failed:"Não foi possível autenticar.",
     auth_confirm_password:"Confirmar senha", auth_enter:"Entrar", auth_create:"Criar conta", auth_password_mismatch:"As senhas não coincidem.", auth_switch_login:"Já tenho conta", auth_switch_register:"Criar nova conta",
     auth_title_login:"Entrar", auth_title_register:"Crie sua conta", auth_sub_login:"Entre para salvar suas conversas", auth_sub_register:"Cadastre-se para guardar seu histórico", auth_no_account:"Ainda não tem conta?", auth_have_account:"Já tem conta?",
-    welcome_title:"Olá, sou <span>AIAME</span>", welcome_subtitle:"Como posso ajudar você hoje?",
-    composer_placeholder:"Escreva uma mensagem para AIAME…", mic_record:"Gravar áudio", mic_stop:"Parar gravação",
-    send:"Enviar", composer_hint:"AIAME pode cometer erros. Verifique informações importantes.",
+    welcome_title:"Olá, sou <span>Media</span>", welcome_subtitle:"Como posso ajudar você hoje?",
+    composer_placeholder:"Escreva uma mensagem para Media…", mic_record:"Gravar áudio", mic_stop:"Parar gravação",
+    send:"Enviar", composer_hint:"Media pode cometer erros. Verifique informações importantes.",
     settings_title:"Configurações", settings_appearance:"Aparência", settings_theme:"Tema", settings_dark:"Modo escuro",
     settings_language:"Idioma", settings_sound:"Som ao responder", close:"Fechar", back:"Voltar", settings_general:"Geral",
-    data_title:"Controle de dados", data_desc:"Gerencie quais dados a AIAME usa",
+    data_title:"Controle de dados", data_desc:"Gerencie quais dados a Media usa",
     data_metadata:"Metadados", data_metadata_desc:"Permite salvar dados sobre suas conversas (datas, títulos) para organizá-las melhor.",
-    data_analytics:"Análises", data_analytics_desc:"Compartilhe estatísticas de uso anônimas para nos ajudar a melhorar a AIAME.",
-    data_models:"Modelos aprimorados", data_models_desc:"Usa suas interações para acessar modelos mais avançados e respostas de maior qualidade.",
-    role_you:"Você", role_ai:"AIAME", default_chat_title:"Novo chat",
-    mock_l1:"Esta é uma resposta de exemplo do AIAME 🤖",
+    data_analytics:"Análises", data_analytics_desc:"Compartilhe estatísticas de uso anônimas para nos ajudar a melhorar a Media.",
+    role_you:"Você", role_ai:"Media", default_chat_title:"Novo chat",
+    mock_l1:"Esta é uma resposta de exemplo do Media 🤖",
     mock_l2:"Ainda não estou conectada a um modelo de IA real, mas a interface já está pronta para receber respostas.",
     mock_you_wrote:"Você escreveu:",
     error_msg:"⚠️ Ocorreu um problema ao obter a resposta. Tente novamente.",
@@ -155,12 +148,11 @@ const I18N = {
     attach:"Anexar", remove:"Remover",
     kbd_hint:"<kbd>Enter</kbd> enviar · <kbd>Shift</kbd>+<kbd>Enter</kbd> nova linha",
     sources:"Fontes", kb_request:"Solicitar fonte verificada", kb_requested:"Solicitação enviada", kb_error:"Não foi possível enviar", related_title:"Relacionado",
-    learn_title:"Perfil de aprendizado", learn_desc:"Como o AIAME adapta as explicações a você", learn_style:"Estilo de explicação", learn_difficulty:"Nível de dificuldade", learn_strengths:"Pontos fortes", learn_growth:"Áreas de melhoria", learn_confusions:"Confusões frequentes", learn_none:"Ainda não há dados.", learn_error:"Não foi possível carregar seu perfil.", learn_style_balanced:"Equilibrado", learn_style_concise:"Conciso", learn_style_detailed:"Detalhado", learn_style_visual:"Visual", learn_diff_basic:"Básico", learn_diff_intermediate:"Intermediário", learn_diff_advanced:"Avançado",
+    learn_title:"Perfil de aprendizado", learn_desc:"Como o Media adapta as explicações a você", learn_style:"Estilo de explicação", learn_difficulty:"Nível de dificuldade", learn_strengths:"Pontos fortes", learn_growth:"Áreas de melhoria", learn_confusions:"Confusões frequentes", learn_none:"Ainda não há dados.", learn_error:"Não foi possível carregar seu perfil.", learn_style_balanced:"Equilibrado", learn_style_concise:"Conciso", learn_style_detailed:"Detalhado", learn_style_visual:"Visual", learn_diff_basic:"Básico", learn_diff_intermediate:"Intermediário", learn_diff_advanced:"Avançado",
     demo_topic:"sua pergunta", demo_intro:"Aqui está uma explicação sobre", demo_point1:"Uma ideia-chave relacionada ao tema.", demo_point2:"Um segundo ponto com mais detalhe.", demo_point3:"Um terceiro ponto para ampliar.", demo_code_intro:"Também posso usar formatação rica e blocos de código:", demo_note:"Resposta de demonstração. Entre para o tutor médico real com fontes verificadas.", demo_followup:"Quer que eu aprofunde em", demo_asset:"Recurso de exemplo",
     practice_title:"Ferramentas de estudo", history_title:"Histórico", practice_slides:"Apresentação", practice_mindmap:"Mapa mental", practice_quiz:"Questionário", practice_cards:"Cartões didáticos", practice_reports:"Relatórios",
     practice_no_conversation:"Você não tem nenhuma conversa.", practice_login:"Entre para salvar e gerar recursos a partir da sua conversa.", practice_ready:"Recurso preparado", practice_error:"Não foi possível preparar o recurso.",
     img_title:"Gerar imagem", img_desc:"Crie uma imagem educativa com IA a partir de uma descrição.", img_prompt:"Descrição", img_prompt_ph:"ex: diagrama do ciclo cardíaco com suas fases", img_aspect:"Proporção", img_quality:"Qualidade", img_quality_fast:"Rápida", img_quality_high:"Alta qualidade", img_close:"Fechar", img_generate:"Gerar", img_generating:"Gerando com Gemini…", img_download:"Baixar PNG", img_empty:"Escreva uma descrição (mín. 3 caracteres).", img_error:"Não foi possível gerar a imagem.",
-    model_title:"Modelos", model_desc:"Escolha a qualidade das respostas do chat.", model_low:"Baixo", model_medium:"Médio", model_high:"Alto", model_low_desc:"Respostas rápidas e diretas.", model_medium_desc:"Equilíbrio entre rapidez e detalhe.", model_high_desc:"Respostas mais completas e fundamentadas.", model_unavailable:"Não configurado", model_status:"Estado", model_health_error:"Não foi possível obter o estado do backend.",
     conv_title:"Conversas", conv_search:"Buscar conversas…", conv_empty:"Você ainda não tem conversas.", conv_login:"Entre para ver seu histórico de conversas.", conv_loading:"Carregando…", conv_error:"Não foi possível carregar o histórico.", conv_delete:"Excluir conversa", conv_delete_confirm:"Excluir esta conversa? Não é possível desfazer.", conv_delete_error:"Não foi possível excluir a conversa.",
   },
 };
@@ -170,6 +162,12 @@ const API_BASE_URL = (
   location.protocol === "file:" ||
   ["5500", "5173", "3000", "8080"].includes(location.port)
 ) ? "http://127.0.0.1:8000" : "";
+
+const BETA_PLANS = {
+  free: { name: "Plan Free", price: "$0", chars: 16000, tokens: "4,000" },
+  plus: { name: "Plan Plus", price: "$5", chars: 128000, tokens: "32,000" },
+  pro: { name: "Plan Pro", price: "$10", chars: 512000, tokens: "128,000" },
+};
 
 function t(key) {
   return (I18N[lang] && I18N[lang][key]) || I18N.es[key] || key;
@@ -200,7 +198,7 @@ function applyI18n() {
 
 function setLang(next) {
   lang = I18N[next] ? next : "es";
-  try { localStorage.setItem("aiame-lang", lang); } catch (_) {}
+  try { localStorage.setItem("Media-lang", lang); } catch (_) {}
   applyI18n();
   if (typeof applyRailCollapsed === "function") {
     applyRailCollapsed(document.body.classList.contains("rail-collapsed"));
@@ -213,7 +211,7 @@ function setLang(next) {
 
 function initLang() {
   let saved = null;
-  try { saved = localStorage.getItem("aiame-lang"); } catch (_) {}
+  try { saved = localStorage.getItem("Media-lang"); } catch (_) {}
   const nav = (navigator.language || "es").slice(0, 2).toLowerCase();
   lang = saved || (I18N[nav] ? nav : "es");
 }
@@ -242,6 +240,8 @@ const el = {
 
   // Barra superior
   btnSettingsTop: document.getElementById("btnSettingsTop"),
+  btnPlansTop:  document.getElementById("btnPlansTop"),
+  btnChatTop:   document.getElementById("btnChatTop"),
   searchBox:   document.getElementById("searchBox"),
   searchInput: document.getElementById("searchInput"),
   btnNotif:    document.getElementById("btnNotif"),
@@ -253,6 +253,13 @@ const el = {
   authEmail:   document.getElementById("authEmail"),
   authPassword: document.getElementById("authPassword"),
   authPasswordConfirm: document.getElementById("authPasswordConfirm"),
+  authRegisterFields: document.getElementById("authRegisterFields"),
+  authFullName: document.getElementById("authFullName"),
+  authCarnet: document.getElementById("authCarnet"),
+  authUniversity: document.getElementById("authUniversity"),
+  authRole: document.getElementById("authRole"),
+  authSpecialty: document.getElementById("authSpecialty"),
+  authLearningChallenges: document.getElementById("authLearningChallenges"),
   authStatus:  document.getElementById("authStatus"),
   btnAuthSubmit: document.getElementById("btnAuthSubmit"),
   btnLogout:   document.getElementById("btnLogout"),
@@ -263,6 +270,14 @@ const el = {
   authTitle:   document.getElementById("authTitle"),
   authSub:     document.getElementById("authSub"),
   accountEmail: document.getElementById("accountEmail"),
+  accountName: document.getElementById("accountName"),
+  accountAvatar: document.getElementById("accountAvatar"),
+  accountDetails: document.getElementById("accountDetails"),
+  accountRole: document.getElementById("accountRole"),
+  accountUniversity: document.getElementById("accountUniversity"),
+  accountPlan: document.getElementById("accountPlan"),
+  btnAccountLearning: document.getElementById("btnAccountLearning"),
+  btnAccountPlans: document.getElementById("btnAccountPlans"),
 
   // Ajustes (paneles slide)
   settingsPanel: document.getElementById("settingsPanel"),
@@ -285,6 +300,16 @@ const el = {
   convBack:    document.getElementById("convBack"),
   convSearch:  document.getElementById("convSearch"),
   convList:    document.getElementById("convList"),
+
+  // Landing + planes beta
+  landingStart: document.getElementById("landingStart"),
+  landingLogin: document.getElementById("landingLogin"),
+  landingPlans: document.getElementById("landingPlans"),
+  plansBeta:    document.getElementById("plansBeta"),
+  planName:     document.getElementById("planName"),
+  tokenUsed:    document.getElementById("tokenUsed"),
+  tokenLimit:   document.getElementById("tokenLimit"),
+  tokenMeterFill: document.getElementById("tokenMeterFill"),
 };
 
 /* =========================================================
@@ -317,7 +342,7 @@ async function demoResponse(question, onToken) {
     `- ${t("demo_point2")}\n` +
     `- ${t("demo_point3")}\n\n` +
     `${t("demo_code_intro")}\n\n` +
-    "```js\nconsole.log('Hola desde AIAME');\n```\n\n" +
+    "```js\nconsole.log('Hola desde Media');\n```\n\n" +
     `_${t("demo_note")}_`;
   const chunks = full.match(/\s*\S+|\s+/g) || [full];
   for (const ch of chunks) { await sleep(12 + Math.random() * 20); onToken(ch); }
@@ -333,7 +358,7 @@ async function demoResponse(question, onToken) {
 async function streamAgentResponse(messages, onToken) {
   const lastMessage = messages[messages.length - 1] || {};
   const last = lastMessage.content ?? "";
-  const token = localStorage.getItem("aiame-auth-token");
+  const token = localStorage.getItem("Media-auth-token");
   // Sin sesión: modo demostración con el chat completo y todas sus funcionalidades.
   if (!token) return demoResponse(last, onToken);
 
@@ -491,7 +516,7 @@ function enhanceCodeBlocks(container) {
 // ---------- Utilidades ----------
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const uid = () => Math.random().toString(36).slice(2, 10);
-const CHAT_STORAGE_KEY = "aiame-chats-v1";
+const CHAT_STORAGE_KEY = "Media-chats-v1";
 const CHAT_STORAGE_LIMIT = 50;
 
 function getActiveChat() {
@@ -674,7 +699,7 @@ function buildMessageNode(m, index, chat) {
   const node = document.createElement("div");
   node.className = "msg msg--" + (role === "user" ? "user" : "ai");
 
-  const avatar = role === "user" ? "U" : `<img src="assets/logo.svg" alt="AIAME" />`;
+  const avatar = role === "user" ? "U" : `<img src="assets/logo.svg" alt="Media" />`;
   node.innerHTML = `
     <div class="msg__avatar">${avatar}</div>
     <div class="msg__body">
@@ -807,10 +832,81 @@ function practiceArtifactEl(artifact) {
     btn.addEventListener("click", () => downloadPracticeArtifact(artifact, format, editor.value));
     actions.appendChild(btn);
   });
-  box.append(title, editor);
+  box.append(title);
+  const visual = practiceStructuredPreviewEl(artifact);
+  if (visual) box.appendChild(visual);
+  box.appendChild(editor);
   const visualTools = practiceVisualTasksEl(artifact);
   if (visualTools) box.appendChild(visualTools);
   box.appendChild(actions);
+  return box;
+}
+
+function practiceStructuredPreviewEl(artifact) {
+  if (artifact.kind === "mindmap" && artifact.data?.mindmap) {
+    return mindmapPreviewEl(artifact.data.mindmap);
+  }
+  if (artifact.kind === "presentation" && Array.isArray(artifact.data?.slides)) {
+    const box = document.createElement("div");
+    box.className = "practice-slide-preview";
+    artifact.data.slides.slice(0, 6).forEach((slide) => {
+      const card = document.createElement("article");
+      card.className = "practice-slide";
+      card.innerHTML = `<span>${escapeHtml(String(slide.slide || ""))}</span><strong>${escapeHtml(slide.title || "Diapositiva")}</strong>`;
+      const list = document.createElement("ul");
+      (slide.bullets || []).slice(0, 3).forEach((bullet) => {
+        const li = document.createElement("li");
+        li.textContent = bullet;
+        list.appendChild(li);
+      });
+      card.appendChild(list);
+      box.appendChild(card);
+    });
+    return box;
+  }
+  if (artifact.kind === "quiz" && Array.isArray(artifact.data?.questions)) {
+    const box = document.createElement("div");
+    box.className = "practice-quiz-preview";
+    artifact.data.questions.slice(0, 4).forEach((q) => {
+      const item = document.createElement("details");
+      item.className = "practice-question";
+      item.innerHTML = `<summary>${escapeHtml(q.question || "Pregunta")}</summary><p>${escapeHtml(q.explanation || q.correct_answer || "")}</p>`;
+      box.appendChild(item);
+    });
+    return box;
+  }
+  if (artifact.kind === "flashcards" && Array.isArray(artifact.data?.cards)) {
+    const box = document.createElement("div");
+    box.className = "practice-card-preview";
+    artifact.data.cards.slice(0, 6).forEach((card) => {
+      const item = document.createElement("div");
+      item.className = "study-card";
+      item.innerHTML = `<strong>${escapeHtml(card.front || "")}</strong><span>${escapeHtml(card.back || "")}</span>`;
+      box.appendChild(item);
+    });
+    return box;
+  }
+  return null;
+}
+
+function mindmapPreviewEl(mindmap) {
+  const box = document.createElement("div");
+  box.className = "mindmap-preview";
+  const root = (mindmap.nodes || []).find((node) => node.id === "root") || (mindmap.nodes || [])[0];
+  const children = (mindmap.nodes || []).filter((node) => node.id !== root?.id).slice(0, 8);
+  const center = document.createElement("div");
+  center.className = "mindmap-preview__root";
+  center.textContent = root?.label || mindmap.title || "Tema";
+  box.appendChild(center);
+  const ring = document.createElement("div");
+  ring.className = "mindmap-preview__ring";
+  children.forEach((node) => {
+    const item = document.createElement("div");
+    item.className = "mindmap-preview__node";
+    item.innerHTML = `<strong>${escapeHtml(node.label || "")}</strong><span>${escapeHtml(node.description || "")}</span>`;
+    ring.appendChild(item);
+  });
+  box.appendChild(ring);
   return box;
 }
 
@@ -1014,7 +1110,7 @@ function openImageGenerator() {
       dl.addEventListener("click", () => {
         const link = document.createElement("a");
         link.href = src;
-        link.download = "aiame-imagen.png";
+        link.download = "Media-imagen.png";
         document.body.appendChild(link);
         link.click();
         link.remove();
@@ -1031,111 +1127,12 @@ function openImageGenerator() {
   form.querySelector("textarea")?.focus();
 }
 
-// ---------- Modelos: calidad de respuesta (effort) + estado (/api/health) ----------
-const MODEL_TIERS = [
-  { key: "low",    label: "model_low",    desc: "model_low_desc" },
-  { key: "medium", label: "model_medium", desc: "model_medium_desc" },
-  { key: "high",   label: "model_high",   desc: "model_high_desc" },
-];
-
 function getEffortPref() {
   try {
-    const v = localStorage.getItem("aiame-effort");
+    const v = localStorage.getItem("Media-effort");
     return v === "low" || v === "medium" || v === "high" ? v : "medium";
   } catch (_) { return "medium"; }
 }
-function setEffortPref(v) {
-  try { localStorage.setItem("aiame-effort", v); } catch (_) {}
-}
-
-function openModels() {
-  ensurePracticeModalStyles();
-  ensureModelModalStyles();
-  const overlay = document.createElement("div");
-  overlay.className = "practice-modal";
-  overlay.innerHTML = `
-    <div class="practice-modal__card" role="dialog" aria-modal="true">
-      <h2>${escapeHtml(t("model_title"))}</h2>
-      <p>${escapeHtml(t("model_desc"))}</p>
-      <div class="model-list"></div>
-      <div class="model-status" hidden></div>
-      <div class="practice-modal__actions">
-        <button type="button" data-cancel>${escapeHtml(t("img_close"))}</button>
-      </div>
-    </div>`;
-  document.body.appendChild(overlay);
-  const list = overlay.querySelector(".model-list");
-  const statusEl = overlay.querySelector(".model-status");
-  const close = () => { overlay.remove(); document.removeEventListener("keydown", onKey); };
-  const onKey = (e) => { if (e.key === "Escape") close(); };
-  document.addEventListener("keydown", onKey);
-  overlay.querySelector("[data-cancel]").addEventListener("click", close);
-  overlay.addEventListener("click", (e) => { if (e.target === overlay) close(); });
-
-  const renderList = (models, configured) => {
-    list.innerHTML = "";
-    const current = getEffortPref();
-    MODEL_TIERS.forEach((tier) => {
-      const card = document.createElement("button");
-      card.type = "button";
-      card.className = "model-card" + (tier.key === current ? " is-selected" : "");
-      const available = !configured || configured[tier.key] !== false;
-      if (!available) card.classList.add("is-unavailable");
-      const modelName = models ? models[`${tier.key}_model`] : "";
-      card.innerHTML = `
-        <span class="model-card__head">
-          <span class="model-card__name">${escapeHtml(t(tier.label))}</span>
-          <span class="model-card__check" aria-hidden="true">✓</span>
-        </span>
-        <span class="model-card__desc">${escapeHtml(t(tier.desc))}</span>
-        <span class="model-card__model">${escapeHtml(modelName || (available ? "" : t("model_unavailable")))}</span>`;
-      card.addEventListener("click", () => {
-        setEffortPref(tier.key);
-        list.querySelectorAll(".model-card").forEach((c) => c.classList.remove("is-selected"));
-        card.classList.add("is-selected");
-      });
-      list.appendChild(card);
-    });
-  };
-
-  renderList(null, null);
-  // Estado del backend + nombres reales de modelo (endpoint público)
-  fetchWithAuth(`${API_BASE_URL}/api/health`)
-    .then((res) => res.ok ? res.json() : Promise.reject())
-    .then((data) => {
-      const primary = data.details?.providers?.primary || {};
-      renderList(primary, data.details?.models_configured || null);
-      statusEl.hidden = false;
-      const dot = data.status === "healthy" ? "🟢" : data.status === "degraded" ? "🟡" : "🔴";
-      statusEl.textContent = `${dot} ${t("model_status")}: ${data.status} · IA: ${data.ai_provider_configuration}`;
-    })
-    .catch(() => {
-      statusEl.hidden = false;
-      statusEl.textContent = t("model_health_error");
-    });
-}
-
-function ensureModelModalStyles() {
-  if (document.getElementById("model-modal-runtime-styles")) return;
-  const style = document.createElement("style");
-  style.id = "model-modal-runtime-styles";
-  style.textContent = `
-    .model-list{display:grid!important;gap:10px!important}
-    .model-card{display:grid!important;gap:4px!important;text-align:left!important;width:100%!important;box-sizing:border-box!important;padding:14px 16px!important;border:1.5px solid var(--border,#2b3344)!important;border-radius:16px!important;background:var(--bg-soft,#0b0b0b)!important;color:var(--text,#fff)!important;cursor:pointer!important;transition:border-color .15s ease,background .15s ease!important}
-    .model-card:hover{border-color:var(--primary,#2f6df6)!important}
-    .model-card.is-selected{border-color:var(--primary,#2f6df6)!important;background:color-mix(in srgb,var(--primary,#2f6df6) 12%,transparent)!important}
-    .model-card.is-unavailable{opacity:.55!important}
-    .model-card__head{display:flex!important;align-items:center!important;justify-content:space-between!important}
-    .model-card__name{font-size:15.5px!important;font-weight:700!important}
-    .model-card__check{color:var(--primary,#2f6df6)!important;font-weight:800!important;opacity:0!important}
-    .model-card.is-selected .model-card__check{opacity:1!important}
-    .model-card__desc{font-size:13px!important;color:var(--text-soft,#d7dce7)!important}
-    .model-card__model{font-size:11.5px!important;color:var(--text-muted,#9aa3b2)!important;font-family:ui-monospace,monospace!important}
-    .model-status{margin-top:16px!important;font-size:12.5px!important;color:var(--text-muted,#9aa3b2)!important;text-align:center!important}
-  `;
-  document.head.appendChild(style);
-}
-
 function downloadPracticeArtifact(artifact, format, editableText) {
   const base = artifact.filename || "recurso";
   let content = editableText || "";
@@ -1493,7 +1490,7 @@ function closeSidebarMobile() {
 
 // ---------- Tema ----------
 function initTheme() {
-  const saved = localStorage.getItem("aiame-theme");
+  const saved = localStorage.getItem("Media-theme");
   if (saved) document.documentElement.setAttribute("data-theme", saved);
 }
 let themeTransitionTimer = null;
@@ -1506,7 +1503,7 @@ function toggleTheme() {
   clearTimeout(themeTransitionTimer);
   themeTransitionTimer = setTimeout(() => root.classList.remove("theme-transition"), 600);
   root.setAttribute("data-theme", next);
-  try { localStorage.setItem("aiame-theme", next); } catch (_) {}
+  try { localStorage.setItem("Media-theme", next); } catch (_) {}
 }
 
 // ---------- Dropdowns de la barra superior ----------
@@ -1529,22 +1526,27 @@ function toggleMenu(menu, btn) {
 
 // ---------- Supabase Auth vía backend ----------
 function getAuthToken() {
-  try { return localStorage.getItem("aiame-auth-token"); } catch (_) { return null; }
+  try { return localStorage.getItem("Media-auth-token"); } catch (_) { return null; }
 }
 
 function getRefreshToken() {
-  try { return localStorage.getItem("aiame-refresh-token"); } catch (_) { return null; }
+  try { return localStorage.getItem("Media-refresh-token"); } catch (_) { return null; }
 }
 
 function getStoredEmail() {
-  try { return localStorage.getItem("aiame-user-email"); } catch (_) { return null; }
+  try { return localStorage.getItem("Media-user-email"); } catch (_) { return null; }
+}
+
+function getStoredUser() {
+  try { return JSON.parse(localStorage.getItem("Media-user-profile") || "null"); } catch (_) { return null; }
 }
 
 function setAuthSession(session) {
   try {
-    if (session.access_token) localStorage.setItem("aiame-auth-token", session.access_token);
-    if (session.refresh_token) localStorage.setItem("aiame-refresh-token", session.refresh_token);
-    if (session.user?.email) localStorage.setItem("aiame-user-email", session.user.email);
+    if (session.access_token) localStorage.setItem("Media-auth-token", session.access_token);
+    if (session.refresh_token) localStorage.setItem("Media-refresh-token", session.refresh_token);
+    if (session.user?.email) localStorage.setItem("Media-user-email", session.user.email);
+    if (session.user) localStorage.setItem("Media-user-profile", JSON.stringify(session.user));
   } catch (_) {}
   updateAuthUI();
   // Reconstruye los chats locales en el backend (reenvía cada pregunta por /api/chat).
@@ -1603,9 +1605,10 @@ async function syncLocalChatsToBackend() {
 
 function clearAuthSession() {
   try {
-    localStorage.removeItem("aiame-auth-token");
-    localStorage.removeItem("aiame-refresh-token");
-    localStorage.removeItem("aiame-user-email");
+    localStorage.removeItem("Media-auth-token");
+    localStorage.removeItem("Media-refresh-token");
+    localStorage.removeItem("Media-user-email");
+    localStorage.removeItem("Media-user-profile");
   } catch (_) {}
   conversationsCache = [];
   state.chats.forEach((chat) => { chat.backendConversationId = null; });
@@ -1649,13 +1652,33 @@ async function fetchWithAuth(url, options = {}, retry = true) {
 
 function updateAuthUI() {
   const signedIn = Boolean(getAuthToken());
+  const user = getStoredUser() || {};
+  const plan = BETA_PLANS[getBetaPlan()] || BETA_PLANS.free;
   if (el.btnLogout) el.btnLogout.hidden = !signedIn;
+  if (el.btnAccountLearning) el.btnAccountLearning.hidden = !signedIn;
+  if (el.btnAccountPlans) el.btnAccountPlans.hidden = false;
+  if (el.accountName) el.accountName.textContent = signedIn ? (user.full_name || "Usuario Media") : "Invitado";
+  if (el.accountAvatar) el.accountAvatar.textContent = (signedIn ? (user.full_name || user.email || "M") : "M").trim().slice(0, 1).toUpperCase();
   if (el.accountEmail) {
     el.accountEmail.textContent = signedIn
-      ? `${t("auth_ready")}${getStoredEmail() ? ": " + getStoredEmail() : ""}`
+      ? (getStoredEmail() || "Sesion recordada")
       : t("acc_hint");
   }
+  if (el.accountDetails) el.accountDetails.hidden = !signedIn;
+  if (el.accountRole) el.accountRole.textContent = signedIn ? roleLabel(user.role) : "";
+  if (el.accountUniversity) el.accountUniversity.textContent = signedIn ? (user.university || "Universidad no definida") : "";
+  if (el.accountPlan) el.accountPlan.textContent = `${plan.name} · ${plan.price}`;
   updateAuthModeUI();
+}
+
+function roleLabel(role) {
+  return {
+    student: "Estudiante",
+    doctor: "Doctor/a",
+    resident: "Residente",
+    teacher: "Docente",
+    other: "Otro perfil",
+  }[role] || "Perfil no definido";
 }
 
 function setAuthMode(mode) {
@@ -1668,10 +1691,11 @@ function updateAuthModeUI() {
   const isReg = authMode === "register";
   if (el.authPassword) el.authPassword.setAttribute("autocomplete", isReg ? "new-password" : "current-password");
   if (el.btnAuthSubmit) el.btnAuthSubmit.textContent = isReg ? t("auth_create") : t("auth_enter");
-  if (el.authTitle) el.authTitle.textContent = isReg ? t("auth_title_register") : t("auth_title_login");
-  if (el.authSub) el.authSub.textContent = isReg ? t("auth_sub_register") : t("auth_sub_login");
+  if (el.authTitle) el.authTitle.textContent = isReg ? "Crea tu cuenta Media" : "Bienvenido de nuevo";
+  if (el.authSub) el.authSub.textContent = isReg ? "Cuéntale a Media quién eres para personalizar tu aprendizaje." : "Accede para guardar tus conversaciones y memoria de aprendizaje.";
   if (el.authSwitchText) el.authSwitchText.textContent = isReg ? t("auth_have_account") : t("auth_no_account");
   if (el.authSwitchBtn) el.authSwitchBtn.textContent = isReg ? t("acc_login") : t("acc_register");
+  if (el.authRegisterFields) el.authRegisterFields.hidden = !isReg;
 }
 
 function openAuth() {
@@ -1681,6 +1705,8 @@ function openAuth() {
   setTimeout(() => el.authEmail?.focus(), 60);
 }
 function closeAuth() { closePanel(el.authPanel); }
+
+window.mediaOpenAuth = openAuth;
 
 async function authenticate(mode) {
   setAuthMode(mode);
@@ -1699,7 +1725,17 @@ async function authenticate(mode) {
     const res = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({
+        email,
+        password,
+        full_name: mode === "register" ? el.authFullName?.value.trim() || null : null,
+        carnet: mode === "register" ? el.authCarnet?.value.trim() || null : null,
+        university: mode === "register" ? el.authUniversity?.value.trim() || null : null,
+        role: mode === "register" ? el.authRole?.value || null : null,
+        specialty: mode === "register" ? el.authSpecialty?.value.trim() || null : null,
+        academic_level: mode === "register" ? el.authSpecialty?.value.trim() || null : null,
+        learning_challenges: mode === "register" ? el.authLearningChallenges?.value.trim() || null : null,
+      }),
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(normalizeAuthError(data.detail || data.message || t("auth_failed")));
@@ -1739,25 +1775,28 @@ function toggleSearch() {
 }
 
 async function handlePracticeAction(kind) {
-  const chat = getActiveChat();
+  let chat = getActiveChat();
+  if (!chat) chat = createChat();
   if (!chatHasConversationData(chat)) {
-    window.alert(t("practice_no_conversation"));
-    return;
+    chat.title = "Practica demo";
+    touchChat(chat);
+    renderChatList();
   }
+  const topic = inferChatTopic(chat);
+  const options = await openPracticeOptions(kind, topic);
+  if (!options) return;
+
   const token = authToken();
   if (!token) {
-    window.alert(t("practice_login"));
+    appendPracticeArtifact(chat, kind, demoPracticeResponse(kind, topic, options));
     return;
   }
   const conversationId = await ensureBackendConversation(chat);
   if (!conversationId) {
-    window.alert(t("practice_error"));
+    appendPracticeArtifact(chat, kind, demoPracticeResponse(kind, topic, options));
     return;
   }
 
-  const topic = inferChatTopic(chat);
-  const options = await openPracticeOptions(kind, topic);
-  if (!options) return;
   const config = practiceConfig(kind, conversationId, topic, options);
   if (!config) return;
 
@@ -1775,19 +1814,183 @@ async function handlePracticeAction(kind) {
       window.alert(data.detail || t("practice_error"));
       return;
     }
-    chat.messages.push({
-      role: "assistant",
-      content: practiceResultMarkdown(kind, data),
-      practiceArtifact: data.contract?.artifact || null,
-      feedback: null,
-    });
-    touchChat(chat);
-    renderMessages();
+    appendPracticeArtifact(chat, kind, data);
   } catch (_) {
-    window.alert(t("practice_error"));
+    appendPracticeArtifact(chat, kind, demoPracticeResponse(kind, topic, options));
   } finally {
     if (item) item.disabled = false;
   }
+}
+
+function appendPracticeArtifact(chat, kind, data) {
+  chat.messages.push({
+    role: "assistant",
+    content: practiceResultMarkdown(kind, data),
+    practiceArtifact: data.contract?.artifact || null,
+    feedback: null,
+  });
+  touchChat(chat);
+  renderMessages();
+}
+
+function demoPracticeResponse(kind, topic, options = {}) {
+  const artifact = demoPracticeArtifact(kind, topic, options);
+  return {
+    status: "prepared",
+    message: "Modo demo visual: inicia sesion para guardar y generar con el backend real.",
+    contract: { artifact, editable: true, downloadable: true },
+  };
+}
+
+function demoPracticeArtifact(kind, topic, options = {}) {
+  const cleanTopic = topic || "Tema de practica";
+  const filename = cleanTopic.toLowerCase().replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").slice(0, 48) || "recurso";
+  if (kind === "mapa") {
+    const mindmap = demoMindmap(cleanTopic);
+    return {
+      kind: "mindmap",
+      title: `Mapa mental: ${cleanTopic}`,
+      filename: `mapa-${filename}`,
+      format: "json",
+      editable_text: demoMindmapMarkdown(mindmap),
+      data: { mindmap, options, structured_output: { provider: "demo", validated: true } },
+      downloads: ["markdown", "json"],
+    };
+  }
+  if (kind === "presentacion") {
+    const slides = demoSlides(cleanTopic, Number(options.slide_count || 6));
+    return {
+      kind: "presentation",
+      title: `Presentacion: ${cleanTopic}`,
+      filename: `presentacion-${filename}`,
+      format: "markdown",
+      editable_text: demoSlidesMarkdown(cleanTopic, slides, options),
+      data: {
+        slides,
+        options,
+        image_tasks: options.include_images ? [{
+          id: "demo-slide-1",
+          label: "Imagen educativa para portada",
+          prompt: `Ilustracion educativa limpia sobre ${cleanTopic}`,
+          quality: "fast",
+          aspect_ratio: "16:9",
+        }] : [],
+      },
+      downloads: ["markdown", "html", "json"],
+    };
+  }
+  if (kind === "cuestionario") {
+    const questions = Array.from({ length: Number(options.question_count || 5) }, (_, i) => ({
+      number: i + 1,
+      question: `Sobre ${cleanTopic}, cual es la idea clave numero ${i + 1}?`,
+      options: ["Concepto central", "Dato aislado", "Excepcion rara", "No aplica"],
+      correct_answer: "Concepto central",
+      explanation: "La respuesta correcta conecta el tema con su mecanismo o uso principal.",
+    }));
+    return {
+      kind: "quiz",
+      title: `Cuestionario: ${cleanTopic}`,
+      filename: `cuestionario-${filename}`,
+      editable_text: demoQuizMarkdown(cleanTopic, questions),
+      data: { questions, options },
+      downloads: ["markdown", "json"],
+    };
+  }
+  if (kind === "tarjetas") {
+    const cards = Array.from({ length: Number(options.card_count || 8) }, (_, i) => ({
+      front: `${cleanTopic}: concepto ${i + 1}`,
+      back: "Definicion breve, ejemplo y una pista para recordarlo.",
+      difficulty: options.difficulty || "intermediate",
+    }));
+    return {
+      kind: "flashcards",
+      title: `Tarjetas didacticas: ${cleanTopic}`,
+      filename: `tarjetas-${filename}`,
+      editable_text: demoCardsMarkdown(cleanTopic, cards),
+      data: { cards, options },
+      downloads: ["markdown", "json", "csv"],
+    };
+  }
+  return {
+    kind: "report",
+    title: `Informe: ${cleanTopic}`,
+    filename: `informe-${filename}`,
+    editable_text: `# Informe: ${cleanTopic}\n\n## Resumen\nSintesis clara del tema con puntos principales.\n\n## Hallazgos clave\n- Idea central\n- Relaciones importantes\n- Puntos para repasar\n\n## Recomendaciones\n- Convertir cada punto en pregunta.\n- Crear tarjetas de memoria.\n- Verificar fuentes cuando uses el backend real.`,
+    data: {
+      options,
+      image_tasks: [{
+        id: "demo-report",
+        label: "Infografia educativa del informe",
+        prompt: `Infografia educativa conceptual sobre ${cleanTopic}`,
+        quality: "fast",
+        aspect_ratio: "16:9",
+      }],
+    },
+    downloads: ["markdown", "html", "json"],
+  };
+}
+
+function demoMindmap(topic) {
+  const branches = [
+    ["conceptos", "Conceptos clave", "Definiciones, signos, mecanismos y vocabulario esencial."],
+    ["clinica", "Aplicacion clinica", "Como se reconoce, interpreta o usa en escenarios reales."],
+    ["riesgos", "Alertas", "Errores frecuentes, limites y puntos que necesitan verificacion."],
+    ["repaso", "Repaso activo", "Preguntas, tarjetas y relaciones para memorizar mejor."],
+  ];
+  return {
+    title: topic,
+    description: "Mapa mental demo",
+    nodes: [
+      { id: "root", label: topic, description: "Tema central", level: 0, category: "topic" },
+      ...branches.map(([id, label, description]) => ({ id, label, description, level: 1, category: "concept" })),
+    ],
+    edges: branches.map(([id]) => ({ source: "root", target: id, label: "incluye" })),
+  };
+}
+
+function demoMindmapMarkdown(mindmap) {
+  return `# ${mindmap.title}\n\n## Nodos\n` +
+    mindmap.nodes.map((node) => `- ${node.label}: ${node.description}`).join("\n") +
+    "\n\n## Relaciones\n" +
+    mindmap.edges.map((edge) => `- ${edge.source} -> ${edge.target}: ${edge.label}`).join("\n");
+}
+
+function demoSlides(topic, count) {
+  const titles = ["Objetivo", "Contexto", "Conceptos clave", "Proceso", "Errores frecuentes", "Cierre"];
+  return Array.from({ length: Math.max(3, Math.min(count, 12)) }, (_, i) => ({
+    slide: i + 1,
+    title: titles[i] || `Seccion ${i + 1}`,
+    bullets: [`Idea principal sobre ${topic}`, "Ejemplo breve para estudiar", "Pregunta guia para recordar"],
+    speaker_notes: "Explica con lenguaje claro y conecta con un caso sencillo.",
+  }));
+}
+
+function demoSlidesMarkdown(topic, slides, options) {
+  const lines = [`# Presentacion: ${topic}`, "", `Tipo: ${options.presentation_type || "study_summary"}`, ""];
+  slides.forEach((slide) => {
+    lines.push(`## Diapositiva ${slide.slide}: ${slide.title}`);
+    slide.bullets.forEach((bullet) => lines.push(`- ${bullet}`));
+    lines.push("", `Notas: ${slide.speaker_notes}`, "");
+  });
+  return lines.join("\n").trim();
+}
+
+function demoQuizMarkdown(topic, questions) {
+  const lines = [`# Cuestionario: ${topic}`, ""];
+  questions.forEach((q) => {
+    lines.push(`## ${q.number}. ${q.question}`);
+    q.options.forEach((option, index) => lines.push(`${String.fromCharCode(65 + index)}. ${option}`));
+    lines.push(`Respuesta: ${q.correct_answer}`, `Explicacion: ${q.explanation}`, "");
+  });
+  return lines.join("\n").trim();
+}
+
+function demoCardsMarkdown(topic, cards) {
+  const lines = [`# Tarjetas didacticas: ${topic}`, ""];
+  cards.forEach((card, index) => {
+    lines.push(`## Tarjeta ${index + 1}`, `Frente: ${card.front}`, `Reverso: ${card.back}`, "");
+  });
+  return lines.join("\n").trim();
 }
 
 function chatHasConversationData(chat) {
@@ -1977,15 +2180,54 @@ el.input.addEventListener("blur", updateComposerMeta);
 
 // Contador de caracteres + atajos (visibles al escribir/enfocar)
 function updateComposerMeta() {
-  if (!el.composerMeta) return;
   const len = el.input.value.length;
-  const max = el.input.getAttribute("maxlength") || 4000;
+  const max = Number(el.input.getAttribute("maxlength") || 4000);
   if (el.charCount) {
     el.charCount.textContent = `${len} / ${max}`;
     el.charCount.classList.toggle("is-warn", len > max * 0.9);
   }
+  updateTokenMeter(len, max);
+  if (!el.composerMeta) return;
   const active = document.activeElement === el.input || len > 0;
   el.composerMeta.hidden = !active;
+}
+
+function getBetaPlan() {
+  try {
+    const saved = localStorage.getItem("Media-beta-plan");
+    return BETA_PLANS[saved] ? saved : "free";
+  } catch (_) {
+    return "free";
+  }
+}
+
+function setBetaPlan(plan) {
+  const key = BETA_PLANS[plan] ? plan : "free";
+  try { localStorage.setItem("Media-beta-plan", key); } catch (_) {}
+  applyBetaPlan(key);
+}
+
+function applyBetaPlan(plan = getBetaPlan()) {
+  const cfg = BETA_PLANS[plan] || BETA_PLANS.free;
+  if (el.input) el.input.setAttribute("maxlength", String(cfg.chars));
+  if (el.planName) el.planName.textContent = cfg.name;
+  if (el.tokenLimit) el.tokenLimit.textContent = cfg.tokens;
+  document.querySelectorAll(".plan-card").forEach((card) => {
+    card.classList.toggle("is-selected", card.dataset.plan === plan);
+  });
+  updateComposerMeta();
+}
+
+function updateTokenMeter(chars = 0, maxChars = 4000) {
+  const approxTokens = Math.ceil(chars / 4);
+  const approxLimit = Math.ceil(maxChars / 4);
+  const pct = Math.min(100, Math.round((chars / Math.max(1, maxChars)) * 100));
+  if (el.tokenUsed) el.tokenUsed.textContent = approxTokens.toLocaleString();
+  if (el.tokenLimit) el.tokenLimit.textContent = approxLimit.toLocaleString();
+  if (el.tokenMeterFill) {
+    el.tokenMeterFill.style.width = `${pct}%`;
+    el.tokenMeterFill.classList.toggle("is-warn", pct > 85);
+  }
 }
 
 // Botón "bajar al final"
@@ -2007,6 +2249,65 @@ if (el.suggestions) {
     if (btn) sendMessage(btn.textContent);
   });
 }
+
+function focusComposer() {
+  el.input?.focus();
+  el.input?.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+el.btnPlansTop?.addEventListener("click", () => {
+  showPlans();
+});
+el.btnChatTop?.addEventListener("click", focusComposer);
+el.landingStart?.addEventListener("click", focusComposer);
+if (el.landingLogin) {
+  el.landingLogin.onclick = (e) => {
+    e.preventDefault();
+    openAuth();
+  };
+}
+el.landingLogin?.addEventListener("click", (e) => {
+  e.preventDefault();
+  openAuth();
+});
+el.landingPlans?.addEventListener("click", showPlans);
+
+document.querySelectorAll(".plan-card").forEach((card) => {
+  card.addEventListener("click", () => {
+    setBetaPlan(card.dataset.plan);
+    focusComposer();
+    updateAuthUI();
+  });
+});
+
+function showPlans() {
+  const hasMessages = !!getActiveChat()?.messages?.length;
+  if (hasMessages) createChat();
+  setTimeout(() => el.plansBeta?.scrollIntoView({ behavior: "smooth", block: "center" }), 0);
+}
+
+document.querySelectorAll("[data-quick]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const prompts = {
+      resume: "Resume este tema con puntos clave, advertencias y una mini-guia de repaso.",
+      mapa: "Crea una explicacion base para luego convertirla en mapa mental.",
+      presentacion: "Ayudame a preparar una presentacion clara con diapositivas y notas del expositor.",
+      quiz: "Hazme preguntas de practica tipo examen y explica cada respuesta.",
+    };
+    el.input.value = prompts[btn.dataset.quick] || btn.textContent;
+    autoGrow();
+    updateSendState();
+    updateComposerMeta();
+    focusComposer();
+  });
+});
+
+document.addEventListener("click", (e) => {
+  if (e.target.closest("#landingLogin")) {
+    e.preventDefault();
+    openAuth();
+  }
+});
 
 // Grabar audio (placeholder visual; conectar MediaRecorder/STT en el futuro)
 if (el.btnMic) {
@@ -2055,7 +2356,6 @@ document.querySelectorAll(".rail__item").forEach((item) => {
 
     if (section === "ajustes") { openSettings(); return; }
     if (section === "imagenes") { openImageGenerator(); return; }
-    if (section === "modelos") { openModels(); return; }
 
     // Secciones (placeholder para futuras vistas)
     document.querySelectorAll(".rail__item").forEach((i) => i.classList.remove("is-active"));
@@ -2075,12 +2375,12 @@ function applyRailCollapsed(collapsed) {
   }
 }
 function getRailCollapsedPref() {
-  try { return localStorage.getItem("aiame-rail") === "1"; } catch (_) { return false; }
+  try { return localStorage.getItem("Media-rail") === "1"; } catch (_) { return false; }
 }
 el.railToggle?.addEventListener("click", () => {
   const collapsed = !document.body.classList.contains("rail-collapsed");
   applyRailCollapsed(collapsed);
-  try { localStorage.setItem("aiame-rail", collapsed ? "1" : "0"); } catch (_) {}
+  try { localStorage.setItem("Media-rail", collapsed ? "1" : "0"); } catch (_) {}
 });
 applyRailCollapsed(getRailCollapsedPref());
 
@@ -2095,12 +2395,12 @@ function applyPracticeCollapsed(collapsed) {
   }
 }
 function getPracticeCollapsedPref() {
-  try { return localStorage.getItem("aiame-practice") === "1"; } catch (_) { return false; }
+  try { return localStorage.getItem("Media-practice") === "1"; } catch (_) { return false; }
 }
 el.practiceToggle?.addEventListener("click", () => {
   const collapsed = !document.body.classList.contains("practice-collapsed");
   applyPracticeCollapsed(collapsed);
-  try { localStorage.setItem("aiame-practice", collapsed ? "1" : "0"); } catch (_) {}
+  try { localStorage.setItem("Media-practice", collapsed ? "1" : "0"); } catch (_) {}
 });
 applyPracticeCollapsed(getPracticeCollapsedPref());
 
@@ -2163,6 +2463,19 @@ function renderLearning(p) {
   prefs.appendChild(prefCard(t("learn_difficulty"), diff));
   el.learnBody.appendChild(prefs);
 
+  const meta = p.metadata || {};
+  const profileItems = [
+    ["Rol", roleLabel(meta.role)],
+    ["Universidad", meta.university || "No definida"],
+    ["Carnet", meta.carnet || "No definido"],
+    ["Especialidad / año", meta.specialty || meta.academic_level || "No definido"],
+    ["Dificultades declaradas", meta.learning_challenges || "Media las irá detectando con tus preguntas."],
+  ];
+  const profile = document.createElement("div");
+  profile.className = "learn-profile";
+  profileItems.forEach(([label, value]) => profile.appendChild(prefCard(label, value)));
+  el.learnBody.appendChild(profile);
+
   el.learnBody.appendChild(chipSection(t("learn_strengths"), p.strengths, "is-pos"));
   el.learnBody.appendChild(chipSection(t("learn_growth"), p.growth_areas, "is-warn"));
   el.learnBody.appendChild(chipSection(t("learn_confusions"), p.recurring_confusions, ""));
@@ -2207,7 +2520,7 @@ function chipSection(title, items, tone) {
 let conversationsCache = [];
 
 function authToken() {
-  try { return localStorage.getItem("aiame-auth-token"); } catch (_) { return null; }
+  try { return localStorage.getItem("Media-auth-token"); } catch (_) { return null; }
 }
 
 function openConversations() {
@@ -2445,13 +2758,13 @@ function notifyResponse() {
 
 function getDataPref(key) {
   try {
-    const v = localStorage.getItem("aiame-data-" + key);
+    const v = localStorage.getItem("Media-data-" + key);
     if (v !== null) return v === "1";
   } catch (_) {}
   return DATA_DEFAULTS[key];
 }
 function setDataPref(key, on) {
-  try { localStorage.setItem("aiame-data-" + key, on ? "1" : "0"); } catch (_) {}
+  try { localStorage.setItem("Media-data-" + key, on ? "1" : "0"); } catch (_) {}
 }
 function initDataToggles() {
   document.querySelectorAll(".setting-row--toggle[data-toggle]").forEach((row) => {
@@ -2495,6 +2808,14 @@ el.btnLogout?.addEventListener("click", () => {
   clearAuthSession();
   closeMenus(null);
 });
+el.btnAccountLearning?.addEventListener("click", () => {
+  closeMenus(null);
+  openLearning();
+});
+el.btnAccountPlans?.addEventListener("click", () => {
+  closeMenus(null);
+  showPlans();
+});
 el.authForm?.addEventListener("submit", (e) => {
   e.preventDefault();
   authenticate(authMode);
@@ -2520,6 +2841,7 @@ document.addEventListener("keydown", (e) => {
 initTheme();
 initLang();
 initDataToggles();
+applyBetaPlan();
 updateAuthUI();
 if (loadLocalChats()) {
   renderChatList();
@@ -2528,3 +2850,4 @@ if (loadLocalChats()) {
   createChat();
 }
 applyI18n();
+
