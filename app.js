@@ -1703,7 +1703,7 @@ async function refreshAuthSession() {
   const refreshToken = getRefreshToken();
   if (!refreshToken) return false;
   try {
-    const res = await fetch(`${API_BASE_URL}/api/auth-refresh`, {
+    const res = await fetch(`${API_BASE_URL}/api/auth_refresh`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ refresh_token: refreshToken }),
@@ -1803,7 +1803,7 @@ async function authenticate(mode) {
     return;
   }
 
-  const endpoint = mode === "register" ? `${API_BASE_URL}/api/auth-register` : `${API_BASE_URL}/api/auth-login`;
+  const endpoint = mode === "register" ? `${API_BASE_URL}/api/auth_register` : `${API_BASE_URL}/api/auth_login`;
   [el.authSwitchBtn, el.btnAuthSubmit].forEach((btn) => { if (btn) btn.disabled = true; });
   if (el.authStatus) el.authStatus.textContent = mode === "register" ? "Creando cuenta..." : "Iniciando sesion...";
 
