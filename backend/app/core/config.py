@@ -1,9 +1,16 @@
 from functools import lru_cache
+import os
 from pathlib import Path
 from typing import Literal
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+def default_local_database_path() -> str:
+    if os.getenv("VERCEL"):
+        return "/tmp/media_local.db"
+    return str(Path(__file__).resolve().parents[3] / "backend" / "media_local.db")
 
 
 class Settings(BaseSettings):
@@ -26,7 +33,7 @@ class Settings(BaseSettings):
     supabase_url: str = ""
     supabase_publishable_key: str = ""
     supabase_secret_key: str = ""
-    local_database_path: str = str(Path(__file__).resolve().parents[3] / "backend" / "media_local.db")
+    local_database_path: str = default_local_database_path()
 
     groq_api_key: str = ""
     groq_low_model: str = "openai/gpt-oss-20b"
