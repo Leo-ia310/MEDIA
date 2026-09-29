@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
@@ -69,3 +69,26 @@ app.include_router(learning.router)
 app.include_router(knowledge.router)
 app.include_router(tools.router)
 app.include_router(clinical.router)
+
+frontend_path = Path(__file__).resolve().parents[2]
+assets_path = frontend_path / "assets"
+vendor_path = frontend_path / "vendor"
+if assets_path.exists():
+    app.mount("/assets", StaticFiles(directory=assets_path), name="assets")
+if vendor_path.exists():
+    app.mount("/vendor", StaticFiles(directory=vendor_path), name="vendor")
+
+
+@app.get("/", include_in_schema=False)
+async def frontend_index():
+    return FileResponse(frontend_path / "index.html")
+
+
+@app.get("/{filename:path}", include_in_schema=False)
+async def frontend_file(filename: str):
+    allowed_files = {"index.html", "app.js", "styles.css", "config.js"}
+    if filename in allowed_files:
+        path = frontend_path / filename
+        if path.exists():
+            return FileResponse(path)
+    raise HTTPException(status_code=404, detail="Not found")

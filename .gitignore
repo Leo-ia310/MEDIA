@@ -13,6 +13,8 @@ desktop.ini
 node_modules/
 dist/
 build/
+__pycache__/
+*.pyc
 
 # Logs / temporales
 *.log
