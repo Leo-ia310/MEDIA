@@ -158,10 +158,13 @@ const I18N = {
 };
 let lang = "es";
 let authMode = "login";
-const API_BASE_URL = (
+const CONFIGURED_API_BASE_URL = String(window.MEDIA_API_BASE_URL || "").replace(/\/+$/, "");
+const API_BASE_URL = CONFIGURED_API_BASE_URL || (
   location.protocol === "file:" ||
   ["5500", "5173", "3000", "8080"].includes(location.port)
-) ? "http://127.0.0.1:8000" : "";
+    ? "http://127.0.0.1:8000"
+    : ""
+);
 
 const BETA_PLANS = {
   free: { name: "Plan Free", price: "$0", chars: 16000, tokens: "4,000" },
@@ -554,6 +557,13 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const uid = () => Math.random().toString(36).slice(2, 10);
 const CHAT_STORAGE_KEY = "Media-chats-v1";
 const CHAT_STORAGE_LIMIT = 50;
+const AGENT_THINKING_STEPS = [
+  "Pensando en tu pregunta",
+  "Buscando información en documentos",
+  "Revisando contexto y fuentes",
+  "Adaptando la explicación a tu perfil",
+  "Preparando la respuesta final",
+];
 
 function getActiveChat() {
   return state.chats.find((c) => c.id === state.activeChatId) ?? null;
@@ -749,7 +759,7 @@ function buildMessageNode(m, index, chat) {
     node.classList.add("msg--thinking");
     bubble.classList.add("is-streaming");
     if (m.content) bubble.textContent = m.content;
-    else bubble.innerHTML = `<span class="typing"><span></span><span></span><span></span></span>`;
+    else bubble.innerHTML = renderAgentThinking(m.thinkingIndex || 0);
     streamingBubble = bubble;
   } else if (role === "assistant") {
     bubble.innerHTML = renderMarkdown(displayMessageContent(m));
@@ -775,6 +785,38 @@ function buildMessageNode(m, index, chat) {
     buildMessageExtras(node.querySelector(".msg__body"), m, chat);
   }
   return node;
+}
+
+function renderAgentThinking(index = 0) {
+  const activeIndex = Math.abs(index) % AGENT_THINKING_STEPS.length;
+  const steps = AGENT_THINKING_STEPS.map((label, i) => {
+    const status = i === activeIndex ? " is-active" : i < activeIndex ? " is-done" : "";
+    return `<div class="agent-thinking__step${status}"><span></span>${escapeHtml(label)}</div>`;
+  }).join("");
+  return `
+    <div class="agent-thinking" aria-live="polite">
+      <div class="agent-thinking__head">
+        <span class="agent-thinking__pulse"></span>
+        <strong>Media está trabajando</strong>
+      </div>
+      <div class="agent-thinking__steps">${steps}</div>
+    </div>`;
+}
+
+function updateAgentThinking(aiMsg) {
+  if (!streamingBubble || aiMsg.content) return;
+  streamingBubble.innerHTML = renderAgentThinking(aiMsg.thinkingIndex || 0);
+  scrollToBottom();
+}
+
+function startAgentThinking(aiMsg) {
+  aiMsg.thinkingIndex = 0;
+  updateAgentThinking(aiMsg);
+  return setInterval(() => {
+    if (!aiMsg.streaming || aiMsg.content) return;
+    aiMsg.thinkingIndex = (aiMsg.thinkingIndex || 0) + 1;
+    updateAgentThinking(aiMsg);
+  }, 1250);
 }
 
 function displayMessageContent(message) {
@@ -1341,9 +1383,11 @@ async function runAssistant(chat) {
   const aiMsg = { role: "assistant", content: "", streaming: true, feedback: null };
   chat.messages.push(aiMsg);
   renderMessages();
+  const thinkingTimer = startAgentThinking(aiMsg);
 
   try {
     const meta = await streamAgentResponse(chat.messages.slice(0, -1), (chunk) => {
+      if (!aiMsg.content) clearInterval(thinkingTimer);
       aiMsg.content += chunk;
       if (streamingBubble) {
         streamingBubble.textContent = aiMsg.content;
@@ -1363,7 +1407,9 @@ async function runAssistant(chat) {
     aiMsg.content = t("error_msg");
     console.error(err);
   } finally {
+    clearInterval(thinkingTimer);
     aiMsg.streaming = false;
+    delete aiMsg.thinkingIndex;
     state.isResponding = false;
     touchChat(chat);
     renderMessages();
@@ -1696,9 +1742,13 @@ function updateAuthUI() {
   if (el.accountName) el.accountName.textContent = signedIn ? (user.full_name || "Usuario Media") : "Invitado";
   if (el.accountAvatar) el.accountAvatar.textContent = (signedIn ? (user.full_name || user.email || "M") : "M").trim().slice(0, 1).toUpperCase();
   if (el.accountEmail) {
-    el.accountEmail.textContent = signedIn
-      ? (getStoredEmail() || "Sesion recordada")
-      : t("acc_hint");
+    if (signedIn) {
+      el.accountEmail.removeAttribute("data-i18n");
+      el.accountEmail.textContent = getStoredEmail() || user.email || "Sesion recordada";
+    } else {
+      el.accountEmail.setAttribute("data-i18n", "acc_hint");
+      el.accountEmail.textContent = t("acc_hint");
+    }
   }
   if (el.accountDetails) el.accountDetails.hidden = !signedIn;
   if (el.accountRole) el.accountRole.textContent = signedIn ? roleLabel(user.role) : "";
@@ -2332,6 +2382,8 @@ function showPlans() {
   setTimeout(() => el.plansBeta?.scrollIntoView({ behavior: "smooth", block: "center" }), 0);
 }
 
+window.mediaShowPlans = showPlans;
+
 document.querySelectorAll("[data-quick]").forEach((btn) => {
   btn.addEventListener("click", () => {
     const prompts = {
@@ -2467,6 +2519,8 @@ function closeData() { closePanel(el.dataPanel); el.settingsPanel.classList.remo
 // ---------- Perfil de aprendizaje (GET /api/learning/profile) ----------
 function openLearning() { openPanel(el.learningPanel); el.settingsPanel.classList.add("is-pushed"); loadLearning(); }
 function closeLearning() { closePanel(el.learningPanel); el.settingsPanel.classList.remove("is-pushed"); }
+
+window.mediaOpenLearning = openLearning;
 
 const STYLE_LABELS = {
   balanced: "learn_style_balanced", concise: "learn_style_concise",
@@ -2888,7 +2942,6 @@ initTheme();
 initLang();
 initDataToggles();
 applyBetaPlan();
-updateAuthUI();
 if (loadLocalChats()) {
   renderChatList();
   renderMessages();
@@ -2896,6 +2949,7 @@ if (loadLocalChats()) {
   createChat();
 }
 applyI18n();
+updateAuthUI();
 
 
 (async function validateSessionOnStartup() {

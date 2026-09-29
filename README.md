@@ -48,6 +48,16 @@ python -m http.server 5500
 
 Abrir `http://127.0.0.1:5500`.
 
+Para producción estática, por ejemplo Vercel, edita `config.js` y define:
+
+```js
+window.MEDIA_API_BASE_URL = "https://tu-backend-publico.example.com";
+```
+
+Ese valor debe apuntar a un despliegue público del backend FastAPI. Si queda vacío en Vercel, el frontend intentará llamar a `/api/...` en el propio dominio estático y el login responderá `404`.
+
+El backend también debe permitir el origen del frontend en `BACKEND_CORS_ORIGINS`, por ejemplo `https://media-eta-livid.vercel.app`.
+
 El menu de cuenta incluye registro e inicio de sesion basicos con email/password mediante:
 
 ```text

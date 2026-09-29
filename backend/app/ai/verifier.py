@@ -2,9 +2,12 @@ from app.ai.schemas import EvidenceChunk
 from app.models.schemas import AnswerStatus, VerificationResult, VerificationStatus
 
 
+VERIFIED_MEDICAL_SOURCES = {"supabase_medical", "local_reference_markdown"}
+
+
 class AnswerVerifier:
     async def verify(self, *, answer: str, evidence: list[EvidenceChunk], strict_grounding: bool) -> VerificationResult:
-        medical_evidence = [chunk for chunk in evidence if chunk.metadata.get("source") == "supabase_medical"]
+        medical_evidence = [chunk for chunk in evidence if chunk.metadata.get("source") in VERIFIED_MEDICAL_SOURCES]
         if strict_grounding and not medical_evidence:
             return VerificationResult(
                 evidence_sufficient=False,

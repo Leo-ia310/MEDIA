@@ -684,6 +684,105 @@ body.practice-collapsed #practiceRail .rail__toggle-fill { opacity:.9; transform
   40%         { transform:translateY(-5px) scale(1); opacity:1; }
 }
 
+.agent-thinking {
+  min-width:min(420px, 72vw);
+  display:grid;
+  gap:12px;
+}
+
+.agent-thinking__head {
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:var(--text);
+}
+
+.agent-thinking__pulse {
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  background:var(--primary);
+  box-shadow:0 0 0 0 rgba(37,99,235,.34);
+  animation:agentPulse 1.25s ease-in-out infinite;
+}
+
+.agent-thinking__steps {
+  display:grid;
+  gap:8px;
+  margin:0;
+  padding:0;
+}
+
+.agent-thinking__step {
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:var(--text-muted);
+  font-size:13px;
+  font-weight:700;
+  transition:color .2s ease, transform .2s ease;
+}
+
+.agent-thinking__step span {
+  width:16px;
+  height:16px;
+  flex:0 0 16px;
+  border-radius:999px;
+  border:1.5px solid var(--border);
+  background:rgba(255,255,255,.04);
+  position:relative;
+}
+
+.agent-thinking__step.is-active {
+  color:var(--text);
+  transform:translateX(2px);
+}
+
+.agent-thinking__step.is-active span {
+  border-color:var(--primary);
+  background:var(--primary-soft);
+}
+
+.agent-thinking__step.is-active span::after {
+  content:"";
+  position:absolute;
+  inset:4px;
+  border-radius:inherit;
+  background:var(--primary);
+  animation:agentDot 1s ease-in-out infinite;
+}
+
+.agent-thinking__step.is-done {
+  color:var(--text-soft);
+}
+
+.agent-thinking__step.is-done span {
+  border-color:var(--primary);
+  background:var(--primary);
+}
+
+.agent-thinking__step.is-done span::after {
+  content:"";
+  position:absolute;
+  width:7px;
+  height:4px;
+  left:4px;
+  top:4px;
+  border-left:2px solid var(--on-primary, #fff);
+  border-bottom:2px solid var(--on-primary, #fff);
+  transform:rotate(-45deg);
+}
+
+@keyframes agentPulse {
+  0%,100% { transform:scale(1); box-shadow:0 0 0 0 rgba(37,99,235,.32); }
+  50% { transform:scale(1.18); box-shadow:0 0 0 8px rgba(37,99,235,0); }
+}
+
+@keyframes agentDot {
+  0%,100% { opacity:.45; transform:scale(.7); }
+  50% { opacity:1; transform:scale(1); }
+}
+
 .welcome { height:100%; min-height:50vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:10px; padding:20px; }
 .welcome__title { font-family:var(--font-title); font-size:32px; font-weight:700; }
 .welcome__title span { color:var(--primary); }

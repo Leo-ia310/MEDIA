@@ -1,5 +1,6 @@
 from pathlib import Path
 from dataclasses import replace
+import logging
 import re
 
 from app.ai.model_router import ModelRouter
@@ -10,6 +11,9 @@ from app.ai.verifier import AnswerVerifier
 from app.core.config import Settings
 from app.core.exceptions import ModelUnavailableError, ProviderError
 from app.models.schemas import AnswerStatus, AuthUser, ChatRequest, ChatResponse, Effort, VerificationStatus
+
+
+logger = logging.getLogger(__name__)
 
 
 class AIOrchestrator:
@@ -25,13 +29,22 @@ class AIOrchestrator:
     async def answer(self, *, request: ChatRequest, user: AuthUser, conversation_id, message_id, recent_messages: list[dict[str, str]], learning_profile: dict) -> ChatResponse:
         image_attachments = self._image_attachments(request)
         selection = self.router.select_for_request(request.effort, request.message, has_image=bool(image_attachments))
-        evidence = await self.retrieval.retrieve(question=request.message, token=user.token, top_k=selection.retrieval_top_k)
+        retrieval_error = None
+        try:
+            evidence = await self.retrieval.retrieve(question=request.message, token=user.token, top_k=selection.retrieval_top_k)
+        except ProviderError as exc:
+            retrieval_error = str(exc)
+            logger.warning("Medical retrieval failed; continuing without evidence", exc_info=exc)
+            evidence = []
         project_context = await self.project_context.retrieve(question=request.message, top_k=self.settings.project_context_top_k)
         if self.settings.strict_document_grounding and not evidence:
+            answer = "No encuentro suficiente informacion en las fuentes disponibles para responder esta pregunta con el nivel de respaldo requerido."
+            if retrieval_error:
+                answer = "No pude consultar las fuentes medicas verificadas en este momento, asi que no puedo responder con respaldo documental estricto."
             return ChatResponse(
                 conversation_id=conversation_id,
                 message_id=message_id,
-                answer="No encuentro suficiente informacion en las fuentes disponibles para responder esta pregunta con el nivel de respaldo requerido.",
+                answer=answer,
                 answer_status=AnswerStatus.insufficient_evidence,
                 verification_status=VerificationStatus.insufficient_evidence,
                 effort=selection.effort,
@@ -42,6 +55,7 @@ class AIOrchestrator:
                     "medical_retrieval_count": 0,
                     "project_context_count": len(project_context),
                     "strict_document_grounding": True,
+                    "medical_retrieval_error": retrieval_error,
                 },
             )
 
@@ -105,6 +119,7 @@ class AIOrchestrator:
                 "usage": llm_response.usage,
                 "has_image_attachments": bool(image_attachments),
                 "medical_retrieval_count": len(evidence),
+                "medical_retrieval_error": retrieval_error,
                 "project_context_count": len(project_context),
                 "strict_document_grounding": self.settings.strict_document_grounding,
                 "fallback_used": fallback_used,

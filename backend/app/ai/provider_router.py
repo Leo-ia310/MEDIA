@@ -60,13 +60,14 @@ class AIProviderRouter(LLMProvider):
             return False
         if selection.supports_vision:
             return False
-        if exc.status_code in {400, 401, 403, 422}:
+        if exc.status_code in {401, 403, 422}:
             return False
         if isinstance(exc, ModelUnavailableError):
             return True
         message = str(exc).lower()
         return (
             exc.status_code == 429
+            or (exc.status_code == 400 and "request was rejected" in message)
             or (exc.status_code is not None and exc.status_code >= 500)
             or "timed out" in message
             or "provider error" in message

@@ -1,9 +1,41 @@
 from __future__ import annotations
 
+from uuid import uuid5, NAMESPACE_URL
+
 from app.ai.schemas import EvidenceChunk
 from app.ai.text_index import expand_medical_tokens, score_tokens, tokens
 from app.core.config import Settings
+from app.core.exceptions import ProviderError
 from app.db.supabase import SupabaseRepository
+from app.services.reference_ingestion import ReferenceDocument, ReferenceIngestionService
+
+
+QUERY_STOPWORDS = {
+    "que",
+    "como",
+    "cual",
+    "cuales",
+    "cuáles",
+    "son",
+    "las",
+    "los",
+    "una",
+    "uno",
+    "unos",
+    "del",
+    "con",
+    "para",
+    "hola",
+    "dime",
+    "explica",
+    "what",
+    "which",
+    "the",
+    "and",
+    "about",
+}
+
+LOCAL_REFERENCE_MIN_SCORE = 2.0
 
 
 class RetrievalService:
@@ -16,13 +48,22 @@ class RetrievalService:
     def __init__(self, settings: Settings, repo: SupabaseRepository) -> None:
         self.settings = settings
         self.repo = repo
+        self._local_documents: list[ReferenceDocument] | None = None
 
     async def retrieve(self, *, question: str, token: str, top_k: int) -> list[EvidenceChunk]:
-        query_tokens = expand_medical_tokens(tokens(question))
+        query_tokens = expand_medical_tokens(tokens(question) - QUERY_STOPWORDS)
         if not query_tokens:
             return []
 
-        rows = await self._fetch_candidate_chunks(token=token, query_tokens=query_tokens)
+        try:
+            rows = await self._fetch_candidate_chunks(token=token, query_tokens=query_tokens)
+        except ProviderError:
+            return self._retrieve_local_references(query_tokens=query_tokens, top_k=top_k)
+        if not rows:
+            local_evidence = self._retrieve_local_references(query_tokens=query_tokens, top_k=top_k)
+            if local_evidence:
+                return local_evidence
+
         scored = []
         for row in rows:
             content = row.get("content") or ""
@@ -53,6 +94,49 @@ class RetrievalService:
             )
             for score, row, document in scored[:top_k]
         ]
+
+    def _retrieve_local_references(self, *, query_tokens: set[str], top_k: int) -> list[EvidenceChunk]:
+        scored = []
+        for document in self._load_local_documents():
+            document_id = str(uuid5(NAMESPACE_URL, document.markdown_path.resolve().as_posix()))
+            pdf_url = self._local_pdf_url(document)
+            for chunk in document.chunks:
+                chunk_tokens = tokens(f"{document.title} {chunk.section or ''} {chunk.subsection or ''} {chunk.content}")
+                score = score_tokens(query_tokens, chunk_tokens, document.title, chunk.section or chunk.subsection)
+                if score < LOCAL_REFERENCE_MIN_SCORE:
+                    continue
+                scored.append((score, document, document_id, pdf_url, chunk))
+
+        scored.sort(key=lambda item: item[0], reverse=True)
+        return [
+            EvidenceChunk(
+                id=str(uuid5(NAMESPACE_URL, f"{document.markdown_path.resolve().as_posix()}#{chunk.chunk_index}")),
+                document_id=document_id,
+                content=chunk.content,
+                title=document.title,
+                section=chunk.section or chunk.subsection,
+                page_start=chunk.page_start,
+                page_end=chunk.page_end,
+                pdf_url=pdf_url,
+                metadata={
+                    "source": "local_reference_markdown",
+                    "score": round(score, 4),
+                    "chunk_index": chunk.chunk_index,
+                    "source_markdown": document.markdown_path.name,
+                },
+            )
+            for score, document, document_id, pdf_url, chunk in scored[:top_k]
+        ]
+
+    def _load_local_documents(self) -> list[ReferenceDocument]:
+        if self._local_documents is None:
+            self._local_documents = ReferenceIngestionService(self.settings).discover()
+        return self._local_documents
+
+    def _local_pdf_url(self, document: ReferenceDocument) -> str | None:
+        if document.pdf_path is None:
+            return None
+        return ReferenceIngestionService(self.settings).pdf_url(document.pdf_path)
 
     async def _fetch_candidate_chunks(self, *, token: str, query_tokens: set[str]) -> list[dict]:
         base_params = {

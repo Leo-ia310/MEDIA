@@ -66,10 +66,24 @@ async def test_auth_error_does_not_fallback() -> None:
 
 
 @pytest.mark.asyncio
+async def test_groq_rejected_request_uses_cloudflare_fallback() -> None:
+    router = AIProviderRouter(
+        Settings(cloudflare_account_id="acct", cloudflare_api_token="token"),
+        primary=FakeProvider(provider="groq", error=ProviderError("Groq request was rejected", 400)),
+        fallback=FakeProvider(provider="cloudflare-workers-ai"),
+    )
+
+    response = await router.generate(messages=[{"role": "user", "content": "hola"}], selection=selection())
+
+    assert response.provider == "cloudflare-workers-ai"
+    assert response.usage["fallback_used"] is True
+
+
+@pytest.mark.asyncio
 async def test_validation_error_does_not_fallback() -> None:
     router = AIProviderRouter(
         Settings(cloudflare_account_id="acct", cloudflare_api_token="token"),
-        primary=FakeProvider(provider="groq", error=ProviderError("Groq request rejected", 400)),
+        primary=FakeProvider(provider="groq", error=ProviderError("Groq invalid request", 422)),
         fallback=FakeProvider(provider="cloudflare-workers-ai"),
     )
 

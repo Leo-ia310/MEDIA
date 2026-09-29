@@ -6,7 +6,7 @@
   <title>Media — Asistente IA</title>
   <meta name="description" content="Media, tu asistente de inteligencia artificial para estudio medico." />
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260928-media" />
+  <link rel="stylesheet" href="styles.css?v=20260928-thinking" />
 </head>
 <body>
  <div class="shell">
@@ -83,8 +83,8 @@
             <span id="accountPlan">Plan Free</span>
           </div>
           <div class="account-menu__auth">
-            <button class="btn-auth btn-auth--ghost" id="btnAccountLearning" type="button">Perfil de aprendizaje</button>
-            <button class="btn-auth btn-auth--ghost" id="btnAccountPlans" type="button">Planes</button>
+          <button class="btn-auth btn-auth--ghost" id="btnAccountLearning" type="button" onclick="if(window.mediaOpenLearning) window.mediaOpenLearning();">Perfil de aprendizaje</button>
+          <button class="btn-auth btn-auth--ghost" id="btnAccountPlans" type="button" onclick="if(window.mediaShowPlans) window.mediaShowPlans();">Planes</button>
             <button class="btn-auth btn-auth--ghost" id="btnLogout" type="button" data-i18n="acc_logout" hidden>Cerrar sesión</button>
           </div>
         </div>
@@ -494,6 +494,7 @@
   <script src="vendor/purify.min.js"></script>
   <script src="vendor/highlight.min.js"></script>
 
-  <script src="app.js?v=20260928-media3"></script>
+  <script src="config.js"></script>
+  <script src="app.js?v=20260928-thinking"></script>
 </body>
 </html>

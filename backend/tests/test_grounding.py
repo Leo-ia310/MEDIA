@@ -62,3 +62,24 @@ async def test_supabase_medical_evidence_can_mark_answer_grounded() -> None:
 
     assert result.answer_status == AnswerStatus.grounded
     assert result.verification_status == VerificationStatus.verified
+
+
+@pytest.mark.asyncio
+async def test_local_reference_markdown_can_mark_answer_grounded() -> None:
+    result = await AnswerVerifier().verify(
+        answer="respuesta",
+        evidence=[
+            EvidenceChunk(
+                id="11111111-1111-1111-1111-111111111111",
+                document_id="22222222-2222-2222-2222-222222222222",
+                title="Guia medica local",
+                section="Tratamiento",
+                content="Evidencia medica extraida de PDF local.",
+                metadata={"source": "local_reference_markdown"},
+            )
+        ],
+        strict_grounding=False,
+    )
+
+    assert result.answer_status == AnswerStatus.grounded
+    assert result.verification_status == VerificationStatus.verified
