@@ -37,7 +37,7 @@ const I18N = {
     mock_l2: "Todavía no estoy conectada a un modelo de IA real, pero la interfaz ya está lista para recibir respuestas.",
     mock_you_wrote: "Tú escribiste:",
     error_msg: "⚠️ Hubo un problema al obtener la respuesta. Inténtalo de nuevo.",
-    act_copy: "Copiar", act_copied: "Copiado", act_regenerate: "Regenerar", act_good: "Buena respuesta", act_bad: "Mala respuesta",
+    act_copy: "Copiar", act_copied: "Copiado", act_regenerate: "Regenerar", act_good: "Buena respuesta", act_bad: "Mala respuesta", act_report: "Reportar error",
     scroll_bottom: "Bajar al final",
     sugg_1: "Explícame un concepto difícil", sugg_2: "Ayúdame a redactar un texto", sugg_3: "Dame ideas para un proyecto", sugg_4: "Resume esto por mí",
     attach: "Adjuntar", remove: "Quitar",
@@ -47,7 +47,7 @@ const I18N = {
     demo_topic: "tu consulta", demo_intro: "Aquí tienes una explicación sobre", demo_point1: "Idea clave relacionada con el tema.", demo_point2: "Un segundo punto con más detalle.", demo_point3: "Un tercer punto para ampliar.", demo_code_intro: "También puedo usar formato enriquecido y bloques de código:", demo_note: "Respuesta de demostración. Inicia sesión para el tutor médico real con fuentes verificadas.", demo_followup: "¿Quieres que profundice en", demo_asset: "Recurso de ejemplo",
     practice_title: "Herramientas de estudio", history_title: "Historial", practice_slides: "Presentación", practice_mindmap: "Mapa mental", practice_quiz: "Cuestionario", practice_cards: "Tarjetas didácticas", practice_reports: "Informes",
     practice_no_conversation: "No tienes ninguna conversacion.", practice_login: "Inicia sesión para guardar y generar recursos desde tu conversación.", practice_ready: "Recurso preparado", practice_error: "No se pudo preparar el recurso.",
-    img_title: "Generar imagen", img_desc: "Crea una imagen educativa con IA a partir de una descripción.", img_prompt: "Descripción", img_prompt_ph: "Ej: diagrama del ciclo cardíaco con sus fases", img_aspect: "Proporción", img_quality: "Calidad", img_quality_fast: "Rápida", img_quality_high: "Alta calidad", img_close: "Cerrar", img_generate: "Generar", img_generating: "Generando con Gemini…", img_download: "Descargar PNG", img_empty: "Escribe una descripción (mín. 3 caracteres).", img_error: "No se pudo generar la imagen.",
+    img_title: "Generar imagen", img_desc: "Crea una imagen educativa con IA a partir de una descripción.", img_prompt: "Descripción", img_prompt_ph: "Ej: diagrama del ciclo cardíaco con sus fases", img_aspect: "Proporción", img_quality: "Calidad", img_quality_fast: "Rápida", img_quality_high: "Alta calidad", img_close: "Cerrar", img_generate: "Generar", img_generating: "Generando…", img_download: "Descargar PNG", img_empty: "Escribe una descripción (mín. 3 caracteres).", img_error: "No se pudo generar la imagen.",
     conv_title: "Conversaciones", conv_search: "Buscar conversaciones…", conv_empty: "Aún no tienes conversaciones.", conv_login: "Inicia sesión para ver tu historial de conversaciones.", conv_loading: "Cargando…", conv_error: "No se pudo cargar el historial.", conv_delete: "Eliminar conversación", conv_delete_confirm: "¿Eliminar esta conversación? No se puede deshacer.", conv_delete_error: "No se pudo eliminar la conversación.",
   },
   en: {
@@ -72,7 +72,7 @@ const I18N = {
     mock_l2: "I'm not connected to a real AI model yet, but the interface is ready to receive responses.",
     mock_you_wrote: "You wrote:",
     error_msg: "⚠️ There was a problem getting the response. Please try again.",
-    act_copy: "Copy", act_copied: "Copied", act_regenerate: "Regenerate", act_good: "Good response", act_bad: "Bad response",
+    act_copy: "Copy", act_copied: "Copied", act_regenerate: "Regenerate", act_good: "Good response", act_bad: "Bad response", act_report: "Report error",
     scroll_bottom: "Scroll to bottom",
     sugg_1: "Explain a difficult concept", sugg_2: "Help me write something", sugg_3: "Give me project ideas", sugg_4: "Summarize this for me",
     attach: "Attach", remove: "Remove",
@@ -82,7 +82,7 @@ const I18N = {
     demo_topic: "your question", demo_intro: "Here's an explanation about", demo_point1: "A key idea related to the topic.", demo_point2: "A second point with more detail.", demo_point3: "A third point to expand on.", demo_code_intro: "I can also use rich formatting and code blocks:", demo_note: "Demo response. Sign in for the real medical tutor with verified sources.", demo_followup: "Want me to go deeper into", demo_asset: "Example resource",
     practice_title: "Study tools", history_title: "History", practice_slides: "Presentation", practice_mindmap: "Mind map", practice_quiz: "Quiz", practice_cards: "Flashcards", practice_reports: "Reports",
     practice_no_conversation: "You don't have any conversations.", practice_login: "Sign in to save and generate resources from your conversation.", practice_ready: "Resource prepared", practice_error: "Could not prepare the resource.",
-    img_title: "Generate image", img_desc: "Create an AI educational image from a description.", img_prompt: "Description", img_prompt_ph: "e.g. diagram of the cardiac cycle with its phases", img_aspect: "Aspect ratio", img_quality: "Quality", img_quality_fast: "Fast", img_quality_high: "High quality", img_close: "Close", img_generate: "Generate", img_generating: "Generating with Gemini…", img_download: "Download PNG", img_empty: "Write a description (min. 3 characters).", img_error: "Could not generate the image.",
+    img_title: "Generate image", img_desc: "Create an AI educational image from a description.", img_prompt: "Description", img_prompt_ph: "e.g. diagram of the cardiac cycle with its phases", img_aspect: "Aspect ratio", img_quality: "Quality", img_quality_fast: "Fast", img_quality_high: "High quality", img_close: "Close", img_generate: "Generate", img_generating: "Generating…", img_download: "Download PNG", img_empty: "Write a description (min. 3 characters).", img_error: "Could not generate the image.",
     conv_title: "Conversations", conv_search: "Search conversations…", conv_empty: "You don't have any conversations yet.", conv_login: "Sign in to see your conversation history.", conv_loading: "Loading…", conv_error: "Could not load history.", conv_delete: "Delete conversation", conv_delete_confirm: "Delete this conversation? This can't be undone.", conv_delete_error: "Could not delete the conversation.",
   },
   fr: {
@@ -157,6 +157,7 @@ const I18N = {
   },
 };
 let lang = "es";
+const SUPPORTED_LANGS = new Set(["es", "en"]);
 let authMode = "login";
 const CONFIGURED_API_BASE_URL = String(window.MEDIA_API_BASE_URL || "").replace(/\/+$/, "");
 const API_BASE_URL = CONFIGURED_API_BASE_URL || (
@@ -191,7 +192,7 @@ function applyI18n() {
   if (el.btnMic) el.btnMic.setAttribute("aria-label", el.btnMic.classList.contains("is-recording") ? t("mic_stop") : t("mic_record"));
   // Desplegable de idioma: etiqueta actual + opción activa
   if (el.langCurrent) {
-    const names = { es: "Español", en: "English", fr: "Français", pt: "Português" };
+    const names = { es: "Español", en: "English" };
     el.langCurrent.textContent = names[lang] || lang;
     document.querySelectorAll(".lang-dd__option").forEach((o) =>
       o.classList.toggle("is-active", o.dataset.value === lang)
@@ -200,7 +201,7 @@ function applyI18n() {
 }
 
 function setLang(next) {
-  lang = I18N[next] ? next : "es";
+  lang = (SUPPORTED_LANGS.has(next) && I18N[next]) ? next : "es";
   try { localStorage.setItem("Media-lang", lang); } catch (_) { }
   applyI18n();
   if (typeof applyRailCollapsed === "function") {
@@ -216,7 +217,7 @@ function initLang() {
   let saved = null;
   try { saved = localStorage.getItem("Media-lang"); } catch (_) { }
   const nav = (navigator.language || "es").slice(0, 2).toLowerCase();
-  lang = saved || (I18N[nav] ? nav : "es");
+  lang = (saved && SUPPORTED_LANGS.has(saved)) ? saved : (SUPPORTED_LANGS.has(nav) ? nav : "es");
 }
 
 // ---------- Referencias al DOM ----------
@@ -243,6 +244,8 @@ const el = {
 
   // Barra superior
   btnSettingsTop: document.getElementById("btnSettingsTop"),
+  btnSettingsRail: document.getElementById("btnSettingsRail"),
+  btnProfileRail: document.getElementById("btnProfileRail"),
   btnPlansTop: document.getElementById("btnPlansTop"),
   btnChatTop: document.getElementById("btnChatTop"),
   searchBox: document.getElementById("searchBox"),
@@ -453,6 +456,8 @@ async function streamAgentResponse(messages, onToken) {
 
   // Metadatos extra de la respuesta para enriquecer el mensaje
   return {
+    backendConversationId: data.conversation_id || null,
+    backendMessageId: data.message_id || null,
     followup: data.suggested_followup || null,
     assets: Array.isArray(data.related_assets) ? data.related_assets : [],
     canRequestKnowledge: !!data.can_request_knowledge,
@@ -561,6 +566,7 @@ const AGENT_THINKING_STEPS = [
   "Pensando en tu pregunta",
   "Buscando información en documentos",
   "Revisando contexto y fuentes",
+  "Comprobando inconsistencias",
   "Adaptando la explicación a tu perfil",
   "Preparando la respuesta final",
 ];
@@ -581,8 +587,11 @@ function serializeChat(chat) {
       .map((m) => ({
         role: m.role,
         content: m.content || "",
+        backendMessageId: m.backendMessageId || null,
         attachments: (m.attachments || []).map((att) => ({ ...att, dataUrl: null })),
         feedback: m.feedback || null,
+        reportReason: m.reportReason || null,
+        reportComment: m.reportComment || null,
         followup: m.followup || null,
         assets: m.assets || [],
         canRequestKnowledge: !!m.canRequestKnowledge,
@@ -723,6 +732,7 @@ let streamingBubble = null;   // referencia al mensaje que se está escribiendo
 
 function renderMessages() {
   const chat = getActiveChat();
+  const keepAtBottom = isNearBottom();
   el.messages.querySelectorAll(".msg-wrap").forEach((n) => n.remove());
   streamingBubble = null;
 
@@ -737,7 +747,7 @@ function renderMessages() {
   el.messages.appendChild(wrap);
   enhanceCodeBlocks(wrap);
   enhanceLinks(wrap);
-  scrollToBottom();
+  if (keepAtBottom) scrollToBottom();
 }
 
 function buildMessageNode(m, index, chat) {
@@ -758,7 +768,7 @@ function buildMessageNode(m, index, chat) {
   if (role === "assistant" && m.streaming) {
     node.classList.add("msg--thinking");
     bubble.classList.add("is-streaming");
-    if (m.content) bubble.textContent = m.content;
+    if (m.content) bubble.innerHTML = renderMarkdown(m.content);
     else bubble.innerHTML = renderAgentThinking(m.thinkingIndex || 0);
     streamingBubble = bubble;
   } else if (role === "assistant") {
@@ -789,24 +799,21 @@ function buildMessageNode(m, index, chat) {
 
 function renderAgentThinking(index = 0) {
   const activeIndex = Math.abs(index) % AGENT_THINKING_STEPS.length;
-  const steps = AGENT_THINKING_STEPS.map((label, i) => {
-    const status = i === activeIndex ? " is-active" : i < activeIndex ? " is-done" : "";
-    return `<div class="agent-thinking__step${status}"><span></span>${escapeHtml(label)}</div>`;
-  }).join("");
+  const label = AGENT_THINKING_STEPS[activeIndex] || AGENT_THINKING_STEPS[0];
   return `
     <div class="agent-thinking" aria-live="polite">
       <div class="agent-thinking__head">
         <span class="agent-thinking__pulse"></span>
-        <strong>Media está trabajando</strong>
+        <span class="agent-thinking__status">${escapeHtml(label)}</span>
       </div>
-      <div class="agent-thinking__steps">${steps}</div>
     </div>`;
 }
 
 function updateAgentThinking(aiMsg) {
   if (!streamingBubble || aiMsg.content) return;
+  const keepAtBottom = isNearBottom();
   streamingBubble.innerHTML = renderAgentThinking(aiMsg.thinkingIndex || 0);
-  scrollToBottom();
+  if (keepAtBottom) scrollToBottom();
 }
 
 function startAgentThinking(aiMsg) {
@@ -995,7 +1002,7 @@ function practiceVisualTasksEl(artifact) {
   box.className = "practice-visuals";
   const head = document.createElement("div");
   head.className = "practice-visuals__title";
-  head.textContent = "Imágenes educativas con Gemini";
+  head.textContent = "Imágenes educativas";
   box.appendChild(head);
   tasks.forEach((task) => {
     const item = document.createElement("div");
@@ -1006,7 +1013,7 @@ function practiceVisualTasksEl(artifact) {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "practice-artifact__download";
-    btn.textContent = "Generar imagen con Gemini";
+    btn.textContent = "Generar imagen";
     const preview = document.createElement("div");
     preview.className = "practice-visuals__preview";
     const existing = (artifact.data?.generated_visuals || []).find((visual) => visual.task_id === task.id);
@@ -1026,7 +1033,7 @@ async function generatePracticeVisual(task, artifact, btn, preview) {
   }
   btn.disabled = true;
   const previous = btn.textContent;
-  btn.textContent = "Generando con Gemini...";
+  btn.textContent = "Generando...";
   try {
     const res = await fetchWithAuth(`${API_BASE_URL}/api/tools/image`, {
       method: "POST",
@@ -1324,6 +1331,7 @@ const ICONS = {
   regen: '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 4v5h-5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   up: '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M7 11v9H4a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h3zm0 0l5-8a2 2 0 0 1 2 2v3h5.5a2 2 0 0 1 2 2.4l-1.4 7A2 2 0 0 1 18 20H7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/></svg>',
   down: '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M17 13V4h3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-3zm0 0l-5 8a2 2 0 0 1-2-2v-3H4.5a2 2 0 0 1-2-2.4l1.4-7A2 2 0 0 1 6 4h11" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/></svg>',
+  report: '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 3 2.8 20h18.4L12 3z" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linejoin="round"/><path d="M12 8v6m0 3h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
 };
 
 function actionBtn(action, label, active) {
@@ -1346,6 +1354,7 @@ function buildActions(container, m, index, chat) {
     if (isLastAssistant) add(actionBtn("regen", t("act_regenerate")));
     add(actionBtn("up", t("act_good"), m.feedback === "up"));
     add(actionBtn("down", t("act_bad"), m.feedback === "down"));
+    add(actionBtn("report", t("act_report"), m.feedback === "report" || !!m.reportReason));
   }
 }
 
@@ -1390,11 +1399,15 @@ async function runAssistant(chat) {
       if (!aiMsg.content) clearInterval(thinkingTimer);
       aiMsg.content += chunk;
       if (streamingBubble) {
-        streamingBubble.textContent = aiMsg.content;
-        scrollToBottom();
+        const keepAtBottom = isNearBottom();
+        streamingBubble.innerHTML = renderMarkdown(aiMsg.content);
+        enhanceLinks(streamingBubble);
+        if (keepAtBottom) scrollToBottom();
       }
     });
     if (meta) {
+      aiMsg.backendMessageId = meta.backendMessageId || aiMsg.backendMessageId || null;
+      if (meta.backendConversationId) chat.backendConversationId = meta.backendConversationId;
       aiMsg.followup = meta.followup;
       aiMsg.assets = meta.assets;
       aiMsg.canRequestKnowledge = meta.canRequestKnowledge;
@@ -1427,6 +1440,101 @@ function regenerateLast() {
   renderMessages();
   touchChat(chat);
   runAssistant(chat);
+}
+
+function previousUserQuestion(chat, index) {
+  for (let i = index - 1; i >= 0; i -= 1) {
+    const msg = chat.messages[i];
+    if (msg?.role === "user" && (msg.content || "").trim()) return msg.content.trim();
+  }
+  return "";
+}
+
+function isUuid(value) {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(value || ""));
+}
+
+async function saveMessageFeedback(message, chat, rating, options = {}) {
+  const token = authToken();
+  if (!message || !chat) return false;
+  if (!token) return false;
+  const index = chat.messages.indexOf(message);
+  const payload = {
+    conversation_id: isUuid(chat.backendConversationId) ? chat.backendConversationId : null,
+    message_id: isUuid(message.backendMessageId) ? message.backendMessageId : null,
+    rating,
+    reason: options.reason || (rating === "up" ? "helpful" : null),
+    comment: options.comment || null,
+    message_content: message.content || "",
+    question: previousUserQuestion(chat, index),
+    metadata: {
+      local_chat_id: chat.id,
+      local_message_index: index,
+      source: "message_actions",
+    },
+  };
+  try {
+    const res = await fetchWithAuth(`${API_BASE_URL}/api/feedback`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (res.status === 401) clearAuthSession();
+    return res.ok;
+  } catch (err) {
+    console.error("Feedback save failed", err);
+    return false;
+  }
+}
+
+function openReportModal(message, chat, index) {
+  ensurePracticeModalStyles();
+  const overlay = document.createElement("div");
+  overlay.className = "practice-modal";
+  overlay.innerHTML = `
+    <div class="practice-modal__card" role="dialog" aria-modal="true" aria-labelledby="reportTitle">
+      <h2 id="reportTitle">${lang === "en" ? "Report response" : "Reportar respuesta"}</h2>
+      <p>${lang === "en" ? "Tell us what went wrong so Media can improve future answers." : "Dinos que salio mal para mejorar futuras respuestas de Media."}</p>
+      <form class="practice-modal__form">
+        <label class="practice-modal__field">
+          ${lang === "en" ? "Reason" : "Motivo"}
+          <select name="reason">
+            <option value="incorrect">${lang === "en" ? "Incorrect information" : "Informacion incorrecta"}</option>
+            <option value="bad_sources">${lang === "en" ? "Bad or missing sources" : "Fuentes malas o faltantes"}</option>
+            <option value="unsafe">${lang === "en" ? "Unsafe medical advice" : "Consejo medico inseguro"}</option>
+            <option value="unclear">${lang === "en" ? "Unclear explanation" : "Explicacion confusa"}</option>
+            <option value="not_medical">${lang === "en" ? "Out of medical scope" : "Fuera del tema medico"}</option>
+            <option value="other">${lang === "en" ? "Other" : "Otro"}</option>
+          </select>
+        </label>
+        <label class="practice-modal__field">
+          ${lang === "en" ? "Comment" : "Comentario"}
+          <textarea name="comment" rows="4" maxlength="1200" placeholder="${lang === "en" ? "Optional detail" : "Detalle opcional"}"></textarea>
+        </label>
+      </form>
+      <div class="practice-modal__actions">
+        <button type="button" data-cancel>${escapeHtml(t("close"))}</button>
+        <button type="button" data-submit>${lang === "en" ? "Send report" : "Enviar reporte"}</button>
+      </div>
+    </div>`;
+  const close = () => overlay.remove();
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay || event.target.closest("[data-cancel]")) close();
+  });
+  overlay.querySelector("[data-submit]").addEventListener("click", async () => {
+    const form = overlay.querySelector("form");
+    const reason = form.elements.reason.value;
+    const comment = form.elements.comment.value.trim();
+    message.feedback = "report";
+    message.reportReason = reason;
+    message.reportComment = comment;
+    touchChat(chat);
+    await saveMessageFeedback(message, chat, "report", { reason, comment });
+    close();
+    renderMessages();
+  });
+  document.body.appendChild(overlay);
+  overlay.querySelector("select")?.focus();
 }
 
 // ---------- Adjuntos (archivos e imágenes) ----------
@@ -1538,6 +1646,12 @@ function resetInput() {
   el.input.value = "";
   el.input.style.height = "auto";
   updateSendState();
+}
+
+function isNearBottom(threshold = 140) {
+  const m = el.messages;
+  if (!m) return true;
+  return m.scrollHeight - m.scrollTop - m.clientHeight <= threshold;
 }
 
 function scrollToBottom(smooth) {
@@ -2158,7 +2272,8 @@ function ensurePracticeModalStyles() {
     .practice-modal__card p{margin:0 0 18px!important;color:var(--text-muted,#9aa3b2)!important;font-size:13.5px!important;line-height:1.45!important}
     .practice-modal__form{display:grid!important;gap:12px!important}
     .practice-modal__field{display:grid!important;gap:7px!important;font-size:13.5px!important;font-weight:700!important;color:var(--text-soft,#d7dce7)!important}
-    .practice-modal__field input,.practice-modal__field select{width:100%!important;box-sizing:border-box!important;border:1px solid var(--border,#2b3344)!important;border-radius:14px!important;background:var(--bg-soft,#0b0b0b)!important;color:var(--text,#fff)!important;padding:11px 12px!important;font:inherit!important;outline:none!important}
+    .practice-modal__field input,.practice-modal__field select,.practice-modal__field textarea{width:100%!important;box-sizing:border-box!important;border:1px solid var(--border,#2b3344)!important;border-radius:14px!important;background:var(--bg-soft,#0b0b0b)!important;color:var(--text,#fff)!important;padding:11px 12px!important;font:inherit!important;outline:none!important}
+    .practice-modal__field textarea{resize:vertical!important;min-height:96px!important}
     .practice-modal__field input[type=checkbox]{width:20px!important;height:20px!important;accent-color:var(--primary,#2f6df6)!important}
     .practice-modal__actions{display:flex!important;justify-content:flex-end!important;gap:10px!important;margin-top:20px!important}
     .practice-modal__actions button{border:1px solid var(--border,#2b3344)!important;border-radius:999px!important;background:var(--bg-soft,#0b0b0b)!important;color:var(--text,#fff)!important;padding:10px 15px!important;font-weight:700!important;cursor:pointer!important}
@@ -2263,10 +2378,14 @@ el.messages.addEventListener("click", (e) => {
   } else if (action === "up" || action === "down") {
     m.feedback = m.feedback === action ? null : action;
     touchChat(chat);
+    if (m.feedback) saveMessageFeedback(m, chat, m.feedback);
     // Actualiza en el sitio (evita re-animar los mensajes)
     const row = btn.closest(".msg__actions");
     row.querySelector('[data-action="up"]')?.classList.toggle("is-active", m.feedback === "up");
     row.querySelector('[data-action="down"]')?.classList.toggle("is-active", m.feedback === "down");
+    row.querySelector('[data-action="report"]')?.classList.toggle("is-active", m.feedback === "report");
+  } else if (action === "report") {
+    openReportModal(m, chat, +btn.dataset.index);
   }
 });
 
@@ -2493,7 +2612,10 @@ function applyPracticeCollapsed(collapsed) {
   }
 }
 function getPracticeCollapsedPref() {
-  try { return localStorage.getItem("Media-practice") === "1"; } catch (_) { return false; }
+  try {
+    const saved = localStorage.getItem("Media-practice");
+    return saved === null ? true : saved === "1";
+  } catch (_) { return true; }
 }
 el.practiceToggle?.addEventListener("click", () => {
   const collapsed = !document.body.classList.contains("practice-collapsed");
@@ -2579,6 +2701,7 @@ function renderLearning(p) {
   el.learnBody.appendChild(chipSection(t("learn_strengths"), p.strengths, "is-pos"));
   el.learnBody.appendChild(chipSection(t("learn_growth"), p.growth_areas, "is-warn"));
   el.learnBody.appendChild(chipSection(t("learn_confusions"), p.recurring_confusions, ""));
+  el.learnBody.appendChild(learningEditForm(p));
 }
 
 function prefCard(label, value) {
@@ -2614,6 +2737,110 @@ function chipSection(title, items, tone) {
     sec.appendChild(empty);
   }
   return sec;
+}
+
+function csvList(value) {
+  if (Array.isArray(value)) return value.join(", ");
+  return "";
+}
+
+function parseList(value) {
+  return String(value || "")
+    .replace(/\n/g, ",")
+    .split(",")
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .slice(0, 24);
+}
+
+function learningEditForm(profile) {
+  const meta = profile.metadata || {};
+  const form = document.createElement("form");
+  form.className = "learn-form";
+  form.innerHTML = `
+    <h3>${lang === "en" ? "Edit profile" : "Modificar perfil"}</h3>
+    <label>${t("learn_style")}
+      <select name="preferred_explanation_style">
+        <option value="balanced">${t("learn_style_balanced")}</option>
+        <option value="concise">${t("learn_style_concise")}</option>
+        <option value="detailed">${t("learn_style_detailed")}</option>
+        <option value="visual">${t("learn_style_visual")}</option>
+      </select>
+    </label>
+    <label>${t("learn_difficulty")}
+      <select name="preferred_difficulty">
+        <option value="basic">${t("learn_diff_basic")}</option>
+        <option value="intermediate">${t("learn_diff_intermediate")}</option>
+        <option value="advanced">${t("learn_diff_advanced")}</option>
+      </select>
+    </label>
+    <label>${t("learn_strengths")}
+      <textarea name="strengths" rows="2" placeholder="${lang === "en" ? "comma separated" : "separadas por comas"}"></textarea>
+    </label>
+    <label>${t("learn_growth")}
+      <textarea name="growth_areas" rows="2" placeholder="${lang === "en" ? "comma separated" : "separadas por comas"}"></textarea>
+    </label>
+    <label>${t("learn_confusions")}
+      <textarea name="recurring_confusions" rows="2" placeholder="${lang === "en" ? "comma separated" : "separadas por comas"}"></textarea>
+    </label>
+    <label>${lang === "en" ? "University" : "Universidad"}
+      <input name="university" maxlength="160" />
+    </label>
+    <label>${lang === "en" ? "Specialty / year" : "Especialidad / año"}
+      <input name="specialty" maxlength="160" />
+    </label>
+    <label>${lang === "en" ? "Declared difficulties" : "Dificultades declaradas"}
+      <textarea name="learning_challenges" rows="2" maxlength="1200"></textarea>
+    </label>
+    <button type="submit">${lang === "en" ? "Save changes" : "Guardar cambios"}</button>
+    <p class="auth-status" hidden></p>`;
+  form.elements.preferred_explanation_style.value = profile.preferred_explanation_style || "balanced";
+  form.elements.preferred_difficulty.value = profile.preferred_difficulty || "intermediate";
+  form.elements.strengths.value = csvList(profile.strengths);
+  form.elements.growth_areas.value = csvList(profile.growth_areas);
+  form.elements.recurring_confusions.value = csvList(profile.recurring_confusions);
+  form.elements.university.value = meta.university || "";
+  form.elements.specialty.value = meta.specialty || meta.academic_level || "";
+  form.elements.learning_challenges.value = meta.learning_challenges || "";
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    await saveLearningProfile(form, profile);
+  });
+  return form;
+}
+
+async function saveLearningProfile(form, profile) {
+  const status = form.querySelector(".auth-status");
+  const button = form.querySelector("button[type='submit']");
+  if (status) { status.hidden = false; status.textContent = lang === "en" ? "Saving..." : "Guardando..."; }
+  if (button) button.disabled = true;
+  const meta = {
+    ...(profile.metadata || {}),
+    university: form.elements.university.value.trim() || null,
+    specialty: form.elements.specialty.value.trim() || null,
+    learning_challenges: form.elements.learning_challenges.value.trim() || null,
+  };
+  try {
+    const res = await fetchWithAuth(`${API_BASE_URL}/api/learning/profile`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        preferred_explanation_style: form.elements.preferred_explanation_style.value,
+        preferred_difficulty: form.elements.preferred_difficulty.value,
+        strengths: parseList(form.elements.strengths.value),
+        growth_areas: parseList(form.elements.growth_areas.value),
+        recurring_confusions: parseList(form.elements.recurring_confusions.value),
+        metadata: meta,
+      }),
+    });
+    if (res.status === 401) { clearAuthSession(); learnMsg(t("conv_login")); return; }
+    if (!res.ok) throw new Error("profile_update_failed");
+    renderLearning(await res.json());
+  } catch (err) {
+    if (status) status.textContent = lang === "en" ? "Could not save changes." : "No se pudieron guardar los cambios.";
+  } finally {
+    if (button) button.disabled = false;
+  }
 }
 
 // ---------- Conversaciones (historial desde /api/conversations) ----------
@@ -2786,6 +3013,7 @@ async function openConversation(id) {
         .map((m) => ({
           role: m.role,
           content: m.content,
+          backendMessageId: m.id || null,
           feedback: null,
           practiceArtifact: m.metadata?.practice_artifact || null,
           assets: m.metadata?.related_assets || [],
@@ -2883,6 +3111,11 @@ function initDataToggles() {
 
 // Barra superior: configuración
 el.btnSettingsTop?.addEventListener("click", openSettings);
+el.btnSettingsRail?.addEventListener("click", openSettings);
+el.btnProfileRail?.addEventListener("click", () => {
+  if (authToken()) openLearning();
+  else openPanel(el.authPanel);
+});
 
 // Barra superior: notificaciones y cuenta
 el.btnNotif.addEventListener("click", (e) => {

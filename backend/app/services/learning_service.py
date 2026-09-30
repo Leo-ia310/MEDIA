@@ -1,7 +1,7 @@
 import re
 
 from app.db.supabase import SupabaseRepository
-from app.models.schemas import AuthUser, LearningProfileOut
+from app.models.schemas import AuthUser, LearningProfileOut, LearningProfileUpdate
 
 
 _STOPWORDS = {
@@ -47,6 +47,23 @@ class LearningService:
             },
             prefer="return=minimal",
         )
+
+    async def update_profile(self, user: AuthUser, payload: LearningProfileUpdate) -> LearningProfileOut:
+        current = await self.get_profile(user)
+        updates = payload.model_dump(exclude_unset=True)
+        if not updates:
+            return current
+        merged = current.model_dump(exclude={"user_id"})
+        if "metadata" in updates:
+            updates["metadata"] = {**(merged.get("metadata") or {}), **(updates["metadata"] or {})}
+        await self.repo.request(
+            table="user_learning_profiles",
+            method="PATCH",
+            token=user.token,
+            params={"user_id": f"eq.{user.id}"},
+            json=updates,
+        )
+        return await self.get_profile(user)
 
 
 def infer_topic(question: str) -> str | None:

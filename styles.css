@@ -41,13 +41,13 @@
   --text-soft:     #4a5a7a;
   --text-muted:    #8595b5;
 
-  --topbar-bg:     #0a1428;   /* barra superior oscura (azul muy profundo) */
+  --topbar-bg:     #1F2937;   /* azul marino profundo */
   --topbar-text:   #eaf1ff;
   --topbar-border: rgba(255,255,255,.14);
   --topbar-hover:  rgba(255,255,255,.10);
 
-  --primary:       var(--blue-600);
-  --primary-hover: var(--blue-700);
+  --primary:       #3B82F6;
+  --primary-hover: #2563eb;
   --primary-soft:  var(--blue-50);
   --on-primary:    #ffffff;
 
@@ -66,9 +66,9 @@
   --rail-w: 200px;
   --rail-right-w: 210px;
   --sidebar-w: 280px;
-  --frame:   #d5deef;   /* marco exterior alrededor de la interfaz */
-  --frame-pad: 12px;    /* grosor del marco */
-  --shell-radius: 24px; /* redondeo del contenedor completo */
+  --frame:   #1F2937;   /* marco exterior alrededor de la interfaz */
+  --frame-pad: 0px;    /* grosor del marco */
+  --shell-radius: 0px; /* redondeo del contenedor completo */
 }
 
 :root[data-theme="dark"] {
@@ -81,11 +81,11 @@
   --text-muted:    #808080;
 
   /* Marco (topbar + laterales + inferior) blanco para distinguir del interior negro */
-  --topbar-bg:     #ffffff;
-  --topbar-text:   #14181f;
+  --topbar-bg:     #1F2937;
+  --topbar-text:   #f8fafc;
   --topbar-border: rgba(0,0,0,.12);
   --topbar-hover:  rgba(0,0,0,.06);
-  --frame:         #ffffff;
+  --frame:         #1F2937;
 
   --primary:       var(--blue-500);
   --primary-hover: var(--blue-400);
@@ -377,6 +377,16 @@ body.rail-collapsed { --rail-w:68px; }
 body.rail-collapsed #rail .rail__label { max-width:0; opacity:0; margin-left:0; }
 body.rail-collapsed #rail .rail__item { justify-content:center; padding:11px 0; }
 
+.rail__bottom {
+  margin-top:auto;
+  padding-top:10px;
+  border-top:1px solid var(--border);
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+body.rail-collapsed #rail .rail__bottom { padding-top:10px; }
+
 /* ---------- RAIL DERECHO (practicar) ---------- */
 .rail__section {
   font-size:12px; font-weight:700; letter-spacing:.6px; text-transform:uppercase;
@@ -602,6 +612,8 @@ body.practice-collapsed #practiceRail .rail__toggle-fill { opacity:.9; transform
 .msg__action.is-active { color:var(--primary); }
 .msg__action.is-done { color:#16a34a; }
 @media (hover:none) { .msg__actions { opacity:1; } }
+
+.msg__action[data-action="report"].is-active { color:#f59e0b; }
 
 /* ---------- Extras del mensaje: assets, follow-up, conocimiento ---------- */
 .msg__assets {
@@ -2268,5 +2280,84 @@ body {
   .learn-profile {
     grid-template-columns:1fr;
   }
+}
+
+/* Ajustes 2026-09: layout mas plano tipo ChatGPT */
+.topbar { display:none; }
+.shell { border-radius:0; }
+.app { height:100vh; }
+.workspace {
+  gap:0;
+  padding:0;
+  background:var(--bg);
+}
+.rail {
+  border-radius:0;
+  border-right:1px solid var(--border);
+  background:var(--surface);
+  box-shadow:none;
+}
+.rail--right {
+  border-left:1px solid var(--border);
+  border-right:0;
+}
+.main {
+  border-radius:0;
+  border:0;
+  box-shadow:none;
+}
+body.rail-collapsed #rail .rail__logo { display:block; }
+body.rail-collapsed #rail .rail__brandbox { justify-content:center; }
+.agent-thinking {
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  color:var(--text-soft);
+}
+.agent-thinking__head {
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+}
+.agent-thinking__status { font-weight:600; }
+.msg--thinking .msg__avatar { align-self:flex-end; }
+.msg__action[data-action="report"].is-active { color:#f59e0b; }
+.learn-form {
+  display:grid;
+  gap:12px;
+  margin-top:18px;
+  padding-top:16px;
+  border-top:1px solid var(--border);
+}
+.learn-form h3 {
+  margin:0;
+  font-size:15px;
+}
+.learn-form label {
+  display:grid;
+  gap:6px;
+  font-size:13px;
+  font-weight:700;
+  color:var(--text-soft);
+}
+.learn-form input,
+.learn-form select,
+.learn-form textarea {
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:var(--bg-soft);
+  color:var(--text);
+  font:inherit;
+  padding:10px 11px;
+  resize:vertical;
+}
+.learn-form button {
+  border:0;
+  border-radius:10px;
+  background:var(--primary);
+  color:#fff;
+  font-weight:700;
+  padding:11px 14px;
 }
 

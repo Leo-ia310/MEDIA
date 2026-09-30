@@ -116,6 +116,18 @@ class LocalAppStore:
                   request_count integer not null default 1,
                   created_at text not null
                 );
+
+                create table if not exists message_feedback (
+                  id text primary key,
+                  user_id text not null references media_users(id) on delete cascade,
+                  conversation_id text,
+                  message_id text,
+                  rating text not null,
+                  reason text,
+                  comment text,
+                  metadata text not null default '{}',
+                  created_at text not null
+                );
                 """
             )
 
@@ -275,7 +287,7 @@ class LocalAppStore:
         if table in {"conversations", "user_learning_profiles"}:
             row.setdefault("created_at", now)
             row.setdefault("updated_at", now)
-        elif table in {"messages", "user_learning_events", "knowledge_requests"}:
+        elif table in {"messages", "user_learning_events", "knowledge_requests", "message_feedback"}:
             row.setdefault("created_at", now)
         if table == "conversations":
             row.setdefault("archived", False)
@@ -285,6 +297,8 @@ class LocalAppStore:
         if table == "knowledge_requests":
             row.setdefault("status", "pending")
             row.setdefault("request_count", 1)
+        if table == "message_feedback":
+            row.setdefault("metadata", {})
         encoded = {key: _encode_value(key, value) for key, value in row.items()}
         columns = list(encoded.keys())
         placeholders = ", ".join("?" for _ in columns)
@@ -301,16 +315,21 @@ class LocalAppStore:
 
     def _patch(self, table: str, user_id: str, params: dict[str, str], payload: dict[str, Any]) -> None:
         row_id = params.get("id", "")
-        if not row_id.startswith("eq."):
+        user_id_filter = params.get("user_id", "")
+        if not row_id.startswith("eq.") and not user_id_filter.startswith("eq."):
             return
         updates = dict(payload)
         if table == "conversations":
             updates["updated_at"] = _now()
+        if table == "user_learning_profiles":
+            updates["updated_at"] = _now()
         encoded = {key: _encode_value(key, value) for key, value in updates.items()}
         assignments = ", ".join(f"{key} = ?" for key in encoded)
-        values = list(encoded.values()) + [row_id[3:], user_id]
+        target_id = row_id[3:] if row_id.startswith("eq.") else user_id_filter[3:]
+        target_column = "id" if row_id.startswith("eq.") else "user_id"
+        values = list(encoded.values()) + [target_id, user_id]
         with self._connect() as conn:
-            conn.execute(f"update {table} set {assignments} where id = ? and user_id = ?", values)
+            conn.execute(f"update {table} set {assignments} where {target_column} = ? and user_id = ?", values)
 
 
 def _now() -> str:

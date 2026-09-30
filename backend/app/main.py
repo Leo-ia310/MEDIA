@@ -5,7 +5,7 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from app.api import auth, chat, clinical, conversations, health, knowledge, learning, tools
+from app.api import auth, chat, clinical, conversations, feedback, health, knowledge, learning, tools
 from app.core.config import get_settings
 from app.core.exceptions import ProviderError
 from app.core.logging import configure_logging
@@ -66,6 +66,7 @@ app.include_router(auth.router)
 app.include_router(chat.router)
 app.include_router(conversations.router)
 app.include_router(learning.router)
+app.include_router(feedback.router)
 app.include_router(knowledge.router)
 app.include_router(tools.router)
 app.include_router(clinical.router)

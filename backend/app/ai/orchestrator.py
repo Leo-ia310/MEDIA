@@ -29,6 +29,24 @@ class AIOrchestrator:
     async def answer(self, *, request: ChatRequest, user: AuthUser, conversation_id, message_id, recent_messages: list[dict[str, str]], learning_profile: dict) -> ChatResponse:
         image_attachments = self._image_attachments(request)
         selection = self.router.select_for_request(request.effort, request.message, has_image=bool(image_attachments))
+        if self._is_out_of_scope(request.message):
+            return ChatResponse(
+                conversation_id=conversation_id,
+                message_id=message_id,
+                answer="Puedo ayudarte con medicina humana, anatomia, fisiologia, ciencias de la salud y estudio clinico. Esa pregunta parece estar fuera de ese alcance; si quieres, la reconducimos a un enfoque de salud humana.",
+                answer_status=AnswerStatus.unverified_model_knowledge,
+                verification_status=VerificationStatus.unverified_model_knowledge,
+                effort=selection.effort,
+                model=None,
+                citations=[],
+                can_request_knowledge=False,
+                metadata={
+                    "scope_guard": "rejected_non_medical",
+                    "medical_retrieval_count": 0,
+                    "project_context_count": 0,
+                    "strict_document_grounding": self.settings.strict_document_grounding,
+                },
+            )
         retrieval_error = None
         try:
             evidence = await self.retrieval.retrieve(question=request.message, token=user.token, top_k=selection.retrieval_top_k)
@@ -166,6 +184,25 @@ class AIOrchestrator:
             if attachment.type == "image" and url and (url.startswith("data:image/") or url.startswith("https://") or url.startswith("http://")):
                 images.append({"url": url, "mime_type": mime_type, "name": attachment.name})
         return images[:4]
+
+    def _is_out_of_scope(self, text: str) -> bool:
+        normalized = re.sub(r"\s+", " ", text.lower())
+        off_topic_terms = {
+            "futbol", "fútbol", "futbolista", "futbolistas", "messi", "ronaldo",
+            "mosca", "moscas", "perro", "gato", "politica", "política", "presidente",
+            "pelicula", "película", "musica", "música", "videojuego", "apuesta",
+        }
+        medical_terms = {
+            "humano", "humana", "medicina", "medico", "médico", "anatomia", "anatomía",
+            "fisiologia", "fisiología", "clinico", "clínico", "paciente", "salud",
+            "cuerpo", "cerebro", "corazon", "corazón", "arteria", "arterias", "vena",
+            "venas", "hueso", "musculo", "músculo", "farmaco", "fármaco", "diagnostico",
+            "diagnóstico", "tratamiento", "enfermedad", "sintoma", "síntoma",
+        }
+        words = set(re.findall(r"[a-záéíóúñü]+", normalized))
+        if words & off_topic_terms:
+            return not (words & medical_terms and not (words & {"mosca", "moscas"}))
+        return False
 
     def _can_fallback_to_low(self, selection, exc: ProviderError) -> bool:
         if selection.effort == Effort.low:

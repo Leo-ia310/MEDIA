@@ -129,6 +129,37 @@ class LearningProfileOut(BaseModel):
     metadata: dict[str, Any] = Field(default_factory=dict)
 
 
+class LearningProfileUpdate(BaseModel):
+    preferred_explanation_style: Literal["balanced", "concise", "detailed", "visual"] | None = None
+    preferred_difficulty: Literal["basic", "intermediate", "advanced"] | None = None
+    strengths: list[str] | None = Field(default=None, max_length=24)
+    growth_areas: list[str] | None = Field(default=None, max_length=24)
+    recurring_confusions: list[str] | None = Field(default=None, max_length=24)
+    metadata: dict[str, Any] | None = None
+
+
+class MessageFeedbackIn(BaseModel):
+    conversation_id: UUID | None = None
+    message_id: UUID | None = None
+    rating: Literal["up", "down", "report"]
+    reason: Literal["helpful", "incorrect", "unsafe", "unclear", "not_medical", "bad_sources", "other"] | None = None
+    comment: str | None = Field(default=None, max_length=1200)
+    message_content: str | None = Field(default=None, max_length=12000)
+    question: str | None = Field(default=None, max_length=8000)
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+class MessageFeedbackOut(BaseModel):
+    id: UUID
+    user_id: UUID
+    conversation_id: UUID | None = None
+    message_id: UUID | None = None
+    rating: str
+    reason: str | None = None
+    comment: str | None = None
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+
 class KnowledgeRequestIn(BaseModel):
     conversation_id: UUID | None = None
     original_question: str = Field(min_length=1, max_length=8000)
