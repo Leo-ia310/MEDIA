@@ -2375,12 +2375,24 @@ body.rail-collapsed #rail .rail__brandbox { justify-content:center; }
 .rail__brandbox { gap:10px; }
 .rail__brand { font-size:22px; }
 body.rail-collapsed #rail .rail__logo {
-  width:44px;
-  height:44px;
-  padding:7px;
+  width:40px;
+  height:40px;
+  padding:6px;
 }
 body.rail-collapsed #rail .rail__header {
-  padding:4px 0;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  gap:8px;
+  padding:4px 0 10px;
+}
+body.rail-collapsed #rail .rail__brandbox {
+  width:100%;
+  justify-content:center;
+}
+body.rail-collapsed #rail .rail__toggle {
+  width:38px;
+  height:38px;
 }
 .msg__avatar {
   width:44px;
