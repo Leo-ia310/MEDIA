@@ -2361,3 +2361,41 @@ body.rail-collapsed #rail .rail__brandbox { justify-content:center; }
   padding:11px 14px;
 }
 
+/* Logo oficial: el isotipo es oscuro, asi que necesita base clara para leerse. */
+.brand__logo,
+.rail__logo {
+  width:42px;
+  height:42px;
+  padding:6px;
+  border-radius:12px;
+  background:#ffffff;
+  object-fit:contain;
+  box-shadow:0 4px 14px rgba(15,23,42,.12);
+}
+.rail__brandbox { gap:10px; }
+.rail__brand { font-size:22px; }
+body.rail-collapsed #rail .rail__logo {
+  width:44px;
+  height:44px;
+  padding:7px;
+}
+body.rail-collapsed #rail .rail__header {
+  padding:4px 0;
+}
+.msg__avatar {
+  width:44px;
+  height:44px;
+}
+.msg--ai .msg__avatar {
+  background:#ffffff;
+  border:1px solid rgba(59,130,246,.22);
+  box-shadow:0 6px 18px rgba(15,23,42,.12);
+}
+:root[data-theme="dark"] .msg--ai .msg__avatar {
+  background:#f8fafc;
+  border-color:rgba(59,130,246,.45);
+}
+.msg--ai .msg__avatar img {
+  padding:4px;
+}
+
