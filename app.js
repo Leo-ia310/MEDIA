@@ -354,7 +354,7 @@ async function demoResponse(question, onToken) {
   for (const ch of chunks) { await sleep(12 + Math.random() * 20); onToken(ch); }
   return {
     followup: `${t("demo_followup")} ${topic}?`,
-    assets: [{ id: "demo", type: "image", caption: t("demo_asset"), path: "assets/logo.svg" }],
+    assets: [{ id: "demo", type: "image", caption: t("demo_asset"), path: "assets/logo-mark.png" }],
     canRequestKnowledge: true,
     originalQuestion: q,
     normalizedTopic: null,
@@ -755,7 +755,7 @@ function buildMessageNode(m, index, chat) {
   const node = document.createElement("div");
   node.className = "msg msg--" + (role === "user" ? "user" : "ai");
 
-  const avatar = role === "user" ? "U" : `<img src="assets/logo.svg" alt="Media" />`;
+  const avatar = role === "user" ? "U" : `<img src="assets/logo-mark.png" alt="Media" />`;
   node.innerHTML = `
     <div class="msg__avatar">${avatar}</div>
     <div class="msg__body">
