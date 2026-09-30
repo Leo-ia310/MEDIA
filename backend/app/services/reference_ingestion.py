@@ -4,6 +4,7 @@ import argparse
 import asyncio
 import json
 import re
+import unicodedata
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -68,7 +69,7 @@ class ReferenceIngestionService:
             metadata = parse_frontmatter(text)
             body = strip_frontmatter(text).strip()
             title = str(metadata.get("title") or title_from_note(markdown_path, body)).strip()
-            pdf_path = self._resolve_pdf(metadata)
+            pdf_path = self._resolve_pdf(metadata, markdown_path)
             chunks = chunk_markdown(body, chunk_chars=self.chunk_chars, markdown_path=markdown_path)
             documents.append(
                 ReferenceDocument(
@@ -93,7 +94,7 @@ class ReferenceIngestionService:
                 "ingestion_profile": "local_markdown_pdf_reference_v1",
             }
         )
-        return {
+        return clean_payload({
             "title": document.title,
             "authors": list_value(document.metadata.get("authors")),
             "organization": text_value(document.metadata.get("organization")),
@@ -106,12 +107,12 @@ class ReferenceIngestionService:
             "verified": True,
             "status": "current",
             "metadata": metadata,
-        }
+        })
 
     def chunk_payloads(self, document_id: str, document: ReferenceDocument) -> list[dict[str, Any]]:
         source_markdown = relative_to_repo(document.markdown_path)
         return [
-            {
+            clean_payload({
                 "document_id": document_id,
                 "content": chunk.content,
                 "page_start": chunk.page_start,
@@ -124,7 +125,7 @@ class ReferenceIngestionService:
                     "source": "local_reference_markdown",
                     "source_markdown": source_markdown,
                 },
-            }
+            })
             for chunk in document.chunks
         ]
 
@@ -133,12 +134,58 @@ class ReferenceIngestionService:
         relative = pdf_path.resolve().relative_to(self.references_dir).as_posix()
         return f"{base_url}/references/{quote(relative)}"
 
-    def _resolve_pdf(self, metadata: dict[str, Any]) -> Path | None:
+    def _resolve_pdf(self, metadata: dict[str, Any], markdown_path: Path) -> Path | None:
         source_file = metadata.get("source_file")
         if source_file:
             candidate = self.references_dir / str(source_file)
             if candidate.exists():
                 return candidate.resolve()
+        inferred = self._infer_pdf_path(metadata, markdown_path)
+        if inferred is not None:
+            return inferred
+        return None
+
+    def _infer_pdf_path(self, metadata: dict[str, Any], markdown_path: Path) -> Path | None:
+        candidates = [path for path in self.references_dir.glob("*.pdf") if path.is_file()]
+        if not candidates:
+            return None
+        wanted_values = [
+            markdown_path.stem,
+            markdown_path.stem.removesuffix("_RAG"),
+            metadata.get("source_file"),
+            metadata.get("file"),
+            metadata.get("pdf"),
+            metadata.get("title"),
+        ]
+        wanted = {_reference_key(str(value)) for value in wanted_values if value}
+        for value in list(wanted):
+            wanted.add(value.removesuffix("pdf"))
+            wanted.add(value.removesuffix("rag"))
+        for candidate in candidates:
+            key = _reference_key(candidate.stem)
+            if key in wanted or f"{key}rag" in wanted:
+                return candidate.resolve()
+        token_matches: list[tuple[float, int, Path]] = []
+        wanted_token_sets = [_reference_tokens(str(value)) for value in wanted_values if value]
+        for candidate in candidates:
+            candidate_tokens = _reference_tokens(candidate.stem)
+            if not candidate_tokens:
+                continue
+            best_score = 0.0
+            best_hits = 0
+            for tokens in wanted_token_sets:
+                if not tokens:
+                    continue
+                hits = len(tokens & candidate_tokens)
+                score = hits / len(tokens)
+                if score > best_score:
+                    best_score = score
+                    best_hits = hits
+            if best_hits >= 3 and best_score >= 0.72:
+                token_matches.append((best_score, best_hits, candidate))
+        if token_matches:
+            token_matches.sort(key=lambda item: (item[0], item[1], -len(item[2].name)), reverse=True)
+            return token_matches[0][2].resolve()
         return None
 
 
@@ -353,8 +400,8 @@ def text_value(value: Any) -> str | None:
     if value is None or value == "":
         return None
     if isinstance(value, list):
-        return ", ".join(str(item) for item in value)
-    return str(value)
+        return clean_text(", ".join(str(item) for item in value))
+    return clean_text(str(value))
 
 
 def date_value(value: Any) -> str | None:
@@ -379,6 +426,36 @@ def relative_to_repo(path: Path | None) -> str | None:
         return resolved.relative_to(repo_root).as_posix()
     except ValueError:
         return resolved.as_posix()
+
+
+def clean_payload(value: Any) -> Any:
+    if isinstance(value, str):
+        return clean_text(value)
+    if isinstance(value, list):
+        return [clean_payload(item) for item in value]
+    if isinstance(value, dict):
+        return {key: clean_payload(item) for key, item in value.items()}
+    return value
+
+
+def clean_text(value: str) -> str:
+    return value.replace("\x00", "")
+
+
+def _reference_key(value: str) -> str:
+    normalized = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
+    normalized = normalized.lower()
+    normalized = re.sub(r"_?rag$", "", normalized)
+    normalized = re.sub(r"\.pdf$", "", normalized)
+    return re.sub(r"[^a-z0-9]+", "", normalized)
+
+
+def _reference_tokens(value: str) -> set[str]:
+    normalized = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
+    normalized = normalized.lower()
+    normalized = re.sub(r"_?rag$", "", normalized)
+    tokens = set(re.findall(r"[a-z0-9]{3,}", normalized))
+    return tokens - {"pdf", "rag", "the", "and", "for", "with", "from"}
 
 
 def raise_for_supabase(response: httpx.Response, action: str) -> None:
