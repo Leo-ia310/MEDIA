@@ -11,12 +11,22 @@ const state = {
   chats: [],        // [{ id, title, messages: [{role, content}] }]
   activeChatId: null,
   isResponding: false,
+  view: "chat",
+  library: {
+    loading: false,
+    loaded: false,
+    activeCategory: "all",
+    activeBranch: "all",
+    query: "",
+    documents: [],
+    categories: [],
+  },
 };
 
 // ---------- i18n (traducción) ----------
 const I18N = {
   es: {
-    rail_new: "Nuevo chat", rail_search: "Buscar chats", rail_images: "Imágenes", rail_settings: "Configuración", rail_toggle: "Contraer menú", rail_toggle_expand: "Expandir menú",
+    rail_new: "Nuevo chat", rail_search: "Buscar chats", rail_images: "Imágenes", rail_library: "Biblioteca", rail_settings: "Configuración", rail_toggle: "Contraer menú", rail_toggle_expand: "Expandir menú",
     tb_search: "Buscar", tb_notifications: "Notificaciones", tb_account: "Cuenta",
     notif_header: "Notificaciones", notif1_title: "Bienvenido a Media", notif1_text: "Tu asistente está listo para conversar.",
     notif2_title: "Consejo", notif2_text: "Pulsa <kbd>Shift</kbd>+<kbd>Enter</kbd> para saltar de línea.",
@@ -51,7 +61,7 @@ const I18N = {
     conv_title: "Conversaciones", conv_search: "Buscar conversaciones…", conv_empty: "Aún no tienes conversaciones.", conv_login: "Inicia sesión para ver tu historial de conversaciones.", conv_loading: "Cargando…", conv_error: "No se pudo cargar el historial.", conv_delete: "Eliminar conversación", conv_delete_confirm: "¿Eliminar esta conversación? No se puede deshacer.", conv_delete_error: "No se pudo eliminar la conversación.",
   },
   en: {
-    rail_new: "New chat", rail_search: "Search chats", rail_images: "Images", rail_settings: "Settings", rail_toggle: "Collapse menu", rail_toggle_expand: "Expand menu",
+    rail_new: "New chat", rail_search: "Search chats", rail_images: "Images", rail_library: "Library", rail_settings: "Settings", rail_toggle: "Collapse menu", rail_toggle_expand: "Expand menu",
     tb_search: "Search", tb_notifications: "Notifications", tb_account: "Account",
     notif_header: "Notifications", notif1_title: "Welcome to Media", notif1_text: "Your assistant is ready to chat.",
     notif2_title: "Tip", notif2_text: "Press <kbd>Shift</kbd>+<kbd>Enter</kbd> for a new line.",
@@ -226,6 +236,12 @@ const el = {
   main: document.querySelector(".main"),
   messages: document.getElementById("messages"),
   welcome: document.getElementById("welcome"),
+  libraryView: document.getElementById("libraryView"),
+  libraryClose: document.getElementById("libraryClose"),
+  librarySearch: document.getElementById("librarySearch"),
+  libraryTree: document.getElementById("libraryTree"),
+  libraryDocs: document.getElementById("libraryDocs"),
+  libraryCount: document.getElementById("libraryCount"),
   form: document.getElementById("composerForm"),
   input: document.getElementById("input"),
   btnSend: document.getElementById("btnSend"),
@@ -689,6 +705,7 @@ function createChat(options = {}) {
 
 function switchChat(id) {
   state.activeChatId = id;
+  setMainView("chat");
   renderChatList();
   renderMessages();
   saveLocalChats();
@@ -2558,6 +2575,152 @@ if (el.form) {
   });
 }
 
+// ---------- Biblioteca virtual ----------
+function setMainView(view) {
+  state.view = view;
+  const libraryOpen = view === "library";
+  if (el.libraryView) el.libraryView.hidden = !libraryOpen;
+  if (el.messages) el.messages.hidden = libraryOpen;
+  if (el.form?.closest(".composer")) el.form.closest(".composer").hidden = libraryOpen;
+  const hint = document.querySelector(".composer__hint");
+  if (hint) hint.hidden = libraryOpen;
+  if (el.main) el.main.classList.toggle("is-library", libraryOpen);
+  document.querySelectorAll(".rail__item").forEach((item) => {
+    item.classList.toggle("is-active", libraryOpen && item.dataset.section === "biblioteca");
+  });
+}
+
+async function openLibrary() {
+  setMainView("library");
+  if (!state.library.loaded && !state.library.loading) await loadLibrary();
+  renderLibrary();
+}
+
+function closeLibrary() {
+  setMainView("chat");
+  renderMessages();
+}
+
+async function loadLibrary() {
+  state.library.loading = true;
+  renderLibraryMessage("Cargando biblioteca...");
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/library`);
+    if (!res.ok) throw new Error(`library_${res.status}`);
+    const data = await res.json();
+    state.library.documents = Array.isArray(data.documents) ? data.documents : [];
+    state.library.categories = Array.isArray(data.categories) ? data.categories : [];
+    state.library.loaded = true;
+  } catch (err) {
+    console.error(err);
+    renderLibraryMessage("No se pudo cargar la biblioteca.");
+  } finally {
+    state.library.loading = false;
+  }
+}
+
+function renderLibraryMessage(message) {
+  if (el.libraryDocs) el.libraryDocs.innerHTML = `<p class="library-empty">${escapeHtml(message)}</p>`;
+  if (el.libraryTree) el.libraryTree.innerHTML = "";
+  if (el.libraryCount) el.libraryCount.textContent = "0 documentos";
+}
+
+function renderLibrary() {
+  if (!el.libraryDocs || !el.libraryTree) return;
+  if (state.library.loading) {
+    renderLibraryMessage("Cargando biblioteca...");
+    return;
+  }
+  const docs = filteredLibraryDocuments();
+  renderLibraryTree();
+  renderLibraryDocs(docs);
+  if (el.libraryCount) {
+    const total = state.library.documents.length;
+    el.libraryCount.textContent = `${docs.length} de ${total} documentos`;
+  }
+}
+
+function filteredLibraryDocuments() {
+  const q = state.library.query.trim().toLowerCase();
+  return state.library.documents.filter((doc) => {
+    if (state.library.activeCategory !== "all" && doc.category !== state.library.activeCategory) return false;
+    if (state.library.activeBranch !== "all" && doc.branch !== state.library.activeBranch) return false;
+    if (!q) return true;
+    const haystack = [
+      doc.title,
+      doc.category,
+      doc.branch,
+      doc.source_pdf,
+      doc.document_type,
+      doc.language,
+      ...(doc.authors || []),
+      ...(doc.topics || []),
+    ].join(" ").toLowerCase();
+    return haystack.includes(q);
+  });
+}
+
+function renderLibraryTree() {
+  const categories = state.library.categories || [];
+  const button = (label, count, category, branch = "all") => {
+    const active = state.library.activeCategory === category && state.library.activeBranch === branch;
+    return `<button class="library-tree__item${active ? " is-active" : ""}" type="button" data-category="${escapeHtml(category)}" data-branch="${escapeHtml(branch)}">
+      <span>${escapeHtml(label)}</span><strong>${count}</strong>
+    </button>`;
+  };
+  const total = state.library.documents.length;
+  const html = [
+    button("Todo", total, "all", "all"),
+    ...categories.map((cat) => `
+      <div class="library-tree__group">
+        ${button(cat.name, cat.count, cat.name, "all")}
+        <div class="library-tree__branches">
+          ${(cat.branches || []).map((branch) => button(branch.name, branch.count, cat.name, branch.name)).join("")}
+        </div>
+      </div>`),
+  ].join("");
+  el.libraryTree.innerHTML = html;
+}
+
+function renderLibraryDocs(docs) {
+  if (!docs.length) {
+    el.libraryDocs.innerHTML = `<p class="library-empty">No encontré documentos con ese filtro.</p>`;
+    return;
+  }
+  el.libraryDocs.innerHTML = docs.map((doc) => {
+    const authors = (doc.authors || []).slice(0, 3).join(", ");
+    const meta = [doc.branch, doc.year, doc.language, doc.pdf_pages ? `${doc.pdf_pages} págs.` : ""].filter(Boolean).join(" · ");
+    const topics = (doc.topics || []).slice(0, 4).map((topic) => `<span>${escapeHtml(topic)}</span>`).join("");
+    const pdf = doc.pdf_url
+      ? `<a class="library-card__pdf" href="${escapeHtml(doc.pdf_url)}" target="_blank" rel="noreferrer">Abrir PDF</a>`
+      : `<span class="library-card__pdf is-disabled">PDF no enlazado</span>`;
+    return `
+      <article class="library-card">
+        <div class="library-card__top">
+          <span class="library-card__category">${escapeHtml(doc.category || "General")}</span>
+          ${pdf}
+        </div>
+        <h2>${escapeHtml(doc.title || "Documento sin titulo")}</h2>
+        <p class="library-card__meta">${escapeHtml(meta)}</p>
+        ${authors ? `<p class="library-card__authors">${escapeHtml(authors)}</p>` : ""}
+        ${topics ? `<div class="library-card__topics">${topics}</div>` : ""}
+      </article>`;
+  }).join("");
+}
+
+el.libraryClose?.addEventListener("click", closeLibrary);
+el.librarySearch?.addEventListener("input", () => {
+  state.library.query = el.librarySearch.value || "";
+  renderLibrary();
+});
+el.libraryTree?.addEventListener("click", (event) => {
+  const btn = event.target.closest(".library-tree__item");
+  if (!btn) return;
+  state.library.activeCategory = btn.dataset.category || "all";
+  state.library.activeBranch = btn.dataset.branch || "all";
+  renderLibrary();
+});
+
 // Rail de iconos
 document.querySelectorAll(".rail__item").forEach((item) => {
   item.addEventListener("click", () => {
@@ -2568,11 +2731,12 @@ document.querySelectorAll(".rail__item").forEach((item) => {
     const section = item.dataset.section;
 
     // Acciones directas
-    if (section === "nuevo") { createChat({ syncBackend: true }); return; }
+    if (section === "nuevo") { closeLibrary(); createChat({ syncBackend: true }); return; }
     if (section === "buscar") { openConversations(); return; }
 
     if (section === "ajustes") { openSettings(); return; }
     if (section === "imagenes") { openImageGenerator(); return; }
+    if (section === "biblioteca") { openLibrary(); return; }
 
     // Secciones (placeholder para futuras vistas)
     document.querySelectorAll(".rail__item").forEach((i) => i.classList.remove("is-active"));

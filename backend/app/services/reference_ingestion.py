@@ -47,6 +47,14 @@ class ReferenceDocument:
 
 
 @dataclass(frozen=True)
+class ReferenceCatalogItem:
+    markdown_path: Path
+    pdf_path: Path | None
+    metadata: dict[str, Any]
+    title: str
+
+
+@dataclass(frozen=True)
 class IngestionResult:
     markdown_files: int
     documents: int
@@ -61,6 +69,23 @@ class ReferenceIngestionService:
         self.references_dir = Path(settings.references_dir).expanduser().resolve()
         self.markdown_dir = Path(settings.reference_markdown_dir).expanduser().resolve()
         self.chunk_chars = settings.reference_chunk_chars
+
+    def catalog(self) -> list[ReferenceCatalogItem]:
+        items: list[ReferenceCatalogItem] = []
+        for markdown_path in sorted(self.markdown_dir.glob("*.md")):
+            text = markdown_path.read_text(encoding="utf-8")
+            metadata = parse_frontmatter(text)
+            body = strip_frontmatter(text).strip()
+            title = str(metadata.get("title") or title_from_note(markdown_path, body)).strip()
+            items.append(
+                ReferenceCatalogItem(
+                    markdown_path=markdown_path,
+                    pdf_path=self._resolve_pdf(metadata, markdown_path),
+                    metadata=metadata,
+                    title=title,
+                )
+            )
+        return items
 
     def discover(self) -> list[ReferenceDocument]:
         documents: list[ReferenceDocument] = []
