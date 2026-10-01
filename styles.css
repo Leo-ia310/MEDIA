@@ -1342,11 +1342,11 @@ body.practice-collapsed #practiceRail .rail__toggle-fill { opacity:.9; transform
   --text:#f7fafc;
   --text-soft:#c7d0df;
   --text-muted:#7f8da3;
-  --primary:#33d6a6;
-  --primary-hover:#15b889;
-  --primary-soft:rgba(51,214,166,.12);
-  --on-primary:#07110e;
-  --accent:#ffcc66;
+  --primary:#3b82f6;
+  --primary-hover:#60a5fa;
+  --primary-soft:rgba(59,130,246,.14);
+  --on-primary:#ffffff;
+  --accent:#22d3ee;
   --danger:#ff5c7a;
   --bubble-user:#2563eb;
   --shadow-sm:0 1px 0 rgba(255,255,255,.04);
@@ -1366,16 +1366,16 @@ body.practice-collapsed #practiceRail .rail__toggle-fill { opacity:.9; transform
   --text:#f7fafc;
   --text-soft:#c7d0df;
   --text-muted:#7f8da3;
-  --primary:#33d6a6;
-  --primary-hover:#15b889;
-  --primary-soft:rgba(51,214,166,.12);
+  --primary:#3b82f6;
+  --primary-hover:#60a5fa;
+  --primary-soft:rgba(59,130,246,.14);
   --frame:#0b0e13;
 }
 
 body {
   background:
-    linear-gradient(135deg, rgba(51,214,166,.08), transparent 34%),
-    linear-gradient(315deg, rgba(255,204,102,.07), transparent 38%),
+    linear-gradient(135deg, rgba(59,130,246,.08), transparent 34%),
+    linear-gradient(315deg, rgba(34,211,238,.07), transparent 38%),
     var(--bg);
 }
 
@@ -1455,7 +1455,7 @@ body {
 
 .rail__item:hover,
 .rail__item.is-active {
-  background:rgba(51,214,166,.12);
+  background:rgba(59,130,246,.12);
   color:var(--text);
 }
 
@@ -1633,9 +1633,9 @@ body {
 .token-card {
   margin:0 20px 20px;
   padding:16px;
-  border:1px solid rgba(51,214,166,.32);
+  border:1px solid rgba(59,130,246,.32);
   border-radius:8px;
-  background:rgba(51,214,166,.08);
+  background:rgba(59,130,246,.08);
 }
 
 .token-card__head {
@@ -1710,13 +1710,13 @@ body {
 }
 
 .plan-card.is-featured {
-  border-color:rgba(255,204,102,.45);
-  background:rgba(255,204,102,.08);
+  border-color:rgba(34,211,238,.45);
+  background:rgba(34,211,238,.08);
 }
 
 .plan-card.is-selected {
   outline:2px solid var(--primary);
-  background:rgba(51,214,166,.11);
+  background:rgba(59,130,246,.11);
 }
 
 .plan-card__badge {
@@ -1816,9 +1816,9 @@ body {
   gap:14px;
   margin:0 0 14px;
   padding:14px;
-  border:1px solid rgba(51,214,166,.25);
+  border:1px solid rgba(59,130,246,.25);
   border-radius:8px;
-  background:rgba(51,214,166,.07);
+  background:rgba(59,130,246,.07);
 }
 
 .mindmap-preview__root {
@@ -2838,37 +2838,44 @@ a.src__chip:hover, .src__chip:focus-visible { border-color:var(--primary); color
 
 /* ===================== Tema claro (data-theme="light") + transición circular ===================== */
 :root { color-scheme:dark; }
+/* Paleta clara: base azul-grisacea fria, texto con contraste AA, azul 600 como primario */
 :root[data-theme="light"] {
   color-scheme:light;
-  --bg:#f3f6fa; --bg-soft:#e9eef5; --surface:#ffffff; --surface-2:#f0f4f9;
-  --border:#d9e0ea; --text:#101828; --text-soft:#475467; --text-muted:#667388;
-  --primary:#087f5d; --primary-hover:#066a4d; --primary-soft:rgba(8,127,93,.10);
-  --on-primary:#ffffff; --accent:#c77d00; --danger:#d92d52; --bubble-user:#2563eb;
-  --shadow-sm:0 1px 2px rgba(16,24,40,.06);
-  --shadow-md:0 10px 28px rgba(16,24,40,.10);
-  --shadow-lg:0 24px 64px rgba(16,24,40,.14);
-  --frame:#f3f6fa;
+  --bg:#f4f7fc; --bg-soft:#e9effa; --surface:#ffffff; --surface-2:#f0f5fd;
+  --border:#d8e1f0; --text:#0b1424; --text-soft:#3d4b63; --text-muted:#62708a;
+  --primary:#2563eb; --primary-hover:#1d4ed8; --primary-soft:rgba(37,99,235,.09);
+  --on-primary:#ffffff; --accent:#0891b2; --danger:#d92d52; --bubble-user:#2563eb;
+  --shadow-sm:0 1px 2px rgba(15,35,80,.06);
+  --shadow-md:0 10px 28px rgba(15,35,80,.10);
+  --shadow-lg:0 24px 64px rgba(15,35,80,.16);
+  --frame:#f4f7fc;
+}
+:root[data-theme="light"] body {
+  background:
+    radial-gradient(60% 50% at 6% 0%, rgba(37,99,235,.10), transparent 62%),
+    radial-gradient(50% 45% at 100% 100%, rgba(8,145,178,.09), transparent 62%),
+    var(--bg);
 }
 /* Colores fijos de las capas oscuras -> equivalentes claros */
-:root[data-theme="light"] .topbar { border-bottom-color:rgba(16,24,40,.08); background:rgba(243,246,250,.85); }
-:root[data-theme="light"] .rail { border-color:rgba(16,24,40,.08); }
-:root[data-theme="light"] .main { border-color:rgba(16,24,40,.06); background:transparent; }
+:root[data-theme="light"] .topbar { border-bottom-color:rgba(15,35,80,.08); background:rgba(244,247,252,.85); }
+:root[data-theme="light"] .rail { border-color:rgba(15,35,80,.08); }
+:root[data-theme="light"] .main { border-color:rgba(15,35,80,.06); background:transparent; }
 :root[data-theme="light"] .composer__form { background:var(--surface); border-color:var(--border); box-shadow:var(--shadow-sm); }
 :root[data-theme="light"] .msg--ai .msg__bubble { background:transparent; }
-:root[data-theme="light"] .practice-artifact { background:rgba(16,24,40,.03); }
+:root[data-theme="light"] .practice-artifact { background:rgba(15,35,80,.03); }
 :root[data-theme="light"] .mindmap-preview__node,
 :root[data-theme="light"] .practice-slide,
 :root[data-theme="light"] .study-card,
-:root[data-theme="light"] .practice-question { border-color:rgba(16,24,40,.09); background:rgba(16,24,40,.03); }
-:root[data-theme="light"] .account-menu__details span { border-color:rgba(16,24,40,.09); background:rgba(16,24,40,.03); }
-:root[data-theme="light"] .token-card__bar { background:rgba(16,24,40,.08); }
+:root[data-theme="light"] .practice-question { border-color:rgba(15,35,80,.09); background:rgba(15,35,80,.03); }
+:root[data-theme="light"] .account-menu__details span { border-color:rgba(15,35,80,.09); background:rgba(15,35,80,.03); }
+:root[data-theme="light"] .token-card__bar { background:rgba(15,35,80,.08); }
 :root[data-theme="light"] .plan-card,
-:root[data-theme="light"] .practice-preview__node { background:rgba(16,24,40,.03); }
-:root[data-theme="light"] .plan-card__badge { border-color:rgba(16,24,40,.14); }
-:root[data-theme="light"] .agent-thinking__step span { background:rgba(16,24,40,.04); }
+:root[data-theme="light"] .practice-preview__node { background:rgba(15,35,80,.03); }
+:root[data-theme="light"] .plan-card__badge { border-color:rgba(15,35,80,.14); }
+:root[data-theme="light"] .agent-thinking__step span { background:rgba(15,35,80,.04); }
 :root[data-theme="light"] .rail--right .rail__item {
-  background:rgba(255,255,255,.72); border-color:rgba(16,24,40,.09);
-  box-shadow:inset 0 1px 0 #fff, 0 8px 18px -12px rgba(16,24,40,.28);
+  background:rgba(255,255,255,.72); border-color:rgba(15,35,80,.09);
+  box-shadow:inset 0 1px 0 #fff, 0 8px 18px -12px rgba(15,35,80,.28);
 }
 :root[data-theme="light"] .rail__item.is-active,
 :root[data-theme="light"] .chat-item.is-active,
@@ -3011,4 +3018,26 @@ a.src__chip:hover, .src__chip:focus-visible { border-color:var(--primary); color
   .composer__input::-webkit-scrollbar { display:none; }
   .composer__input::placeholder { font-size:13.5px; }
   .composer__form { gap:4px; padding-left:8px; padding-right:8px; }
+}
+
+/* Logo como boton: con el rail contraido el boton de despliegue no se muestra;
+   el logo hace de boton y al pasar el cursor/foco muestra el icono de expandir */
+@media (min-width:901px) {
+  body.rail-collapsed #rail .rail__header {
+    position:relative; flex-direction:row; align-items:center; justify-content:center;
+    height:54px; padding:4px 0 10px; gap:0;
+  }
+  body.rail-collapsed #rail .rail__brandbox { width:auto; gap:0; }
+  body.rail-collapsed #rail .rail__logo { transition:opacity .18s var(--ease-out), transform .18s var(--ease-out); }
+  body.rail-collapsed #rail .rail__toggle {
+    position:absolute; top:4px; left:50%; width:40px; height:40px; margin-left:-20px; z-index:2;
+    border-radius:12px; border-color:transparent; background:transparent; opacity:0;
+    transition:opacity .18s var(--ease-out), background .18s var(--ease-out), border-color .18s var(--ease-out), transform .12s ease;
+  }
+  body.rail-collapsed #rail .rail__header:hover .rail__toggle,
+  body.rail-collapsed #rail .rail__toggle:focus-visible {
+    opacity:1; background:var(--surface-2, var(--bg-soft)); border-color:var(--border); color:var(--text);
+  }
+  body.rail-collapsed #rail .rail__header:hover .rail__logo,
+  body.rail-collapsed #rail .rail__header:has(.rail__toggle:focus-visible) .rail__logo { opacity:0; transform:scale(.9); }
 }
