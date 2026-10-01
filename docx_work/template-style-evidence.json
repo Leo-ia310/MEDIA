@@ -1,0 +1,136 @@
+{
+  "input": "C:\\Users\\Maykel\\Downloads\\Estructura del Informe del proyecto Feria STEM 2026 (1).docx",
+  "fonts_by_char_count": {
+    "Arial": 2327,
+    "Britannic Bold": 20
+  },
+  "direct_run_formatting_runs": 64,
+  "direct_paragraph_formatting_paragraphs": 87,
+  "heading_like_paragraphs_not_heading_style": [
+    {
+      "para_index": 1,
+      "text": "GU\u00cdA PARA LA PRESENTACI\u00d3N DEL INFORME DE PROYECTO",
+      "style": "Normal"
+    },
+    {
+      "para_index": 36,
+      "text": "TU UNIVERSIDAD POR EXCELENCIA",
+      "style": "Normal"
+    },
+    {
+      "para_index": 58,
+      "text": "\u00cdndice ",
+      "style": "Normal"
+    },
+    {
+      "para_index": 60,
+      "text": "Introducci\u00f3n ",
+      "style": "Normal"
+    },
+    {
+      "para_index": 65,
+      "text": "Planteamiento de problema",
+      "style": "Normal"
+    },
+    {
+      "para_index": 68,
+      "text": "Justificaci\u00f3n",
+      "style": "Normal"
+    },
+    {
+      "para_index": 71,
+      "text": "Objetivos",
+      "style": "Normal"
+    },
+    {
+      "para_index": 75,
+      "text": "Desarrollo t\u00e9cnico y metodol\u00f3gico",
+      "style": "Normal"
+    },
+    {
+      "para_index": 81,
+      "text": "Impacto del proyecto",
+      "style": "List Paragraph"
+    },
+    {
+      "para_index": 83,
+      "text": "Conclusiones ",
+      "style": "Normal"
+    },
+    {
+      "para_index": 86,
+      "text": "Recomendaciones",
+      "style": "Normal"
+    },
+    {
+      "para_index": 89,
+      "text": "Referencias bibliograf\u00eda ",
+      "style": "Normal"
+    },
+    {
+      "para_index": 93,
+      "text": "Anexos",
+      "style": "Normal"
+    }
+  ],
+  "examples": {
+    "direct_paragraph_formatting": [
+      {
+        "para_index": 1,
+        "text": "GU\u00cdA PARA LA PRESENTACI\u00d3N DEL INFORME DE PROYECTO",
+        "style": "Normal"
+      },
+      {
+        "para_index": 2,
+        "text": "",
+        "style": "Normal"
+      },
+      {
+        "para_index": 3,
+        "text": "Estimados estudiantes:",
+        "style": "Normal"
+      },
+      {
+        "para_index": 4,
+        "text": "Cada equipo deber\u00e1 entregar un informe escrito impreso que describa en qu\u00e9 consiste el proyecto, la problem\u00e1tica plantea",
+        "style": "Normal"
+      },
+      {
+        "para_index": 5,
+        "text": "",
+        "style": "Normal"
+      }
+    ],
+    "direct_run_formatting": [
+      {
+        "para_index": 1,
+        "run_text": "GU\u00cdA PARA LA PRESENTACI\u00d3N DEL INFORME DE PROYECTO",
+        "style": "Normal"
+      },
+      {
+        "para_index": 3,
+        "run_text": "Estimados estudiantes:",
+        "style": "Normal"
+      },
+      {
+        "para_index": 4,
+        "run_text": "Cada equipo deber\u00e1 entregar un informe escrito impreso que describa en qu\u00e9 consi",
+        "style": "Normal"
+      },
+      {
+        "para_index": 6,
+        "run_text": "REQUISITOS DE FORMATO:",
+        "style": "Normal"
+      },
+      {
+        "para_index": 7,
+        "run_text": "- Impreso en papel tama\u00f1o carta, fondo blanco, encolochado.",
+        "style": "Normal"
+      }
+    ]
+  },
+  "notes": [
+    "Direct formatting is not always wrong, but it often causes inconsistent output when templates change.",
+    "Heading-like paragraphs not using Heading styles can break TOC and accessibility."
+  ]
+}
