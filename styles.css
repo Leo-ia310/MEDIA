@@ -2634,32 +2634,19 @@ body.rail-collapsed #rail .rail__toggle {
 
 @property --halo-a { syntax:"<angle>"; inherits:false; initial-value:0deg; }
 
-/* 1) Fondo aurora detrás del chat */
-.main::before {
-  content:""; position:absolute; inset:-25%; z-index:0; pointer-events:none;
-  background:
-    radial-gradient(38% 34% at 18% 22%, var(--primary-wash), transparent 70%),
-    radial-gradient(34% 30% at 82% 72%, var(--accent-wash), transparent 70%),
-    radial-gradient(30% 28% at 62% 12%, color-mix(in oklch, var(--bubble-user, var(--primary)) 14%, transparent), transparent 70%);
-  filter:blur(46px); opacity:.9;
-  animation:auroraDrift 26s ease-in-out infinite alternate;
-}
-.main > .messages, .main > .composer, .main > .composer__hint { position:relative; z-index:1; }
-@keyframes auroraDrift {
-  0%   { transform:translate3d(-3%, -2%, 0) rotate(0deg) scale(1); }
-  50%  { transform:translate3d(3%, 2%, 0)  rotate(4deg) scale(1.06); }
-  100% { transform:translate3d(-2%, 3%, 0) rotate(-3deg) scale(1.02); }
-}
-
 /* 2) Hero de bienvenida */
 .hero { margin:auto; max-width:640px; padding:24px 20px; text-align:center; display:grid; gap:10px; justify-items:center; }
 .hero__eyebrow {
-  padding:5px 12px; border-radius:999px; font-size:12.5px; font-weight:600; letter-spacing:.3px;
-  color:var(--text-soft); background:var(--surface-glass);
-  border:1px solid color-mix(in oklch, var(--text) 10%, transparent);
-  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+  display:inline-flex; align-items:center; gap:9px;
+  font-size:14px; font-weight:600; letter-spacing:.2px; color:var(--text-soft);
   animation:heroIn .7s var(--ease-out) both;
 }
+.hero__eyebrow .sky { flex-shrink:0; width:22px; height:22px; animation:skyIn .9s .15s var(--ease-spring) both; }
+.hero__eyebrow .sky--sun { color:#f59e0b; filter:drop-shadow(0 0 6px rgba(245,158,11,.45)); }
+.hero__eyebrow .sky--moon { color:#9db8ff; filter:drop-shadow(0 0 6px rgba(157,184,255,.4)); }
+:root[data-theme="light"] .hero__eyebrow .sky--moon { color:#4f6fd8; filter:none; }
+:root[data-theme="light"] .hero__eyebrow .sky--sun { filter:none; }
+@keyframes skyIn { from { opacity:0; transform:scale(.4) rotate(-80deg); } to { opacity:1; transform:none; } }
 .hero__title {
   font-family:var(--font-title); font-weight:700; line-height:1.1; letter-spacing:-.5px;
   font-size:clamp(30px, 5.2vw, 48px); color:var(--text);
@@ -2750,23 +2737,38 @@ body.rail-collapsed #rail .rail__toggle {
   border:1px solid color-mix(in oklch, var(--text) 8%, transparent);
 }
 
-/* 8) Skeleton con shimmer mientras llega la primera respuesta (vive en la burbuja, que persiste) */
-@keyframes skShimmer { from { background-position:200% 0; } to { background-position:-100% 0; } }
-.msg__bubble.is-streaming:has(.agent-thinking)::after {
-  content:""; display:block; width:min(420px, 72vw); height:52px; margin:12px 0 0; padding:0;
-  border-radius:6px; box-shadow:none; vertical-align:baseline;
-  background:linear-gradient(100deg,
-    color-mix(in oklch, var(--text) 9%, transparent) 30%,
-    color-mix(in oklch, var(--primary) 38%, transparent) 50%,
-    color-mix(in oklch, var(--text) 9%, transparent) 70%) 0 0 / 250% 100%;
-  -webkit-mask:linear-gradient(#000,#000) 0 0 / 100% 10px no-repeat,
-               linear-gradient(#000,#000) 0 21px / 82% 10px no-repeat,
-               linear-gradient(#000,#000) 0 42px / 58% 10px no-repeat;
-          mask:linear-gradient(#000,#000) 0 0 / 100% 10px no-repeat,
-               linear-gradient(#000,#000) 0 21px / 82% 10px no-repeat,
-               linear-gradient(#000,#000) 0 42px / 58% 10px no-repeat;
-  animation:skShimmer 1.7s linear infinite;
+/* 8) Indicador "pensando": orbe de degradados que gira + texto con brillo.
+   Solo anima transform/opacity (compositor) y un texto pequeno; no repinta areas grandes. */
+.msg__bubble.is-streaming:has(.think)::after { content:none; }
+.think { display:inline-flex; align-items:center; gap:15px; padding:4px 0; color:var(--text-soft); }
+.think__orb { position:relative; width:28px; height:28px; flex:0 0 28px; animation:orbSpin 3.6s linear infinite; }
+.think__orb i { position:absolute; inset:0; border-radius:50%; opacity:.95; }
+.think__orb i:nth-child(1) { background:radial-gradient(circle at 28% 30%, var(--primary), transparent 64%); }
+.think__orb i:nth-child(2) {
+  background:radial-gradient(circle at 74% 34%, var(--accent, var(--primary)), transparent 62%);
+  animation:orbBreath 2.4s ease-in-out infinite;
 }
+.think__orb i:nth-child(3) {
+  background:radial-gradient(circle at 50% 78%, color-mix(in oklch, var(--primary) 55%, #a78bfa), transparent 62%);
+  animation:orbBreath 2.4s -1.2s ease-in-out infinite;
+}
+.think__orb::after {
+  content:""; position:absolute; inset:-5px; border-radius:50%; border:1.5px solid transparent;
+  border-top-color:var(--primary); border-right-color:var(--accent, var(--primary));
+  opacity:.6; animation:orbSpin 1.5s linear infinite reverse;
+}
+.think__label { display:inline-block; }
+.think__label.is-in { animation:thinkIn .4s var(--ease-out) both; }
+.think__text {
+  font-weight:600; font-size:14.5px;
+  background:linear-gradient(100deg, var(--text-muted) 30%, var(--text) 50%, var(--text-muted) 70%) 0 0 / 250% 100%;
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent;
+  animation:thinkShimmer 1.9s linear infinite;
+}
+@keyframes orbSpin { to { transform:rotate(360deg); } }
+@keyframes orbBreath { 0%, 100% { transform:scale(.78); opacity:.6; } 50% { transform:scale(1.12); opacity:1; } }
+@keyframes thinkIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+@keyframes thinkShimmer { from { background-position:150% 0; } to { background-position:-100% 0; } }
 
 /* 9) Fuentes como tarjetas/chips con detalle al pasar el cursor */
 .src { margin-top:14px; display:grid; gap:8px; }
@@ -3043,12 +3045,7 @@ a.src__chip:hover, .src__chip:focus-visible { border-color:var(--primary); color
 }
 
 /* ===================== Rendimiento del chat ===================== */
-/* La aurora ya son degradados radiales suaves: el blur de 46px sobre una capa de 150% del area
-   era el filtro mas caro de la pagina y se recalculaba mientras la capa animaba. */
-.main::before { filter:none; will-change:transform; }
-
 /* Mientras responde, las animaciones decorativas y la mascara del fade no compiten con el streaming */
-body.is-busy .main::before,
 body.is-busy .composer__form::before,
 body.is-busy .hero__grad { animation-play-state:paused; }
 body.is-busy .messages {

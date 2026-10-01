@@ -884,6 +884,8 @@ let staggerNextRender = true; // anima en cascada la próxima lista (abrir/cambi
 
 // ---------- Hero de bienvenida: saludo por hora + subtítulo con efecto de escritura ----------
 let heroTypeTimer = null;
+const SKY_SUN = '<svg class="sky sky--sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><g stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3 7 7M17 17l1.7 1.7M18.7 5.3 17 7M7 17l-1.7 1.7"/></g></svg>';
+const SKY_MOON = '<svg class="sky sky--moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7z" fill="currentColor"/></svg>';
 function heroGreetKey() {
   const h = new Date().getHours();
   return h < 6 ? "hero_night" : h < 12 ? "hero_morning" : h < 19 ? "hero_afternoon" : "hero_evening";
@@ -893,12 +895,9 @@ function renderHero() {
   const title = document.getElementById("heroTitle");
   const sub = document.getElementById("heroSub");
   if (!greet || !title || !sub) return;
-  let day = "";
-  try {
-    day = new Intl.DateTimeFormat(lang, { weekday: "long" }).format(new Date());
-    day = day.charAt(0).toUpperCase() + day.slice(1);
-  } catch (_) { /* sin Intl: solo saludo */ }
-  greet.textContent = day ? `${t(heroGreetKey())} · ${day}` : t(heroGreetKey());
+  const hour = new Date().getHours();
+  greet.innerHTML = (hour >= 6 && hour < 19 ? SKY_SUN : SKY_MOON) + "<span></span>";
+  greet.lastElementChild.textContent = t(heroGreetKey());
   title.innerHTML = `${escapeHtml(t("hero_hi"))} <span class="hero__grad">Media</span>`;
   const tip = document.getElementById("heroTip");
   if (tip) {
@@ -1013,18 +1012,28 @@ function renderAgentThinking(index = 0) {
   const activeIndex = Math.abs(index) % AGENT_THINKING_STEPS.length;
   const label = AGENT_THINKING_STEPS[activeIndex] || AGENT_THINKING_STEPS[0];
   return `
-    <div class="agent-thinking" aria-live="polite">
-      <div class="agent-thinking__head">
-        <span class="agent-thinking__pulse"></span>
-        <span class="agent-thinking__status">${escapeHtml(label)}</span>
-      </div>
+    <div class="agent-thinking think" aria-live="polite">
+      <span class="think__orb" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="think__label"><span class="think__text">${escapeHtml(label)}</span></span>
     </div>`;
 }
 
 function updateAgentThinking(aiMsg) {
   if (!streamingBubble || aiMsg.content) return;
   const keepAtBottom = isNearBottom();
-  streamingBubble.innerHTML = renderAgentThinking(aiMsg.thinkingIndex || 0);
+  const idx = Math.abs(aiMsg.thinkingIndex || 0) % AGENT_THINKING_STEPS.length;
+  const label = AGENT_THINKING_STEPS[idx] || AGENT_THINKING_STEPS[0];
+  const text = streamingBubble.querySelector(".think__text");
+  if (!text) {
+    streamingBubble.innerHTML = renderAgentThinking(aiMsg.thinkingIndex || 0);
+  } else if (text.textContent !== label) {
+    // Solo se cambia el texto con una transicion: el orbe no se recrea ni reinicia su animacion
+    const wrap = text.parentElement;
+    wrap.classList.remove("is-in");
+    void wrap.offsetWidth;
+    text.textContent = label;
+    wrap.classList.add("is-in");
+  }
   if (keepAtBottom) scrollToBottom();
 }
 
