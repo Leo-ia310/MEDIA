@@ -29,6 +29,7 @@ const I18N = {
     rail_new: "Nuevo chat", rail_search: "Buscar chats", rail_images: "Imágenes", rail_library: "Biblioteca", rail_settings: "Configuración", rail_toggle: "Contraer menú", rail_toggle_expand: "Expandir menú",
     hero_morning:"Buenos días", hero_afternoon:"Buenas tardes", hero_evening:"Buenas noches", hero_night:"Buenas noches", hero_hi:"Hola, soy", hero_sub:"¿En qué puedo ayudarte hoy?",
     day_today:"Hoy", day_yesterday:"Ayer",
+    pal_placeholder:"Busca chats, acciones o herramientas…", pal_empty:"Sin resultados", pal_hint:"↑↓ navegar · Enter seleccionar · Esc cerrar", pal_g_actions:"Acciones", pal_g_tools:"Herramientas de estudio", pal_g_chats:"Chats", pal_new:"Nuevo chat", pal_images:"Generar imagen", pal_library:"Biblioteca virtual", pal_settings:"Configuración", pal_profile:"Perfil", pal_theme:"Cambiar tema (claro/oscuro)", pal_lang:"Idioma:", hero_tip:"Pulsa {k} para buscar y ejecutar acciones", empty_history_title:"Aún no hay chats", empty_history_text:"Tus conversaciones aparecerán aquí.", det_title:"Detalles de la respuesta", det_model:"Modelo", det_quality:"Calidad", det_verification:"Verificación", det_sources:"Fuentes", det_answer:"Respuesta", det_q_low:"Baja", det_q_medium:"Media", det_q_high:"Alta", ans_grounded:"Basada en fuentes", ans_unverified_model_knowledge:"Conocimiento general del modelo", ans_insufficient_evidence:"Evidencia insuficiente", ans_provider_error:"Error del proveedor", ver_verified:"Verificada", ver_unverified_model_knowledge:"Sin verificar", ver_insufficient_evidence:"Evidencia insuficiente", ver_failed:"Verificación fallida", m_menu:"Abrir menú", m_tools:"Herramientas de estudio",
     tb_search: "Buscar", tb_notifications: "Notificaciones", tb_account: "Cuenta",
     notif_header: "Notificaciones", notif1_title: "Bienvenido a Media", notif1_text: "Tu asistente está listo para conversar.",
     notif2_title: "Consejo", notif2_text: "Pulsa <kbd>Shift</kbd>+<kbd>Enter</kbd> para saltar de línea.",
@@ -66,6 +67,7 @@ const I18N = {
     rail_new: "New chat", rail_search: "Search chats", rail_images: "Images", rail_library: "Library", rail_settings: "Settings", rail_toggle: "Collapse menu", rail_toggle_expand: "Expand menu",
     hero_morning:"Good morning", hero_afternoon:"Good afternoon", hero_evening:"Good evening", hero_night:"Good evening", hero_hi:"Hi, I'm", hero_sub:"How can I help you today?",
     day_today:"Today", day_yesterday:"Yesterday",
+    pal_placeholder:"Search chats, actions or tools…", pal_empty:"No results", pal_hint:"↑↓ navigate · Enter select · Esc close", pal_g_actions:"Actions", pal_g_tools:"Study tools", pal_g_chats:"Chats", pal_new:"New chat", pal_images:"Generate image", pal_library:"Virtual library", pal_settings:"Settings", pal_profile:"Profile", pal_theme:"Toggle theme (light/dark)", pal_lang:"Language:", hero_tip:"Press {k} to search and run actions", empty_history_title:"No chats yet", empty_history_text:"Your conversations will show up here.", det_title:"Answer details", det_model:"Model", det_quality:"Quality", det_verification:"Verification", det_sources:"Sources", det_answer:"Answer", det_q_low:"Low", det_q_medium:"Medium", det_q_high:"High", ans_grounded:"Source-based", ans_unverified_model_knowledge:"General model knowledge", ans_insufficient_evidence:"Insufficient evidence", ans_provider_error:"Provider error", ver_verified:"Verified", ver_unverified_model_knowledge:"Unverified", ver_insufficient_evidence:"Insufficient evidence", ver_failed:"Verification failed", m_menu:"Open menu", m_tools:"Study tools",
     tb_search: "Search", tb_notifications: "Notifications", tb_account: "Account",
     notif_header: "Notifications", notif1_title: "Welcome to Media", notif1_text: "Your assistant is ready to chat.",
     notif2_title: "Tip", notif2_text: "Press <kbd>Shift</kbd>+<kbd>Enter</kbd> for a new line.",
@@ -103,6 +105,7 @@ const I18N = {
     rail_new: "Nouveau chat", rail_search: "Rechercher", rail_images: "Images", rail_settings: "Paramètres", rail_toggle: "Réduire le menu", rail_toggle_expand: "Développer le menu",
     hero_morning:"Bonjour", hero_afternoon:"Bon après-midi", hero_evening:"Bonsoir", hero_night:"Bonsoir", hero_hi:"Salut, je suis", hero_sub:"Comment puis-je t'aider aujourd'hui ?",
     day_today:"Aujourd'hui", day_yesterday:"Hier",
+    pal_placeholder:"Cherche des chats, actions ou outils…", pal_empty:"Aucun résultat", pal_hint:"↑↓ naviguer · Entrée choisir · Échap fermer", pal_g_actions:"Actions", pal_g_tools:"Outils d'étude", pal_g_chats:"Chats", pal_new:"Nouveau chat", pal_images:"Générer une image", pal_library:"Bibliothèque virtuelle", pal_settings:"Paramètres", pal_profile:"Profil", pal_theme:"Changer de thème (clair/sombre)", pal_lang:"Langue :", hero_tip:"Appuie sur {k} pour chercher et lancer des actions", empty_history_title:"Pas encore de chats", empty_history_text:"Tes conversations apparaîtront ici.", det_title:"Détails de la réponse", det_model:"Modèle", det_quality:"Qualité", det_verification:"Vérification", det_sources:"Sources", det_answer:"Réponse", det_q_low:"Basse", det_q_medium:"Moyenne", det_q_high:"Élevée", ans_grounded:"Fondée sur des sources", ans_unverified_model_knowledge:"Connaissance générale du modèle", ans_insufficient_evidence:"Preuves insuffisantes", ans_provider_error:"Erreur du fournisseur", ver_verified:"Vérifiée", ver_unverified_model_knowledge:"Non vérifiée", ver_insufficient_evidence:"Preuves insuffisantes", ver_failed:"Échec de la vérification", m_menu:"Ouvrir le menu", m_tools:"Outils d'étude",
     tb_search: "Rechercher", tb_notifications: "Notifications", tb_account: "Compte",
     notif_header: "Notifications", notif1_title: "Bienvenue sur Media", notif1_text: "Votre assistant est prêt à discuter.",
     notif2_title: "Astuce", notif2_text: "Appuie sur <kbd>Shift</kbd>+<kbd>Enter</kbd> pour un saut de ligne.",
@@ -140,6 +143,7 @@ const I18N = {
     rail_new: "Novo chat", rail_search: "Buscar chats", rail_images: "Imagens", rail_settings: "Configurações", rail_toggle: "Recolher menu", rail_toggle_expand: "Expandir menu",
     hero_morning:"Bom dia", hero_afternoon:"Boa tarde", hero_evening:"Boa noite", hero_night:"Boa noite", hero_hi:"Olá, eu sou", hero_sub:"Como posso ajudar hoje?",
     day_today:"Hoje", day_yesterday:"Ontem",
+    pal_placeholder:"Busque chats, ações ou ferramentas…", pal_empty:"Sem resultados", pal_hint:"↑↓ navegar · Enter selecionar · Esc fechar", pal_g_actions:"Ações", pal_g_tools:"Ferramentas de estudo", pal_g_chats:"Chats", pal_new:"Novo chat", pal_images:"Gerar imagem", pal_library:"Biblioteca virtual", pal_settings:"Configurações", pal_profile:"Perfil", pal_theme:"Alternar tema (claro/escuro)", pal_lang:"Idioma:", hero_tip:"Pressione {k} para buscar e executar ações", empty_history_title:"Ainda não há chats", empty_history_text:"Suas conversas aparecerão aqui.", det_title:"Detalhes da resposta", det_model:"Modelo", det_quality:"Qualidade", det_verification:"Verificação", det_sources:"Fontes", det_answer:"Resposta", det_q_low:"Baixa", det_q_medium:"Média", det_q_high:"Alta", ans_grounded:"Baseada em fontes", ans_unverified_model_knowledge:"Conhecimento geral do modelo", ans_insufficient_evidence:"Evidência insuficiente", ans_provider_error:"Erro do provedor", ver_verified:"Verificada", ver_unverified_model_knowledge:"Não verificada", ver_insufficient_evidence:"Evidência insuficiente", ver_failed:"Falha na verificação", m_menu:"Abrir menu", m_tools:"Ferramentas de estudo",
     tb_search: "Buscar", tb_notifications: "Notificações", tb_account: "Conta",
     notif_header: "Notificações", notif1_title: "Bem-vindo a Media", notif1_text: "Seu assistente está pronto para conversar.",
     notif2_title: "Dica", notif2_text: "Pressione <kbd>Shift</kbd>+<kbd>Enter</kbd> para pular linha.",
@@ -230,6 +234,7 @@ function setLang(next) {
   }
   if (typeof updateAuthUI === "function") updateAuthUI();
   if (typeof renderHero === "function") renderHero();
+  if (window.__refreshDrawerLabels) window.__refreshDrawerLabels();
 }
 
 function initLang() {
@@ -490,6 +495,13 @@ async function streamAgentResponse(messages, onToken) {
     followup: data.suggested_followup || null,
     assets: Array.isArray(data.related_assets) ? data.related_assets : [],
     canRequestKnowledge: !!data.can_request_knowledge,
+    details: {
+      model: data.model || null,
+      effort: data.effort || null,
+      answer_status: data.answer_status || null,
+      verification_status: data.verification_status || null,
+      sources: Array.isArray(data.citations) ? data.citations.length : null,
+    },
     originalQuestion: last,
     normalizedTopic: (data.metadata && data.metadata.normalized_topic) || null,
   };
@@ -735,6 +747,7 @@ function serializeChat(chat) {
         normalizedTopic: m.normalizedTopic || null,
         knowledgeRequested: !!m.knowledgeRequested,
         practiceArtifact: m.practiceArtifact || null,
+        details: m.details || null,
       })),
   };
 }
@@ -840,6 +853,7 @@ function renderChatList(filter = "") {
     Array.isArray(c.messages) && c.messages.some((m) => !m.streaming && (m.content || "").trim()) &&
     (!q || (c.title || "").toLowerCase().includes(q))
   );
+  if (!items.length && !q) { el.chatList.innerHTML = emptyStateHTML(t("empty_history_title"), t("empty_history_text")); return; }
   el.chatList.innerHTML = "";
   items.forEach((chat) => {
     const row = document.createElement("div");
@@ -886,6 +900,14 @@ function renderHero() {
   } catch (_) { /* sin Intl: solo saludo */ }
   greet.textContent = day ? `${t(heroGreetKey())} · ${day}` : t(heroGreetKey());
   title.innerHTML = `${escapeHtml(t("hero_hi"))} <span class="hero__grad">Media</span>`;
+  const tip = document.getElementById("heroTip");
+  if (tip) {
+    tip.textContent = "";
+    const parts = t("hero_tip").split("{k}");
+    const kbd = document.createElement("kbd");
+    kbd.textContent = IS_MAC ? "⌘ K" : "Ctrl K";
+    tip.append(parts[0], kbd, parts[1] || "");
+  }
   clearInterval(heroTypeTimer);
   const text = t("hero_sub");
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -982,6 +1004,7 @@ function buildMessageNode(m, index, chat) {
   buildActions(node.querySelector(".msg__actions"), m, index, chat);
   if (role === "assistant" && !m.streaming) {
     buildMessageExtras(node.querySelector(".msg__body"), m, chat);
+    buildMessageDetails(node.querySelector(".msg__body"), m);
   }
   return node;
 }
@@ -1557,6 +1580,7 @@ async function sendMessage(text) {
 
   const attachments = pendingAttachments.slice();
   chat.messages.push({ role: "user", content, attachments, ts: Date.now() });
+  hapticTap(8);
   pendingAttachments = [];
   renderAttachPreview();
 
@@ -1599,6 +1623,7 @@ async function runAssistant(chat) {
       aiMsg.followup = meta.followup;
       aiMsg.assets = meta.assets;
       aiMsg.canRequestKnowledge = meta.canRequestKnowledge;
+      aiMsg.details = meta.details || null;
       aiMsg.originalQuestion = meta.originalQuestion;
       aiMsg.normalizedTopic = meta.normalizedTopic;
     }
@@ -1880,7 +1905,7 @@ function initTheme() {
   document.documentElement.setAttribute("data-theme", saved === "light" ? "light" : "dark");
 }
 let themeTransitionTimer = null;
-function toggleTheme() {
+function toggleTheme(origin) {
   const root = document.documentElement;
   const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
   const apply = () => {
@@ -1892,8 +1917,9 @@ function toggleTheme() {
     // Círculo que se expande desde el interruptor hasta cubrir la pantalla
     const btn = document.getElementById("settingsTheme");
     const r = btn ? btn.getBoundingClientRect() : null;
-    const x = r ? r.left + r.width / 2 : innerWidth / 2;
-    const y = r ? r.top + r.height / 2 : innerHeight / 2;
+    const hasOrigin = origin && Number.isFinite(origin.x) && Number.isFinite(origin.y);
+    const x = hasOrigin ? origin.x : (r ? r.left + r.width / 2 : innerWidth / 2);
+    const y = hasOrigin ? origin.y : (r ? r.top + r.height / 2 : innerHeight / 2);
     const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
     const vt = document.startViewTransition(apply);
     vt.ready.then(() => {
@@ -2208,7 +2234,7 @@ async function handlePracticeAction(kind) {
   if (!config) return;
 
   const item = document.querySelector(`[data-practice="${kind}"]`);
-  if (item) item.disabled = true;
+  if (item) { item.disabled = true; item.classList.add("is-loading"); }
   try {
     const res = await fetchWithAuth(`${API_BASE_URL}${config.endpoint}`, {
       method: "POST",
@@ -2225,7 +2251,7 @@ async function handlePracticeAction(kind) {
   } catch (_) {
     appendPracticeArtifact(chat, kind, demoPracticeResponse(kind, topic, options));
   } finally {
-    if (item) item.disabled = false;
+    if (item) { item.disabled = false; item.classList.remove("is-loading"); }
   }
 }
 
@@ -3373,6 +3399,7 @@ async function openConversation(id) {
           feedback: null,
           practiceArtifact: m.metadata?.practice_artifact || null,
           assets: m.metadata?.related_assets || [],
+          details: m.role === "assistant" ? { model: m.model || null, effort: m.effort || null, answer_status: m.answer_status || null, verification_status: m.verification_status || null, sources: null } : null,
         })),
     };
     const existingIndex = state.chats.findIndex((c) => c.backendConversationId === detail.id);
@@ -3527,10 +3554,327 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+// ===================== Fase 3 UI: paleta, estados vacíos, detalles, drawers, háptica =====================
+const IS_MAC = /Mac|iPhone|iPad/i.test((navigator.platform || "") + " " + (navigator.userAgent || ""));
+
+// Háptica: misma preferencia que el sonido/vibración al responder
+function hapticTap(ms = 8) {
+  if (!getDataPref("sound")) return;
+  try { navigator.vibrate?.(ms); } catch (_) { }
+}
+
+// ---------- Estados vacíos con ilustración ----------
+function emptyStateHTML(title, text) {
+  return `<div class="empty-state">
+    <svg class="empty-state__art" viewBox="0 0 96 80" aria-hidden="true">
+      <rect class="es-b1" x="8" y="12" width="52" height="34" rx="10"/>
+      <path class="es-b1" d="M22 46l-3 13 15-13z"/>
+      <rect class="es-b2" x="36" y="28" width="52" height="34" rx="10"/>
+      <path class="es-b2" d="M76 62l4 11-15-11z"/>
+      <path class="es-line" d="M46 40h30M46 49h20"/>
+      <path class="es-spark" d="M80 10l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/>
+    </svg>
+    <p class="empty-state__title">${escapeHtml(title)}</p>
+    <p class="empty-state__text">${escapeHtml(text)}</p>
+  </div>`;
+}
+
+// ---------- Panel plegable "Detalles de la respuesta" ----------
+const DET_DOT = { verified: "ok", unverified_model_knowledge: "warn", insufficient_evidence: "warn", failed: "bad" };
+function tOr(key, fallback) { const v = t(key); return v && v !== key ? v : fallback; }
+function buildMessageDetails(body, m) {
+  const d = m.details;
+  if (!d) return;
+  const rows = [];
+  if (d.answer_status) rows.push([t("det_answer"), tOr("ans_" + d.answer_status, d.answer_status)]);
+  if (d.verification_status) rows.push([t("det_verification"), tOr("ver_" + d.verification_status, d.verification_status)]);
+  if (d.model) rows.push([t("det_model"), d.model]);
+  if (d.effort) rows.push([t("det_quality"), tOr("det_q_" + d.effort, d.effort)]);
+  if (Number.isFinite(d.sources)) rows.push([t("det_sources"), String(d.sources)]);
+  if (!rows.length) return;
+  const det = document.createElement("details");
+  det.className = "msg__details";
+  const sum = document.createElement("summary");
+  sum.innerHTML = `<span class="msg__details-dot is-${DET_DOT[d.verification_status] || "idle"}"></span><span class="msg__details-label"></span><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  sum.querySelector(".msg__details-label").textContent = t("det_title");
+  const grid = document.createElement("dl");
+  grid.className = "msg__details-grid";
+  rows.forEach(([k, v]) => {
+    const dt = document.createElement("dt"); dt.textContent = k;
+    const dd = document.createElement("dd"); dd.textContent = v;
+    grid.append(dt, dd);
+  });
+  det.append(sum, grid);
+  body.appendChild(det);
+}
+
+// ---------- Paleta de comandos (Ctrl/Cmd + K) ----------
+const norm = (s) => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+const PAL_ICONS = {
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  image: '<rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="8.5" cy="9" r="1.6"/><path d="M4 17l4.5-4.5L13 17l3-3 4 4"/>',
+  book: '<path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/>',
+  sliders: '<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>',
+  user: '<circle cx="12" cy="8" r="4"/><path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6"/>',
+  theme: '<circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/>',
+  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',
+  slides: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8.5 20h7"/>',
+  map: '<circle cx="12" cy="12" r="2.6"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M9.7 10.4 6.6 7.5M14.3 10.4l3-2.9M14.3 13.6l3 2.9"/>',
+  quiz: '<circle cx="12" cy="12" r="9"/><path d="M9.6 9.2a2.5 2.5 0 1 1 3.4 2.3c-.8.4-1.1.9-1.1 1.8M12 16.5h.01"/>',
+  cards: '<rect x="3" y="8" width="13" height="11" rx="2"/><path d="M7 5.5h11A2.5 2.5 0 0 1 20.5 8v8"/>',
+  report: '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M9 17v-3M12 17v-5M15 17v-2"/>',
+  chat: '<path d="M4 5h16v11H8l-4 4z"/>',
+};
+function paletteIcon(name) {
+  return `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${PAL_ICONS[name] || PAL_ICONS.chat}</svg>`;
+}
+
+let paletteEl = null, paletteItems = [], paletteIndex = 0, paletteReturnFocus = null, paletteHideTimer = null;
+
+// Sinónimos para que "quiz", "dark" o "slides" encuentren el comando en cualquier idioma
+const PAL_KW = {
+  pal_new: "new chat nuevo nouveau novo conversation",
+  pal_images: "image imagen imagem picture generate generar generer gerar",
+  pal_library: "library biblioteca bibliotheque books libros livros pdf",
+  pal_settings: "settings config configuracion preferences parametres configuracoes",
+  pal_profile: "profile perfil profil account cuenta compte conta",
+  pal_theme: "theme tema dark light claro oscuro mode modo sombre clair escuro",
+  practice_slides: "slides presentation powerpoint diapositivas diaporama apresentacao",
+  practice_mindmap: "mind map mapa conceptual carte mentale",
+  practice_quiz: "quiz test examen exam questionnaire questionario",
+  practice_cards: "flashcards cards tarjetas fichas cartes cartoes",
+  practice_reports: "report informe resumen rapport relatorio summary",
+};
+const palText = (c) => norm(c.title + " " + (c.kw || ""));
+
+function buildPaletteCommands() {
+  const click = (sel) => () => document.querySelector(sel)?.click();
+  const cmds = [
+    { g: "pal_g_actions", icon: "plus", title: t("pal_new"), kw: PAL_KW.pal_new, run: click('[data-section="nuevo"]') },
+    { g: "pal_g_actions", icon: "image", title: t("pal_images"), kw: PAL_KW.pal_images, run: click('[data-section="imagenes"]') },
+    { g: "pal_g_actions", icon: "book", title: t("pal_library"), kw: PAL_KW.pal_library, run: click('[data-section="biblioteca"]') },
+    { g: "pal_g_actions", icon: "sliders", title: t("pal_settings"), kw: PAL_KW.pal_settings, run: click("#btnSettingsRail") },
+    { g: "pal_g_actions", icon: "user", title: t("pal_profile"), kw: PAL_KW.pal_profile, run: click("#btnProfileRail") },
+    { g: "pal_g_actions", icon: "theme", title: t("pal_theme"), kw: PAL_KW.pal_theme, run: () => toggleTheme({ x: innerWidth / 2, y: 90 }) },
+  ];
+  [["es", "Español"], ["en", "English"], ["fr", "Français"], ["pt", "Português"]].forEach(([code, name]) => {
+    if (code !== lang) cmds.push({ g: "pal_g_actions", icon: "globe", title: `${t("pal_lang")} ${name}`, run: () => setLang(code) });
+  });
+  [["presentacion", "slides", "practice_slides"], ["mapa", "map", "practice_mindmap"], ["cuestionario", "quiz", "practice_quiz"],
+   ["tarjetas", "cards", "practice_cards"], ["informes", "report", "practice_reports"]]
+    .forEach(([k, icon, key]) => cmds.push({ g: "pal_g_tools", icon, title: t(key), kw: PAL_KW[key], run: click(`[data-practice="${k}"]`) }));
+  return cmds;
+}
+
+function paletteChatMatches(q) {
+  const out = [];
+  state.chats.forEach((c) => {
+    const msgs = (c.messages || []).filter((m) => !m.streaming && (m.content || "").trim());
+    if (!msgs.length) return;
+    const title = c.title || t("default_chat_title");
+    const nt = norm(title);
+    let score = 0, hint = "";
+    if (!q) score = 1;
+    else if (nt.includes(q)) score = 3 - Math.min(2, nt.indexOf(q) / 20);
+    else {
+      const hit = msgs.find((m) => norm(m.content).includes(q));
+      if (hit) {
+        score = 1;
+        const i = norm(hit.content).indexOf(q);
+        hint = "…" + hit.content.slice(Math.max(0, i - 30), i + 70).replace(/[*_`#>]/g, "").replace(/\s+/g, " ").trim() + "…";
+      }
+    }
+    if (score) out.push({ g: "pal_g_chats", icon: "chat", title, hint, score, run: () => switchChat(c.id) });
+  });
+  return out.sort((a, b) => b.score - a.score).slice(0, q ? 8 : 5);
+}
+
+function setHighlighted(node, text, tokens) {
+  const nt = norm(text);
+  let idx = -1, len = 0;
+  for (const tk of tokens) { const i = nt.indexOf(tk); if (i >= 0) { idx = i; len = tk.length; break; } }
+  if (idx < 0) { node.textContent = text; return; }
+  const mk = document.createElement("mark");
+  mk.textContent = text.slice(idx, idx + len);
+  node.append(text.slice(0, idx), mk, text.slice(idx + len));
+}
+
+function setPaletteIndex(i, scroll = true) {
+  if (!paletteItems.length) return;
+  paletteIndex = (i + paletteItems.length) % paletteItems.length;
+  paletteItems.forEach((p, n) => {
+    const on = n === paletteIndex;
+    p.el.classList.toggle("is-active", on);
+    p.el.setAttribute("aria-selected", String(on));
+  });
+  const cur = paletteItems[paletteIndex].el;
+  paletteEl.querySelector("input").setAttribute("aria-activedescendant", cur.id);
+  if (scroll) cur.scrollIntoView({ block: "nearest" });
+}
+
+function renderPalette(query) {
+  const q = norm(query.trim());
+  const tokens = q.split(/\s+/).filter(Boolean);
+  const cmds = buildPaletteCommands().filter((c) => tokens.every((tk) => palText(c).includes(tk)));
+  const chats = paletteChatMatches(q);
+  const acts = cmds.filter((c) => c.g === "pal_g_actions");
+  const tools = cmds.filter((c) => c.g === "pal_g_tools");
+  const groups = q
+    ? [["pal_g_chats", chats], ["pal_g_actions", acts], ["pal_g_tools", tools]]
+    : [["pal_g_actions", acts], ["pal_g_tools", tools], ["pal_g_chats", chats]];
+  const list = paletteEl.querySelector(".palette__list");
+  list.innerHTML = "";
+  paletteItems = [];
+  groups.forEach(([gk, items]) => {
+    if (!items.length) return;
+    const h = document.createElement("div");
+    h.className = "palette__group"; h.setAttribute("role", "presentation"); h.textContent = t(gk);
+    list.appendChild(h);
+    items.forEach((it) => {
+      const idx = paletteItems.length;
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "palette__item"; b.id = "pal-opt-" + idx; b.tabIndex = -1;
+      b.setAttribute("role", "option");
+      b.innerHTML = `${paletteIcon(it.icon)}<span class="palette__text"><span class="palette__title"></span><span class="palette__hint"></span></span>`;
+      setHighlighted(b.querySelector(".palette__title"), it.title, tokens);
+      const hint = b.querySelector(".palette__hint");
+      if (it.hint) hint.textContent = it.hint; else hint.remove();
+      b.addEventListener("click", () => runPaletteItem(it));
+      b.addEventListener("pointermove", () => { if (paletteIndex !== idx) setPaletteIndex(idx, false); });
+      list.appendChild(b);
+      paletteItems.push({ el: b, it });
+    });
+  });
+  if (!paletteItems.length) list.innerHTML = `<div class="palette__empty">${escapeHtml(t("pal_empty"))}</div>`;
+  setPaletteIndex(0, false);
+}
+
+function runPaletteItem(it) {
+  hapticTap(6);
+  closePalette(false);
+  setTimeout(() => { try { it.run(); } catch (e) { console.error(e); } }, 0);
+}
+
+function createPalette() {
+  paletteEl = document.createElement("div");
+  paletteEl.className = "palette";
+  paletteEl.hidden = true;
+  paletteEl.innerHTML = `
+    <div class="palette__card" role="dialog" aria-modal="true" aria-label="${escapeHtml(t("pal_placeholder"))}">
+      <div class="palette__search">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" fill="none"/><path d="M20 20l-3.2-3.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input type="text" role="combobox" aria-expanded="true" aria-controls="paletteList" aria-autocomplete="list" autocomplete="off" spellcheck="false" />
+        <kbd>Esc</kbd>
+      </div>
+      <div class="palette__list" id="paletteList" role="listbox"></div>
+      <div class="palette__foot"><span></span></div>
+    </div>`;
+  document.body.appendChild(paletteEl);
+  const input = paletteEl.querySelector("input");
+  paletteEl.addEventListener("mousedown", (e) => { if (e.target === paletteEl) closePalette(); });
+  input.addEventListener("input", () => renderPalette(input.value));
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowDown") { e.preventDefault(); setPaletteIndex(paletteIndex + 1); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); setPaletteIndex(paletteIndex - 1); }
+    else if (e.key === "Home") { e.preventDefault(); setPaletteIndex(0); }
+    else if (e.key === "End") { e.preventDefault(); setPaletteIndex(paletteItems.length - 1); }
+    else if (e.key === "Enter") { e.preventDefault(); const cur = paletteItems[paletteIndex]; if (cur) runPaletteItem(cur.it); }
+    else if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); closePalette(); }
+    else if (e.key === "Tab") { e.preventDefault(); }
+  });
+}
+
+function openPalette() {
+  if (!paletteEl) createPalette();
+  clearTimeout(paletteHideTimer);
+  paletteReturnFocus = document.activeElement;
+  const input = paletteEl.querySelector("input");
+  input.placeholder = t("pal_placeholder");
+  paletteEl.querySelector(".palette__foot span").textContent = t("pal_hint");
+  input.value = "";
+  paletteEl.hidden = false;
+  renderPalette("");
+  requestAnimationFrame(() => paletteEl.classList.add("is-open"));
+  input.focus();
+}
+function closePalette(restore = true) {
+  if (!paletteEl || paletteEl.hidden) return;
+  paletteEl.classList.remove("is-open");
+  clearTimeout(paletteHideTimer);
+  paletteHideTimer = setTimeout(() => { paletteEl.hidden = true; }, 170);
+  if (restore) paletteReturnFocus?.focus?.();
+}
+document.addEventListener("keydown", (e) => {
+  if ((e.ctrlKey || e.metaKey) && !e.altKey && !e.shiftKey && e.key.toLowerCase() === "k") {
+    e.preventDefault();
+    if (paletteEl && !paletteEl.hidden) closePalette(); else openPalette();
+  }
+});
+
+// ---------- Drawers responsive (≤900px): menú, herramientas, gestos ----------
+function initDrawers() {
+  const mq = window.matchMedia("(max-width: 900px)");
+  const mk = (cls, label, svg) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "m-btn " + cls;
+    b.setAttribute("aria-label", label); b.setAttribute("aria-expanded", "false");
+    b.innerHTML = svg;
+    return b;
+  };
+  const left = mk("m-btn--left", t("m_menu"), '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>');
+  const right = mk("m-btn--right", t("m_tools"), '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M12 16v4M8.5 20h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>');
+  const overlay = document.createElement("div");
+  overlay.className = "drawer-overlay";
+  document.body.append(left, right, overlay);
+
+  const body = document.body;
+  const set = (side, open) => {
+    const l = side === "left" && open, r = side === "right" && open;
+    body.classList.toggle("drawer-left-open", l);
+    body.classList.toggle("drawer-right-open", r);
+    left.setAttribute("aria-expanded", String(l));
+    right.setAttribute("aria-expanded", String(r));
+    if (open) hapticTap(6);
+  };
+  const close = () => set(null, false);
+  const anyOpen = () => body.classList.contains("drawer-left-open") || body.classList.contains("drawer-right-open");
+
+  left.addEventListener("click", () => set("left", !body.classList.contains("drawer-left-open")));
+  right.addEventListener("click", () => set("right", !body.classList.contains("drawer-right-open")));
+  overlay.addEventListener("click", close);
+  ["rail", "practiceRail"].forEach((id) => document.getElementById(id)?.addEventListener("click", (e) => {
+    if (mq.matches && e.target.closest(".rail__item, .chat-item__main")) close();
+  }));
+  mq.addEventListener("change", (e) => { if (!e.matches) close(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && anyOpen()) close(); });
+
+  // Gestos: deslizar desde el borde abre; deslizar hacia el borde cierra
+  let sx = 0, sy = 0;
+  document.addEventListener("touchstart", (e) => { const p = e.touches[0]; sx = p.clientX; sy = p.clientY; }, { passive: true });
+  document.addEventListener("touchend", (e) => {
+    if (!mq.matches) return;
+    const p = e.changedTouches[0], dx = p.clientX - sx, dy = p.clientY - sy;
+    if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    const lo = body.classList.contains("drawer-left-open"), ro = body.classList.contains("drawer-right-open");
+    if (lo && dx < 0) close();
+    else if (ro && dx > 0) close();
+    else if (!lo && !ro) {
+      if (sx < 28 && dx > 0) set("left", true);
+      else if (sx > innerWidth - 28 && dx < 0) set("right", true);
+    }
+  }, { passive: true });
+
+  window.__refreshDrawerLabels = () => {
+    left.setAttribute("aria-label", t("m_menu"));
+    right.setAttribute("aria-label", t("m_tools"));
+  };
+}
+
 // ---------- Init ----------
 initTheme();
 initLang();
 renderHero();
+initDrawers();
 initDataToggles();
 applyBetaPlan();
 if (loadLocalChats()) {
