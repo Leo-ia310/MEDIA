@@ -446,11 +446,15 @@ async function streamAgentResponse(messages, onToken) {
   }
   if (!res.ok) {
     const errorData = await res.json().catch(() => ({}));
+    logMediaLatency(errorData.metadata?.media_latency);
+    logRagMetrics(errorData.metadata?.rag_metrics || errorData.metadata?.media_latency?.rag_internal_metrics);
     onToken(errorData.detail || `El backend respondió con error ${res.status}. Inténtalo de nuevo.`);
     return;
   }
 
   const data = await res.json();
+  logMediaLatency(data.metadata?.media_latency);
+  logRagMetrics(data.metadata?.rag_metrics || data.metadata?.media_latency?.rag_internal_metrics);
   if (activeChat && data.conversation_id) {
     activeChat.backendConversationId = data.conversation_id;
     touchChat(activeChat);
@@ -480,6 +484,70 @@ async function streamAgentResponse(messages, onToken) {
     originalQuestion: last,
     normalizedTopic: (data.metadata && data.metadata.normalized_topic) || null,
   };
+}
+
+function logMediaLatency(metrics) {
+  if (!metrics || typeof metrics !== "object") return;
+  try {
+    const stageRows = Object.entries(metrics)
+      .filter(([key, value]) => key.endsWith("_ms") && typeof value === "number")
+      .sort(([a], [b]) => {
+        if (a === "total_request_ms" || a === "total_ms") return 1;
+        if (b === "total_request_ms" || b === "total_ms") return -1;
+        return a.localeCompare(b);
+      })
+      .map(([key, value]) => ({ etapa: key.replace(/_ms$/, "").toUpperCase(), ms: value }));
+    console.group(`[MEDIA LATENCY] request_id: ${metrics.request_id || "n/a"}`);
+    if (stageRows.length) console.table(stageRows);
+    console.log("MODEL:", metrics.model || metrics.selected_model || null);
+    console.log("PROVIDER:", metrics.final_provider || metrics.provider || null);
+    console.log("INPUT_TOKENS:", metrics.input_tokens ?? null);
+    console.log("OUTPUT_TOKENS:", metrics.output_tokens ?? null);
+    console.log("TOTAL_TOKENS:", metrics.total_tokens ?? null);
+    console.log("GROQ_QUEUE_TIME:", metrics.groq_queue_time ?? null);
+    console.log("GROQ_PROMPT_TIME:", metrics.groq_prompt_time ?? null);
+    console.log("GROQ_COMPLETION_TIME:", metrics.groq_completion_time ?? null);
+    console.log("GROQ_TOTAL_TIME:", metrics.groq_total_time ?? null);
+    console.log("RETRIES:", metrics.retries ?? 0);
+    console.log("FALLBACK:", Boolean(metrics.fallback));
+    console.log("[MEDIA_METRICS]", JSON.stringify(metrics));
+    console.groupEnd();
+  } catch (err) {
+    console.log("[MEDIA_METRICS]", metrics);
+  }
+}
+
+function logRagMetrics(rag) {
+  if (!rag || typeof rag !== "object") return;
+  try {
+    console.group(`[RAG_METRICS] request_id: ${rag.request_id || "n/a"}`);
+    console.table([
+      { etapa: "embedding", ms: rag.embedding_ms ?? 0 },
+      { etapa: "embedding_provider_call", ms: rag.embedding_provider_call_ms ?? 0 },
+      { etapa: "vector_db_query", ms: rag.vector_db_query_ms ?? 0 },
+      { etapa: "metadata_filter", ms: rag.metadata_filter_ms ?? 0 },
+      { etapa: "fetch_chunks", ms: rag.fetch_chunks_ms ?? 0 },
+      { etapa: "processing_results", ms: rag.processing_results_ms ?? 0 },
+      { etapa: "reranking", ms: rag.reranking_ms ?? 0 },
+      { etapa: "local_reference_fallback", ms: rag.local_reference_fallback_ms ?? 0 },
+      { etapa: "load_local_index", ms: rag.load_local_index_ms ?? 0 },
+      { etapa: "ai_calls_inside_rag", ms: rag.ai_calls_inside_rag_ms ?? 0 },
+      { etapa: "TOTAL_RAG", ms: rag.total_rag_ms ?? 0 },
+    ]);
+    console.log("documents_consulted:", rag.documents_consulted ?? 0);
+    console.log("candidate_chunks:", rag.candidate_chunks ?? 0);
+    console.log("final_chunks:", rag.final_chunks ?? 0);
+    console.log("supabase_queries:", rag.supabase_queries ?? 0);
+    console.log("retries:", rag.retries ?? 0);
+    console.log("embedding_provider:", rag.embedding_provider ?? null);
+    console.log("embedding_model:", rag.embedding_model ?? null);
+    console.log("reranking_provider:", rag.reranking_provider ?? null);
+    console.log("reranking_model:", rag.reranking_model ?? null);
+    console.log("[RAG_METRICS_JSON]", JSON.stringify(rag));
+    console.groupEnd();
+  } catch (_) {
+    console.log("[RAG_METRICS]", rag);
+  }
 }
 
 // ---------- Markdown + código ----------
@@ -1762,9 +1830,7 @@ function setAuthSession(session) {
     if (session.user) localStorage.setItem("Media-user-profile", JSON.stringify(session.user));
   } catch (_) { }
   updateAuthUI();
-  // Reconstruye los chats locales en el backend (reenvía cada pregunta por /api/chat).
-  syncLocalChatsToBackend().finally(() => loadConversations());
-  // Pre-carga el historial para que "Buscar chats" abra al instante.
+  // Pre-carga el historial remoto sin bloquear ni regenerar chats antiguos.
   loadConversations();
 }
 
@@ -3024,15 +3090,16 @@ async function loadConversations() {
   const token = authToken();
   // Sin sesión: historial local (chats guardados en el navegador).
   if (!token) { renderLocalChats(el.convSearch?.value || ""); return; }
-  renderConvMessage(t("conv_loading"));
+  renderLocalChats(el.convSearch?.value || "");
   try {
     const res = await fetchWithAuth(`${API_BASE_URL}/api/conversations`);
     if (res.status === 401) { clearAuthSession(); renderLocalChats(el.convSearch?.value || ""); return; }
-    if (!res.ok) { renderConvMessage(t("conv_error")); return; }
+    if (!res.ok) { return; }
     conversationsCache = await res.json();
-    renderConvList(el.convSearch?.value || "");
+    if (Array.isArray(conversationsCache) && conversationsCache.length) renderConvList(el.convSearch?.value || "");
+    else renderLocalChats(el.convSearch?.value || "");
   } catch (_) {
-    renderConvMessage(t("conv_error"));
+    renderLocalChats(el.convSearch?.value || "");
   }
 }
 

@@ -40,3 +40,19 @@ async def test_create_message_touches_conversation() -> None:
     touch_calls = [call for call in repo.calls if call["table"] == "conversations" and call["method"] == "PATCH"]
     assert touch_calls
     assert touch_calls[0]["json"]["metadata"]["last_message_preview"] == "Hola"
+
+
+@pytest.mark.asyncio
+async def test_create_message_can_skip_touch_for_chat_fast_path() -> None:
+    repo = FakeRepo()
+    user = AuthUser(id=UUID("11111111-1111-1111-1111-111111111111"), email=None, token="token")
+
+    await ConversationService(repo).create_user_message(
+        user,
+        UUID("22222222-2222-2222-2222-222222222222"),
+        "Hola",
+        touch=False,
+    )
+
+    touch_calls = [call for call in repo.calls if call["table"] == "conversations" and call["method"] == "PATCH"]
+    assert touch_calls == []

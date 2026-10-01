@@ -54,7 +54,7 @@ El health check queda en:
 GET http://127.0.0.1:8000/api/health
 ```
 
-El contenedor usa Python 3.12, instala automaticamente `backend/requirements.txt`, sirve el frontend estatico desde FastAPI y expone el puerto `8000`. La base local queda persistida en el volumen Docker `media_data`.
+El contenedor usa Python 3.12, instala automaticamente `backend/requirements.txt`, sirve el frontend estatico desde FastAPI y expone el puerto `8000`. La autenticacion y los datos de la aplicacion usan Supabase; no se usa SQLite local.
 
 ## Ejecutar backend
 

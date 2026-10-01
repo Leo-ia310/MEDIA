@@ -1,4 +1,5 @@
 from pathlib import Path
+import logging
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, JSONResponse
@@ -8,10 +9,12 @@ from fastapi.staticfiles import StaticFiles
 from app.api import auth, chat, clinical, conversations, feedback, health, knowledge, learning, library, tools
 from app.core.config import get_settings
 from app.core.exceptions import ProviderError
+from app.core.latency import MediaLatencyMetrics, reset_current_metrics, set_current_metrics
 from app.core.logging import configure_logging
 
 settings = get_settings()
 configure_logging(settings.log_level)
+logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Media Medical Tutor Backend", version="0.1.0")
 
@@ -50,12 +53,31 @@ app.add_middleware(
 
 @app.middleware("http")
 async def add_cors_to_error_responses(request, call_next):
+    metrics = None
+    metrics_token = None
+    if request.method == "POST" and request.url.path == "/api/chat":
+        metrics = MediaLatencyMetrics()
+        metrics_token = set_current_metrics(metrics)
+        request.state.media_request_id = metrics.request_id
     try:
         response = await call_next(request)
     except ProviderError as exc:
-        response = JSONResponse(status_code=503, content={"detail": str(exc), "code": "provider_error"})
+        logger.warning("ProviderError during request path=%s status_code=%s detail=%s", request.url.path, exc.status_code, str(exc))
+        content = {"detail": str(exc), "code": "provider_error"}
+        if metrics is not None:
+            metrics.finish()
+            content["metadata"] = {"media_latency": metrics.snapshot()}
+            rag_metrics = content["metadata"]["media_latency"].get("rag_internal_metrics")
+            if isinstance(rag_metrics, dict):
+                content["metadata"]["rag_metrics"] = rag_metrics
+        response = JSONResponse(status_code=503, content=content)
     except Exception:
         response = JSONResponse(status_code=500, content={"detail": "Unexpected backend error", "code": "backend_error"})
+    finally:
+        if metrics is not None:
+            metrics.log()
+        if metrics_token is not None:
+            reset_current_metrics(metrics_token)
     origin = request.headers.get("origin")
     if origin in settings.cors_origins:
         response.headers.update(cors_headers_for(request))

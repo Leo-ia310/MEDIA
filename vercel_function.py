@@ -68,8 +68,21 @@ def session_response(data: dict[str, Any]) -> dict[str, Any]:
 def auth_handler(action: Callable[[Any, Any], Awaitable[dict[str, Any]]]) -> type[BaseHTTPRequestHandler]:
     from app.core.config import get_settings
     from app.core.exceptions import AuthenticationError
-    from app.db.local_store import LocalAppStore
+    from app.db.supabase import SupabaseClient
     from app.models.schemas import AuthCredentials, RefreshTokenIn
+
+    class SupabaseAuthAdapter:
+        def __init__(self) -> None:
+            self.client = SupabaseClient(get_settings())
+
+        async def register(self, payload: AuthCredentials) -> dict[str, Any]:
+            return await self.client.sign_up(payload=payload)
+
+        async def login(self, payload: AuthCredentials) -> dict[str, Any]:
+            return await self.client.sign_in_with_password(email=payload.email, password=payload.password)
+
+        async def refresh_session(self, *, refresh_token: str) -> dict[str, Any]:
+            return await self.client.refresh_session(refresh_token=refresh_token)
 
     class Handler(BaseHTTPRequestHandler):
         def do_OPTIONS(self) -> None:
@@ -78,8 +91,7 @@ def auth_handler(action: Callable[[Any, Any], Awaitable[dict[str, Any]]]) -> typ
         def do_POST(self) -> None:
             try:
                 payload = read_json(self)
-                settings = get_settings()
-                store = LocalAppStore(settings)
+                store = SupabaseAuthAdapter()
                 if action.__name__ == "refresh":
                     parsed = RefreshTokenIn(**payload)
                 else:

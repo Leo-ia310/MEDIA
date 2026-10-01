@@ -15,8 +15,7 @@ RUN python -m pip install --upgrade pip \
 
 COPY . /app
 
-RUN mkdir -p /app/backend/data \
-    && chown -R media:media /app
+RUN chown -R media:media /app
 
 USER media
 WORKDIR /app/backend

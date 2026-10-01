@@ -33,20 +33,21 @@ class handler(BaseHTTPRequestHandler):
     def do_POST(self) -> None:
         from app.core.config import get_settings
         from app.core.exceptions import AuthenticationError
-        from app.db.local_store import LocalAppStore
+        from app.db.supabase import SupabaseClient
         from app.models.schemas import AuthCredentials, RefreshTokenIn
 
         action = (parse_qs(urlparse(self.path).query).get("action") or [""])[0]
         try:
             payload = read_json(self)
-            store = LocalAppStore(get_settings())
+            client = SupabaseClient(get_settings())
             if action == "login":
-                data = run_async(store.login(AuthCredentials(**payload)))
+                credentials = AuthCredentials(**payload)
+                data = run_async(client.sign_in_with_password(email=credentials.email, password=credentials.password))
             elif action == "register":
-                data = run_async(store.register(AuthCredentials(**payload)))
+                data = run_async(client.sign_up(payload=AuthCredentials(**payload)))
             elif action == "refresh":
                 parsed = RefreshTokenIn(**payload)
-                data = run_async(store.refresh_session(refresh_token=parsed.refresh_token))
+                data = run_async(client.refresh_session(refresh_token=parsed.refresh_token))
             else:
                 method_not_allowed(self)
                 return

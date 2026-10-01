@@ -1,10 +1,13 @@
+import base64
+import json
+import time
 from typing import Any
 
 import httpx
 
 from app.core.config import Settings
 from app.core.exceptions import AuthenticationError, ProviderError
-from app.models.schemas import AuthUser
+from app.models.schemas import AuthCredentials, AuthUser
 
 
 class SupabaseClient:
@@ -15,6 +18,9 @@ class SupabaseClient:
     async def get_user(self, token: str) -> AuthUser:
         if not self.settings.supabase_configured:
             raise AuthenticationError("Supabase is not configured")
+        decoded = self._decode_user_from_jwt(token)
+        if decoded is not None:
+            return decoded
         async with httpx.AsyncClient(timeout=self.settings.request_timeout_seconds) as client:
             response = await client.get(
                 f"{self.base_url}/auth/v1/user",
@@ -25,8 +31,42 @@ class SupabaseClient:
         data = response.json()
         return AuthUser(id=data["id"], email=data.get("email"), token=token)
 
-    async def sign_up(self, *, email: str, password: str) -> dict[str, Any]:
-        return await self._auth_request("signup", {"email": email, "password": password})
+    def _decode_user_from_jwt(self, token: str) -> AuthUser | None:
+        try:
+            parts = token.split(".")
+            if len(parts) != 3:
+                return None
+            payload = parts[1] + "=" * (-len(parts[1]) % 4)
+            data = json.loads(base64.urlsafe_b64decode(payload.encode("ascii")))
+            subject = data.get("sub")
+            if not subject:
+                return None
+            expires_at = data.get("exp")
+            if isinstance(expires_at, (int, float)) and expires_at <= time.time():
+                raise AuthenticationError("Sesión expirada o inválida.")
+            return AuthUser(id=subject, email=data.get("email"), token=token)
+        except AuthenticationError:
+            raise
+        except Exception:
+            return None
+
+    async def sign_up(self, *, payload: AuthCredentials) -> dict[str, Any]:
+        return await self._auth_request(
+            "signup",
+            {
+                "email": payload.email,
+                "password": payload.password,
+                "data": {
+                    "full_name": payload.full_name,
+                    "carnet": payload.carnet,
+                    "university": payload.university,
+                    "role": payload.role,
+                    "specialty": payload.specialty,
+                    "academic_level": payload.academic_level,
+                    "learning_challenges": payload.learning_challenges,
+                },
+            },
+        )
 
     async def sign_in_with_password(self, *, email: str, password: str) -> dict[str, Any]:
         return await self._auth_request("token?grant_type=password", {"email": email, "password": password})
@@ -64,6 +104,7 @@ class SupabaseRepository:
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
         self.base_url = settings.supabase_url.rstrip("/")
+        self._client = httpx.AsyncClient(timeout=self.settings.request_timeout_seconds)
 
     async def request(self, *, table: str, method: str, token: str, params: dict[str, str] | None = None, json: Any = None, prefer: str | None = None) -> Any:
         headers = {
@@ -73,8 +114,7 @@ class SupabaseRepository:
         }
         if prefer:
             headers["Prefer"] = prefer
-        async with httpx.AsyncClient(timeout=self.settings.request_timeout_seconds) as client:
-            response = await client.request(method, f"{self.base_url}/rest/v1/{table}", headers=headers, params=params, json=json)
+        response = await self._client.request(method, f"{self.base_url}/rest/v1/{table}", headers=headers, params=params, json=json)
         if response.status_code >= 400:
             raise ProviderError(f"Supabase table request failed for {table}", response.status_code)
         if not response.content:

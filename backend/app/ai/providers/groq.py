@@ -10,6 +10,7 @@ from app.ai.providers.base import LLMProvider
 from app.ai.schemas import LLMResponse, ModelSelection
 from app.core.config import Settings
 from app.core.exceptions import ModelUnavailableError, ProviderError
+from app.core.latency import current_metrics, measure_latency
 
 
 class GroqProvider(LLMProvider):
@@ -30,9 +31,20 @@ class GroqProvider(LLMProvider):
             "reasoning_effort": selection.reasoning_effort,
         }
         started = time.perf_counter()
-        async with httpx.AsyncClient(timeout=self.settings.groq_timeout_seconds) as client:
-            data = await self._post(client, payload, selection.model_id)
+        with measure_latency("GROQ_REQUEST"):
+            async with httpx.AsyncClient(timeout=self.settings.groq_timeout_seconds) as client:
+                data = await self._post(client, payload, selection.model_id)
         latency_ms = int((time.perf_counter() - started) * 1000)
+        metrics = current_metrics()
+        if metrics:
+            metrics.add_duration("GROQ_GENERATION", latency_ms)
+            metrics.update_details(
+                {
+                    "model": selection.model_id,
+                    "provider": self.provider_name,
+                    "groq_streaming": False,
+                }
+            )
         choices = data.get("choices") if isinstance(data, dict) else None
         text = ""
         if isinstance(choices, list) and choices:

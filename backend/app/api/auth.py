@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 
 from app.core.config import Settings, get_settings
 from app.core.exceptions import AuthenticationError, unauthorized
-from app.db.local_store import LocalAppStore
+from app.db.supabase import SupabaseClient
 from app.models.schemas import AuthCredentials, AuthSessionOut, RefreshTokenIn
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
@@ -11,7 +11,7 @@ router = APIRouter(prefix="/api/auth", tags=["auth"])
 @router.post("/register", response_model=AuthSessionOut)
 async def register(payload: AuthCredentials, settings: Settings = Depends(get_settings)) -> AuthSessionOut:
     try:
-        data = await LocalAppStore(settings).register(payload)
+        data = await SupabaseClient(settings).sign_up(payload=payload)
     except AuthenticationError as exc:
         raise unauthorized(str(exc)) from exc
     return _session_response(data)
@@ -20,7 +20,7 @@ async def register(payload: AuthCredentials, settings: Settings = Depends(get_se
 @router.post("/login", response_model=AuthSessionOut)
 async def login(payload: AuthCredentials, settings: Settings = Depends(get_settings)) -> AuthSessionOut:
     try:
-        data = await LocalAppStore(settings).login(payload)
+        data = await SupabaseClient(settings).sign_in_with_password(email=payload.email, password=payload.password)
     except AuthenticationError as exc:
         raise unauthorized(str(exc)) from exc
     return _session_response(data)
@@ -29,7 +29,7 @@ async def login(payload: AuthCredentials, settings: Settings = Depends(get_setti
 @router.post("/refresh", response_model=AuthSessionOut)
 async def refresh(payload: RefreshTokenIn, settings: Settings = Depends(get_settings)) -> AuthSessionOut:
     try:
-        data = await LocalAppStore(settings).refresh_session(refresh_token=payload.refresh_token)
+        data = await SupabaseClient(settings).refresh_session(refresh_token=payload.refresh_token)
     except AuthenticationError as exc:
         raise unauthorized(str(exc)) from exc
     return _session_response(data)

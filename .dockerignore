@@ -32,6 +32,5 @@ frontend.out.log
 Thumbs.db
 desktop.ini
 
-backend/media_local.db
 backend/data/
 docx_work/

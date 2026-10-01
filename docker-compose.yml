@@ -11,7 +11,6 @@ services:
       BACKEND_CORS_ORIGINS: ${BACKEND_CORS_ORIGINS:-http://localhost:8000,http://127.0.0.1:8000,http://localhost:5173,http://127.0.0.1:5173,http://localhost:5500,http://127.0.0.1:5500}
       REQUEST_TIMEOUT_SECONDS: ${REQUEST_TIMEOUT_SECONDS:-90}
       BACKEND_PUBLIC_BASE_URL: ${BACKEND_PUBLIC_BASE_URL:-http://127.0.0.1:8000}
-      LOCAL_DATABASE_PATH: ${LOCAL_DATABASE_PATH:-/app/backend/data/media_local.db}
       SUPABASE_URL: ${SUPABASE_URL:-}
       SUPABASE_PUBLISHABLE_KEY: ${SUPABASE_PUBLISHABLE_KEY:-}
       SUPABASE_SECRET_KEY: ${SUPABASE_SECRET_KEY:-}
@@ -45,9 +44,4 @@ services:
       REFERENCES_DIR: ${REFERENCES_DIR:-/app/Referencias}
       REFERENCE_MARKDOWN_DIR: ${REFERENCE_MARKDOWN_DIR:-/app/Referencias/MDs}
       REFERENCE_CHUNK_CHARS: ${REFERENCE_CHUNK_CHARS:-1800}
-    volumes:
-      - media_data:/app/backend/data
     restart: unless-stopped
-
-volumes:
-  media_data:

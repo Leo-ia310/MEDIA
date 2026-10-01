@@ -9,6 +9,7 @@ from app.ai.providers.base import LLMProvider
 from app.ai.schemas import LLMResponse, ModelSelection
 from app.core.config import Settings
 from app.core.exceptions import ModelUnavailableError, ProviderError
+from app.core.latency import current_metrics, measure_latency
 
 
 class AIProviderRouter(LLMProvider):
@@ -22,6 +23,7 @@ class AIProviderRouter(LLMProvider):
         self.fallback = fallback
 
     async def generate(self, *, messages: Sequence[dict[str, Any]], selection: ModelSelection) -> LLMResponse:
+        metrics = current_metrics()
         started = time.perf_counter()
         try:
             response = await self.primary.generate(messages=messages, selection=selection)
@@ -35,6 +37,13 @@ class AIProviderRouter(LLMProvider):
         except ProviderError as exc:
             if not self._can_fallback(selection, exc):
                 raise
+            if metrics:
+                metrics.update_details({"fallback": True, "fallback_reason": self._error_type(exc)})
+                metrics.add_retry(
+                    retry_number=len(metrics.retries) + 1,
+                    retry_reason=f"fallback_to_cloudflare:{self._error_type(exc)}",
+                    provider=selection.provider,
+                )
             fallback_selection = replace(
                 selection,
                 model_id=self.settings.cloudflare_text_model,
@@ -42,7 +51,8 @@ class AIProviderRouter(LLMProvider):
                 supports_vision=False,
             )
             fallback_started = time.perf_counter()
-            response = await self.fallback.generate(messages=self._text_only_messages(messages), selection=fallback_selection)  # type: ignore[union-attr]
+            with measure_latency("CLOUDFLARE_FALLBACK"):
+                response = await self.fallback.generate(messages=self._text_only_messages(messages), selection=fallback_selection)  # type: ignore[union-attr]
             fallback_latency = int((time.perf_counter() - fallback_started) * 1000)
             response.usage = {
                 **(response.usage or {}),
@@ -67,9 +77,11 @@ class AIProviderRouter(LLMProvider):
         message = str(exc).lower()
         return (
             exc.status_code == 429
+            or exc.status_code == 413
             or (exc.status_code == 400 and "request was rejected" in message)
             or (exc.status_code is not None and exc.status_code >= 500)
             or "timed out" in message
+            or "too large" in message
             or "provider error" in message
             or "request failed" in message
             or "unavailable" in message

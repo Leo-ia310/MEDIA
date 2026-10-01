@@ -10,6 +10,7 @@ from app.ai.retrieval import RetrievalService
 from app.ai.verifier import AnswerVerifier
 from app.core.config import Settings
 from app.core.exceptions import ModelUnavailableError, ProviderError
+from app.core.latency import current_metrics, measure_latency
 from app.models.schemas import AnswerStatus, AuthUser, ChatRequest, ChatResponse, Effort, VerificationStatus
 
 
@@ -27,9 +28,20 @@ class AIOrchestrator:
         self.system_prompt = (Path(__file__).parent / "prompts" / "tutor_system.md").read_text(encoding="utf-8")
 
     async def answer(self, *, request: ChatRequest, user: AuthUser, conversation_id, message_id, recent_messages: list[dict[str, str]], learning_profile: dict) -> ChatResponse:
-        image_attachments = self._image_attachments(request)
-        selection = self.router.select_for_request(request.effort, request.message, has_image=bool(image_attachments))
-        if self._is_out_of_scope(request.message):
+        metrics = current_metrics()
+        with measure_latency("QUERY_PREPROCESSING_INTENT"):
+            image_attachments = self._image_attachments(request)
+            selection = self.router.select_for_request(request.effort, request.message, has_image=bool(image_attachments))
+            out_of_scope = self._is_out_of_scope(request.message)
+        if metrics:
+            metrics.update_details(
+                {
+                    "selected_model": selection.model_id,
+                    "selected_effort": selection.effort.value,
+                    "has_image_attachments": bool(image_attachments),
+                }
+            )
+        if out_of_scope:
             return ChatResponse(
                 conversation_id=conversation_id,
                 message_id=message_id,
@@ -49,12 +61,31 @@ class AIOrchestrator:
             )
         retrieval_error = None
         try:
-            evidence = await self.retrieval.retrieve(question=request.message, token=user.token, top_k=selection.retrieval_top_k)
+            with measure_latency("RAG_VECTOR_SEARCH"):
+                evidence = await self.retrieval.retrieve(question=request.message, token=user.token, top_k=selection.retrieval_top_k)
         except ProviderError as exc:
             retrieval_error = str(exc)
             logger.warning("Medical retrieval failed; continuing without evidence", exc_info=exc)
             evidence = []
-        project_context = await self.project_context.retrieve(question=request.message, top_k=self.settings.project_context_top_k)
+        if metrics:
+            metrics.update_details(
+                {
+                    "rag_chunks": len(evidence),
+                    "rag_context_chars": sum(len(chunk.content) for chunk in evidence),
+                    "medical_retrieval_error": bool(retrieval_error),
+                    "embedding_used": False,
+                    "reranking_used": False,
+                }
+            )
+        with measure_latency("LOAD_PROJECT_CONTEXT"):
+            project_context = await self.project_context.retrieve(question=request.message, top_k=self.settings.project_context_top_k)
+        if metrics:
+            metrics.update_details(
+                {
+                    "project_context_chunks": len(project_context),
+                    "project_context_chars": sum(len(chunk.content) for chunk in project_context),
+                }
+            )
         if self.settings.strict_document_grounding and not evidence:
             answer = "No encuentro suficiente informacion en las fuentes disponibles para responder esta pregunta con el nivel de respaldo requerido."
             if retrieval_error:
@@ -77,7 +108,15 @@ class AIOrchestrator:
                 },
             )
 
-        messages = self._build_messages(request.message, recent_messages, evidence, project_context, learning_profile, image_attachments=image_attachments)
+        with measure_latency("BUILD_PROMPT"):
+            messages = self._build_messages(request.message, recent_messages, evidence, project_context, learning_profile, image_attachments=image_attachments)
+        if metrics:
+            metrics.update_details(
+                {
+                    "llm_message_count": len(messages),
+                    "prompt_context_chars": _messages_size(messages),
+                }
+            )
         fallback_used = False
         retry_used = False
         try:
@@ -85,10 +124,14 @@ class AIOrchestrator:
         except ProviderError as exc:
             if self._can_fallback_to_low(selection, exc):
                 fallback_used = True
+                if metrics:
+                    metrics.add_retry(retry_number=len(metrics.retries) + 1, retry_reason=self._retry_reason(exc), provider=selection.provider)
                 selection = self.router.select(Effort.low)
                 llm_response = await self.provider.generate(messages=messages, selection=selection)
             elif self._can_retry_with_more_tokens(exc):
                 retry_used = True
+                if metrics:
+                    metrics.add_retry(retry_number=len(metrics.retries) + 1, retry_reason=self._retry_reason(exc), provider=selection.provider)
                 retry_selection = replace(selection, max_tokens=max(selection.max_tokens * 2, 1200))
                 retry_messages = [
                     *messages,
@@ -99,6 +142,8 @@ class AIOrchestrator:
                 raise
         if self._looks_truncated(llm_response.text):
             retry_used = True
+            if metrics:
+                metrics.add_retry(retry_number=len(metrics.retries) + 1, retry_reason="truncated_response", provider=llm_response.provider)
             retry_selection = replace(selection, max_tokens=max(selection.max_tokens * 2, 2600))
             retry_messages = [
                 *messages,
@@ -113,8 +158,23 @@ class AIOrchestrator:
 
         sanitized_answer, citation_sanitization = self._sanitize_model_citations(llm_response.text)
         llm_response.text = sanitized_answer
-        verification = await self.verifier.verify(answer=llm_response.text, evidence=evidence, strict_grounding=self.settings.strict_document_grounding)
+        with measure_latency("VERIFICATION_CRITIC"):
+            verification = await self.verifier.verify(answer=llm_response.text, evidence=evidence, strict_grounding=self.settings.strict_document_grounding)
         citations = [chunk.citation() for chunk in evidence]
+        if metrics:
+            usage = llm_response.usage or {}
+            metrics.update_details(_usage_metrics(usage))
+            metrics.update_details(
+                {
+                    "model": llm_response.model,
+                    "provider": llm_response.provider,
+                    "final_provider": llm_response.provider,
+                    "fallback": bool(fallback_used or usage.get("fallback_used")),
+                    "fallback_reason": usage.get("fallback_reason"),
+                    "retries": len(metrics.retries),
+                    "answer_chars": len(llm_response.text),
+                }
+            )
         return ChatResponse(
             conversation_id=conversation_id,
             message_id=message_id,
@@ -224,6 +284,17 @@ class AIOrchestrator:
         message = str(exc).lower()
         return "empty or unsupported response" in message or "no final answer" in message
 
+    def _retry_reason(self, exc: ProviderError) -> str:
+        if isinstance(exc, ModelUnavailableError):
+            return "model_unavailable"
+        if exc.status_code == 429:
+            return "rate_limited"
+        if exc.status_code and exc.status_code >= 500:
+            return "provider_5xx"
+        if "timed out" in str(exc).lower():
+            return "timeout"
+        return "provider_error"
+
     def _looks_truncated(self, text: str) -> bool:
         stripped = text.rstrip()
         if not stripped:
@@ -266,3 +337,37 @@ class AIOrchestrator:
         cleaned = re.sub(r"\n{3,}", "\n\n", cleaned).strip()
         removed = cleaned != original.strip()
         return cleaned, {"removed_inline_model_citations": removed}
+
+
+def _messages_size(messages: list[dict]) -> int:
+    total = 0
+    for message in messages:
+        content = message.get("content", "")
+        if isinstance(content, str):
+            total += len(content)
+        elif isinstance(content, list):
+            for part in content:
+                if isinstance(part, dict):
+                    text = part.get("text")
+                    if isinstance(text, str):
+                        total += len(text)
+    return total
+
+
+def _usage_metrics(usage: dict) -> dict:
+    prompt_tokens = usage.get("prompt_tokens") or usage.get("input_tokens")
+    completion_tokens = usage.get("completion_tokens") or usage.get("output_tokens")
+    total_tokens = usage.get("total_tokens")
+    prompt_details = usage.get("prompt_tokens_details") or {}
+    completion_details = usage.get("completion_tokens_details") or {}
+    return {
+        "input_tokens": prompt_tokens,
+        "output_tokens": completion_tokens,
+        "total_tokens": total_tokens,
+        "cached_tokens": usage.get("cached_tokens") or prompt_details.get("cached_tokens"),
+        "reasoning_tokens": usage.get("reasoning_tokens") or completion_details.get("reasoning_tokens"),
+        "groq_queue_time": usage.get("queue_time"),
+        "groq_prompt_time": usage.get("prompt_time"),
+        "groq_completion_time": usage.get("completion_time"),
+        "groq_total_time": usage.get("total_time"),
+    }
