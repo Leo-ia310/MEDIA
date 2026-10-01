@@ -25,3 +25,7 @@ __pycache__/
 
 # Archivo local muy grande; mantener fuera del repo y de LFS por ahora
 Referencias/anatomy-and-physiology-2e_-_WEB.pdf
+
+# Base de datos local del backend (SQLite)
+backend/media_local.db
+backend/media_local.db-*
