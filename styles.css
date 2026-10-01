@@ -2741,3 +2741,120 @@ body.rail-collapsed #rail .rail__toggle {
 
 /* Composer: atajos ocultos; el contador solo aparece cerca del límite (JS) */
 .composer__shortcuts { display:none; }
+
+
+/* ===================== Fase 2 UI: burbujas, skeleton, fuentes, fade, glass ===================== */
+/* 7) Burbujas: usuario con degradado y brillo; IA editorial (sin tarjeta, hilo lateral) */
+.msg--user .msg__body {
+  background:linear-gradient(135deg,
+    color-mix(in oklch, var(--bubble-user) 86%, white),
+    color-mix(in oklch, var(--bubble-user) 80%, black));
+  border-radius:10px 10px 3px 10px;
+  box-shadow:0 10px 26px -12px color-mix(in oklch, var(--bubble-user) 70%, transparent),
+             inset 0 1px 0 rgba(255,255,255,.18);
+}
+.msg--ai .msg__bubble {
+  background:transparent; border:0; border-radius:0; box-shadow:none;
+  padding:2px 0 2px 16px;
+  border-left:2px solid color-mix(in oklch, var(--primary) 42%, transparent);
+  transition:border-color .3s var(--ease-out);
+}
+.msg--ai:hover .msg__bubble { border-left-color:color-mix(in oklch, var(--primary) 75%, transparent); }
+
+/* Agrupación: mensajes seguidos del mismo autor (<5 min) sin avatar ni nombre repetidos */
+.msg--cont { padding-top:2px; }
+.msg--cont .msg__avatar { visibility:hidden; }
+.msg--cont .msg__role { display:none; }
+
+/* 13) Separadores de fecha */
+.msg-day { display:flex; justify-content:center; padding:18px 0 6px; animation:msgRise .5s var(--ease-out) both; animation-delay:calc(min(var(--i, 0), 10) * 55ms); }
+.msg-day > span {
+  padding:4px 12px; border-radius:999px; font-size:12px; font-weight:600; letter-spacing:.2px;
+  color:var(--text-muted); background:var(--surface-glass);
+  border:1px solid color-mix(in oklch, var(--text) 8%, transparent);
+}
+
+/* 8) Skeleton con shimmer mientras llega la primera respuesta (vive en la burbuja, que persiste) */
+@keyframes skShimmer { from { background-position:200% 0; } to { background-position:-100% 0; } }
+.msg__bubble.is-streaming:has(.agent-thinking)::after {
+  content:""; display:block; width:min(420px, 72vw); height:52px; margin:12px 0 0; padding:0;
+  border-radius:6px; box-shadow:none; vertical-align:baseline;
+  background:linear-gradient(100deg,
+    color-mix(in oklch, var(--text) 9%, transparent) 30%,
+    color-mix(in oklch, var(--primary) 38%, transparent) 50%,
+    color-mix(in oklch, var(--text) 9%, transparent) 70%) 0 0 / 250% 100%;
+  -webkit-mask:linear-gradient(#000,#000) 0 0 / 100% 10px no-repeat,
+               linear-gradient(#000,#000) 0 21px / 82% 10px no-repeat,
+               linear-gradient(#000,#000) 0 42px / 58% 10px no-repeat;
+          mask:linear-gradient(#000,#000) 0 0 / 100% 10px no-repeat,
+               linear-gradient(#000,#000) 0 21px / 82% 10px no-repeat,
+               linear-gradient(#000,#000) 0 42px / 58% 10px no-repeat;
+  animation:skShimmer 1.7s linear infinite;
+}
+
+/* 9) Fuentes como tarjetas/chips con detalle al pasar el cursor */
+.src { margin-top:14px; display:grid; gap:8px; }
+.src__head { font-size:11.5px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; color:var(--text-muted); }
+.src__list { display:flex; flex-wrap:wrap; gap:8px; }
+.src__chip {
+  position:relative; display:inline-flex; align-items:center; gap:7px; max-width:260px;
+  padding:6px 11px; border-radius:8px; font-size:13px; text-decoration:none;
+  color:var(--text-soft); background:var(--surface-glass);
+  border:1px solid color-mix(in oklch, var(--text) 11%, transparent);
+  transition:border-color .2s var(--ease-out), color .2s var(--ease-out), transform .2s var(--ease-spring);
+}
+a.src__chip:hover, .src__chip:focus-visible { border-color:var(--primary); color:var(--text); transform:translateY(-1px); }
+.src__chip svg { flex-shrink:0; color:var(--primary); }
+.src__title { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.src__pop {
+  position:absolute; left:0; bottom:calc(100% + 8px); z-index:6; width:max-content; max-width:min(320px, 80vw);
+  display:grid; gap:3px; padding:10px 12px; border-radius:8px; white-space:normal;
+  background:var(--surface-2, var(--surface)); border:1px solid var(--border); box-shadow:var(--shadow-md);
+  color:var(--text); font-size:12.5px; line-height:1.4;
+  opacity:0; transform:translateY(4px); pointer-events:none;
+  transition:opacity .18s var(--ease-out), transform .18s var(--ease-out);
+}
+.src__pop em { color:var(--text-muted); font-style:normal; }
+.src__pop em:empty { display:none; }
+.src__chip:hover .src__pop, .src__chip:focus-visible .src__pop { opacity:1; transform:none; }
+
+/* 10) Fade superior del chat guiado por el scroll real (solo aparece si hay contenido arriba) */
+@property --fade-top { syntax:"<length>"; inherits:false; initial-value:0px; }
+@keyframes fadeTopIn { from { --fade-top:0px; } to { --fade-top:38px; } }
+.messages {
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 var(--fade-top));
+          mask-image:linear-gradient(to bottom, transparent 0, #000 var(--fade-top));
+  animation:fadeTopIn linear both;
+  animation-timeline:scroll(self block);
+  animation-range:0 56px;
+}
+@supports not (animation-timeline: scroll()) { .messages { --fade-top:34px; animation:none; } }
+@media (prefers-reduced-motion:reduce) { .messages { --fade-top:34px; } }
+
+/* 12) Rail "Herramientas de estudio": vidrio con degradado detrás, borde de luz y spotlight */
+.rail--right {
+  background:
+    radial-gradient(130% 55% at 100% 0%, var(--primary-wash), transparent 62%),
+    radial-gradient(100% 50% at 0% 100%, var(--accent-wash), transparent 62%),
+    var(--surface);
+}
+.rail--right .rail__item {
+  position:relative; isolation:isolate; overflow:hidden;
+  background:color-mix(in oklch, var(--surface-2, var(--surface)) 52%, transparent);
+  border:1px solid color-mix(in oklch, white 11%, transparent);
+  -webkit-backdrop-filter:blur(14px) saturate(1.7); backdrop-filter:blur(14px) saturate(1.7);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14), 0 10px 22px -14px rgba(0,0,0,.6);
+  transition:border-color .2s var(--ease-out), transform .2s var(--ease-spring), background .2s var(--ease-out);
+}
+.rail--right .rail__item::before {
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none; opacity:0;
+  background:radial-gradient(130px circle at var(--mx, 50%) var(--my, 50%), color-mix(in oklch, var(--primary) 30%, transparent), transparent 70%);
+  transition:opacity .25s var(--ease-out);
+}
+.rail--right .rail__item:hover { border-color:color-mix(in oklch, var(--primary) 55%, transparent); transform:translateY(-1px); }
+.rail--right .rail__item:hover::before { opacity:1; }
+.rail--right .rail__icon, .rail--right .rail__label { position:relative; z-index:1; }
+
+/* Los chips de fuentes no deben heredar el estilo de enlace del Markdown */
+.msg--ai .msg__bubble .src__chip { text-decoration:none; color:var(--text-soft); }
+.msg--ai .msg__bubble a.src__chip:hover, .msg--ai .msg__bubble .src__chip:focus-visible { color:var(--text); }

@@ -28,6 +28,7 @@ const I18N = {
   es: {
     rail_new: "Nuevo chat", rail_search: "Buscar chats", rail_images: "Imágenes", rail_library: "Biblioteca", rail_settings: "Configuración", rail_toggle: "Contraer menú", rail_toggle_expand: "Expandir menú",
     hero_morning:"Buenos días", hero_afternoon:"Buenas tardes", hero_evening:"Buenas noches", hero_night:"Buenas noches", hero_hi:"Hola, soy", hero_sub:"¿En qué puedo ayudarte hoy?",
+    day_today:"Hoy", day_yesterday:"Ayer",
     tb_search: "Buscar", tb_notifications: "Notificaciones", tb_account: "Cuenta",
     notif_header: "Notificaciones", notif1_title: "Bienvenido a Media", notif1_text: "Tu asistente está listo para conversar.",
     notif2_title: "Consejo", notif2_text: "Pulsa <kbd>Shift</kbd>+<kbd>Enter</kbd> para saltar de línea.",
@@ -64,6 +65,7 @@ const I18N = {
   en: {
     rail_new: "New chat", rail_search: "Search chats", rail_images: "Images", rail_library: "Library", rail_settings: "Settings", rail_toggle: "Collapse menu", rail_toggle_expand: "Expand menu",
     hero_morning:"Good morning", hero_afternoon:"Good afternoon", hero_evening:"Good evening", hero_night:"Good evening", hero_hi:"Hi, I'm", hero_sub:"How can I help you today?",
+    day_today:"Today", day_yesterday:"Yesterday",
     tb_search: "Search", tb_notifications: "Notifications", tb_account: "Account",
     notif_header: "Notifications", notif1_title: "Welcome to Media", notif1_text: "Your assistant is ready to chat.",
     notif2_title: "Tip", notif2_text: "Press <kbd>Shift</kbd>+<kbd>Enter</kbd> for a new line.",
@@ -100,6 +102,7 @@ const I18N = {
   fr: {
     rail_new: "Nouveau chat", rail_search: "Rechercher", rail_images: "Images", rail_settings: "Paramètres", rail_toggle: "Réduire le menu", rail_toggle_expand: "Développer le menu",
     hero_morning:"Bonjour", hero_afternoon:"Bon après-midi", hero_evening:"Bonsoir", hero_night:"Bonsoir", hero_hi:"Salut, je suis", hero_sub:"Comment puis-je t'aider aujourd'hui ?",
+    day_today:"Aujourd'hui", day_yesterday:"Hier",
     tb_search: "Rechercher", tb_notifications: "Notifications", tb_account: "Compte",
     notif_header: "Notifications", notif1_title: "Bienvenue sur Media", notif1_text: "Votre assistant est prêt à discuter.",
     notif2_title: "Astuce", notif2_text: "Appuie sur <kbd>Shift</kbd>+<kbd>Enter</kbd> pour un saut de ligne.",
@@ -136,6 +139,7 @@ const I18N = {
   pt: {
     rail_new: "Novo chat", rail_search: "Buscar chats", rail_images: "Imagens", rail_settings: "Configurações", rail_toggle: "Recolher menu", rail_toggle_expand: "Expandir menu",
     hero_morning:"Bom dia", hero_afternoon:"Boa tarde", hero_evening:"Boa noite", hero_night:"Boa noite", hero_hi:"Olá, eu sou", hero_sub:"Como posso ajudar hoje?",
+    day_today:"Hoje", day_yesterday:"Ontem",
     tb_search: "Buscar", tb_notifications: "Notificações", tb_account: "Conta",
     notif_header: "Notificações", notif1_title: "Bem-vindo a Media", notif1_text: "Seu assistente está pronto para conversar.",
     notif2_title: "Dica", notif2_text: "Pressione <kbd>Shift</kbd>+<kbd>Enter</kbd> para pular linha.",
@@ -556,6 +560,48 @@ function logRagMetrics(rag) {
 }
 
 // ---------- Markdown + código ----------
+function dayLabel(ts) {
+  const d = new Date(ts), now = new Date();
+  const start = (x) => new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime();
+  const diff = Math.round((start(now) - start(d)) / 86400000);
+  if (diff === 0) return t("day_today");
+  if (diff === 1) return t("day_yesterday");
+  try { return new Intl.DateTimeFormat(lang, { weekday: "long", day: "numeric", month: "long" }).format(d); }
+  catch (_) { return d.toLocaleDateString(); }
+}
+
+// Convierte la lista "Fuentes:" (Markdown) en tarjetas/chips con detalle al pasar el cursor.
+function enhanceSources(container) {
+  const labels = new Set(Object.values(I18N).map((d) => String(d.sources || "").toLowerCase()).filter(Boolean));
+  container.querySelectorAll(".msg--ai .msg__bubble p").forEach((p) => {
+    const head = p.textContent.trim().replace(/:$/, "");
+    const ul = p.nextElementSibling;
+    if (!labels.has(head.toLowerCase()) || !ul || ul.tagName !== "UL") return;
+    const box = document.createElement("div");
+    box.className = "src";
+    const h = document.createElement("div");
+    h.className = "src__head"; h.textContent = head;
+    const list = document.createElement("div");
+    list.className = "src__list";
+    [...ul.children].forEach((li) => {
+      const a = li.querySelector("a");
+      const [title, ...rest] = li.textContent.trim().split(" — ");
+      const detail = rest.join(" — ");
+      const chip = document.createElement(a ? "a" : "span");
+      chip.className = "src__chip";
+      if (a) { chip.href = a.href; chip.target = "_blank"; chip.rel = "noopener noreferrer"; }
+      chip.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-6-6z" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linejoin="round"/><path d="M14 3v6h6" stroke="currentColor" stroke-width="1.8" fill="none"/></svg><span class="src__title"></span><span class="src__pop" role="tooltip"><strong></strong><em></em></span>`;
+      chip.querySelector(".src__title").textContent = title;
+      chip.querySelector(".src__pop strong").textContent = title;
+      chip.querySelector(".src__pop em").textContent = detail;
+      list.appendChild(chip);
+    });
+    box.append(h, list);
+    p.replaceWith(box);
+    ul.remove();
+  });
+}
+
 function renderMarkdown(text) {
   try {
     if (window.marked && window.DOMPurify) {
@@ -675,6 +721,7 @@ function serializeChat(chat) {
       .filter((m) => !m.streaming)
       .map((m) => ({
         role: m.role,
+        ts: m.ts || null,
         content: m.content || "",
         backendMessageId: m.backendMessageId || null,
         attachments: (m.attachments || []).map((att) => ({ ...att, dataUrl: null })),
@@ -866,14 +913,29 @@ function renderMessages() {
   const wrap = document.createElement("div");
   wrap.className = "msg-wrap";
   if (staggerNextRender) { wrap.classList.add("is-stagger"); staggerNextRender = false; }
+  let prev = null;   // { role, ts, day } del mensaje anterior con fecha
   chat.messages.forEach((m, i) => {
+    const ts = Number(m.ts) || null;
+    const day = ts ? new Date(ts).toDateString() : null;
+    const newDay = !!ts && (!prev || prev.day !== day);
+    if (newDay) {
+      const sep = document.createElement("div");
+      sep.className = "msg-day";
+      sep.style.setProperty("--i", String(i));
+      sep.innerHTML = `<span></span>`;
+      sep.firstChild.textContent = dayLabel(ts);
+      wrap.appendChild(sep);
+    }
     const node = buildMessageNode(m, i, chat);
     node.style.setProperty("--i", String(i));
+    if (!newDay && prev && ts && prev.role === m.role && ts - prev.ts < 5 * 60 * 1000) node.classList.add("msg--cont");
     wrap.appendChild(node);
+    prev = ts ? { role: m.role, ts, day } : null;
   });
   el.messages.appendChild(wrap);
   enhanceCodeBlocks(wrap);
   enhanceLinks(wrap);
+  enhanceSources(wrap);
   if (keepAtBottom) scrollToBottom();
 }
 
@@ -1494,7 +1556,7 @@ async function sendMessage(text) {
   if (!chat) chat = createChat();
 
   const attachments = pendingAttachments.slice();
-  chat.messages.push({ role: "user", content, attachments });
+  chat.messages.push({ role: "user", content, attachments, ts: Date.now() });
   pendingAttachments = [];
   renderAttachPreview();
 
@@ -1515,7 +1577,7 @@ async function runAssistant(chat) {
   state.isResponding = true;
   el.btnSend.disabled = true;
 
-  const aiMsg = { role: "assistant", content: "", streaming: true, feedback: null };
+  const aiMsg = { role: "assistant", content: "", streaming: true, feedback: null, ts: Date.now() };
   chat.messages.push(aiMsg);
   renderMessages();
   const thinkingTimer = startAgentThinking(aiMsg);
@@ -2149,6 +2211,7 @@ async function handlePracticeAction(kind) {
 function appendPracticeArtifact(chat, kind, data) {
   chat.messages.push({
     role: "assistant",
+    ts: Date.now(),
     content: practiceResultMarkdown(kind, data),
     practiceArtifact: data.contract?.artifact || null,
     feedback: null,
@@ -3283,6 +3346,7 @@ async function openConversation(id) {
         .filter((m) => m.role === "user" || m.role === "assistant")
         .map((m) => ({
           role: m.role,
+          ts: m.created_at ? Date.parse(m.created_at) : null,
           content: m.content,
           backendMessageId: m.id || null,
           feedback: null,
@@ -3478,3 +3542,13 @@ updateAuthUI();
   } catch (_) { }
 })();
 
+
+
+// Spotlight del rail "Herramientas de estudio": el brillo sigue al cursor
+document.getElementById("practiceRail")?.addEventListener("pointermove", (e) => {
+  const item = e.target.closest(".rail__item");
+  if (!item) return;
+  const r = item.getBoundingClientRect();
+  item.style.setProperty("--mx", (e.clientX - r.left) + "px");
+  item.style.setProperty("--my", (e.clientY - r.top) + "px");
+});
