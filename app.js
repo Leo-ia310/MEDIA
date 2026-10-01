@@ -965,9 +965,7 @@ function buildMessageNode(m, index, chat) {
   const node = document.createElement("div");
   node.className = "msg msg--" + (role === "user" ? "user" : "ai");
 
-  const avatar = role === "user" ? "U" : `<img src="assets/logo-mark.png" alt="Media" />`;
   node.innerHTML = `
-    <div class="msg__avatar">${avatar}</div>
     <div class="msg__body">
       <div class="msg__role">${role === "user" ? t("role_you") : t("role_ai")}</div>
       <div class="msg__bubble"></div>
