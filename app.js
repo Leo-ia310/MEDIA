@@ -1600,22 +1600,30 @@ async function sendMessage(text) {
 async function runAssistant(chat) {
   state.isResponding = true;
   el.btnSend.disabled = true;
+  document.body.classList.add("is-busy");   // pausa animaciones decorativas mientras responde
 
   const aiMsg = { role: "assistant", content: "", streaming: true, feedback: null, ts: Date.now() };
   chat.messages.push(aiMsg);
   renderMessages();
   const thinkingTimer = startAgentThinking(aiMsg);
 
+  // Reparsear todo el Markdown en cada token es cuadrático (12k caracteres ≈ 3 s de CPU):
+  // se agrupa en un render cada ~40-160 ms, más espaciado cuanto más larga la respuesta.
+  let renderTimer = null;
+  const flushStream = () => {
+    renderTimer = null;
+    if (!streamingBubble) return;
+    const keepAtBottom = isNearBottom();
+    streamingBubble.innerHTML = renderMarkdown(aiMsg.content);
+    enhanceLinks(streamingBubble);
+    if (keepAtBottom) scrollToBottom();
+  };
+
   try {
     const meta = await streamAgentResponse(chat.messages.slice(0, -1), (chunk) => {
       if (!aiMsg.content) clearInterval(thinkingTimer);
       aiMsg.content += chunk;
-      if (streamingBubble) {
-        const keepAtBottom = isNearBottom();
-        streamingBubble.innerHTML = renderMarkdown(aiMsg.content);
-        enhanceLinks(streamingBubble);
-        if (keepAtBottom) scrollToBottom();
-      }
+      if (!renderTimer) renderTimer = setTimeout(flushStream, Math.min(160, 40 + aiMsg.content.length / 60));
     });
     if (meta) {
       aiMsg.backendMessageId = meta.backendMessageId || aiMsg.backendMessageId || null;
@@ -1634,6 +1642,8 @@ async function runAssistant(chat) {
     console.error(err);
   } finally {
     clearInterval(thinkingTimer);
+    clearTimeout(renderTimer);
+    document.body.classList.remove("is-busy");
     aiMsg.streaming = false;
     delete aiMsg.thinkingIndex;
     state.isResponding = false;
@@ -1868,7 +1878,8 @@ function isNearBottom(threshold = 140) {
 }
 
 function scrollToBottom(smooth) {
-  el.messages.scrollTo({ top: el.messages.scrollHeight, behavior: smooth ? "smooth" : "auto" });
+  // "auto" obedece al CSS (scroll-behavior:smooth) y reiniciaba una animación por token; "instant" salta
+  el.messages.scrollTo({ top: el.messages.scrollHeight, behavior: smooth ? "smooth" : "instant" });
   updateScrollBtn();
 }
 

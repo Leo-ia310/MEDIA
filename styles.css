@@ -3041,3 +3041,19 @@ a.src__chip:hover, .src__chip:focus-visible { border-color:var(--primary); color
   body.rail-collapsed #rail .rail__header:hover .rail__logo,
   body.rail-collapsed #rail .rail__header:has(.rail__toggle:focus-visible) .rail__logo { opacity:0; transform:scale(.9); }
 }
+
+/* ===================== Rendimiento del chat ===================== */
+/* La aurora ya son degradados radiales suaves: el blur de 46px sobre una capa de 150% del area
+   era el filtro mas caro de la pagina y se recalculaba mientras la capa animaba. */
+.main::before { filter:none; will-change:transform; }
+
+/* Mientras responde, las animaciones decorativas y la mascara del fade no compiten con el streaming */
+body.is-busy .main::before,
+body.is-busy .composer__form::before,
+body.is-busy .hero__grad { animation-play-state:paused; }
+body.is-busy .messages {
+  -webkit-mask-image:none; mask-image:none; animation:none;
+}
+
+/* Mensajes antiguos fuera de pantalla no se renderizan (los 8 mas recientes siempre si) */
+.msg-wrap .msg:nth-last-child(n+9) { content-visibility:auto; contain-intrinsic-size:auto 140px; }
