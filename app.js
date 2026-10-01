@@ -766,7 +766,6 @@ function createChat(options = {}) {
   renderChatList();
   renderMessages();
   saveLocalChats();
-  if (options.syncBackend) ensureBackendConversation(chat);
   el.input.focus();
   return chat;
 }
@@ -1465,7 +1464,6 @@ async function sendMessage(text) {
   renderMessages();
   touchChat(chat);
   resetInput();
-  await ensureBackendConversation(chat);
   await runAssistant(chat);
 }
 
@@ -3420,21 +3418,16 @@ updateAuthUI();
   const token = authToken();
   if (!token) return;
   try {
-    const res = await fetch(`${API_BASE_URL}/api/health`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    if (res.ok) return;
-  } catch (_) {
-
-    return;
-  }
-
-  try {
-    const res2 = await fetch(`${API_BASE_URL}/api/conversations`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    if (res2.status === 401) {
-
+    if (getRefreshToken()) {
+      const refreshed = await refreshAuthSession();
+      if (!refreshed) {
+        clearAuthSession();
+        console.warn("[Media] Sesión local expirada. El usuario deberá iniciar sesión de nuevo.");
+      }
+      return;
+    }
+    const res = await fetchWithAuth(`${API_BASE_URL}/api/conversations`);
+    if (res.status === 401) {
       clearAuthSession();
       console.warn("[Media] Sesión local expirada. El usuario deberá iniciar sesión de nuevo.");
     }
