@@ -3054,3 +3054,15 @@ body.is-busy .messages {
 
 /* Mensajes antiguos fuera de pantalla no se renderizan (los 8 mas recientes siempre si) */
 .msg-wrap .msg:nth-last-child(n+9) { content-visibility:auto; contain-intrinsic-size:auto 140px; }
+
+/* Modo claro: botones de "Herramientas de estudio" sólidos (sin vidrio, degradado ni spotlight).
+   El vidrio y los degradados solo tienen sentido sobre fondo oscuro; en claro se ven sucios. */
+:root[data-theme="light"] .rail--right { background:var(--surface); }
+:root[data-theme="light"] .rail--right .rail__item {
+  background:#ffffff; border:1px solid var(--border);
+  -webkit-backdrop-filter:none; backdrop-filter:none;
+  box-shadow:0 1px 2px rgba(15,35,80,.06);
+}
+:root[data-theme="light"] .rail--right .rail__item::before { display:none; }
+:root[data-theme="light"] .rail--right .rail__item:hover,
+:root[data-theme="light"] .rail--right .rail__toggle:hover { background:#eaf1ff; border-color:#9db9f7; }
