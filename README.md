@@ -6,6 +6,8 @@ Interfaz web tipo chat IA con backend FastAPI, Supabase, Groq como proveedor pri
 
 ```
 Media/
+├── Dockerfile        # Imagen del backend FastAPI + frontend estatico
+├── docker-compose.yml
 ├── index.html        # Frontend estatico existente
 ├── styles.css        # Estilos existentes
 ├── app.js            # UI de chat; login basico y llamada a /api/chat con Bearer token
@@ -21,6 +23,38 @@ Media/
 │   └── logo.svg
 └── README.md
 ```
+
+## Ejecutar con Docker
+
+Requisito: tener Docker Desktop o Docker Engine con Docker Compose.
+
+Crear el archivo de entorno local:
+
+```bash
+cp .env.example .env
+```
+
+Edita `.env` solo si vas a usar proveedores externos como Supabase, Groq, Cloudflare o Gemini. No subas ese archivo al repositorio.
+
+Levantar todo el proyecto:
+
+```bash
+docker compose up --build
+```
+
+Abrir:
+
+```text
+http://127.0.0.1:8000
+```
+
+El health check queda en:
+
+```text
+GET http://127.0.0.1:8000/api/health
+```
+
+El contenedor usa Python 3.12, instala automaticamente `backend/requirements.txt`, sirve el frontend estatico desde FastAPI y expone el puerto `8000`. La base local queda persistida en el volumen Docker `media_data`.
 
 ## Ejecutar backend
 
