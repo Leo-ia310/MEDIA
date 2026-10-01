@@ -27,6 +27,7 @@ const state = {
 const I18N = {
   es: {
     rail_new: "Nuevo chat", rail_search: "Buscar chats", rail_images: "Imágenes", rail_library: "Biblioteca", rail_settings: "Configuración", rail_toggle: "Contraer menú", rail_toggle_expand: "Expandir menú",
+    hero_morning:"Buenos días", hero_afternoon:"Buenas tardes", hero_evening:"Buenas noches", hero_night:"Buenas noches", hero_hi:"Hola, soy", hero_sub:"¿En qué puedo ayudarte hoy?",
     tb_search: "Buscar", tb_notifications: "Notificaciones", tb_account: "Cuenta",
     notif_header: "Notificaciones", notif1_title: "Bienvenido a Media", notif1_text: "Tu asistente está listo para conversar.",
     notif2_title: "Consejo", notif2_text: "Pulsa <kbd>Shift</kbd>+<kbd>Enter</kbd> para saltar de línea.",
@@ -62,6 +63,7 @@ const I18N = {
   },
   en: {
     rail_new: "New chat", rail_search: "Search chats", rail_images: "Images", rail_library: "Library", rail_settings: "Settings", rail_toggle: "Collapse menu", rail_toggle_expand: "Expand menu",
+    hero_morning:"Good morning", hero_afternoon:"Good afternoon", hero_evening:"Good evening", hero_night:"Good evening", hero_hi:"Hi, I'm", hero_sub:"How can I help you today?",
     tb_search: "Search", tb_notifications: "Notifications", tb_account: "Account",
     notif_header: "Notifications", notif1_title: "Welcome to Media", notif1_text: "Your assistant is ready to chat.",
     notif2_title: "Tip", notif2_text: "Press <kbd>Shift</kbd>+<kbd>Enter</kbd> for a new line.",
@@ -97,6 +99,7 @@ const I18N = {
   },
   fr: {
     rail_new: "Nouveau chat", rail_search: "Rechercher", rail_images: "Images", rail_settings: "Paramètres", rail_toggle: "Réduire le menu", rail_toggle_expand: "Développer le menu",
+    hero_morning:"Bonjour", hero_afternoon:"Bon après-midi", hero_evening:"Bonsoir", hero_night:"Bonsoir", hero_hi:"Salut, je suis", hero_sub:"Comment puis-je t'aider aujourd'hui ?",
     tb_search: "Rechercher", tb_notifications: "Notifications", tb_account: "Compte",
     notif_header: "Notifications", notif1_title: "Bienvenue sur Media", notif1_text: "Votre assistant est prêt à discuter.",
     notif2_title: "Astuce", notif2_text: "Appuie sur <kbd>Shift</kbd>+<kbd>Enter</kbd> pour un saut de ligne.",
@@ -132,6 +135,7 @@ const I18N = {
   },
   pt: {
     rail_new: "Novo chat", rail_search: "Buscar chats", rail_images: "Imagens", rail_settings: "Configurações", rail_toggle: "Recolher menu", rail_toggle_expand: "Expandir menu",
+    hero_morning:"Bom dia", hero_afternoon:"Boa tarde", hero_evening:"Boa noite", hero_night:"Boa noite", hero_hi:"Olá, eu sou", hero_sub:"Como posso ajudar hoje?",
     tb_search: "Buscar", tb_notifications: "Notificações", tb_account: "Conta",
     notif_header: "Notificações", notif1_title: "Bem-vindo a Media", notif1_text: "Seu assistente está pronto para conversar.",
     notif2_title: "Dica", notif2_text: "Pressione <kbd>Shift</kbd>+<kbd>Enter</kbd> para pular linha.",
@@ -221,6 +225,7 @@ function setLang(next) {
     applyPracticeCollapsed(document.body.classList.contains("practice-collapsed"));
   }
   if (typeof updateAuthUI === "function") updateAuthUI();
+  if (typeof renderHero === "function") renderHero();
 }
 
 function initLang() {
@@ -771,6 +776,7 @@ function createChat(options = {}) {
 }
 
 function switchChat(id) {
+  staggerNextRender = true;
   state.activeChatId = id;
   setMainView("chat");
   renderChatList();
@@ -813,6 +819,38 @@ function renderChatList(filter = "") {
 
 // ---------- Render: mensajes ----------
 let streamingBubble = null;   // referencia al mensaje que se está escribiendo
+let staggerNextRender = true; // anima en cascada la próxima lista (abrir/cambiar de chat)
+
+// ---------- Hero de bienvenida: saludo por hora + subtítulo con efecto de escritura ----------
+let heroTypeTimer = null;
+function heroGreetKey() {
+  const h = new Date().getHours();
+  return h < 6 ? "hero_night" : h < 12 ? "hero_morning" : h < 19 ? "hero_afternoon" : "hero_evening";
+}
+function renderHero() {
+  const greet = document.getElementById("heroGreet");
+  const title = document.getElementById("heroTitle");
+  const sub = document.getElementById("heroSub");
+  if (!greet || !title || !sub) return;
+  let day = "";
+  try {
+    day = new Intl.DateTimeFormat(lang, { weekday: "long" }).format(new Date());
+    day = day.charAt(0).toUpperCase() + day.slice(1);
+  } catch (_) { /* sin Intl: solo saludo */ }
+  greet.textContent = day ? `${t(heroGreetKey())} · ${day}` : t(heroGreetKey());
+  title.innerHTML = `${escapeHtml(t("hero_hi"))} <span class="hero__grad">Media</span>`;
+  clearInterval(heroTypeTimer);
+  const text = t("hero_sub");
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    sub.textContent = text; sub.classList.remove("is-typing"); return;
+  }
+  sub.textContent = ""; sub.classList.add("is-typing");
+  let i = 0;
+  heroTypeTimer = setInterval(() => {
+    i += 1; sub.textContent = text.slice(0, i);
+    if (i >= text.length) { clearInterval(heroTypeTimer); sub.classList.remove("is-typing"); }
+  }, 28);
+}
 
 function renderMessages() {
   const chat = getActiveChat();
@@ -827,7 +865,12 @@ function renderMessages() {
 
   const wrap = document.createElement("div");
   wrap.className = "msg-wrap";
-  chat.messages.forEach((m, i) => wrap.appendChild(buildMessageNode(m, i, chat)));
+  if (staggerNextRender) { wrap.classList.add("is-stagger"); staggerNextRender = false; }
+  chat.messages.forEach((m, i) => {
+    const node = buildMessageNode(m, i, chat);
+    node.style.setProperty("--i", String(i));
+    wrap.appendChild(node);
+  });
   el.messages.appendChild(wrap);
   enhanceCodeBlocks(wrap);
   enhanceLinks(wrap);
@@ -2484,8 +2527,7 @@ function updateComposerMeta() {
   }
   updateTokenMeter(len, max);
   if (!el.composerMeta) return;
-  const active = document.activeElement === el.input || len > 0;
-  el.composerMeta.hidden = !active;
+  el.composerMeta.hidden = !(len > max * 0.9);   // solo cerca del límite del plan
 }
 
 function getBetaPlan() {
@@ -3250,6 +3292,7 @@ async function openConversation(id) {
     };
     const existingIndex = state.chats.findIndex((c) => c.backendConversationId === detail.id);
     if (existingIndex >= 0) state.chats.splice(existingIndex, 1);
+    staggerNextRender = true;
     state.chats.unshift(chat);
     state.activeChatId = chat.id;
     saveLocalChats();
@@ -3402,6 +3445,7 @@ document.addEventListener("keydown", (e) => {
 // ---------- Init ----------
 initTheme();
 initLang();
+renderHero();
 initDataToggles();
 applyBetaPlan();
 if (loadLocalChats()) {

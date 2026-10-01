@@ -2643,3 +2643,101 @@ body.rail-collapsed #rail .rail__toggle {
   padding:4px;
 }
 
+
+
+/* ===================== Fase 1 UI: aurora, hero, motion, halo ===================== */
+/* Tokens derivados de --primary/--accent (OKLCH): se adaptan a cualquier paleta */
+:root {
+  --primary-glow: color-mix(in oklch, var(--primary) 38%, transparent);
+  --primary-wash: color-mix(in oklch, var(--primary) 10%, transparent);
+  --accent-wash:  color-mix(in oklch, var(--accent, var(--primary)) 14%, transparent);
+  --surface-glass: color-mix(in oklch, var(--surface) 72%, transparent);
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+}
+
+@property --halo-a { syntax:"<angle>"; inherits:false; initial-value:0deg; }
+
+/* 1) Fondo aurora detrás del chat */
+.main::before {
+  content:""; position:absolute; inset:-25%; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(38% 34% at 18% 22%, var(--primary-wash), transparent 70%),
+    radial-gradient(34% 30% at 82% 72%, var(--accent-wash), transparent 70%),
+    radial-gradient(30% 28% at 62% 12%, color-mix(in oklch, var(--bubble-user, var(--primary)) 14%, transparent), transparent 70%);
+  filter:blur(46px); opacity:.9;
+  animation:auroraDrift 26s ease-in-out infinite alternate;
+}
+.main > .messages, .main > .composer, .main > .composer__hint { position:relative; z-index:1; }
+@keyframes auroraDrift {
+  0%   { transform:translate3d(-3%, -2%, 0) rotate(0deg) scale(1); }
+  50%  { transform:translate3d(3%, 2%, 0)  rotate(4deg) scale(1.06); }
+  100% { transform:translate3d(-2%, 3%, 0) rotate(-3deg) scale(1.02); }
+}
+
+/* 2) Hero de bienvenida */
+.hero { margin:auto; max-width:640px; padding:24px 20px; text-align:center; display:grid; gap:10px; justify-items:center; }
+.hero__eyebrow {
+  padding:5px 12px; border-radius:999px; font-size:12.5px; font-weight:600; letter-spacing:.3px;
+  color:var(--text-soft); background:var(--surface-glass);
+  border:1px solid color-mix(in oklch, var(--text) 10%, transparent);
+  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+  animation:heroIn .7s var(--ease-out) both;
+}
+.hero__title {
+  font-family:var(--font-title); font-weight:700; line-height:1.1; letter-spacing:-.5px;
+  font-size:clamp(30px, 5.2vw, 48px); color:var(--text);
+  animation:heroIn .7s .08s var(--ease-out) both;
+}
+.hero__grad {
+  background:linear-gradient(90deg, var(--primary), var(--accent, var(--primary)), var(--primary));
+  background-size:260% 100%;
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent;
+  animation:heroShift 7s linear infinite;
+}
+.hero__sub {
+  min-height:1.6em; font-size:clamp(15px, 2.2vw, 18px); color:var(--text-soft);
+  animation:heroIn .7s .16s var(--ease-out) both;
+}
+.hero__sub.is-typing::after {
+  content:""; display:inline-block; width:2px; height:1.05em; margin-left:3px; vertical-align:-.15em;
+  background:var(--primary); animation:caretPulse .9s ease-in-out infinite;
+}
+@keyframes heroIn    { from { opacity:0; transform:translateY(12px); filter:blur(6px); } to { opacity:1; transform:none; filter:none; } }
+@keyframes heroShift { to { background-position:-260% 0; } }
+
+/* 3) Entrada de mensajes: fade + subida + blur; escalonada al abrir un chat */
+@keyframes msgRise { from { opacity:0; transform:translateY(10px) scale(.985); filter:blur(4px); } to { opacity:1; transform:none; filter:none; } }
+.msg-wrap .msg--ai:last-child,
+.msg-wrap .msg--user:last-child { animation:msgRise .45s var(--ease-out) both; }
+.msg-wrap.is-stagger .msg {
+  animation:msgRise .5s var(--ease-out) both;
+  animation-delay:calc(min(var(--i, 0), 10) * 55ms);
+}
+
+/* 4) Caret de streaming: barra con brillo */
+.msg__bubble.is-streaming::after {
+  content:""; display:inline-block; width:7px; height:1.05em; margin-left:3px; vertical-align:-.15em;
+  border-radius:2px; background:var(--primary); box-shadow:0 0 10px var(--primary-glow);
+  animation:caretPulse 1s ease-in-out infinite;
+}
+@keyframes caretPulse { 0%, 100% { opacity:1; } 50% { opacity:.2; } }
+
+/* 5) Composer: halo de degradado cónico giratorio al enfocar */
+.composer__form { position:relative; overflow:visible; transition:box-shadow .3s var(--ease-out), border-color .3s var(--ease-out); }
+.composer__form::before {
+  content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1.5px; pointer-events:none;
+  background:conic-gradient(from var(--halo-a), transparent 0deg, var(--primary) 70deg, var(--accent, var(--primary)) 150deg, transparent 230deg, transparent 360deg);
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude;
+  opacity:0; transition:opacity .35s var(--ease-out);
+  animation:haloSpin 4.5s linear infinite;
+}
+.composer__form:focus-within::before { opacity:1; }
+.composer__form:focus-within {
+  box-shadow:0 0 0 4px var(--primary-wash), 0 14px 44px -12px var(--primary-glow);
+}
+@keyframes haloSpin { to { --halo-a:360deg; } }
+
+/* Composer: atajos ocultos; el contador solo aparece cerca del límite (JS) */
+.composer__shortcuts { display:none; }
