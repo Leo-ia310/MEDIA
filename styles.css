@@ -71,30 +71,6 @@
   --shell-radius: 0px; /* redondeo del contenedor completo */
 }
 
-:root[data-theme="dark"] {
-  --bg:            #0a0a0a;   /* negro neutro */
-  --bg-soft:       #141414;
-  --surface:       #1a1a1a;   /* tarjetas/paneles */
-  --border:        #2a2a2a;
-  --text:          #f2f2f2;
-  --text-soft:     #b8b8b8;
-  --text-muted:    #808080;
-
-  /* Marco (topbar + laterales + inferior) blanco para distinguir del interior negro */
-  --topbar-bg:     #1F2937;
-  --topbar-text:   #f8fafc;
-  --topbar-border: rgba(0,0,0,.12);
-  --topbar-hover:  rgba(0,0,0,.06);
-  --frame:         #1F2937;
-
-  --primary:       var(--blue-500);
-  --primary-hover: var(--blue-400);
-  --primary-soft:  #1e1e1e;
-
-  --shadow-sm:0 1px 2px rgba(0,0,0,.3);
-  --shadow-md:0 6px 20px rgba(0,0,0,.35);
-  --shadow-lg:0 12px 40px rgba(0,0,0,.45);
-}
 
 /* ---------- RESET ---------- */
 * { box-sizing:border-box; margin:0; padding:0; }
@@ -2858,3 +2834,47 @@ a.src__chip:hover, .src__chip:focus-visible { border-color:var(--primary); color
 /* Los chips de fuentes no deben heredar el estilo de enlace del Markdown */
 .msg--ai .msg__bubble .src__chip { text-decoration:none; color:var(--text-soft); }
 .msg--ai .msg__bubble a.src__chip:hover, .msg--ai .msg__bubble .src__chip:focus-visible { color:var(--text); }
+
+
+/* ===================== Tema claro (data-theme="light") + transición circular ===================== */
+:root { color-scheme:dark; }
+:root[data-theme="light"] {
+  color-scheme:light;
+  --bg:#f3f6fa; --bg-soft:#e9eef5; --surface:#ffffff; --surface-2:#f0f4f9;
+  --border:#d9e0ea; --text:#101828; --text-soft:#475467; --text-muted:#667388;
+  --primary:#087f5d; --primary-hover:#066a4d; --primary-soft:rgba(8,127,93,.10);
+  --on-primary:#ffffff; --accent:#c77d00; --danger:#d92d52; --bubble-user:#2563eb;
+  --shadow-sm:0 1px 2px rgba(16,24,40,.06);
+  --shadow-md:0 10px 28px rgba(16,24,40,.10);
+  --shadow-lg:0 24px 64px rgba(16,24,40,.14);
+  --frame:#f3f6fa;
+}
+/* Colores fijos de las capas oscuras -> equivalentes claros */
+:root[data-theme="light"] .topbar { border-bottom-color:rgba(16,24,40,.08); background:rgba(243,246,250,.85); }
+:root[data-theme="light"] .rail { border-color:rgba(16,24,40,.08); }
+:root[data-theme="light"] .main { border-color:rgba(16,24,40,.06); background:transparent; }
+:root[data-theme="light"] .composer__form { background:var(--surface); border-color:var(--border); box-shadow:var(--shadow-sm); }
+:root[data-theme="light"] .msg--ai .msg__bubble { background:transparent; }
+:root[data-theme="light"] .practice-artifact { background:rgba(16,24,40,.03); }
+:root[data-theme="light"] .mindmap-preview__node,
+:root[data-theme="light"] .practice-slide,
+:root[data-theme="light"] .study-card,
+:root[data-theme="light"] .practice-question { border-color:rgba(16,24,40,.09); background:rgba(16,24,40,.03); }
+:root[data-theme="light"] .account-menu__details span { border-color:rgba(16,24,40,.09); background:rgba(16,24,40,.03); }
+:root[data-theme="light"] .token-card__bar { background:rgba(16,24,40,.08); }
+:root[data-theme="light"] .plan-card,
+:root[data-theme="light"] .practice-preview__node { background:rgba(16,24,40,.03); }
+:root[data-theme="light"] .plan-card__badge { border-color:rgba(16,24,40,.14); }
+:root[data-theme="light"] .agent-thinking__step span { background:rgba(16,24,40,.04); }
+:root[data-theme="light"] .rail--right .rail__item {
+  background:rgba(255,255,255,.72); border-color:rgba(16,24,40,.09);
+  box-shadow:inset 0 1px 0 #fff, 0 8px 18px -12px rgba(16,24,40,.28);
+}
+:root[data-theme="light"] .rail__item.is-active,
+:root[data-theme="light"] .chat-item.is-active,
+:root[data-theme="light"] .lang-dd__option.is-active { background:var(--primary-soft); color:var(--primary-hover); }
+
+/* Transición de tema: círculo que se expande desde el interruptor (View Transitions API) */
+::view-transition-old(root), ::view-transition-new(root) { animation:none; mix-blend-mode:normal; }
+::view-transition-old(root) { z-index:1; }
+::view-transition-new(root) { z-index:2; }

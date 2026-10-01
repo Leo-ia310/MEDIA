@@ -1874,20 +1874,41 @@ function closeSidebarMobile() {
 
 // ---------- Tema ----------
 function initTheme() {
-  const saved = localStorage.getItem("Media-theme");
-  if (saved) document.documentElement.setAttribute("data-theme", saved);
+  // Oscuro por defecto; "light" solo si el usuario lo eligió. Siempre se fija el atributo.
+  let saved = null;
+  try { saved = localStorage.getItem("Media-theme"); } catch (_) { }
+  document.documentElement.setAttribute("data-theme", saved === "light" ? "light" : "dark");
 }
 let themeTransitionTimer = null;
 function toggleTheme() {
   const root = document.documentElement;
-  const current = root.getAttribute("data-theme") === "dark" ? "dark" : "light";
-  const next = current === "dark" ? "light" : "dark";
-  // Crossfade suave de toda la interfaz solo durante el cambio
+  const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+  const apply = () => {
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("Media-theme", next); } catch (_) { }
+  };
+  const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (document.startViewTransition && !reduce) {
+    // Círculo que se expande desde el interruptor hasta cubrir la pantalla
+    const btn = document.getElementById("settingsTheme");
+    const r = btn ? btn.getBoundingClientRect() : null;
+    const x = r ? r.left + r.width / 2 : innerWidth / 2;
+    const y = r ? r.top + r.height / 2 : innerHeight / 2;
+    const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    const vt = document.startViewTransition(apply);
+    vt.ready.then(() => {
+      root.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+        { duration: 650, easing: "cubic-bezier(.22, 1, .36, 1)", pseudoElement: "::view-transition-new(root)" }
+      );
+    }).catch(() => { });
+    return;
+  }
+  // Fallback: crossfade global
   root.classList.add("theme-transition");
   clearTimeout(themeTransitionTimer);
   themeTransitionTimer = setTimeout(() => root.classList.remove("theme-transition"), 600);
-  root.setAttribute("data-theme", next);
-  try { localStorage.setItem("Media-theme", next); } catch (_) { }
+  apply();
 }
 
 // ---------- Dropdowns de la barra superior ----------
